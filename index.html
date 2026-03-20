@@ -10,9 +10,9 @@
         .post { background: white; padding: 20px; margin-bottom: 20px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
         .post-date { color: #888; font-size: 0.9em; margin-bottom: 10px; }
         .post-title { font-size: 1.8em; margin: 0 0 10px 0; color: #333; }
-        .post-content { line-height: 1.6; }
+        .post-content { line-height: 1.6; white-space: pre-wrap; }
         .post-media img { max-width: 100%; border-radius: 5px; margin-top: 15px;}
-        .post-media iframe { width: 100%; height: 400px; margin-top: 15px; border: none;}
+        .post-media iframe { width: 100%; height: 400px; margin-top: 15px; border: none; border-radius: 5px;}
     </style>
 </head>
 <body>
@@ -23,18 +23,24 @@
     </header>
 
     <div class="container" id="news-feed">
-        <h2>Loading today's news...</h2>
+        <h2 id="loading-text" style="text-align:center; color:#555;">Loading today's news...</h2>
     </div>
 
     <script>
-        const googleScriptUrl = 'https://script.google.com/macros/s/AKfycbzmyzl-vK0EY-_DtDom_4fhs20zOamhTLns2RBTGW4Td46NJWKMOZNnPBCtvZgy69me/exec';
+        // PASTE YOUR NEW LINK CAREFULLY BETWEEN THE QUOTES
+        const googleScriptUrl = 'https://script.google.com/macros/s/AKfycbzeYK6bYRdsH5lWV7mQVF1kTkaxSxK2nVTENQxQ-O3-sp_Js9N7gWMLHDZBBbHTvE6b/exec';
 
-        // Function to transform standard YouTube link to Embed link
         function getYoutubeEmbed(url) {
+            if(!url) return '';
             let videoId = url.split('v=')[1];
+            if(!videoId) {
+                videoId = url.split('youtu.be/')[1]; // Handle shortened links
+            }
             if(!videoId) return url;
             let ampersandPosition = videoId.indexOf('&');
+            let questionPosition = videoId.indexOf('?');
             if(ampersandPosition !== -1) videoId = videoId.substring(0, ampersandPosition);
+            if(questionPosition !== -1) videoId = videoId.substring(0, questionPosition);
             return `https://www.youtube.com/embed/${videoId}`;
         }
 
@@ -42,31 +48,45 @@
             .then(response => response.json())
             .then(data => {
                 const feed = document.getElementById('news-feed');
-                feed.innerHTML = ''; // clear loading text
+                document.getElementById('loading-text').style.display = 'none'; // hide loading
+
+                // Reverse data so newest posts are at the top
+                if (!Array.isArray(data) || data.length === 0) {
+                    feed.innerHTML = '<h2 style="text-align:center;">No news posted yet! Go to your admin panel to make a post.</h2>';
+                    return;
+                }
 
                 data.forEach(post => {
-                    if(!post.Title) return; // Skip empty rows
+                    // This makes sure it works no matter how you typed your column names
+                    const postTitle = post.Title || post.title || "";
+                    const postContent = post.Content || post.content || "";
+                    const postDate = post.Date || post.date || "";
+                    const postType = post.Type || post.type || "";
+                    const postMedia = post.MediaURL || post.MediaUrl || post.mediaurl || post.media || "";
+
+                    if(!postTitle && !postContent) return; // Skip completely empty rows
 
                     let mediaHTML = '';
-                    if (post.Type === 'photo' && post.MediaURL) {
-                        mediaHTML = `<div class="post-media"><img src="${post.MediaURL}" alt="News Image"></div>`;
-                    } else if (post.Type === 'video' && post.MediaURL) {
-                        mediaHTML = `<div class="post-media"><iframe src="${getYoutubeEmbed(post.MediaURL)}" allowfullscreen></iframe></div>`;
+                    if (postType.toLowerCase() === 'photo' && postMedia) {
+                        mediaHTML = `<div class="post-media"><img src="${postMedia}" alt="News Image"></div>`;
+                    } else if (postType.toLowerCase() === 'video' && postMedia) {
+                        mediaHTML = `<div class="post-media"><iframe src="${getYoutubeEmbed(postMedia)}" allowfullscreen></iframe></div>`;
                     }
 
                     const postElement = document.createElement('div');
                     postElement.className = 'post';
+
                     postElement.innerHTML = `
-                        <div class="post-date">${new Date(post.Date).toLocaleDateString()}</div>
-                        <h2 class="post-title">${post.Title}</h2>
-                        <div class="post-content">${post.Content}</div>
+                        <div class="post-date">${postDate}</div>
+                        <h2 class="post-title">${postTitle}</h2>
+                        <div class="post-content">${postContent}</div>
                         ${mediaHTML}
                     `;
                     feed.appendChild(postElement);
                 });
             })
             .catch(error => {
-                document.getElementById('news-feed').innerHTML = '<p>Error loading news.</p>';
+                document.getElementById('loading-text').innerHTML = '<span style="color:red;">Error loading news. Did you paste the correct link?</span>';
             });
     </script>
 </body>
