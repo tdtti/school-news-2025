@@ -1,1 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Magazine Admin Panel</title>
+    <style>
+        body { font-family: Arial; padding: 20px; max-width: 600px; margin: auto; }
+        input, textarea, select { width: 100%; margin-bottom: 15px; padding: 10px; }
+        button { padding: 10px 20px; background: #28a745; color: white; border: none; cursor: pointer; width: 100%;}
+    </style>
+</head>
+<body>
 
+    <h2>Admin Post Area</h2>
+    <form id="postForm">
+        <label>Title</label>
+        <input type="text" id="title" required>
+
+        <label>Content / News Text</label>
+        <textarea id="content" rows="5" required></textarea>
+
+        <label>Post Type</label>
+        <select id="type">
+            <option value="news">Text News</option>
+            <option value="photo">Photo Update</option>
+            <option value="video">Video Update</option>
+        </select>
+
+        <label>Upload Photo (If Photo Update)</label>
+        <input type="file" id="imageFile" accept="image/*">
+
+        <label>YouTube Link (If Video Update)</label>
+        <input type="text" id="videoUrl" placeholder="Paste YouTube link here">
+
+        <button type="submit" id="submitBtn">Publish Post</button>
+        <p id="status"></p>
+    </form>
+
+    <script>
+        const imgbbApiKey = 'e6dd312a0239b2d4806a9ef6eff53e4c'; 
+        const googleScriptUrl = 'https://script.google.com/macros/s/AKfycbzmyzl-vK0EY-_DtDom_4fhs20zOamhTLns2RBTGW4Td46NJWKMOZNnPBCtvZgy69me/exec';
+
+        document.getElementById('postForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const status = document.getElementById('status');
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            status.innerText = "Processing...";
+
+            let mediaUrl = "";
+            let type = document.getElementById('type').value;
+
+            // If an image is selected, upload it to Imgbb first
+            const imageFile = document.getElementById('imageFile').files[0];
+            if (imageFile && type === 'photo') {
+                status.innerText = "Uploading Photo...";
+                let imgData = new FormData();
+                imgData.append("image", imageFile);
+                
+                const imgResponse = await fetch(`https://api.imgbb.com/1/upload?key=${imgbbApiKey}`, {
+                    method: 'POST', body: imgData
+                });
+                const imgResult = await imgResponse.json();
+                mediaUrl = imgResult.data.url; // Get the hosted image link
+            } else if (type === 'video') {
+                mediaUrl = document.getElementById('videoUrl').value;
+            }
+
+            status.innerText = "Saving to Database...";
+
+            // Send to Google Sheets
+            let postData = new FormData();
+            postData.append("title", document.getElementById('title').value);
+            postData.append("content", document.getElementById('content').value);
+            postData.append("type", type);
+            postData.append("media", mediaUrl);
+
+            fetch(googleScriptUrl, { method: 'POST', body: postData })
+            .then(res => {
+                status.innerText = "Post Published Successfully!";
+                document.getElementById('postForm').reset();
+                submitBtn.disabled = false;
+            })
+            .catch(err => {
+                status.innerText = "Error saving post.";
+                submitBtn.disabled = false;
+            });
+        });
+    </script>
+</body>
+</html>
