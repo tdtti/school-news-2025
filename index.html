@@ -2,92 +2,76 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>School Magazine & News</title>
-    <style>
-        body { font-family: 'Georgia', serif; background: #f4f4f4; margin: 0; padding: 0; }
-        header { background: #003366; color: white; padding: 20px; text-align: center; }
-        .container { max-width: 800px; margin: 20px auto; }
-        .post { background: white; padding: 20px; margin-bottom: 20px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .post-date { color: #888; font-size: 0.9em; margin-bottom: 10px; }
-        .post-title { font-size: 1.8em; margin: 0 0 10px 0; color: #333; }
-        .post-content { line-height: 1.6; white-space: pre-wrap; }
-        .post-media img { max-width: 100%; border-radius: 5px; margin-top: 15px;}
-        .post-media iframe { width: 100%; height: 400px; margin-top: 15px; border: none; border-radius: 5px;}
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our School Magazine</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body>
+<body class="bg-gray-50">
 
-    <header>
-        <h1>Daily School Magazine</h1>
-        <p>News, Photos, and Videos from our Campus</p>
+    <!-- Header -->
+    <header class="bg-blue-800 text-white text-center py-10 shadow-md">
+        <h1 class="text-5xl font-extrabold tracking-tight">The Campus Chronicle</h1>
+        <p class="mt-2 text-lg text-blue-200">The Official Daily School Online Magazine</p>
     </header>
 
-    <div class="container" id="news-feed">
-        <h2 id="loading-text" style="text-align:center; color:#555;">Loading today's news...</h2>
-    </div>
+    <!-- News Feed Section -->
+    <main class="max-w-6xl mx-auto p-6 mt-6">
+        <div id="news-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <p class="text-center col-span-3 text-gray-500">Loading today's news...</p>
+        </div>
+    </main>
 
     <script>
-        // PASTE YOUR NEW LINK CAREFULLY BETWEEN THE QUOTES
-        const googleScriptUrl = 'https://script.google.com/macros/s/AKfycbzeYK6bYRdsH5lWV7mQVF1kTkaxSxK2nVTENQxQ-O3-sp_Js9N7gWMLHDZBBbHTvE6b/exec';
-
-        function getYoutubeEmbed(url) {
-            if(!url) return '';
-            let videoId = url.split('v=')[1];
-            if(!videoId) {
-                videoId = url.split('youtu.be/')[1]; // Handle shortened links
+        // Helper to turn YouTube links into Embeds
+        function getEmbedUrl(url) {
+            if (url.includes('youtube.com') || url.includes('youtu.be')) {
+                let videoId = url.includes('v=') ? url.split('v=')[1].substring(0, 11) : url.split('.be/')[1].substring(0, 11);
+                return `https://www.youtube.com/embed/${videoId}`;
             }
-            if(!videoId) return url;
-            let ampersandPosition = videoId.indexOf('&');
-            let questionPosition = videoId.indexOf('?');
-            if(ampersandPosition !== -1) videoId = videoId.substring(0, ampersandPosition);
-            if(questionPosition !== -1) videoId = videoId.substring(0, questionPosition);
-            return `https://www.youtube.com/embed/${videoId}`;
+            return url;
         }
 
-        fetch(googleScriptUrl)
-            .then(response => response.json())
-            .then(data => {
-                const feed = document.getElementById('news-feed');
-                document.getElementById('loading-text').style.display = 'none'; // hide loading
-
-                // Reverse data so newest posts are at the top
-                if (!Array.isArray(data) || data.length === 0) {
-                    feed.innerHTML = '<h2 style="text-align:center;">No news posted yet! Go to your admin panel to make a post.</h2>';
-                    return;
-                }
+        // Fetch Data from Google Sheets
+        async function loadNews() {
+            // REPLACE THIS URL WITH YOUR GOOGLE WEB APP URL
+            const GOOGLE_APP_URL = "https://script.google.com/macros/s/AKfycbwPFOBkwFVYAoQ7NH1OwoA0gvOXrjVC6SrBvrH8Vh4KzTKOoDOoFqOtE2OPHNb47nWU/exec"; 
+            
+            try {
+                const response = await fetch(GOOGLE_APP_URL);
+                const data = await response.json();
+                
+                const container = document.getElementById('news-container');
+                container.innerHTML = ""; // Clear loading text
 
                 data.forEach(post => {
-                    // This makes sure it works no matter how you typed your column names
-                    const postTitle = post.Title || post.title || "";
-                    const postContent = post.Content || post.content || "";
-                    const postDate = post.Date || post.date || "";
-                    const postType = post.Type || post.type || "";
-                    const postMedia = post.MediaURL || post.MediaUrl || post.mediaurl || post.media || "";
-
-                    if(!postTitle && !postContent) return; // Skip completely empty rows
-
-                    let mediaHTML = '';
-                    if (postType.toLowerCase() === 'photo' && postMedia) {
-                        mediaHTML = `<div class="post-media"><img src="${postMedia}" alt="News Image"></div>`;
-                    } else if (postType.toLowerCase() === 'video' && postMedia) {
-                        mediaHTML = `<div class="post-media"><iframe src="${getYoutubeEmbed(postMedia)}" allowfullscreen></iframe></div>`;
+                    let mediaHTML = "";
+                    
+                    if(post.category === "Video" && post.mediaUrl) {
+                        mediaHTML = `<iframe class="w-full h-48 object-cover" src="${getEmbedUrl(post.mediaUrl)}" frameborder="0" allowfullscreen></iframe>`;
+                    } else if (post.mediaUrl) {
+                        mediaHTML = `<img src="${post.mediaUrl}" class="w-full h-48 object-cover" alt="News Image">`;
                     }
 
-                    const postElement = document.createElement('div');
-                    postElement.className = 'post';
-
-                    postElement.innerHTML = `
-                        <div class="post-date">${postDate}</div>
-                        <h2 class="post-title">${postTitle}</h2>
-                        <div class="post-content">${postContent}</div>
-                        ${mediaHTML}
+                    const card = `
+                        <div class="bg-white rounded-lg shadow-lg overflow-hidden flex flex-col hover:shadow-xl transition-shadow">
+                            ${mediaHTML}
+                            <div class="p-5 flex-grow">
+                                <span class="text-xs font-bold uppercase tracking-wider ${post.category === 'Video' ? 'text-red-500' : 'text-blue-500'}">${post.category}</span>
+                                <h3 class="text-xl font-bold mt-2 text-gray-800">${post.title}</h3>
+                                <p class="text-xs text-gray-400 mt-1 mb-4">${new Date(post.date).toLocaleDateString()}</p>
+                                <p class="text-gray-600 text-sm whitespace-pre-wrap">${post.description}</p>
+                            </div>
+                        </div>
                     `;
-                    feed.appendChild(postElement);
+                    container.innerHTML += card;
                 });
-            })
-            .catch(error => {
-                document.getElementById('loading-text').innerHTML = '<span style="color:red;">Error loading news. Did you paste the correct link?</span>';
-            });
+            } catch (error) {
+                document.getElementById('news-container').innerHTML = "<p>Error loading news. Please try again later.</p>";
+            }
+        }
+
+        // Load news on page load
+        loadNews();
     </script>
 </body>
 </html>
