@@ -9,12 +9,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
     
     <style>
+        /* === WEB PROTECTION CSS === */
+        body { -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; }
+        img { -webkit-user-drag: none; -khtml-user-drag: none; -moz-user-drag: none; -o-user-drag: none; }
+        /* ========================== */
+
         :root {
-            --bg-color: #f0f2f5; 
-            --box-bg: #ffffff; --text-dark: #050505; --text-gray: #65676B;
-            --accent-blue: #0866FF; --accent-indigo: #4f46e5; --accent-red: #ef4444;
-            --radius-large: 12px; --radius-medium: 8px;
-            --shadow-soft: 0 1px 2px rgba(0,0,0,0.1);
+            --bg-color: #f0f2f5; --box-bg: #ffffff; --text-dark: #050505; --text-gray: #65676B;
+            --accent-blue: #0866FF; --accent-red: #ef4444;
+            --radius-large: 12px; --radius-medium: 8px; --shadow-soft: 0 1px 2px rgba(0,0,0,0.1);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -27,14 +30,22 @@
         .ticker-track span { display: inline-block; padding-left: 100%; animation: scroll 30s linear infinite; }
         @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
 
-        /* Header & Nav */
-        .main-header { background: var(--box-bg); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 4px rgba(0,0,0,0.08); position: sticky; top: 0; z-index: 1000; }
-        .header-logo { display: flex; align-items: center; gap: 12px; font-size: 1.5rem; font-weight: 800; }
-        .header-logo img { width: 45px; height: 45px; border-radius: 10px; }
-        .header-principal { display: flex; align-items: center; gap: 12px; cursor: pointer; }
-        .header-principal img { width: 45px; height: 45px; border-radius: 50%; border: 2px solid var(--accent-blue); }
+        /* === NEW MAIN HEADER (COVER & PROFILE) === */
+        .site-profile-header { background: var(--box-bg); padding-bottom: 20px; border-bottom: 1px solid #ced0d4; position: relative;}
+        .cover-photo { width: 100%; height: 280px; object-fit: cover; display: block; background: #e4e6eb; pointer-events: none; }
+        .profile-pic-container { max-width: 800px; margin: 0 auto; position: relative; display: flex; align-items: flex-end; padding: 0 20px; margin-top: -65px; }
+        .profile-pic { width: 140px; height: 140px; border-radius: 50%; border: 4px solid #fff; object-fit: cover; background: #fff; z-index: 2; box-shadow: 0 2px 8px rgba(0,0,0,0.15); cursor: pointer; transition: transform 0.2s;}
+        .profile-pic:hover { transform: scale(1.03); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+        .school-name-title { font-size: 1.8rem; font-weight: 800; margin-left: 20px; margin-bottom: 20px; z-index: 2; color: var(--text-dark);}
+        
+        @media (max-width: 500px) {
+            .cover-photo { height: 180px; }
+            .profile-pic-container { flex-direction: column; align-items: center; text-align: center; margin-top: -70px; }
+            .school-name-title { margin-left: 0; margin-top: 10px; margin-bottom: 0; font-size: 1.5rem;}
+        }
 
-        .nav-wrapper { background: var(--box-bg); border-bottom: 1px solid #e2e8f0; padding: 10px 5%; position: sticky; top: 75px; z-index: 900; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        /* Nav (Sticky right at the top) */
+        .nav-wrapper { background: var(--box-bg); border-bottom: 1px solid #e2e8f0; padding: 10px 5%; position: sticky; top: 0; z-index: 900; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
         .scroll-container { position: relative; display: flex; align-items: center; }
         .scroll-track { display: flex; gap: 12px; overflow-x: auto; scrollbar-width: none; padding: 5px 40px; scroll-behavior: smooth; }
         .scroll-track::-webkit-scrollbar { display: none; }
@@ -43,11 +54,11 @@
         .nav-pills a { text-decoration: none; padding: 8px 18px; background: #e4e6eb; color: var(--text-dark); border-radius: 20px; font-weight: 700; font-size: 0.85rem; white-space: nowrap; transition: 0.2s; }
         .nav-pills a.active, .nav-pills a:hover { background: var(--accent-blue); color: white; }
 
-        /* Main Content */
-        .layout-container { max-width: 680px; margin: 30px auto; padding: 0 15px; min-height: 60vh; }
+        /* Main Content Grid */
+        .layout-container { max-width: 680px; margin: 20px auto 30px auto; padding: 0 15px; min-height: 60vh; }
         .section-wrapper { margin-bottom: 40px; scroll-margin-top: 150px; }
 
-        /* Loader & Full-Size Spinner */
+        /* Spinners */
         .saving-overlay { position: fixed; inset: 0; background: rgba(255,255,255,0.7); z-index: 20000; display: none; justify-content: center; align-items: center; flex-direction: column; backdrop-filter: blur(10px); }
         .saving-overlay.active { display: flex; }
         .loader-wrapper { display: flex; justify-content: center; align-items: center; position: relative; height: 90px; }
@@ -55,42 +66,33 @@
         .spinner-logo { width: 50px; height: 50px; border-radius: 50%; position: absolute; object-fit: cover; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
-        /* Facebook Style Post CSS */
+        /* FB Posts & Birthdays */
         .fb-post { background: var(--box-bg); border-radius: var(--radius-large); box-shadow: var(--shadow-soft); margin-bottom: 20px; overflow: hidden; border: 1px solid #ced0d4; }
         .fb-header { display: flex; align-items: center; padding: 12px 16px; gap: 10px; }
-        .fb-avatar { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 1px solid #e4e6eb; }
+        .fb-avatar { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 1px solid #e4e6eb; pointer-events: none;}
         .fb-header-info { display: flex; flex-direction: column; justify-content: center; }
         .fb-header-info strong { font-size: 0.95rem; font-weight: 700; color: var(--text-dark); }
         .fb-header-info span { font-size: 0.8rem; color: var(--text-gray); }
-        
         .fb-content { padding: 0 16px 12px 16px; }
         .fb-content h3 { font-size: 1.1rem; margin-bottom: 5px; color: var(--text-dark); }
         .fb-content p { font-size: 0.95rem; line-height: 1.5; white-space: pre-wrap; color: var(--text-dark); }
-        
         .fb-media { width: 100%; background: #000; border-top: 1px solid #f0f2f5; border-bottom: 1px solid #f0f2f5; }
-        .fb-media img, .fb-media video { width: 100%; max-height: 600px; object-fit: cover; display: block; }
+        .fb-media img, .fb-media video { width: 100%; max-height: 600px; object-fit: cover; display: block; pointer-events: none;}
 
-        /* Birthday Specific CSS */
         .bday-nav { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; background: #fff; border-bottom: 1px solid #e4e6eb; }
         .bday-nav button { background: #e4e6eb; color: var(--text-dark); border: none; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-weight: bold; font-size: 1rem; transition: 0.2s;}
-        .bday-nav button:hover { background: #d8dadf; }
-        
         .birthday-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; padding: 16px; }
-        
         .bday-item { position: relative; border-radius: 10px; overflow: hidden; height: 280px; box-shadow: 0 2px 5px rgba(0,0,0,0.15); background: #f0f2f5; }
-        .bday-item img { width: 100%; height: 100%; object-fit: cover; }
-        
-        .bday-info { position: absolute; bottom: 10px; left: 10px; right: 10px; background: rgba(0, 0, 0, 0.65); backdrop-filter: blur(5px); padding: 10px; text-align: center; color: #fff; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);}
+        .bday-item img { width: 100%; height: 100%; object-fit: cover; pointer-events: none;}
+        .bday-info { position: absolute; bottom: 10px; left: 10px; right: 10px; background: rgba(0, 0, 0, 0.65); backdrop-filter: blur(5px); padding: 10px; text-align: center; color: #fff; border-radius: 8px;}
         .bday-info h5 { margin: 0 0 2px 0; font-size: 1.05rem; font-weight: 700; text-transform: uppercase;}
         .bday-info p { margin: 0; font-size: 0.85rem; font-weight: 600; color: #e4e6eb; }
 
-        /* Read More / Less Toggle */
         .is-hidden { display: none !important; }
         .show-post { display: block !important; }
         .read-more-box { width: 100%; padding: 12px; background: #e4e6eb; border: none; border-radius: 8px; font-weight: 700; color: var(--text-dark); cursor: pointer; margin-bottom: 20px; transition: 0.2s; }
-        .read-more-box:hover { background: #d8dadf; }
 
-        /* Modals */
+        /* Modals & Forms */
         .modal-overlay { position: fixed; inset: 0; background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(5px); z-index: 10000; display: none; align-items: center; justify-content: center; padding: 20px; }
         .modal-overlay.active { display: flex; }
         .modal-box { background: white; padding: 30px; border-radius: var(--radius-large); width: 100%; max-width: 500px; position: relative; max-height: 90vh; overflow-y: auto; box-shadow: 0 10px 40px rgba(0,0,0,0.2); border: 1px solid #ced0d4; }
@@ -101,32 +103,29 @@
         .form-control:read-only { background-color: #e4e6eb; cursor: not-allowed; }
         
         .btn-submit { width: 100%; padding: 12px; background: var(--accent-blue); color: white; border: none; border-radius: 8px; font-weight: 700; font-size: 1rem; cursor: pointer; margin-top: 10px; transition: 0.2s;}
-        .btn-submit:hover { background: #0055ff; }
         .btn-delete { background: var(--accent-red); margin-top: 5px; }
-        .btn-delete:hover { background: #dc2626; }
         
-        .admin-mode-toggles { display: flex; gap: 15px; margin-bottom: 20px; padding: 10px; background: #eef2ff; border-radius: 8px; border: 1px solid var(--accent-blue); }
-        .admin-mode-toggles label { font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 5px; color: var(--accent-blue); font-size: 0.95rem;}
+        .admin-mode-toggles { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; padding: 15px; background: #eef2ff; border-radius: 8px; border: 1px solid var(--accent-blue); }
+        .admin-mode-toggles label { font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 5px; color: var(--accent-blue); font-size: 0.95rem; flex: 1; min-width: 120px;}
 
-        /* Footer & Socials */
+        /* Footer */
         .site-footer { text-align: center; padding: 40px 20px; color: var(--text-gray); font-weight: 700; background: #ffffff; border-top: 1px solid #ced0d4; margin-top: 40px; }
-        .footer-socials { display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; }
+        .footer-socials { display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; flex-wrap: wrap;}
         .footer-socials a { display: flex; align-items: center; justify-content: center; width: 45px; height: 45px; border-radius: 50%; background: #e4e6eb; color: var(--text-dark); text-decoration: none; transition: all 0.3s ease; }
         .footer-socials a svg { width: 22px; height: 22px; fill: currentColor; }
-        .footer-socials a:hover { color: #ffffff; transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-        .footer-socials a.fb:hover { background: #1877F2; }
-        .footer-socials a.ig:hover { background: #E4405F; }
-        .footer-socials a.yt:hover { background: #FF0000; }
-        .footer-socials a.wa:hover { background: #25D366; }
-        .footer-socials a.mail:hover { background: #EA4335; }
+        .footer-socials a.fb:hover { background: #1877F2; color: #fff;}
+        .footer-socials a.ig:hover { background: #E4405F; color: #fff;}
+        .footer-socials a.yt:hover { background: #FF0000; color: #fff;}
+        .footer-socials a.wa:hover { background: #25D366; color: #fff;}
+        .footer-socials a.mail:hover { background: #EA4335; color: #fff;}
     </style>
 </head>
 <body>
 
-    <div class="saving-overlay active" id="loadingOverlay">
+    <div class="saving-overlay" id="loadingOverlay">
         <div class="loader-wrapper">
             <div class="spinner-ring"></div>
-            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjGka-p7C45PTqBMBKqSjulqicQlHmW_Ee1BCfUPpaW888vYnoPjElzW9DVm8az1kCOjdlabjA3qb_vS00GpCApyVWh2C0aIcOcvb-BWeeTI8AdLojSf25iCvNpMS6aENxrWO-SgM5xjqePEMsHfCLy4HinnGk2xAnDlKaapXYFY05jXQM/s56-c/Logo2.png" class="spinner-logo">
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhfNRJx_i0-RPkzfOKFQD2gDuXWjTLUCMWk-b9jgW0V9i1wiJu9RJOsyznzfylt_ly5h2pem0Tl1yT8852cgauqrFMdI9wh18H0V5iOusnTkxR6WQTBGWzBQol111WLNEgt4LrNfooBH-mzWaHMe74N0_oVU3eN6Sthl5f8c7DWYoZg56Y/s1600/Logo2.png" class="spinner-logo">
         </div>
     </div>
 
@@ -135,17 +134,13 @@
         <div class="ticker-track"><span id="live-ticker-text">Loading latest updates...</span></div>
     </div>
 
-    <header class="main-header">
-        <div class="header-logo">
-            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjGka-p7C45PTqBMBKqSjulqicQlHmW_Ee1BCfUPpaW888vYnoPjElzW9DVm8az1kCOjdlabjA3qb_vS00GpCApyVWh2C0aIcOcvb-BWeeTI8AdLojSf25iCvNpMS6aENxrWO-SgM5xjqePEMsHfCLy4HinnGk2xAnDlKaapXYFY05jXQM/s56-c/Logo2.png" alt="Logo">
-            <span>TDTTI THURAVOOR</span>
-        </div>
-        <div class="header-principal" onclick="openLoginModal()">
-            <div style="text-align: right; margin-right: 10px;" class="hide-mobile">
-                <h4 style="font-size: 0.9rem;">ASHA V</h4>
-                <p style="font-size: 0.7rem; color: var(--text-gray); font-weight: 700;">Principal</p>
-            </div>
-            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiRkN_fkpQ9rzeGYiaN7YahUs6pPmumJngjvCBYP004ffxlSzJ2gkzs1lHzRMx7aJs-SHDhfShCwl8FqJDitti_7aNAxE_tHEQsp7Z55nUKyBJ5V2gD2opBM5rfQFHU4hikmVxyVSpRusWYqVqc4r1qh4sg-J9wO99AOzpjBp7BGHZlxXwi2mAY34pDUcmT/s1238/va.jpeg" alt="Admin">
+    <!-- MAIN HEADER: Cover Photo & Profile Picture -->
+    <header class="site-profile-header">
+        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjYIxRUMuWWKaQKZ-ujMNoD5ZbhehwRqbw2d3W487D7HOj4Icgek2cBWGVOwEqXBX3XIeOCGIvysbeffzXJ0eg7E2XbL-DWhkvQbQ4RIibfmshRBhhctnoJC-JY7vo-U1PNCC7Bw7AKI4PKQSRO9WcTufUyaCepXpwan2ZL2p0Ek_e02tI/s1600/21.HOCKY%20TEAM.jpeg" class="cover-photo" id="ui-cover">
+        <div class="profile-pic-container">
+            <!-- Clicking this triggers Admin Login -->
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhfNRJx_i0-RPkzfOKFQD2gDuXWjTLUCMWk-b9jgW0V9i1wiJu9RJOsyznzfylt_ly5h2pem0Tl1yT8852cgauqrFMdI9wh18H0V5iOusnTkxR6WQTBGWzBQol111WLNEgt4LrNfooBH-mzWaHMe74N0_oVU3eN6Sthl5f8c7DWYoZg56Y/s1600/Logo2.png" class="profile-pic" id="ui-profile" onclick="openLoginModal()" title="Admin Login">
+            <h1 class="school-name-title">TDTTI THURAVOOR</h1>
         </div>
     </header>
 
@@ -169,16 +164,29 @@
         </div>
     </nav>
 
-    <main class="layout-container" id="main-content"></main>
+    <main class="layout-container" id="main-content">
+        <!-- Content injects here instantly from memory cache -->
+    </main>
 
     <footer class="site-footer">
         <div class="footer-socials">
+            <a href="https://wa.me/911234567890" class="wa" target="_blank" title="WhatsApp">
+                <svg viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.91C21.95 6.45 17.5 2 12.04 2m.01 1.67c4.54 0 8.23 3.7 8.23 8.24 0 4.54-3.7 8.23-8.23 8.23-1.53 0-3.04-.42-4.36-1.2l-.31-.18-3.24.85.86-3.16-.2-.32c-.86-1.37-1.31-2.96-1.31-4.59 0-4.54 3.7-8.24 8.24-8.24m4.67 11.23c-.26-.13-1.52-.75-1.76-.84-.23-.08-.41-.13-.58.13-.18.26-.67.84-.82 1.01-.15.18-.3.2-.56.08-1.2-.55-2.22-1.12-3.05-2.24-.22-.29-.02-.45.1-.58.11-.11.26-.3.39-.45.13-.15.17-.26.26-.44.08-.17.04-.32-.02-.45-.06-.13-.58-1.4-.8-1.92-.21-.5-.42-.43-.58-.44h-.5c-.21 0-.56.08-.85.4s-1.12 1.1-1.12 2.68c0 1.58 1.15 3.1 1.31 3.32.16.21 2.27 3.46 5.49 4.85.77.33 1.37.53 1.84.68.77.24 1.47.2 2.02.12.61-.09 1.52-.62 1.74-1.22.21-.6.21-1.12.15-1.22-.07-.1-.24-.15-.5-.28z"/></svg>
+            </a>
             <a href="https://facebook.com" class="fb" target="_blank" title="Facebook">
                 <svg viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-1.1 0-2 .9-2 2v1h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/></svg>
             </a>
-            <!-- Add other icons as needed -->
+            <a href="https://youtube.com" class="yt" target="_blank" title="YouTube">
+                <svg viewBox="0 0 24 24"><path d="M21.58 7.19c-.23-.86-.91-1.54-1.77-1.77C18.25 5 12 5 12 5s-6.25 0-7.81.42c-.86.23-1.54.91-1.77 1.77C2 8.75 2 12 2 12s0 3.25.42 4.81c.23.86.91 1.54 1.77 1.77C5.75 19 12 19 12 19s6.25 0 7.81-.42c.86-.23 1.54-.91 1.77-1.77C22 15.25 22 12 22 12s0-3.25-.42-4.81zM10 15V9l5.2 3-5.2 3z"/></svg>
+            </a>
+            <a href="https://instagram.com" class="ig" target="_blank" title="Instagram">
+                <svg viewBox="0 0 24 24"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/></svg>
+            </a>
+            <a href="mailto:contact@yourschool.com" class="mail" title="Email Us">
+                <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+            </a>
         </div>
-        <div style="font-size: 0.9rem;">&copy; 2026 TDTTI THURAVOOR School Portal</div>
+        <div style="font-size: 0.9rem;">&copy; 2026 TDTTI THURAVOOR Portal</div>
     </footer>
 
     <!-- Admin Login Modal -->
@@ -198,15 +206,24 @@
     <div class="modal-overlay" id="uploadModal">
         <div class="modal-box">
             <button class="close-modal" onclick="closeModals()">&times;</button>
-            <h2 style="margin-bottom: 15px;">Create and Edit</h2>
+            <h2 style="margin-bottom: 15px;">Admin Dashboard</h2>
 
             <div class="admin-mode-toggles">
-                <label><input type="radio" name="adminMode" value="create" checked onchange="toggleAdminMode()"> 📝 Create New</label>
+                <label style="width: 100%;"><input type="radio" name="adminMode" value="settings" onchange="toggleAdminMode()"> 🖼️ Update Profile & Cover</label>
+                <label><input type="radio" name="adminMode" value="create" checked onchange="toggleAdminMode()"> 📝 Create Post</label>
                 <label><input type="radio" name="adminMode" value="edit" onchange="toggleAdminMode()"> ✏️ Edit / Delete</label>
             </div>
 
             <form id="uploadForm">
-                <div class="form-group">
+                <div class="form-group" id="settingsSelectGroup" style="display: none;">
+                    <label>Select Image to Update</label>
+                    <select id="settingKey" class="form-control">
+                        <option value="ProfilePicture">Profile Picture</option>
+                        <option value="CoverPhoto">Cover Photo</option>
+                    </select>
+                </div>
+
+                <div class="form-group" id="fg-section">
                     <label>Section</label>
                     <select id="sectionSelect" class="form-control" onchange="toggleFields()">
                         <option value="Scrolling">Scrolling</option>
@@ -232,7 +249,7 @@
                 <div id="birthdayFields" style="display:none; background: #e4e6eb; padding: 15px; border-radius: 10px; margin-bottom: 15px;">
                     <div class="form-group" style="position: relative;">
                         <label style="color: var(--accent-blue);">🔍 Search Student (By Name or Date)</label>
-                        <input type="text" id="bdayStudentSearch" list="bdayStudentList" class="form-control" placeholder="Type name or date (e.g. 30:03:2026)" oninput="autoFillStudent()">
+                        <input type="text" id="bdayStudentSearch" list="bdayStudentList" class="form-control" placeholder="Type name or date" oninput="autoFillStudent()">
                         <datalist id="bdayStudentList"></datalist>
                         <input type="hidden" id="selectedStudentRowIndex">
                     </div>
@@ -246,18 +263,15 @@
 
                 <div id="normalFields">
                     <div class="form-group" id="fg-title"><label>Title</label><input type="text" id="postTitle" class="form-control"></div>
-                    
-                    <!-- NEW: AUTHOR FIELD -->
                     <div class="form-group" id="fg-author">
                         <label>Author Profile</label>
                         <select id="postAuthor" class="form-control">
-                            <option value="TDTTI">TDTTI </option>
+                            <option value="TDTTI THURAVOOR">TDTTI THURAVOOR</option>
                             <option value="Principal Asha V">Principal Asha V</option>
                             <option value="Admin Desk">Admin Desk</option>
                             <option value="Academics Dept">Academics Dept</option>
                         </select>
                     </div>
-
                     <div class="form-group" id="fg-content"><label>Content</label><textarea id="postContent" class="form-control" rows="3"></textarea></div>
                     <div class="form-group" id="fg-media"><label>Media Link (YouTube/Direct URL)</label><input type="url" id="mediaLink" class="form-control" placeholder="Leave blank if uploading image below"></div>
                 </div>
@@ -280,32 +294,21 @@
     </div>
 
     <script>
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxqbz9JOHl-ygPtcI3xKewZJkFKtMwvO-RKllv7LA7rbVyWkJ33RWFwYH4sn5SXm6IdSA/exec"; 
+        // === ANTI-COPY SCRIPT EXECUTIONS ===
+        document.addEventListener('contextmenu', event => event.preventDefault()); 
+        document.addEventListener('keydown', function(e) {
+            if(e.ctrlKey && (e.key === 'u' || e.key === 's' || e.key === 'c' || e.key === 'p')) e.preventDefault();
+        });
+
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwpqVFbKgaWXD9VsNg17EW-h8arYYkQeCP4brxjZB6FD1Gs-FHigkgPBH7oNjLz6ftzxw/exec"; 
         const IMGBB_API_KEY = "dcf1e98ceb03a9258bc9b06786f2bb18"; 
-        const SCHOOL_LOGO_URL = "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjGka-p7C45PTqBMBKqSjulqicQlHmW_Ee1BCfUPpaW888vYnoPjElzW9DVm8az1kCOjdlabjA3qb_vS00GpCApyVWh2C0aIcOcvb-BWeeTI8AdLojSf25iCvNpMS6aENxrWO-SgM5xjqePEMsHfCLy4HinnGk2xAnDlKaapXYFY05jXQM/s56-c/Logo2.png";
         
-        // Define exact mapping to the dropdown options
-        const AUTHOR_PROFILES = [
-    { name: "TDTTI", avatar: SCHOOL_LOGO_URL },
-    { name: "Principal Asha V", avatar: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiRkN_fkpQ9rzeGYiaN7YahUs6pPmumJngjvCBYP004ffxlSzJ2gkzs1lHzRMx7aJs-SHDhfShCwl8FqJDitti_7aNAxE_tHEQsp7Z55nUKyBJ5V2gD2opBM5rfQFHU4hikmVxyVSpRusWYqVqc4r1qh4sg-J9wO99AOzpjBp7BGHZlxXwi2mAY34pDUcmT/s1238/va.jpeg" },
-    { name: "Admin Desk", avatar: "https://cdn-icons-png.flaticon.com/512/9334/9334336.png" },
-    { name: "Academics Dept", avatar: "https://cdn-icons-png.flaticon.com/512/6832/6832868.png" },
-
-    // --- Student & Community Focused ---
-    { name: "Student Council", avatar: "https://cdn-icons-png.flaticon.com/512/3449/3449692.png" },
-    { name: "PTA / Parents", avatar: "https://cdn-icons-png.flaticon.com/512/2620/2620667.png" },
-    { name: "Alumni Association", avatar: "https://cdn-icons-png.flaticon.com/512/4607/4607147.png" },
-
-    // --- Activity & Subject Focused ---
-    { name: "Sports & Wellness", avatar: "https://cdn-icons-png.flaticon.com/512/857/857455.png" },
-    { name: "Arts & Culture", avatar: "https://cdn-icons-png.flaticon.com/512/1048/1048953.png" },
-    { name: "STEM & Tech Lab", avatar: "https://cdn-icons-png.flaticon.com/512/1085/1085813.png" },
-    { name: "Library & Media", avatar: "https://cdn-icons-png.flaticon.com/512/2232/2232688.png" },
-
-    // --- Support & Guidance ---
-    { name: "Counselor’s Corner", avatar: "https://cdn-icons-png.flaticon.com/512/4344/4344855.png" },
-    { name: "Career Guidance", avatar: "https://cdn-icons-png.flaticon.com/512/3079/3079165.png" }
-];
+        const AUTHOR_PROFILES =[
+            { name: "TDTTI THURAVOOR", avatar: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhfNRJx_i0-RPkzfOKFQD2gDuXWjTLUCMWk-b9jgW0V9i1wiJu9RJOsyznzfylt_ly5h2pem0Tl1yT8852cgauqrFMdI9wh18H0V5iOusnTkxR6WQTBGWzBQol111WLNEgt4LrNfooBH-mzWaHMe74N0_oVU3eN6Sthl5f8c7DWYoZg56Y/s1600/Logo2.png" },
+            { name: "Principal Asha V", avatar: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiRkN_fkpQ9rzeGYiaN7YahUs6pPmumJngjvCBYP004ffxlSzJ2gkzs1lHzRMx7aJs-SHDhfShCwl8FqJDitti_7aNAxE_tHEQsp7Z55nUKyBJ5V2gD2opBM5rfQFHU4hikmVxyVSpRusWYqVqc4r1qh4sg-J9wO99AOzpjBp7BGHZlxXwi2mAY34pDUcmT/s1238/va.jpeg" },
+            { name: "Admin Desk", avatar: "https://cdn-icons-png.flaticon.com/512/9334/9334336.png" },
+            { name: "Academics Dept", avatar: "https://cdn-icons-png.flaticon.com/512/6832/6832868.png" }
+        ];
 
         const SECTIONS =["Notice Board", "Birthdays", "Achievements", "Updates", "Appraisals", "Personalised Skills", "Academic", "Sports", "Fairs", "Kalothswom", "Gallery"];
         
@@ -317,7 +320,6 @@
             const now = new Date();
             return `${String(now.getDate()).padStart(2,'0')}:${String(now.getMonth()+1).padStart(2,'0')}:${now.getFullYear()}`;
         }
-
         function getFormattedDateDisplay(dateStr) {
             const parts = dateStr.split(':');
             const d = new Date(parts[2], parseInt(parts[1]) - 1, parts[0]);
@@ -331,24 +333,45 @@
         };
 
         async function loadContent() {
+            // CACHE SYSTEM FOR INSTANT LOADING
+            const cachedData = localStorage.getItem('schoolPortalData');
+            if (cachedData) {
+                try {
+                    const parsed = JSON.parse(cachedData);
+                    globalPosts = parsed.posts ||[];
+                    globalBirthdays = parsed.birthdays ||[];
+                    renderAll(globalPosts, parsed.settings || {});
+                    document.getElementById('loadingOverlay').classList.remove('active'); 
+                } catch(e) {}
+            } else {
+                document.getElementById('loadingOverlay').classList.add('active'); 
+            }
+
             try {
                 const response = await fetch(SCRIPT_URL);
                 const data = await response.json();
-                globalPosts = data.posts || [];
+                localStorage.setItem('schoolPortalData', JSON.stringify(data)); 
+                globalPosts = data.posts ||[];
                 globalBirthdays = data.birthdays ||[];
-                renderAll(globalPosts);
+                renderAll(globalPosts, data.settings || {});
             } catch (e) {
                 console.error("Fetch Error:", e);
-                document.getElementById('main-content').innerHTML = `<p style="text-align:center; padding:50px;">Failed to load data.</p>`;
+                if(!cachedData) document.getElementById('main-content').innerHTML = `<p style="text-align:center; padding:50px;">Failed to load data.</p>`;
             } finally {
                 document.getElementById('loadingOverlay').classList.remove('active');
             }
         }
 
-        function renderAll(postsData) {
+        function renderAll(postsData, settingsData) {
             const container = document.getElementById('main-content');
-            container.innerHTML = ""; 
+            
+            // Render Dynamic Cover & Profile Photo on the Main Header
+            let defaultCover = "https://via.placeholder.com/1200x300.png?text=Welcome+to+TDTTI+THURAVOOR";
+            let defaultProfile = AUTHOR_PROFILES[0].avatar;
+            document.getElementById('ui-cover').src = settingsData["CoverPhoto"] || defaultCover;
+            document.getElementById('ui-profile').src = settingsData["ProfilePicture"] || defaultProfile;
 
+            // Scrolling Ticker logic
             const notices = postsData.filter(i => i.Section === "Scrolling").slice(-3);
             if(notices.length > 0) {
                 document.getElementById('live-ticker-text').innerText = notices.map(n => `🔴 ${n.Content || n.Title}`).join("   |   ");
@@ -356,16 +379,13 @@
                 document.getElementById('live-ticker-text').innerText = "No new updates.";
             }
 
+            let htmlFull = ``;
             SECTIONS.forEach(secName => {
                 const wrapperId = secName.replace(/\s/g, '');
-                const wrapper = document.createElement('div');
-                wrapper.className = 'section-wrapper';
-                wrapper.id = wrapperId;
-                
-                let html = ``; 
+                let secHtml = `<div class="section-wrapper" id="${wrapperId}">`;
                 
                 if (secName === "Birthdays") {
-                    html += `
+                    secHtml += `
                     <div class="fb-post" style="padding:0; border:1px solid #ced0d4;">
                         <div class="bday-nav">
                             <button onclick="changeBday(-1)">&lt;</button>
@@ -373,13 +393,11 @@
                             <button onclick="changeBday(1)">&gt;</button>
                         </div>
                         <div class="birthday-grid" id="bday-grid-container"></div>
-                    </div>`;
-                    wrapper.innerHTML = html;
-                    container.appendChild(wrapper);
-                    updateBirthdayGrid();
+                    </div></div>`;
+                    htmlFull += secHtml;
                 } else {
                     const sectionPosts = postsData.filter(item => item.Section === secName).reverse();
-                    html += `<div class="cards-grid" id="grid-${wrapperId}">`;
+                    secHtml += `<div class="cards-grid" id="grid-${wrapperId}">`;
                     
                     let hiddenCount = 0;
                     let todayCount = 0;
@@ -390,7 +408,7 @@
                     });
 
                     if (sectionPosts.length === 0) {
-                        html += `<p style="color:#65676B; padding:20px; text-align:center;">No updates yet.</p>`;
+                        secHtml += `<p style="color:#65676B; padding:20px; text-align:center;">No updates yet.</p>`;
                     } else {
                         sectionPosts.forEach((item, index) => {
                             let rawDate = item.Timestamp.split(' ')[0].trim().replace(/[-/]/g, ':');
@@ -400,11 +418,10 @@
                             let hiddenClass = (isToday || forceShow) ? '' : 'is-hidden';
                             if (!isToday && !forceShow) hiddenCount++;
                             
-                            // Map accurate author to post
-                            let authorName = item.Author || "TDTTI";
+                            let authorName = item.Author || "TDTTI THURAVOOR";
                             let author = AUTHOR_PROFILES.find(a => a.name === authorName) || AUTHOR_PROFILES[0];
                             
-                            html += `
+                            secHtml += `
                                 <div class="fb-post ${hiddenClass}">
                                     <div class="fb-header">
                                         <img src="${author.avatar}" class="fb-avatar">
@@ -421,31 +438,31 @@
                                 </div>`;
                         });
                     }
-                    html += `</div>`;
-                    wrapper.innerHTML = html;
-                    container.appendChild(wrapper);
+                    secHtml += `</div>`;
 
                     if (hiddenCount > 0) {
-                        const grid = wrapper.querySelector('.cards-grid');
-                        const btn = document.createElement('button');
-                        btn.className = 'read-more-box';
-                        btn.innerText = (hiddenCount === sectionPosts.length) ? 'SHOW PREVIOUS POSTS' : 'SHOW MORE';
-                        
-                        btn.onclick = () => {
-                            const hiddenItems = grid.querySelectorAll('.is-hidden');
-                            if (btn.innerText === 'SHOW MORE' || btn.innerText === 'SHOW PREVIOUS POSTS') {
-                                hiddenItems.forEach(p => p.classList.add('show-post'));
-                                btn.innerText = 'SHOW LESS';
-                            } else {
-                                hiddenItems.forEach(p => p.classList.remove('show-post'));
-                                btn.innerText = (hiddenCount === sectionPosts.length) ? 'SHOW PREVIOUS POSTS' : 'SHOW MORE';
-                                wrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                            }
-                        };
-                        wrapper.appendChild(btn);
+                        secHtml += `<button class="read-more-box" onclick="toggleReadMore(this, ${hiddenCount}, ${sectionPosts.length})">SHOW MORE</button>`;
                     }
+                    secHtml += `</div>`;
+                    htmlFull += secHtml;
                 }
             });
+
+            container.innerHTML = htmlFull;
+            updateBirthdayGrid(); 
+        }
+
+        function toggleReadMore(btn, hiddenCount, totalCount) {
+            const grid = btn.previousElementSibling;
+            const hiddenItems = grid.querySelectorAll('.is-hidden');
+            if (btn.innerText === 'SHOW MORE' || btn.innerText === 'SHOW PREVIOUS POSTS') {
+                hiddenItems.forEach(p => p.classList.add('show-post'));
+                btn.innerText = 'SHOW LESS';
+            } else {
+                hiddenItems.forEach(p => p.classList.remove('show-post'));
+                btn.innerText = (hiddenCount === totalCount) ? 'SHOW PREVIOUS POSTS' : 'SHOW MORE';
+                grid.parentElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
         }
 
         function changeBday(offsetDays) {
@@ -460,6 +477,7 @@
 
         function updateBirthdayGrid() {
             const gridContainer = document.getElementById('bday-grid-container');
+            if(!gridContainer) return;
             const dayBirthdays = globalBirthdays.filter(b => {
                 if (!b.Date) return false;
                 let safeDate = String(b.Date).replace(/[-/]/g, ':').replace(/'/g, '').trim(); 
@@ -516,7 +534,7 @@
                 closeModals();
                 populateStudentSearch(); 
                 document.getElementById('uploadModal').classList.add('active');
-                toggleFields();
+                toggleAdminMode();
             } else { alert("Invalid Credentials"); }
         }
 
@@ -533,29 +551,48 @@
 
         function toggleAdminMode() {
             const mode = document.querySelector('input[name="adminMode"]:checked').value;
-            const sec = document.getElementById('sectionSelect').value;
 
-            if (mode === 'edit' && sec !== "Birthdays") {
-                document.getElementById('editSelectGroup').style.display = 'block';
-                document.getElementById('submitBtn').style.display = 'none';
-                document.getElementById('updateBtn').style.display = 'block';
-                document.getElementById('deleteBtn').style.display = 'block';
-                populateEditDropdown();
-            } else {
+            if (mode === 'settings') {
+                document.getElementById('settingsSelectGroup').style.display = 'block';
+                document.getElementById('fg-section').style.display = 'none';
                 document.getElementById('editSelectGroup').style.display = 'none';
+                document.getElementById('birthdayFields').style.display = 'none';
+                document.getElementById('normalFields').style.display = 'none';
+                document.getElementById('imageUploadGroup').style.display = 'block';
+                
                 document.getElementById('submitBtn').style.display = 'block';
+                document.getElementById('submitBtn').innerText = "Update Image";
                 document.getElementById('updateBtn').style.display = 'none';
                 document.getElementById('deleteBtn').style.display = 'none';
-                clearPostFields();
+            } 
+            else {
+                document.getElementById('settingsSelectGroup').style.display = 'none';
+                document.getElementById('fg-section').style.display = 'block';
+                document.getElementById('submitBtn').innerText = "Publish Now";
+                
+                toggleFields(); 
+                
+                if (mode === 'edit' && document.getElementById('sectionSelect').value !== "Birthdays") {
+                    document.getElementById('editSelectGroup').style.display = 'block';
+                    document.getElementById('submitBtn').style.display = 'none';
+                    document.getElementById('updateBtn').style.display = 'block';
+                    document.getElementById('deleteBtn').style.display = 'block';
+                    populateEditDropdown();
+                } else {
+                    document.getElementById('editSelectGroup').style.display = 'none';
+                    document.getElementById('submitBtn').style.display = 'block';
+                    document.getElementById('updateBtn').style.display = 'none';
+                    document.getElementById('deleteBtn').style.display = 'none';
+                }
             }
         }
 
         function clearPostFields() {
             document.getElementById('postTitle').value = "";
-            document.getElementById('postAuthor').value = "TDTTI";
+            document.getElementById('postAuthor').value = "TDTTI THURAVOOR";
             document.getElementById('postContent').value = "";
             document.getElementById('mediaLink').value = "";
-            document.getElementById('editPostSelect').value = "";
+            if(document.getElementById('editPostSelect')) document.getElementById('editPostSelect').value = "";
             document.getElementById('fileUpload').value = "";
             resetCamera();
         }
@@ -581,13 +618,16 @@
             const post = globalPosts.find(p => p.Section === sec && String(p._rowIndex) === String(rowIndex));
             if(post) {
                 document.getElementById('postTitle').value = post.Title || "";
-                document.getElementById('postAuthor').value = post.Author || "TDTTI";
+                document.getElementById('postAuthor').value = post.Author || "TDTTI THURAVOOR";
                 document.getElementById('postContent').value = post.Content || "";
                 document.getElementById('mediaLink').value = post.MediaLink || "";
             }
         }
 
         function toggleFields() {
+            const mode = document.querySelector('input[name="adminMode"]:checked').value;
+            if(mode === 'settings') return; 
+
             const sec = document.getElementById('sectionSelect').value;
             const bdayFields = document.getElementById('birthdayFields');
             const normalFields = document.getElementById('normalFields');
@@ -614,12 +654,10 @@
                 normalFields.style.display = "block";
                 
                 titleField.style.display = "none";
-                authorField.style.display = "none"; // Hide author for scroller
+                authorField.style.display = "none"; 
                 mediaField.style.display = "none";
                 imgField.style.display = "none";
                 contentField.style.display = "block";
-                
-                toggleAdminMode();
             } 
             else {
                 bdayFields.style.display = "none";
@@ -630,8 +668,6 @@
                 mediaField.style.display = "block";
                 imgField.style.display = "block";
                 contentField.style.display = "block";
-                
-                toggleAdminMode();
             }
         }
 
@@ -682,23 +718,29 @@
         }
 
         async function submitData(actionType = 'create') {
+            const mode = document.querySelector('input[name="adminMode"]:checked').value;
             const section = document.getElementById('sectionSelect').value;
             const fileInput = document.getElementById('fileUpload');
             const cameraInput = document.getElementById('cameraUpload');
             const overlay = document.getElementById('loadingOverlay');
-            const mode = document.querySelector('input[name="adminMode"]:checked').value;
             
-            if (section === "Birthdays" && document.getElementById('selectedStudentRowIndex').value === "") {
+            if (mode !== 'settings' && section === "Birthdays" && document.getElementById('selectedStudentRowIndex').value === "") {
                 alert("Please select a valid student from the search box to update their photo.");
+                return;
+            }
+            if (mode === 'settings' && fileInput.files.length === 0 && cameraInput.files.length === 0) {
+                alert("Please upload or take an image first to update settings.");
                 return;
             }
 
             let rowIndex = "";
-            if (section === "Birthdays") {
-                rowIndex = document.getElementById('selectedStudentRowIndex').value;
-            } else if (mode === 'edit' && actionType !== 'create') {
-                rowIndex = document.getElementById('editPostSelect').value;
-                if(!rowIndex) { alert("Please select a post first."); return; }
+            if (mode !== 'settings') {
+                if (section === "Birthdays") {
+                    rowIndex = document.getElementById('selectedStudentRowIndex').value;
+                } else if (mode === 'edit' && actionType !== 'create') {
+                    rowIndex = document.getElementById('editPostSelect').value;
+                    if(!rowIndex) { alert("Please select a post first."); return; }
+                }
             }
 
             if(actionType === 'delete') {
@@ -728,14 +770,16 @@
                 }
             }
 
-            // Create robust payload
             let payload = { 
                 section: section, 
                 mediaLink: finalMediaLink,
-                author: document.getElementById('postAuthor') ? document.getElementById('postAuthor').value : "TDTTI"
+                author: document.getElementById('postAuthor') ? document.getElementById('postAuthor').value : "TDTTI THURAVOOR"
             };
 
-            if (actionType === 'delete') {
+            if (mode === 'settings') {
+                payload.action = "updateSettings";
+                payload.settingKey = document.getElementById('settingKey').value;
+            } else if (actionType === 'delete') {
                 payload.action = "deletePost";
                 payload.rowIndex = rowIndex;
             } else if (section === "Birthdays") {
