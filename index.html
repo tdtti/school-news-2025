@@ -33,18 +33,14 @@
         /* === NEW MAIN HEADER (COVER & PROFILE) === */
         .site-profile-header { background: var(--box-bg); padding-bottom: 20px; border-bottom: 1px solid #ced0d4; position: relative;}
         
-        /* Top Overlay for Name & Logo */
         .cover-overlay-top { position: absolute; top: 20px; left: 20px; right: 20px; display: flex; justify-content: space-between; align-items: flex-start; z-index: 5; max-width: 1000px; margin: 0 auto; }
-        
         .cover-school-name { background: rgba(255, 255, 255, 0.9); color: var(--accent-blue); padding: 10px 20px; border-radius: var(--radius-large); font-weight: 800; font-size: 1.3rem; box-shadow: 0 4px 15px rgba(0,0,0,0.15); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); letter-spacing: 0.5px; }
-        
         .cover-logo-login { background: rgba(255, 255, 255, 0.9); padding: 6px; border-radius: var(--radius-large); box-shadow: 0 4px 15px rgba(0,0,0,0.15); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); cursor: pointer; transition: transform 0.2s; display: flex; align-items: center; justify-content: center; }
         .cover-logo-login:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,0.2); }
         .cover-logo-login img { width: 45px; height: 45px; object-fit: contain; border-radius: 8px; }
 
         .cover-photo { width: 100%; height: 320px; object-fit: cover; display: block; background: #e4e6eb; pointer-events: none; }
         
-        /* Profile Pic & Slogan */
         .profile-pic-container { max-width: 800px; margin: 0 auto; position: relative; display: flex; align-items: flex-end; padding: 0 20px; margin-top: -65px; z-index: 6;}
         .profile-pic { width: 140px; height: 140px; border-radius: 50%; border: 4px solid #fff; object-fit: cover; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.15); pointer-events: none;}
         .school-slogan { font-size: 1.4rem; font-weight: 700; margin-left: 20px; margin-bottom: 25px; color: var(--text-dark); letter-spacing: -0.3px;}
@@ -72,7 +68,7 @@
         .layout-container { max-width: 680px; margin: 20px auto 30px auto; padding: 0 15px; min-height: 60vh; }
         .section-wrapper { margin-bottom: 40px; scroll-margin-top: 150px; }
 
-        /* === RESTORED SPINNER CSS === */
+        /* SPINNER */
         .saving-overlay { position: fixed; inset: 0; background: rgba(255,255,255,0.7); z-index: 20000; display: none; justify-content: center; align-items: center; flex-direction: column; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
         .saving-overlay.active { display: flex; }
         .loader-wrapper { display: flex; justify-content: center; align-items: center; position: relative; height: 90px; margin-bottom: 20px;}
@@ -106,6 +102,13 @@
         .show-post { display: block !important; }
         .read-more-box { width: 100%; padding: 12px; background: #e4e6eb; border: none; border-radius: 8px; font-weight: 700; color: var(--text-dark); cursor: pointer; margin-bottom: 20px; transition: 0.2s; }
 
+        /* === FAIRS TABS CSS === */
+        .fairs-tabs-container { display: flex; gap: 10px; overflow-x: auto; margin-bottom: 15px; padding: 5px 0; scrollbar-width: none; }
+        .fairs-tabs-container::-webkit-scrollbar { display: none; }
+        .fair-tab { padding: 8px 18px; background: #e4e6eb; border: 1px solid #ced0d4; border-radius: 20px; font-weight: 700; color: var(--text-dark); cursor: pointer; white-space: nowrap; transition: 0.2s; font-size: 0.85rem; }
+        .fair-tab.active, .fair-tab:hover { background: var(--accent-blue); color: white; border-color: var(--accent-blue); }
+        .fair-hidden { display: none !important; }
+
         /* Modals & Forms */
         .modal-overlay { position: fixed; inset: 0; background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(5px); z-index: 10000; display: none; align-items: center; justify-content: center; padding: 20px; }
         .modal-overlay.active { display: flex; }
@@ -132,12 +135,10 @@
         .footer-socials a.yt:hover { background: #FF0000; color: #fff;}
         .footer-socials a.wa:hover { background: #25D366; color: #fff;}
         .footer-socials a.mail:hover { background: #EA4335; color: #fff;}
-        .author-avatar {width: 50px;height: 50px;border-radius: 50%; /* Makes them circular */border: 2px solid #f0f0f0; /* Soft border */box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Subtle depth */object-fit: cover;background-color: #ffffff;}
     </style>
 </head>
 <body>
 
-    <!-- RESTORED ACTIVE CLASS HERE SO IT SHOWS INSTANTLY -->
     <div class="saving-overlay active" id="loadingOverlay">
         <div class="loader-wrapper">
             <div class="spinner-ring"></div>
@@ -150,25 +151,18 @@
         <div class="ticker-track"><span id="live-ticker-text">Loading latest updates...</span></div>
     </div>
 
-    <!-- MAIN HEADER: Cover Photo & Profile Picture -->
+    <!-- MAIN HEADER -->
     <header class="site-profile-header">
-        
-        <!-- Absolute Top Overlay (School Name & Logo/Login Box) -->
         <div class="cover-overlay-top">
             <div class="cover-school-name">TDTTI THURAVOOR</div>
-            
-            <!-- Admin Login Trigger Container -->
             <div class="cover-logo-login" onclick="openLoginModal()" title="Admin Login">
                 <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjGka-p7C45PTqBMBKqSjulqicQlHmW_Ee1BCfUPpaW888vYnoPjElzW9DVm8az1kCOjdlabjA3qb_vS00GpCApyVWh2C0aIcOcvb-BWeeTI8AdLojSf25iCvNpMS6aENxrWO-SgM5xjqePEMsHfCLy4HinnGk2xAnDlKaapXYFY05jXQM/s56-c/Logo2.png" alt="School Logo">
             </div>
         </div>
-
         <img src="https://via.placeholder.com/1200x300.png?text=Loading+Cover..." class="cover-photo" id="ui-cover">
         
         <div class="profile-pic-container">
-            <!-- Dynamically populated profile photo -->
             <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" class="profile-pic" id="ui-profile">
-            <!-- Slogan -->
             <h2 class="school-slogan">Empowering Minds..<br>Shaping Futures...</h2>
         </div>
     </header>
@@ -199,21 +193,11 @@
 
     <footer class="site-footer">
         <div class="footer-socials">
-            <a href="https://wa.me/911234567890" class="wa" target="_blank" title="WhatsApp">
-                <svg viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.91C21.95 6.45 17.5 2 12.04 2m.01 1.67c4.54 0 8.23 3.7 8.23 8.24 0 4.54-3.7 8.23-8.23 8.23-1.53 0-3.04-.42-4.36-1.2l-.31-.18-3.24.85.86-3.16-.2-.32c-.86-1.37-1.31-2.96-1.31-4.59 0-4.54 3.7-8.24 8.24-8.24m4.67 11.23c-.26-.13-1.52-.75-1.76-.84-.23-.08-.41-.13-.58.13-.18.26-.67.84-.82 1.01-.15.18-.3.2-.56.08-1.2-.55-2.22-1.12-3.05-2.24-.22-.29-.02-.45.1-.58.11-.11.26-.3.39-.45.13-.15.17-.26.26-.44.08-.17.04-.32-.02-.45-.06-.13-.58-1.4-.8-1.92-.21-.5-.42-.43-.58-.44h-.5c-.21 0-.56.08-.85.4s-1.12 1.1-1.12 2.68c0 1.58 1.15 3.1 1.31 3.32.16.21 2.27 3.46 5.49 4.85.77.33 1.37.53 1.84.68.77.24 1.47.2 2.02.12.61-.09 1.52-.62 1.74-1.22.21-.6.21-1.12.15-1.22-.07-.1-.24-.15-.5-.28z"/></svg>
-            </a>
-            <a href="https://facebook.com" class="fb" target="_blank" title="Facebook">
-                <svg viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-1.1 0-2 .9-2 2v1h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/></svg>
-            </a>
-            <a href="https://youtube.com" class="yt" target="_blank" title="YouTube">
-                <svg viewBox="0 0 24 24"><path d="M21.58 7.19c-.23-.86-.91-1.54-1.77-1.77C18.25 5 12 5 12 5s-6.25 0-7.81.42c-.86.23-1.54.91-1.77 1.77C2 8.75 2 12 2 12s0 3.25.42 4.81c.23.86.91 1.54 1.77 1.77C5.75 19 12 19 12 19s6.25 0 7.81-.42c.86-.23 1.54-.91 1.77-1.77C22 15.25 22 12 22 12s0-3.25-.42-4.81zM10 15V9l5.2 3-5.2 3z"/></svg>
-            </a>
-            <a href="https://instagram.com" class="ig" target="_blank" title="Instagram">
-                <svg viewBox="0 0 24 24"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/></svg>
-            </a>
-            <a href="mailto:contact@yourschool.com" class="mail" title="Email Us">
-                <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-            </a>
+            <a href="https://wa.me/911234567890" class="wa" target="_blank" title="WhatsApp"><svg viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.91C21.95 6.45 17.5 2 12.04 2m.01 1.67c4.54 0 8.23 3.7 8.23 8.24 0 4.54-3.7 8.23-8.23 8.23-1.53 0-3.04-.42-4.36-1.2l-.31-.18-3.24.85.86-3.16-.2-.32c-.86-1.37-1.31-2.96-1.31-4.59 0-4.54 3.7-8.24 8.24-8.24m4.67 11.23c-.26-.13-1.52-.75-1.76-.84-.23-.08-.41-.13-.58.13-.18.26-.67.84-.82 1.01-.15.18-.3.2-.56.08-1.2-.55-2.22-1.12-3.05-2.24-.22-.29-.02-.45.1-.58.11-.11.26-.3.39-.45.13-.15.17-.26.26-.44.08-.17.04-.32-.02-.45-.06-.13-.58-1.4-.8-1.92-.21-.5-.42-.43-.58-.44h-.5c-.21 0-.56.08-.85.4s-1.12 1.1-1.12 2.68c0 1.58 1.15 3.1 1.31 3.32.16.21 2.27 3.46 5.49 4.85.77.33 1.37.53 1.84.68.77.24 1.47.2 2.02.12.61-.09 1.52-.62 1.74-1.22.21-.6.21-1.12.15-1.22-.07-.1-.24-.15-.5-.28z"/></svg></a>
+            <a href="https://facebook.com" class="fb" target="_blank" title="Facebook"><svg viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-1.1 0-2 .9-2 2v1h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/></svg></a>
+            <a href="https://youtube.com" class="yt" target="_blank" title="YouTube"><svg viewBox="0 0 24 24"><path d="M21.58 7.19c-.23-.86-.91-1.54-1.77-1.77C18.25 5 12 5 12 5s-6.25 0-7.81.42c-.86.23-1.54.91-1.77 1.77C2 8.75 2 12 2 12s0 3.25.42 4.81c.23.86.91 1.54 1.77 1.77C5.75 19 12 19 12 19s6.25 0 7.81-.42c.86-.23 1.54-.91 1.77-1.77C22 15.25 22 12 22 12s0-3.25-.42-4.81zM10 15V9l5.2 3-5.2 3z"/></svg></a>
+            <a href="https://instagram.com" class="ig" target="_blank" title="Instagram"><svg viewBox="0 0 24 24"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/></svg></a>
+            <a href="mailto:contact@yourschool.com" class="mail" title="Email Us"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></a>
         </div>
         <div style="font-size: 0.9rem;">&copy; 2026 TDTTI THURAVOOR Portal</div>
     </footer>
@@ -270,6 +254,17 @@
                     </select>
                 </div>
 
+                <!-- NEW: FAIRS SUB-SECTION -->
+                <div class="form-group" id="fg-subsection" style="display: none; background: #fff8e1; padding: 10px; border-radius: 8px; border: 1px dashed #f59e0b;">
+                    <label style="color: #b45309;">Fairs Category</label>
+                    <select id="subSectionSelect" class="form-control">
+                        <option value="Art">🎨 Art</option>
+                        <option value="Maths">➗ Maths</option>
+                        <option value="Science">🔬 Science</option>
+                        <option value="Social Science">🌍 Social</option>
+                    </select>
+                </div>
+
                 <div class="form-group" id="editSelectGroup" style="display: none;">
                     <label style="color: var(--accent-red);">Select Post to Edit/Delete</label>
                     <select id="editPostSelect" class="form-control" onchange="loadSelectedPost()"></select>
@@ -299,6 +294,15 @@
                             <option value="Principal Asha V">Principal Asha V</option>
                             <option value="Admin Desk">Admin Desk</option>
                             <option value="Academics Dept">Academics Dept</option>
+                            <option value="Student Council">Student Council</option>
+                            <option value="PTA / Parents">PTA / Parents</option>
+                            <option value="Alumni Association">Alumni Association</option>
+                            <option value="Sports & Wellness">Sports & Wellness</option>
+                            <option value="Arts & Culture">Arts & Culture</option>
+                            <option value="STEM & Tech Lab">STEM & Tech Lab</option>
+                            <option value="Library & Media">Library & Media</option>
+                            <option value="Counselor’s Corner">Counselor’s Corner</option>
+                            <option value="Career Guidance">Career Guidance</option>
                         </select>
                     </div>
                     <div class="form-group" id="fg-content"><label>Content</label><textarea id="postContent" class="form-control" rows="3"></textarea></div>
@@ -323,36 +327,29 @@
     </div>
 
     <script>
-        // === ANTI-COPY SCRIPT EXECUTIONS ===
         document.addEventListener('contextmenu', event => event.preventDefault()); 
         document.addEventListener('keydown', function(e) {
             if(e.ctrlKey && (e.key === 'u' || e.key === 's' || e.key === 'c' || e.key === 'p')) e.preventDefault();
         });
 
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwQ5W6_RzxEr8pQgKUa6hxG44fyxvaknbZTcON5wyZ4HxbmKApC6BUnhbMxjDhhPx9pHA/exec"; 
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyqGiS4wjkx_qj3lJ-g2ceBl42k0QzfKBXWiDoifkNiLesAvjnuahN0fyk5aNLu1ZzJ/exec"; 
         const IMGBB_API_KEY = "dcf1e98ceb03a9258bc9b06786f2bb18"; 
         
         const AUTHOR_PROFILES = [
-    { name: "TDTTI", avatar: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjGka-p7C45PTqBMBKqSjulqicQlHmW_Ee1BCfUPpaW888vYnoPjElzW9DVm8az1kCOjdlabjA3qb_vS00GpCApyVWh2C0aIcOcvb-BWeeTI8AdLojSf25iCvNpMS6aENxrWO-SgM5xjqePEMsHfCLy4HinnGk2xAnDlKaapXYFY05jXQM/s56-c/Logo2.png" },
-    { name: "Principal Asha V", avatar: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiRkN_fkpQ9rzeGYiaN7YahUs6pPmumJngjvCBYP004ffxlSzJ2gkzs1lHzRMx7aJs-SHDhfShCwl8FqJDitti_7aNAxE_tHEQsp7Z55nUKyBJ5V2gD2opBM5rfQFHU4hikmVxyVSpRusWYqVqc4r1qh4sg-J9wO99AOzpjBp7BGHZlxXwi2mAY34pDUcmT/s1238/va.jpeg" },
-    { name: "Admin Desk", avatar: "https://cdn-icons-png.flaticon.com/512/9438/9438159.png" }, // Professional Avatar
-    { name: "Academics Dept", avatar: "https://cdn-icons-png.flaticon.com/512/8065/8065261.png" }, // Book/Grad Cap Mix
-
-    // --- Student & Community Focused ---
-    { name: "Student Council", avatar: "https://cdn-icons-png.flaticon.com/512/4395/4395254.png" }, // Dynamic Group
-    { name: "PTA / Parents", avatar: "https://cdn-icons-png.flaticon.com/512/4128/4128253.png" }, // Family/Community
-    { name: "Alumni Association", avatar: "https://cdn-icons-png.flaticon.com/512/10543/10543419.png" }, // Growth/Legacy
-
-    // --- Activity & Subject Focused ---
-    { name: "Sports & Wellness", avatar: "https://cdn-icons-png.flaticon.com/512/5351/5351313.png" }, // Vibrant Sports Gear
-    { name: "Arts & Culture", avatar: "https://cdn-icons-png.flaticon.com/512/3659/3659802.png" }, // Palette/Creative
-    { name: "STEM & Tech Lab", avatar: "https://cdn-icons-png.flaticon.com/512/5024/5024467.png" }, // Tech/Atom
-    { name: "Library & Media", avatar: "https://cdn-icons-png.flaticon.com/512/3145/3145765.png" }, // Open Books
-
-    // --- Support & Guidance ---
-    { name: "Counselor’s Corner", avatar: "https://cdn-icons-png.flaticon.com/512/6531/6531122.png" }, // Heart/Care
-    { name: "Career Guidance", avatar: "https://cdn-icons-png.flaticon.com/512/10061/10061730.png" } // Compass/Direction
-];
+            { name: "TDTTI THURAVOOR", avatar: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjGka-p7C45PTqBMBKqSjulqicQlHmW_Ee1BCfUPpaW888vYnoPjElzW9DVm8az1kCOjdlabjA3qb_vS00GpCApyVWh2C0aIcOcvb-BWeeTI8AdLojSf25iCvNpMS6aENxrWO-SgM5xjqePEMsHfCLy4HinnGk2xAnDlKaapXYFY05jXQM/s56-c/Logo2.png" },
+            { name: "Principal", avatar: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiRkN_fkpQ9rzeGYiaN7YahUs6pPmumJngjvCBYP004ffxlSzJ2gkzs1lHzRMx7aJs-SHDhfShCwl8FqJDitti_7aNAxE_tHEQsp7Z55nUKyBJ5V2gD2opBM5rfQFHU4hikmVxyVSpRusWYqVqc4r1qh4sg-J9wO99AOzpjBp7BGHZlxXwi2mAY34pDUcmT/s1238/va.jpeg" },
+            { name: "Admin Desk", avatar: "https://cdn-icons-png.flaticon.com/512/9438/9438159.png" },
+            { name: "Academics Dept", avatar: "https://cdn-icons-png.flaticon.com/512/8065/8065261.png" },
+            { name: "Student Council", avatar: "https://cdn-icons-png.flaticon.com/512/4395/4395254.png" },
+            { name: "PTA", avatar: "https://cdn-icons-png.flaticon.com/512/4128/4128253.png" },
+            { name: "Alumni Association", avatar: "https://cdn-icons-png.flaticon.com/512/10543/10543419.png" },
+            { name: "Sports & Wellness", avatar: "https://cdn-icons-png.flaticon.com/512/5351/5351313.png" },
+            { name: "Arts & Culture", avatar: "https://cdn-icons-png.flaticon.com/512/3659/3659802.png" },
+            { name: "STEM & Tech Lab", avatar: "https://cdn-icons-png.flaticon.com/512/5024/5024467.png" },
+            { name: "Library & Media", avatar: "https://cdn-icons-png.flaticon.com/512/3145/3145765.png" },
+            { name: "Counselor’s Corner", avatar: "https://cdn-icons-png.flaticon.com/512/6531/6531122.png" },
+            { name: "Career Guidance", avatar: "https://cdn-icons-png.flaticon.com/512/10061/10061730.png" }
+        ];
 
         const SECTIONS =["Notice Board", "Birthdays", "Achievements", "Updates", "Appraisals", "Personalised Skills", "Academic", "Sports", "Fairs", "Kalothswom", "Gallery"];
         
@@ -371,7 +368,6 @@
             return `${parts[0]}/${parts[1]} - ${days[d.getDay()]}`; 
         }
 
-        // --- DAILY RANDOMIZED BIRTHDAY PHOTO ENGINE ---
         function getDailyBirthdayPhoto() {
             if (!globalBirthdays || globalBirthdays.length === 0) return null;
             let validPhotos =[];
@@ -387,18 +383,15 @@
                         if (typeof student[key] === 'string' && student[key].startsWith('http')) { rawImg = student[key]; break; }
                     }
                 }
-                
                 if (rawImg && rawImg.trim() !== '' && rawImg.indexOf('blank-profile') === -1 && rawImg.indexOf('placeholder') === -1) {
                     validPhotos.push(rawImg.trim());
                 }
             });
 
             if (validPhotos.length === 0) return null;
-            
             let today = new Date();
             let seed = today.getFullYear() * 10000 + (today.getMonth() + 1) * 100 + today.getDate();
             let index = seed % validPhotos.length;
-            
             return validPhotos[index];
         }
 
@@ -415,8 +408,6 @@
                     globalPosts = parsed.posts ||[];
                     globalBirthdays = parsed.birthdays ||[];
                     renderAll(globalPosts, parsed.settings || {});
-                    
-                    // IF we load from cache, hide the spinner
                     document.getElementById('loadingOverlay').classList.remove('active'); 
                 } catch(e) {}
             }
@@ -429,10 +420,8 @@
                 globalBirthdays = data.birthdays ||[];
                 renderAll(globalPosts, data.settings || {});
             } catch (e) {
-                console.error("Fetch Error:", e);
                 if(!cachedData) document.getElementById('main-content').innerHTML = `<p style="text-align:center; padding:50px;">Failed to load data.</p>`;
             } finally {
-                // Ensure spinner is removed if no cache was used
                 document.getElementById('loadingOverlay').classList.remove('active');
             }
         }
@@ -479,6 +468,19 @@
                     htmlFull += secHtml;
                 } else {
                     const sectionPosts = postsData.filter(item => item.Section === secName).reverse();
+                    
+                    // NEW: Inject Fairs Tabs if section is Fairs
+                    if (secName === "Fairs") {
+                        secHtml += `
+                        <div class="fairs-tabs-container">
+                            <button class="fair-tab active" onclick="filterFairs('All', this)">All Fairs</button>
+                            <button class="fair-tab" onclick="filterFairs('Art', this)">🎨 Art</button>
+                            <button class="fair-tab" onclick="filterFairs('Maths', this)">➗ Maths</button>
+                            <button class="fair-tab" onclick="filterFairs('Science', this)">🔬 Science</button>
+                            <button class="fair-tab" onclick="filterFairs('Social Science', this)">🌍 Social</button>
+                        </div>`;
+                    }
+
                     secHtml += `<div class="cards-grid" id="grid-${wrapperId}">`;
                     
                     let hiddenCount = 0;
@@ -502,13 +504,14 @@
                             
                             let authorName = item.Author || "TDTTI THURAVOOR";
                             let author = AUTHOR_PROFILES.find(a => a.name === authorName) || AUTHOR_PROFILES[0];
+                            let subSecAttr = item.SubSection ? `data-subsection="${item.SubSection}"` : `data-subsection="Other"`;
                             
                             secHtml += `
-                                <div class="fb-post ${hiddenClass}">
+                                <div class="fb-post ${hiddenClass}" ${subSecAttr}>
                                     <div class="fb-header">
                                         <img src="${author.avatar}" class="fb-avatar">
                                         <div class="fb-header-info">
-                                            <strong>${author.name}</strong>
+                                            <strong>${author.name} ${item.SubSection ? `<span style="color:var(--accent-blue);font-weight:700;">• ${item.SubSection}</span>` : ''}</strong>
                                             <span>${displayDate}</span>
                                         </div>
                                     </div>
@@ -523,7 +526,7 @@
                     secHtml += `</div>`;
 
                     if (hiddenCount > 0) {
-                        secHtml += `<button class="read-more-box" onclick="toggleReadMore(this, ${hiddenCount}, ${sectionPosts.length})">SHOW MORE</button>`;
+                        secHtml += `<button class="read-more-box" id="btn-more-${wrapperId}" onclick="toggleReadMore(this, ${hiddenCount}, ${sectionPosts.length})">SHOW MORE</button>`;
                     }
                     secHtml += `</div>`;
                     htmlFull += secHtml;
@@ -532,6 +535,32 @@
 
             container.innerHTML = htmlFull;
             updateBirthdayGrid(); 
+        }
+
+        // NEW: Filter Fairs Logic
+        function filterFairs(category, btnElement) {
+            document.querySelectorAll('.fair-tab').forEach(b => b.classList.remove('active'));
+            btnElement.classList.add('active');
+
+            const fairsGrid = document.getElementById('grid-Fairs');
+            if(!fairsGrid) return;
+            const posts = fairsGrid.querySelectorAll('.fb-post');
+            const readMoreBtn = document.getElementById('btn-more-Fairs');
+            
+            if(category === 'All') {
+                posts.forEach(p => p.classList.remove('fair-hidden'));
+                if(readMoreBtn) readMoreBtn.style.display = 'block';
+            } else {
+                posts.forEach(p => {
+                    if(p.getAttribute('data-subsection') === category) {
+                        p.classList.remove('fair-hidden');
+                        p.classList.add('show-post'); // Overrides standard hidden state
+                    } else {
+                        p.classList.add('fair-hidden');
+                    }
+                });
+                if(readMoreBtn) readMoreBtn.style.display = 'none'; // Hide "Show More" while filtering
+            }
         }
 
         function toggleReadMore(btn, hiddenCount, totalCount) {
@@ -637,6 +666,7 @@
             if (mode === 'settings') {
                 document.getElementById('settingsSelectGroup').style.display = 'block';
                 document.getElementById('fg-section').style.display = 'none';
+                document.getElementById('fg-subsection').style.display = 'none'; // Hide sub-section on settings
                 document.getElementById('editSelectGroup').style.display = 'none';
                 document.getElementById('birthdayFields').style.display = 'none';
                 document.getElementById('normalFields').style.display = 'none';
@@ -674,6 +704,7 @@
             document.getElementById('postAuthor').value = "TDTTI THURAVOOR";
             document.getElementById('postContent').value = "";
             document.getElementById('mediaLink').value = "";
+            document.getElementById('subSectionSelect').value = "Art"; // Reset Fairs category
             if(document.getElementById('editPostSelect')) document.getElementById('editPostSelect').value = "";
             document.getElementById('fileUpload').value = "";
             resetCamera();
@@ -703,6 +734,10 @@
                 document.getElementById('postAuthor').value = post.Author || "TDTTI THURAVOOR";
                 document.getElementById('postContent').value = post.Content || "";
                 document.getElementById('mediaLink').value = post.MediaLink || "";
+                // Load sub-section if exists
+                if(sec === "Fairs" && post.SubSection) {
+                    document.getElementById('subSectionSelect').value = post.SubSection;
+                }
             }
         }
 
@@ -718,9 +753,14 @@
             const contentField = document.getElementById('fg-content');
             const mediaField = document.getElementById('fg-media');
             const imgField = document.getElementById('imageUploadGroup');
+            const subSecField = document.getElementById('fg-subsection'); // Fairs sub section
 
             clearPostFields();
             
+            // Toggle the sub-section dropdown only for Fairs
+            if (sec === "Fairs") subSecField.style.display = "block";
+            else subSecField.style.display = "none";
+
             if (sec === "Birthdays") {
                 bdayFields.style.display = "block";
                 normalFields.style.display = "none";
@@ -855,7 +895,9 @@
             let payload = { 
                 section: section, 
                 mediaLink: finalMediaLink,
-                author: document.getElementById('postAuthor') ? document.getElementById('postAuthor').value : "TDTTI THURAVOOR"
+                author: document.getElementById('postAuthor') ? document.getElementById('postAuthor').value : "TDTTI THURAVOOR",
+                // Pass the subSection data to backend
+                subSection: (section === "Fairs" && document.getElementById('subSectionSelect')) ? document.getElementById('subSectionSelect').value : ""
             };
 
             if (mode === 'settings') {
