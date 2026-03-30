@@ -82,6 +82,51 @@
         .hidden-post { display: none !important; }
         .read-more-box { width: 100%; padding: 15px; background: none; border: 2px dashed #cbd5e1; border-radius: 12px; font-weight: 800; color: var(--text-gray); cursor: pointer; margin-bottom: 30px; transition: 0.2s; }
         .read-more-box:hover { background: #f8fafc; color: var(--text-dark); border-color: var(--text-dark); }
+        /* Footer & Socials */
+        .site-footer {
+            text-align: center; 
+            padding: 40px 20px; 
+            color: var(--text-gray); 
+            font-weight: 700;
+            background: #ffffff;
+            border-top: 1px solid #e2e8f0;
+            margin-top: 40px;
+        }
+        .footer-socials {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .footer-socials a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: #f1f5f9;
+            color: var(--text-gray);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        .footer-socials a svg {
+            width: 22px;
+            height: 22px;
+            fill: currentColor;
+        }
+        .footer-socials a:hover {
+            color: #ffffff;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        /* Brand Colors on Hover */
+        .footer-socials a.fb:hover { background: #1877F2; }
+        .footer-socials a.ig:hover { background: #E4405F; }
+        .footer-socials a.yt:hover { background: #FF0000; }
+        .footer-socials a.wa:hover { background: #25D366; }
+        .footer-socials a.mail:hover { background: #EA4335; }
+    
     </style>
 </head>
 <body>
@@ -129,8 +174,32 @@
         <div class="loading-spinner">Connecting to School Server...</div>
     </main>
 
-    <footer style="text-align: center; padding: 40px; color: var(--text-gray); font-weight: 700;">
-        &copy; 2026 Global Public School Portal
+    <footer class="site-footer">
+        <div class="footer-socials">
+            <!-- Facebook -->
+            <a href="https://facebook.com" class="fb" target="_blank" title="Facebook">
+                <svg viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-1.1 0-2 .9-2 2v1h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/></svg>
+            </a>
+            <!-- Instagram -->
+            <a href="https://instagram.com" class="ig" target="_blank" title="Instagram">
+                <svg viewBox="0 0 24 24"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/></svg>
+            </a>
+            <!-- YouTube -->
+            <a href="https://youtube.com" class="yt" target="_blank" title="YouTube">
+                <svg viewBox="0 0 24 24"><path d="M21.58 7.19c-.23-.86-.91-1.54-1.77-1.77C18.25 5 12 5 12 5s-6.25 0-7.81.42c-.86.23-1.54.91-1.77 1.77C2 8.75 2 12 2 12s0 3.25.42 4.81c.23.86.91 1.54 1.77 1.77C5.75 19 12 19 12 19s6.25 0 7.81-.42c.86-.23 1.54-.91 1.77-1.77C22 15.25 22 12 22 12s0-3.25-.42-4.81zM10 15V9l5.2 3-5.2 3z"/></svg>
+            </a>
+            <!-- WhatsApp -->
+            <a href="https://wa.me/911234567890" class="wa" target="_blank" title="WhatsApp">
+                <svg viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.91C21.95 6.45 17.5 2 12.04 2m.01 1.67c4.54 0 8.23 3.7 8.23 8.24 0 4.54-3.7 8.23-8.23 8.23-1.53 0-3.04-.42-4.36-1.2l-.31-.18-3.24.85.86-3.16-.2-.32c-.86-1.37-1.31-2.96-1.31-4.59 0-4.54 3.7-8.24 8.24-8.24m4.67 11.23c-.26-.13-1.52-.75-1.76-.84-.23-.08-.41-.13-.58.13-.18.26-.67.84-.82 1.01-.15.18-.3.2-.56.08-1.2-.55-2.22-1.12-3.05-2.24-.22-.29-.02-.45.1-.58.11-.11.26-.3.39-.45.13-.15.17-.26.26-.44.08-.17.04-.32-.02-.45-.06-.13-.58-1.4-.8-1.92-.21-.5-.42-.43-.58-.44h-.5c-.21 0-.56.08-.85.4s-1.12 1.1-1.12 2.68c0 1.58 1.15 3.1 1.31 3.32.16.21 2.27 3.46 5.49 4.85.77.33 1.37.53 1.84.68.77.24 1.47.2 2.02.12.61-.09 1.52-.62 1.74-1.22.21-.6.21-1.12.15-1.22-.07-.1-.24-.15-.5-.28z"/></svg>
+            </a>
+            <!-- Email -->
+            <a href="mailto:contact@yourschool.com" class="mail" title="Email Us">
+                <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+            </a>
+        </div>
+        <div style="font-size: 0.9rem;">
+            &copy; 2026 Global Public School Portal
+        </div>
     </footer>
 
     <!-- Admin Login Modal -->
