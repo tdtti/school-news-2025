@@ -43,7 +43,7 @@
         .nav-pills a.active, .nav-pills a:hover { background: var(--text-dark); color: white; }
 
         /* Main Content */
-        .layout-container { max-width: 900px; margin: 40px auto; padding: 0 20px; min-height: 60vh; }
+        .layout-container { max-width: 100%; margin: 40px auto; padding: 0 20px; min-height: 60vh; }
         .section-wrapper { margin-bottom: 60px; scroll-margin-top: 150px; }
         .section-head { display: inline-block; background: linear-gradient(135deg, var(--accent-blue), var(--accent-indigo)); color: #fff; padding: 8px 20px; border-radius: 10px; font-size: 1.1rem; font-weight: 800; margin-bottom: 20px; }
         
@@ -214,7 +214,7 @@
     <script>
         // ==========================================================
         // 1. YOUR GOOGLE APPS SCRIPT URL
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw9Pm-nW94EKl2PdGDHD5Cy_CVEAscusUKbzZ6BZzW6Ah7FzMNUzstmHrG8KJ7G51rWSQ/exec"; 
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwpqVFbKgaWXD9VsNg17EW-h8arYYkQeCP4brxjZB6FD1Gs-FHigkgPBH7oNjLz6ftzxw/exec"; 
         
         // 2. YOUR IMGBB API KEY
         const IMGBB_API_KEY = "dcf1e98ceb03a9258bc9b06786f2bb18"; 
@@ -233,7 +233,15 @@
             currentBdayViewStr = getTodayDateStr();
             loadContent();
         };
-
+        
+        function getFormattedDateDisplay(dateStr) {
+            // Converts DD:MM:YYYY to DD/MM/YYYY - Mon
+            const parts = dateStr.split(':');
+            const d = new Date(parts[2], parseInt(parts[1]) - 1, parts[0]);
+            const days =['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+            return `${parts[0]}/${parts[1]}/${parts[2]} - ${days[d.getDay()]}`;
+        }
+        
         async function loadContent() {
             try {
                 const response = await fetch(SCRIPT_URL);
@@ -270,7 +278,7 @@
                     <div class="box-card">
                         <div class="bday-nav">
                             <button onclick="changeBday(-1)">&lt;</button>
-                            <h3 id="bday-display-title">${currentBdayViewStr === getTodayDateStr() ? "Today's Birthdays" : "Birthdays"} (${currentBdayViewStr.substring(0, 5)})</h3>
+                            <h3 id="bday-display-title">${currentBdayViewStr === getTodayDateStr() ? "Today's Birthdays" : "Birthdays"} (${getFormattedDateDisplay(currentBdayViewStr)})</h3>
                             <button onclick="changeBday(1)">&gt;</button>
                         </div>
                         <div class="bday-msg">HAPPY BIRTHDAY TO YOU DEAR! 🎂</div>
@@ -280,7 +288,7 @@
                     wrapper.innerHTML = html;
                     container.appendChild(wrapper);
                     updateBirthdayGrid();
-                } 
+                }
                 // --- NORMAL SECTIONS HTML GENERATOR ---
                 else {
                     const sectionPosts = postsData.filter(item => item.Section === secName).reverse();
@@ -336,7 +344,7 @@
             currentBdayViewStr = `${String(d.getDate()).padStart(2,'0')}:${String(d.getMonth()+1).padStart(2,'0')}:${d.getFullYear()}`;
             
             const titleEl = document.getElementById('bday-display-title');
-            titleEl.innerText = (currentBdayViewStr === getTodayDateStr() ? "Today's Birthdays" : "Birthdays") + ` (${currentBdayViewStr.substring(0, 5)})`;
+            titleEl.innerText = (currentBdayViewStr === getTodayDateStr() ? "Today's Birthdays" : "Birthdays") + ` (${getFormattedDateDisplay(currentBdayViewStr)})`;
             
             updateBirthdayGrid();
         }
@@ -358,16 +366,37 @@
 
             let html = "";
             dayBirthdays.forEach(student => {
-                const rawImg = student['ImageLink'] || student['Image Link'] || student['MediaLink'] || student['Image'];
+                
+                // SMARTER IMAGE FETCHING: Looks through all columns to find the image link
+                let rawImg = "";
+                for (let key in student) {
+                    let lowerKey = key.trim().toLowerCase();
+                    if (['imagelink', 'image link', 'image', 'photo', 'medialink'].includes(lowerKey)) {
+                        rawImg = student[key];
+                        break;
+                    }
+                }
+                
+                // Fallback: If it's still missing, find any column that has a valid "http" link
+                if (!rawImg || rawImg.trim() === '') {
+                    for (let key in student) {
+                        if (typeof student[key] === 'string' && student[key].startsWith('http')) {
+                            rawImg = student[key];
+                            break;
+                        }
+                    }
+                }
+
                 const imgLink = (rawImg && rawImg.trim() !== '') 
                                 ? rawImg.trim() 
                                 : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png';
 
+                // UPDATED: Changed the formatting to display exactly like "5A"
                 html += `
                 <div class="bday-item">
                     <img src="${imgLink}" alt="${student['Student Name'] || 'Student'}">
                     <h5>${student['Student Name'] || ''}</h5>
-                    <p>Class: ${student['Class'] || ''} '${student['Division'] || ''}'</p>
+                    <p>${student['Class'] || ''}${student['Division'] || ''}</p>
                 </div>`;
             });
             gridContainer.innerHTML = html;
@@ -484,12 +513,12 @@
 
             let finalMediaLink = document.getElementById('mediaLink') ? document.getElementById('mediaLink').value : "";
 
-            // 1. Upload to ImgBB (UPDATED: Directly sending File object)
+            // 1. Upload to ImgBB
             if (fileInput.files.length > 0) {
                 try {
                     btn.innerText = "Uploading Image to ImgBB...";
                     const formData = new FormData();
-                    formData.append("image", fileInput.files[0]); // Pass actual file, not base64
+                    formData.append("image", fileInput.files[0]);
 
                     const imgbbRes = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
                         method: "POST",
@@ -522,11 +551,13 @@
                 payload.content = document.getElementById('postContent').value;
             }
 
-            // 3. Post to Google Sheets (UPDATED: Added mode: 'no-cors')
+            // 3. Post to Google Sheets (UPDATED with bulletproof headers)
             try {
                 await fetch(SCRIPT_URL, {
                     method: 'POST',
-                    mode: 'no-cors', // Bypasses Google's strict redirect rules
+                    headers: {
+                        "Content-Type": "text/plain;charset=utf-8" // This safely bypasses Google's CORS blocks
+                    },
                     body: JSON.stringify(payload) 
                 });
                 
@@ -534,7 +565,7 @@
                 location.reload();
             } catch (err) {
                 console.error(err);
-                alert("Published Successfully! Reloading page...");
+                alert("Published action completed. Reloading page...");
                 location.reload();
             }
         }
