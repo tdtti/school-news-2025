@@ -30,24 +30,27 @@
         .ticker-track span { display: inline-block; padding-left: 100%; animation: scroll 30s linear infinite; }
         @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
 
-        /* === MAIN HEADER (COVER & PROFILE) === */
+        /* === NEW MAIN HEADER (COVER & PROFILE) === */
         .site-profile-header { background: var(--box-bg); padding-bottom: 20px; border-bottom: 1px solid #ced0d4; position: relative;}
         
+        /* Top Overlay for Name & Logo */
         .cover-overlay-top { position: absolute; top: 20px; left: 20px; right: 20px; display: flex; justify-content: space-between; align-items: flex-start; z-index: 5; max-width: 1000px; margin: 0 auto; }
-        .cover-school-name { background: rgba(255, 255, 255, 0.9); color: var(--accent-blue); padding: 10px 20px; border-radius: var(--radius-large); font-weight: 800; font-size: 1.3rem; box-shadow: 0 4px 15px rgba(0,0,0,0.15); backdrop-filter: blur(8px); letter-spacing: 0.5px; }
         
-        .cover-logo-login { background: rgba(255, 255, 255, 0.9); padding: 6px; border-radius: var(--radius-large); box-shadow: 0 4px 15px rgba(0,0,0,0.15); backdrop-filter: blur(8px); cursor: pointer; transition: transform 0.2s; display: flex; align-items: center; justify-content: center; }
+        .cover-school-name { background: rgba(255, 255, 255, 0.9); color: var(--accent-blue); padding: 10px 20px; border-radius: var(--radius-large); font-weight: 800; font-size: 1.3rem; box-shadow: 0 4px 15px rgba(0,0,0,0.15); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); letter-spacing: 0.5px; }
+        
+        .cover-logo-login { background: rgba(255, 255, 255, 0.9); padding: 6px; border-radius: var(--radius-large); box-shadow: 0 4px 15px rgba(0,0,0,0.15); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); cursor: pointer; transition: transform 0.2s; display: flex; align-items: center; justify-content: center; }
         .cover-logo-login:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,0.2); }
         .cover-logo-login img { width: 45px; height: 45px; object-fit: contain; border-radius: 8px; }
 
-        .cover-photo { width: 100%; height: 300px; object-fit: cover; display: block; background: #e4e6eb; pointer-events: none; }
+        .cover-photo { width: 100%; height: 320px; object-fit: cover; display: block; background: #e4e6eb; pointer-events: none; }
         
-        .profile-pic-container { max-width: auto; margin: 0 auto; position: relative; display: flex; align-items: flex-end; padding: 0 20px; margin-top: -65px; z-index: 6;}
-        .profile-pic { width: 120px; height: 120px; border-radius: 50%; border: 4px solid #fff; object-fit: cover; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.15); pointer-events: none;}
+        /* Profile Pic & Slogan */
+        .profile-pic-container { max-width: 800px; margin: 0 auto; position: relative; display: flex; align-items: flex-end; padding: 0 20px; margin-top: -65px; z-index: 6;}
+        .profile-pic { width: 140px; height: 140px; border-radius: 50%; border: 4px solid #fff; object-fit: cover; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.15); pointer-events: none;}
         .school-slogan { font-size: 1.4rem; font-weight: 700; margin-left: 20px; margin-bottom: 25px; color: var(--text-dark); letter-spacing: -0.3px;}
         
         @media (max-width: 500px) {
-            .cover-photo { height: 200px; }
+            .cover-photo { height: 220px; }
             .cover-overlay-top { top: 15px; left: 15px; right: 15px; align-items: center;}
             .cover-school-name { font-size: 1rem; padding: 8px 15px; }
             .cover-logo-login img { width: 35px; height: 35px; }
@@ -55,7 +58,7 @@
             .school-slogan { margin-left: 0; margin-top: 10px; margin-bottom: 0; font-size: 1.2rem;}
         }
 
-        /* Nav */
+        /* Nav (Sticky right at the top) */
         .nav-wrapper { background: var(--box-bg); border-bottom: 1px solid #e2e8f0; padding: 10px 5%; position: sticky; top: 0; z-index: 900; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
         .scroll-container { position: relative; display: flex; align-items: center; }
         .scroll-track { display: flex; gap: 12px; overflow-x: auto; scrollbar-width: none; padding: 5px 40px; scroll-behavior: smooth; }
@@ -65,14 +68,14 @@
         .nav-pills a { text-decoration: none; padding: 8px 18px; background: #e4e6eb; color: var(--text-dark); border-radius: 20px; font-weight: 700; font-size: 0.85rem; white-space: nowrap; transition: 0.2s; }
         .nav-pills a.active, .nav-pills a:hover { background: var(--accent-blue); color: white; }
 
-        /* Main Content */
-        .layout-container { max-width:auto; margin: 20px auto 30px auto; padding: 0 15px; min-height: 60vh; }
+        /* Main Content Grid */
+        .layout-container { max-width: 680px; margin: 20px auto 30px auto; padding: 0 15px; min-height: 60vh; }
         .section-wrapper { margin-bottom: 40px; scroll-margin-top: 150px; }
 
-        /* Spinners */
-        .saving-overlay { position: fixed; inset: 0; background: rgba(255,255,255,0.7); z-index: 20000; display: none; justify-content: center; align-items: center; flex-direction: column; backdrop-filter: blur(10px); }
+        /* === RESTORED SPINNER CSS === */
+        .saving-overlay { position: fixed; inset: 0; background: rgba(255,255,255,0.7); z-index: 20000; display: none; justify-content: center; align-items: center; flex-direction: column; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
         .saving-overlay.active { display: flex; }
-        .loader-wrapper { display: flex; justify-content: center; align-items: center; position: relative; height: 90px; }
+        .loader-wrapper { display: flex; justify-content: center; align-items: center; position: relative; height: 90px; margin-bottom: 20px;}
         .spinner-ring { width: 80px; height: 80px; border: 5px solid #e2e8f0; border-top-color: var(--accent-blue); border-radius: 50%; animation: spin 1s linear infinite; position: absolute; }
         .spinner-logo { width: 50px; height: 50px; border-radius: 50%; position: absolute; object-fit: cover; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
@@ -129,11 +132,13 @@
         .footer-socials a.yt:hover { background: #FF0000; color: #fff;}
         .footer-socials a.wa:hover { background: #25D366; color: #fff;}
         .footer-socials a.mail:hover { background: #EA4335; color: #fff;}
+        .author-avatar {width: 50px;height: 50px;border-radius: 50%; /* Makes them circular */border: 2px solid #f0f0f0; /* Soft border */box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Subtle depth */object-fit: cover;background-color: #ffffff;}
     </style>
 </head>
 <body>
 
-    <div class="saving-overlay" id="loadingOverlay">
+    <!-- RESTORED ACTIVE CLASS HERE SO IT SHOWS INSTANTLY -->
+    <div class="saving-overlay active" id="loadingOverlay">
         <div class="loader-wrapper">
             <div class="spinner-ring"></div>
             <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjGka-p7C45PTqBMBKqSjulqicQlHmW_Ee1BCfUPpaW888vYnoPjElzW9DVm8az1kCOjdlabjA3qb_vS00GpCApyVWh2C0aIcOcvb-BWeeTI8AdLojSf25iCvNpMS6aENxrWO-SgM5xjqePEMsHfCLy4HinnGk2xAnDlKaapXYFY05jXQM/s56-c/Logo2.png" class="spinner-logo">
@@ -148,9 +153,11 @@
     <!-- MAIN HEADER: Cover Photo & Profile Picture -->
     <header class="site-profile-header">
         
+        <!-- Absolute Top Overlay (School Name & Logo/Login Box) -->
         <div class="cover-overlay-top">
             <div class="cover-school-name">TDTTI THURAVOOR</div>
             
+            <!-- Admin Login Trigger Container -->
             <div class="cover-logo-login" onclick="openLoginModal()" title="Admin Login">
                 <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjGka-p7C45PTqBMBKqSjulqicQlHmW_Ee1BCfUPpaW888vYnoPjElzW9DVm8az1kCOjdlabjA3qb_vS00GpCApyVWh2C0aIcOcvb-BWeeTI8AdLojSf25iCvNpMS6aENxrWO-SgM5xjqePEMsHfCLy4HinnGk2xAnDlKaapXYFY05jXQM/s56-c/Logo2.png" alt="School Logo">
             </div>
@@ -161,7 +168,8 @@
         <div class="profile-pic-container">
             <!-- Dynamically populated profile photo -->
             <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" class="profile-pic" id="ui-profile">
-            <h2 class="school-slogan">Empowering Minds, Shaping Futures</h2>
+            <!-- Slogan -->
+            <h2 class="school-slogan">Empowering Minds..<br>Shaping Futures...</h2>
         </div>
     </header>
 
@@ -324,12 +332,27 @@
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwQ5W6_RzxEr8pQgKUa6hxG44fyxvaknbZTcON5wyZ4HxbmKApC6BUnhbMxjDhhPx9pHA/exec"; 
         const IMGBB_API_KEY = "dcf1e98ceb03a9258bc9b06786f2bb18"; 
         
-        const AUTHOR_PROFILES =[
-            { name: "TDTTI THURAVOOR", avatar: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjGka-p7C45PTqBMBKqSjulqicQlHmW_Ee1BCfUPpaW888vYnoPjElzW9DVm8az1kCOjdlabjA3qb_vS00GpCApyVWh2C0aIcOcvb-BWeeTI8AdLojSf25iCvNpMS6aENxrWO-SgM5xjqePEMsHfCLy4HinnGk2xAnDlKaapXYFY05jXQM/s56-c/Logo2.png" },
-            { name: "Principal Asha V", avatar: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiRkN_fkpQ9rzeGYiaN7YahUs6pPmumJngjvCBYP004ffxlSzJ2gkzs1lHzRMx7aJs-SHDhfShCwl8FqJDitti_7aNAxE_tHEQsp7Z55nUKyBJ5V2gD2opBM5rfQFHU4hikmVxyVSpRusWYqVqc4r1qh4sg-J9wO99AOzpjBp7BGHZlxXwi2mAY34pDUcmT/s1238/va.jpeg" },
-            { name: "Admin Desk", avatar: "https://cdn-icons-png.flaticon.com/512/9334/9334336.png" },
-            { name: "Academics Dept", avatar: "https://cdn-icons-png.flaticon.com/512/6832/6832868.png" }
-        ];
+        const AUTHOR_PROFILES = [
+    { name: "TDTTI", avatar: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjGka-p7C45PTqBMBKqSjulqicQlHmW_Ee1BCfUPpaW888vYnoPjElzW9DVm8az1kCOjdlabjA3qb_vS00GpCApyVWh2C0aIcOcvb-BWeeTI8AdLojSf25iCvNpMS6aENxrWO-SgM5xjqePEMsHfCLy4HinnGk2xAnDlKaapXYFY05jXQM/s56-c/Logo2.png" },
+    { name: "Principal Asha V", avatar: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiRkN_fkpQ9rzeGYiaN7YahUs6pPmumJngjvCBYP004ffxlSzJ2gkzs1lHzRMx7aJs-SHDhfShCwl8FqJDitti_7aNAxE_tHEQsp7Z55nUKyBJ5V2gD2opBM5rfQFHU4hikmVxyVSpRusWYqVqc4r1qh4sg-J9wO99AOzpjBp7BGHZlxXwi2mAY34pDUcmT/s1238/va.jpeg" },
+    { name: "Admin Desk", avatar: "https://cdn-icons-png.flaticon.com/512/9438/9438159.png" }, // Professional Avatar
+    { name: "Academics Dept", avatar: "https://cdn-icons-png.flaticon.com/512/8065/8065261.png" }, // Book/Grad Cap Mix
+
+    // --- Student & Community Focused ---
+    { name: "Student Council", avatar: "https://cdn-icons-png.flaticon.com/512/4395/4395254.png" }, // Dynamic Group
+    { name: "PTA / Parents", avatar: "https://cdn-icons-png.flaticon.com/512/4128/4128253.png" }, // Family/Community
+    { name: "Alumni Association", avatar: "https://cdn-icons-png.flaticon.com/512/10543/10543419.png" }, // Growth/Legacy
+
+    // --- Activity & Subject Focused ---
+    { name: "Sports & Wellness", avatar: "https://cdn-icons-png.flaticon.com/512/5351/5351313.png" }, // Vibrant Sports Gear
+    { name: "Arts & Culture", avatar: "https://cdn-icons-png.flaticon.com/512/3659/3659802.png" }, // Palette/Creative
+    { name: "STEM & Tech Lab", avatar: "https://cdn-icons-png.flaticon.com/512/5024/5024467.png" }, // Tech/Atom
+    { name: "Library & Media", avatar: "https://cdn-icons-png.flaticon.com/512/3145/3145765.png" }, // Open Books
+
+    // --- Support & Guidance ---
+    { name: "Counselor’s Corner", avatar: "https://cdn-icons-png.flaticon.com/512/6531/6531122.png" }, // Heart/Care
+    { name: "Career Guidance", avatar: "https://cdn-icons-png.flaticon.com/512/10061/10061730.png" } // Compass/Direction
+];
 
         const SECTIONS =["Notice Board", "Birthdays", "Achievements", "Updates", "Appraisals", "Personalised Skills", "Academic", "Sports", "Fairs", "Kalothswom", "Gallery"];
         
@@ -364,15 +387,14 @@
                         if (typeof student[key] === 'string' && student[key].startsWith('http')) { rawImg = student[key]; break; }
                     }
                 }
-                // Exclude empty and default blank placeholder avatars from selection
+                
                 if (rawImg && rawImg.trim() !== '' && rawImg.indexOf('blank-profile') === -1 && rawImg.indexOf('placeholder') === -1) {
                     validPhotos.push(rawImg.trim());
                 }
             });
 
             if (validPhotos.length === 0) return null;
-
-            // Use the current calendar date as the deterministic seed for randomness (Changes every 24 hrs)
+            
             let today = new Date();
             let seed = today.getFullYear() * 10000 + (today.getMonth() + 1) * 100 + today.getDate();
             let index = seed % validPhotos.length;
@@ -393,10 +415,10 @@
                     globalPosts = parsed.posts ||[];
                     globalBirthdays = parsed.birthdays ||[];
                     renderAll(globalPosts, parsed.settings || {});
+                    
+                    // IF we load from cache, hide the spinner
                     document.getElementById('loadingOverlay').classList.remove('active'); 
                 } catch(e) {}
-            } else {
-                document.getElementById('loadingOverlay').classList.add('active'); 
             }
 
             try {
@@ -410,6 +432,7 @@
                 console.error("Fetch Error:", e);
                 if(!cachedData) document.getElementById('main-content').innerHTML = `<p style="text-align:center; padding:50px;">Failed to load data.</p>`;
             } finally {
+                // Ensure spinner is removed if no cache was used
                 document.getElementById('loadingOverlay').classList.remove('active');
             }
         }
@@ -417,14 +440,12 @@
         function renderAll(postsData, settingsData) {
             const container = document.getElementById('main-content');
             
-            // --- Determine Header Images ---
             let defaultCover = "https://via.placeholder.com/1200x300.png?text=Welcome+to+TDTTI+THURAVOOR";
-            let fallbackProfile = AUTHOR_PROFILES[0].avatar; // The School Logo
+            let fallbackProfile = AUTHOR_PROFILES[0].avatar; 
             
             let coverImg = settingsData["CoverPhoto"] || defaultCover;
             let profileImg = settingsData["ProfilePicture"];
 
-            // If profile image is empty or still the default school logo, inject the daily random birthday photo
             if (!profileImg || profileImg === fallbackProfile || profileImg.trim() === "") {
                 let dailyPhoto = getDailyBirthdayPhoto();
                 profileImg = dailyPhoto ? dailyPhoto : fallbackProfile;
@@ -433,7 +454,6 @@
             document.getElementById('ui-cover').src = coverImg;
             document.getElementById('ui-profile').src = profileImg;
 
-            // Scrolling Ticker logic
             const notices = postsData.filter(i => i.Section === "Scrolling").slice(-3);
             if(notices.length > 0) {
                 document.getElementById('live-ticker-text').innerText = notices.map(n => `🔴 ${n.Content || n.Title}`).join("   |   ");
@@ -814,7 +834,6 @@
 
             let finalMediaLink = document.getElementById('mediaLink') ? document.getElementById('mediaLink').value : "";
 
-            // --- BUG FIX: UPLOADS TO IMGBB WHEN mode === 'settings' REGARDLESS OF 'section' ---
             if (actionType !== 'delete' && (mode === 'settings' || section !== "Scrolling")) {
                 let fileToUpload = null;
                 if(cameraInput.files.length > 0) fileToUpload = cameraInput.files[0];
