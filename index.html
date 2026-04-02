@@ -65,7 +65,7 @@
         .nav-pills a.active, .nav-pills a:hover { background: var(--accent-blue); color: white; }
 
         /* Main Content Grid */
-        .layout-container { max-width: 680px; margin: 20px auto 30px auto; padding: 0 15px; min-height: 60vh; }
+        .layout-container { max-width: auto; margin: 20px auto 30px auto; padding: 0 15px; min-height: 60vh; }
         .section-wrapper { margin-bottom: 40px; scroll-margin-top: 150px; }
 
         /* SPINNER */
@@ -155,7 +155,14 @@
     <header class="site-profile-header">
         <div class="cover-overlay-top">
             <div class="cover-school-name">TDTTI THURAVOOR</div>
-            <div class="cover-logo-login" onclick="openLoginModal()" title="Admin Login">
+            <div class="cover-logo-login" 
+                 onmousedown="startLoginPress(event)" 
+                 onmouseup="cancelLoginPress()" 
+                 onmouseleave="cancelLoginPress()" 
+                 ontouchstart="startLoginPress(event)" 
+                 ontouchend="cancelLoginPress()" 
+                 title="Admin Login (Hold 15s)"
+                 style="-webkit-touch-callout: none;">
                 <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjGka-p7C45PTqBMBKqSjulqicQlHmW_Ee1BCfUPpaW888vYnoPjElzW9DVm8az1kCOjdlabjA3qb_vS00GpCApyVWh2C0aIcOcvb-BWeeTI8AdLojSf25iCvNpMS6aENxrWO-SgM5xjqePEMsHfCLy4HinnGk2xAnDlKaapXYFY05jXQM/s56-c/Logo2.png" alt="School Logo">
             </div>
         </div>
@@ -634,6 +641,21 @@
                 return `<iframe width="100%" height="315" src="https://www.youtube.com/embed/${id}" frameborder="0" allowfullscreen></iframe>`;
             }
             return `<img src="${url}" loading="lazy">`;
+        }
+        
+        // --- 15 SECOND PRESS & HOLD LOGIN LOGIC ---
+        let loginHoldTimer;
+        function startLoginPress(e) {
+            if(e.type === 'touchstart') {
+                if(e.touches.length === 1) e.preventDefault(); 
+            }
+            clearTimeout(loginHoldTimer);
+            loginHoldTimer = setTimeout(() => {
+                openLoginModal();
+            }, 15000); // 15 seconds
+        }
+        function cancelLoginPress() {
+            clearTimeout(loginHoldTimer);
         }
 
         function openLoginModal() { document.getElementById('loginModal').classList.add('active'); }
