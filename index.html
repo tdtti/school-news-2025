@@ -34,7 +34,7 @@
         .ticker-track span { display: inline-block; padding-left: 100%; animation: scroll 30s linear infinite; }
         @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
 
-        /* === NEW MAIN HEADER (COVER & PROFILE) === */
+        /* === MAIN HEADER (COVER & PROFILE) === */
         .site-profile-header { background: var(--box-bg); padding-bottom: 20px; border-bottom: 1px solid #ced0d4; position: relative;}
         
         .cover-overlay-top { position: absolute; top: 20px; left: 20px; right: 20px; display: flex; justify-content: space-between; align-items: flex-start; z-index: 5; max-width: 1000px; margin: 0 auto; }
@@ -47,7 +47,7 @@
         
         .profile-pic-container { max-width: 800px; margin: 0 auto; position: relative; display: flex; align-items: flex-end; padding: 0 20px; margin-top: -65px; z-index: 6;}
         .profile-pic { width: 140px; height: 140px; border-radius: 50%; border: 4px solid #fff; object-fit: cover; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.15); pointer-events: none;}
-        .school-slogan { font-size: 1.4rem; font-weight: 700; margin-left: 20px; margin-bottom: 10px; color:#000080; letter-spacing: -0.3px;}
+        .school-slogan { font-size: 1.4rem; font-weight: 700; margin-left: 20px; margin-bottom: 25px; color: var(--text-dark); letter-spacing: -0.3px;}
         
         @media (max-width: 500px) {
             .cover-photo { height: 220px; }
@@ -68,43 +68,28 @@
         .nav-pills a { text-decoration: none; padding: 8px 18px; background: #e4e6eb; color: var(--text-dark); border-radius: 20px; font-weight: 700; font-size: 0.85rem; white-space: nowrap; transition: 0.2s; }
         .nav-pills a.active, .nav-pills a:hover { background: var(--accent-blue); color: white; }
 
-        /* === NEW DESKTOP GRID LAYOUT === */
+        /* === DESKTOP GRID LAYOUT === */
         @media (min-width: 992px) {
             .layout-container {
-                max-width: 1400px; /* Widen container for desktop */
-                display: flex;
-                flex-direction: row-reverse; /* Puts Sidebar on the right */
-                gap: 25px;
-                align-items: flex-start;
+                max-width: 1400px; display: flex; flex-direction: row-reverse; gap: 25px; align-items: flex-start;
             }
             .main-feed-area {
-                flex: 3; /* Takes up 3/4 of the width */
-                display: grid;
-                grid-template-columns: repeat(3, 1fr); /* 3 items per line */
-                gap: 20px;
-                align-items: flex-start;
+                flex: 3; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; align-items: flex-start;
             }
-            .sidebar-area {
-                flex: 1; /* Takes up 1/4 of the width */
-                min-width: 320px;
-                display: flex;
-                flex-direction: column;
-                gap: 20px;
-            }
-            .main-feed-area .section-wrapper, .sidebar-area .section-wrapper {
-                margin-bottom: 0; /* Let grid gap handle spacing */
-            }
+            .sidebar-area { flex: 1; min-width: 320px; display: flex; flex-direction: column; gap: 20px; }
+            .main-feed-area .section-wrapper, .sidebar-area .section-wrapper { margin-bottom: 0; }
         }
         @media (max-width: 991px) {
             .layout-container { display: flex; flex-direction: column; max-width: 680px; }
             .main-feed-area, .sidebar-area { display: flex; flex-direction: column; width: 100%; gap: 20px; margin-bottom: 40px;}
         }
-        /* ================================ */
 
         /* Main Content Grid */
         .layout-container { margin: 20px auto 30px auto; padding: 0 15px; min-height: 60vh; }
-        .section-wrapper { margin-bottom: 40px; scroll-margin-top: 150px; }
-
+        .section-wrapper { margin-bottom: 30px; scroll-margin-top: 150px; display: flex; flex-direction: column; gap: 20px; }
+        .cards-grid { display: flex; flex-direction: column; gap: 20px; width: 100%; }
+        @media (min-width: 992px) { .cards-grid { display: contents; } }
+        
         /* SPINNER */
         .saving-overlay { position: fixed; inset: 0; background: rgba(255,255,255,0.7); z-index: 20000; display: none; justify-content: center; align-items: center; flex-direction: column; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
         .saving-overlay.active { display: flex; }
@@ -114,7 +99,7 @@
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
         /* FB Posts & Birthdays */
-        .fb-post { background: var(--box-bg); border-radius: var(--radius-large); box-shadow: var(--shadow-soft); margin-bottom: 20px; overflow: hidden; border: 1px solid #ced0d4; height: 100%;}
+        .fb-post { background: var(--box-bg); border-radius: var(--radius-large); box-shadow: var(--shadow-soft); margin-bottom: 0; overflow: hidden; border: 1px solid #ced0d4; height: 100%; display: flex; flex-direction: column; }
         .fb-header { display: flex; align-items: center; padding: 12px 16px; gap: 10px; }
         .fb-avatar { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 1px solid #e4e6eb; pointer-events: none;}
         .fb-header-info { display: flex; flex-direction: column; justify-content: center; }
@@ -145,33 +130,6 @@
         .fair-tab { padding: 8px 18px; background: #e4e6eb; border: 1px solid #ced0d4; border-radius: 20px; font-weight: 700; color: var(--text-dark); cursor: pointer; white-space: nowrap; transition: 0.2s; font-size: 0.85rem; }
         .fair-tab.active, .fair-tab:hover { background: var(--accent-blue); color: white; border-color: var(--accent-blue); }
         .fair-hidden { display: none !important; }
-
-        /* Modals & Forms */
-        .modal-overlay { position: fixed; inset: 0; background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(5px); z-index: 10000; display: none; align-items: center; justify-content: center; padding: 20px; }
-        .modal-overlay.active { display: flex; }
-        .modal-box { background: white; padding: 30px; border-radius: var(--radius-large); width: 100%; max-width: 500px; position: relative; max-height: 90vh; overflow-y: auto; box-shadow: 0 10px 40px rgba(0,0,0,0.2); border: 1px solid #ced0d4; }
-        .close-modal { position: absolute; top: 15px; right: 20px; font-size: 2rem; cursor: pointer; border: none; background: none; color: #65676B; }
-        .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; font-weight: 700; margin-bottom: 5px; font-size: 0.9rem; }
-        .form-control { width: 100%; padding: 12px; border: 1px solid #ced0d4; border-radius: 8px; font-family: inherit; background: #f0f2f5; }
-        .form-control:read-only { background-color: #e4e6eb; cursor: not-allowed; }
-        
-        .btn-submit { width: 100%; padding: 12px; background: var(--accent-blue); color: white; border: none; border-radius: 8px; font-weight: 700; font-size: 1rem; cursor: pointer; margin-top: 10px; transition: 0.2s;}
-        .btn-delete { background: var(--accent-red); margin-top: 5px; }
-        
-        .admin-mode-toggles { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; padding: 15px; background: #eef2ff; border-radius: 8px; border: 1px solid var(--accent-blue); }
-        .admin-mode-toggles label { font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 5px; color: var(--accent-blue); font-size: 0.95rem; flex: 1; min-width: 120px;}
-
-        /* Footer */
-        .site-footer { text-align: center; padding: 40px 20px; color: var(--text-gray); font-weight: 700; background: #ffffff; border-top: 1px solid #ced0d4; margin-top: 40px; }
-        .footer-socials { display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; flex-wrap: wrap;}
-        .footer-socials a { display: flex; align-items: center; justify-content: center; width: 45px; height: 45px; border-radius: 50%; background: #e4e6eb; color: var(--text-dark); text-decoration: none; transition: all 0.3s ease; }
-        .footer-socials a svg { width: 22px; height: 22px; fill: currentColor; }
-        .footer-socials a.fb:hover { background: #1877F2; color: #fff;}
-        .footer-socials a.ig:hover { background: #E4405F; color: #fff;}
-        .footer-socials a.yt:hover { background: #FF0000; color: #fff;}
-        .footer-socials a.wa:hover { background: #25D366; color: #fff;}
-        .footer-socials a.mail:hover { background: #EA4335; color: #fff;}
         
         /* === SECTION HEADERS === */
         .section-header-title {
@@ -184,9 +142,79 @@
             display: inline-block;
             text-transform: uppercase;
         }
+        
+        /* Modals & Forms */
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(5px); z-index: 10000; display: none; align-items: center; justify-content: center; padding: 20px; }
+        .modal-overlay.active { display: flex; }
+        .modal-box { background: white; padding: 30px; border-radius: var(--radius-large); width: 100%; max-width: 500px; position: relative; max-height: 90vh; overflow-y: auto; box-shadow: 0 10px 40px rgba(0,0,0,0.2); border: 1px solid #ced0d4; }
+        .close-modal { position: absolute; top: 15px; right: 20px; font-size: 2rem; cursor: pointer; border: none; background: none; color: #65676B; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; font-weight: 700; margin-bottom: 5px; font-size: 0.9rem; }
+        .form-control { width: 100%; padding: 12px; border: 1px solid #ced0d4; border-radius: 8px; font-family: inherit; background: #f0f2f5; }
+        .form-control:read-only { background-color: #e4e6eb; cursor: not-allowed; }
+        
+        .btn-submit { width: 100%; padding: 12px; background: var(--accent-blue); color: white; border: none; border-radius: 8px; font-weight: 700; font-size: 1rem; cursor: pointer; margin-top: 10px; transition: 0.2s;}
+        .btn-delete { background: var(--accent-red); margin-top: 5px; }
+        
+        /* === MODIFIED: ADMIN DASHBOARD STYLES (Vertical Layout) === */
+        .admin-mode-toggles { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+        .admin-mode-toggles label { background: #eef2ff; border: 1px solid var(--accent-blue); font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 10px; color: var(--accent-blue); font-size: 1.05rem; padding: 12px 20px; border-radius: 10px; transition: 0.3s;}
+        .admin-mode-toggles label:hover { background: var(--accent-blue); color: #fff; }
+        .admin-mode-toggles input[type="radio"] { transform: scale(1.2); cursor: pointer; }
+
+        /* === NEW: QUICK LINKS STYLES === */
+        .quick-links-wrapper { background: var(--box-bg); border-radius: var(--radius-large); padding: 20px; margin-bottom: 20px; box-shadow: var(--shadow-soft); border: 1px solid #ced0d4; }
+        .quick-links-wrapper h3 { font-size: 1.1rem; margin-bottom: 15px; color: var(--text-dark); display: flex; align-items: center; gap: 8px; border-bottom: 2px solid #f0f2f5; padding-bottom: 10px;}
+        .ql-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .ql-btn { display: flex; align-items: center; justify-content: center; background: #f8fafc; color: var(--text-dark); padding: 12px; text-align: center; border-radius: 8px; font-weight: 700; text-decoration: none; border: 1px solid #ced0d4; font-size: 0.85rem; transition: 0.2s; box-shadow: 0 1px 2px rgba(0,0,0,0.05);}
+        .ql-btn:hover { background: var(--accent-blue); color: white; border-color: var(--accent-blue); transform: translateY(-2px);}
+
+        /* === NEW: INTERNAL MESSAGING BOXES === */
+        .custom-alert-box, .custom-confirm-box { background: white; padding: 30px; border-radius: var(--radius-large); width: 100%; max-width: 400px; text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,0.3); }
+        .custom-msg-text { font-size: 1.1rem; margin-bottom: 25px; color: var(--text-dark); font-weight: 600; line-height: 1.5;}
+        .custom-msg-btns { display: flex; gap: 10px; justify-content: center; }
+        .custom-msg-btns button { flex: 1; padding: 12px; border-radius: 8px; font-weight: 700; cursor: pointer; border: none; font-size: 1rem; transition: 0.2s;}
+        .btn-alert-ok, .btn-confirm-yes { background: var(--accent-blue); color: white; }
+        .btn-confirm-no { background: #e4e6eb; color: var(--text-dark); }
+        .btn-alert-ok:hover, .btn-confirm-yes:hover { opacity: 0.9; }
+
+        /* === FLOATING TOP BUTTONS (REFRESH & FULLSCREEN) === */
+        .top-actions-container { position: fixed; top: 15px; right: 15px; display: flex; gap: 10px; z-index: 9999; }
+        .floating-btn { padding: 8px 16px; border-radius: 20px; font-weight: 800; font-size: 0.85rem; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 10px rgba(0,0,0,0.2); text-transform: uppercase; border: none; backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); }
+        .refresh-btn { background: rgba(8, 102, 255, 0.15); color: var(--accent-blue); border: 2px solid var(--accent-blue); }
+        .refresh-btn:hover { background: var(--accent-blue); color: white; }
+        .exit-fs-btn { background: rgba(239, 68, 68, 0.15); color: #ef4444; border: 2px solid #ef4444; display: none; }
+        .exit-fs-btn:hover { background: #ef4444; color: white; }
+
+        /* === NEW: PWA PROMPT MODAL === */
+        .pwa-header { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; text-align: left; background: #f8fafc; padding: 15px; border-radius: 10px; border: 1px solid #ced0d4;}
+        .pwa-header img { width: 55px; height: 55px; border-radius: 12px; object-fit: contain; background: white; padding: 2px;}
+        .pwa-header div { display: flex; flex-direction: column; }
+        .pwa-header strong { font-size: 1.1rem; color: var(--text-dark); }
+        .pwa-header span { font-size: 0.85rem; color: var(--text-gray); }
+
+        /* Footer */
+        .site-footer { text-align: center; padding: 40px 20px; color: var(--text-gray); font-weight: 700; background: #ffffff; border-top: 1px solid #ced0d4; margin-top: 40px; }
+        .footer-socials { display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; flex-wrap: wrap;}
+        .footer-socials a { display: flex; align-items: center; justify-content: center; width: 45px; height: 45px; border-radius: 50%; background: #e4e6eb; color: var(--text-dark); text-decoration: none; transition: all 0.3s ease; }
+        .footer-socials a svg { width: 22px; height: 22px; fill: currentColor; }
+        .footer-socials a.fb:hover { background: #1877F2; color: #fff;}
+        .footer-socials a.ig:hover { background: #E4405F; color: #fff;}
+        .footer-socials a.yt:hover { background: #FF0000; color: #fff;}
+        .footer-socials a.wa:hover { background: #25D366; color: #fff;}
+        .footer-socials a.mail:hover { background: #EA4335; color: #fff;}
+        
+        
     </style>
 </head>
 <body>
+
+    <!-- Exit Full Screen Button -->
+    <!-- Floating Top Actions -->
+    <div class="top-actions-container">
+        <button id="refreshBtn" class="floating-btn refresh-btn" onclick="location.reload()">🔄 Refresh</button>
+        <button id="exitFullScreenBtn" class="floating-btn exit-fs-btn" onclick="exitFullScreen()">Exit Full Screen</button>
+    </div>
 
     <div class="saving-overlay active" id="loadingOverlay">
         <div class="loader-wrapper">
@@ -279,10 +307,11 @@
             <button class="close-modal" onclick="closeModals()">&times;</button>
             <h2 style="margin-bottom: 15px;">Admin Dashboard</h2>
 
+            <!-- REARRANGED: Vertical Order 1. Create, 2. Edit, 3. Update Profile -->
             <div class="admin-mode-toggles">
-                <label style="width: 100%;"><input type="radio" name="adminMode" value="settings" onchange="toggleAdminMode()"> 🖼️ Update Profile & Cover</label>
                 <label><input type="radio" name="adminMode" value="create" checked onchange="toggleAdminMode()"> 📝 Create Post</label>
                 <label><input type="radio" name="adminMode" value="edit" onchange="toggleAdminMode()"> ✏️ Edit / Delete</label>
+                <label><input type="radio" name="adminMode" value="settings" onchange="toggleAdminMode()"> 🖼️ Update Profile & Cover</label>
             </div>
 
             <form id="uploadForm">
@@ -383,7 +412,189 @@
         </div>
     </div>
 
+    <!-- Custom Alert Modal (Replaces standard alert) -->
+    <div class="modal-overlay" id="customAlertModal" style="z-index: 21000;">
+        <div class="custom-alert-box">
+            <div class="custom-msg-text" id="customAlertMsg">Alert message goes here.</div>
+            <div class="custom-msg-btns">
+                <button class="btn-alert-ok" onclick="closeCustomAlert()">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Confirm Modal (Replaces standard confirm) -->
+    <div class="modal-overlay" id="customConfirmModal" style="z-index: 21000;">
+        <div class="custom-confirm-box">
+            <div class="custom-msg-text" id="customConfirmMsg">Are you sure?</div>
+            <div class="custom-msg-btns">
+                <button class="btn-confirm-yes" id="btnConfirmYes">Yes, Delete</button>
+                <button class="btn-confirm-no" onclick="closeCustomConfirm()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- PWA Add To Home Screen Prompt Modal -->
+    <div class="modal-overlay" id="pwaPromptModal" style="z-index: 22000;">
+        <div class="modal-box" style="max-width: 400px; text-align: center; padding: 25px;">
+            <div class="pwa-header">
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjGka-p7C45PTqBMBKqSjulqicQlHmW_Ee1BCfUPpaW888vYnoPjElzW9DVm8az1kCOjdlabjA3qb_vS00GpCApyVWh2C0aIcOcvb-BWeeTI8AdLojSf25iCvNpMS6aENxrWO-SgM5xjqePEMsHfCLy4HinnGk2xAnDlKaapXYFY05jXQM/s56-c/Logo2.png" alt="TDTTI Logo">
+                <div>
+                    <strong>TDTTI THURAVOOR</strong>
+                    <span>Install our Live Web App</span>
+                </div>
+            </div>
+            <p style="margin-bottom: 20px; font-weight: 600; color: var(--text-dark);">Add TDTTI to your home screen for instant access to the latest updates.</p>
+            <div class="custom-msg-btns">
+                <button class="btn-alert-ok" onclick="handlePwaAccept()">Add to Home Screen</button>
+                <button class="btn-confirm-no" onclick="handlePwaDismiss()">Not Now</button>
+            </div>
+        </div>
+    </div>
+
     <script>
+        // --- NEW: DYNAMIC PWA MANIFEST CREATION ---
+        const manifestData = {
+            "name": "TDTTI THURAVOOR",
+            "short_name": "TDTTI",
+            "start_url": window.location.href,
+            "display": "standalone",
+            "background_color": "#f0f2f5",
+            "theme_color": "#0866FF",
+            "icons": [{
+                "src": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjGka-p7C45PTqBMBKqSjulqicQlHmW_Ee1BCfUPpaW888vYnoPjElzW9DVm8az1kCOjdlabjA3qb_vS00GpCApyVWh2C0aIcOcvb-BWeeTI8AdLojSf25iCvNpMS6aENxrWO-SgM5xjqePEMsHfCLy4HinnGk2xAnDlKaapXYFY05jXQM/s56-c/Logo2.png",
+                "sizes": "192x192",
+                "type": "image/png"
+            }]
+        };
+        const manifestBlob = new Blob([JSON.stringify(manifestData)], {type: 'application/json'});
+        const manifestURL = URL.createObjectURL(manifestBlob);
+        const link = document.createElement('link');
+        link.rel = 'manifest';
+        link.href = manifestURL;
+        document.head.appendChild(link);
+
+        // --- NEW: PWA PROMPT LOGIC ---
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+        });
+
+        setTimeout(() => {
+            // Do not show if already running as standalone or if dismissed
+            if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) return;
+            if (!localStorage.getItem('pwaPromptDismissed')) {
+                document.getElementById('pwaPromptModal').classList.add('active');
+            }
+        }, 2500);
+
+        function handlePwaAccept() {
+            document.getElementById('pwaPromptModal').classList.remove('active');
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        localStorage.setItem('pwaPromptDismissed', 'true');
+                    }
+                    deferredPrompt = null;
+                });
+            } else {
+                showCustomAlert("To install, tap the 'Share' button and select 'Add to Home Screen' (or check your browser menu).");
+                localStorage.setItem('pwaPromptDismissed', 'true');
+            }
+        }
+        
+        function handlePwaDismiss() {
+            localStorage.setItem('pwaPromptDismissed', 'true');
+            document.getElementById('pwaPromptModal').classList.remove('active');
+        }
+
+        // --- NEW: AUTO FULLSCREEN LOGIC ---
+        document.addEventListener('click', function initFullScreen() {
+            if (!document.fullscreenElement && !localStorage.getItem('fullscreenIgnored')) {
+                // Browsers require user interaction to trigger fullscreen
+                document.documentElement.requestFullscreen().catch(err => console.log("Fullscreen blocked implicitly."));
+            }
+            document.removeEventListener('click', initFullScreen);
+        }, {once: true});
+
+        document.addEventListener('touchstart', function initFullScreenTouch() {
+            if (!document.fullscreenElement && !localStorage.getItem('fullscreenIgnored')) {
+                document.documentElement.requestFullscreen().catch(err => console.log("Fullscreen blocked implicitly."));
+            }
+            document.removeEventListener('touchstart', initFullScreenTouch);
+        }, {once: true});
+
+        document.addEventListener('fullscreenchange', () => {
+            const exitBtn = document.getElementById('exitFullScreenBtn');
+            if (document.fullscreenElement || document.webkitIsFullScreen) {
+                exitBtn.style.display = 'block';
+            } else {
+                exitBtn.style.display = 'none';
+                localStorage.setItem('fullscreenIgnored', 'true'); 
+            }
+        });
+
+        // --- AGGRESSIVE AUTO FULLSCREEN LOGIC ---
+        function forceFullScreen() {
+            if (!document.fullscreenElement && !localStorage.getItem('fullscreenIgnored')) {
+                let fs = document.documentElement.requestFullscreen || 
+                         document.documentElement.webkitRequestFullscreen || 
+                         document.documentElement.msRequestFullscreen;
+                if (fs) fs.call(document.documentElement).catch(err => console.log("Waiting for interaction"));
+            }
+        }
+        
+        // Trigger on ANY first action (click, touch, scroll)
+        ['click', 'touchstart', 'scroll', 'keydown'].forEach(evt => {
+            document.addEventListener(evt, function initFS() {
+                forceFullScreen();
+                // We keep it active so if they exit, the next click puts it back (unless ignored)
+            }, {passive: true});
+        });
+
+        document.addEventListener('fullscreenchange', () => {
+            const btn = document.getElementById('exitFullScreenBtn');
+            if (document.fullscreenElement || document.webkitIsFullScreen) {
+                btn.style.display = 'block';
+            } else {
+                btn.style.display = 'none';
+                localStorage.setItem('fullscreenIgnored', 'true'); // Stops forcing if user clicked exit
+            }
+        });
+
+        function exitFullScreen() {
+            if (document.fullscreenElement || document.webkitIsFullScreen) {
+                let efs = document.exitFullscreen || document.webkitExitFullscreen || document.msExitFullscreen;
+                if (efs) efs.call(document);
+            }
+        }
+
+        // --- NEW: CUSTOM ALERT & CONFIRM FUNCTIONS ---
+        function showCustomAlert(msg) {
+            document.getElementById('customAlertMsg').innerText = msg;
+            document.getElementById('customAlertModal').classList.add('active');
+        }
+        function closeCustomAlert() {
+            document.getElementById('customAlertModal').classList.remove('active');
+        }
+        
+        let confirmCallback = null;
+        function showCustomConfirm(msg, callback) {
+            document.getElementById('customConfirmMsg').innerText = msg;
+            confirmCallback = callback;
+            document.getElementById('customConfirmModal').classList.add('active');
+            document.getElementById('btnConfirmYes').onclick = function() {
+                closeCustomConfirm();
+                if(confirmCallback) confirmCallback();
+            };
+        }
+        function closeCustomConfirm() {
+            document.getElementById('customConfirmModal').classList.remove('active');
+            confirmCallback = null;
+        }
+
+        // --- ORIGINAL PROTECTION CODE ---
         document.addEventListener('contextmenu', event => event.preventDefault()); 
         document.addEventListener('keydown', function(e) {
             if(e.ctrlKey && (e.key === 'u' || e.key === 's' || e.key === 'c' || e.key === 'p')) e.preventDefault();
@@ -518,6 +729,21 @@
                 // Inject Section Header based on the toggle (Excluding Scrolling ticker)
                 if (SHOW_SECTION_HEADS && secName !== "Scrolling") {
                     secHtml += `<h2 class="section-header-title">${secName}</h2>`;
+                }
+
+                // --- NEW: INJECT QUICK LINKS BEFORE NOTICE BOARD ---
+                if (secName === "Notice Board") {
+                    let quickLinksHtml = `
+                    <div class="quick-links-wrapper">
+                        <h3>⚡ Quick Links</h3>
+                        <div class="ql-grid">
+                            <a href="#" class="ql-btn">🚌 SCHOOL BUS</a>
+                            <a href="#" class="ql-btn">🧒 CM KIDS</a>
+                            <a href="#" class="ql-btn">🗳️ SCHOOL ELECTION</a>
+                            <a href="#" class="ql-btn">🎪 UTHSAV</a>
+                        </div>
+                    </div>`;
+                    sidebarHtml += quickLinksHtml; 
                 }
                 
                 if (secName === "Birthdays") {
@@ -738,7 +964,9 @@
                 populateStudentSearch(); 
                 document.getElementById('uploadModal').classList.add('active');
                 toggleAdminMode();
-            } else { alert("Invalid Credentials"); }
+            } else { 
+                showCustomAlert("Invalid Credentials"); // Replacing standard alert
+            }
         }
 
         function syncCameraText() {
@@ -929,19 +1157,18 @@
             document.getElementById('studentDiv').value = "";
         }
 
-        async function submitData(actionType = 'create') {
+        function submitData(actionType = 'create') {
             const mode = document.querySelector('input[name="adminMode"]:checked').value;
             const section = document.getElementById('sectionSelect').value;
             const fileInput = document.getElementById('fileUpload');
             const cameraInput = document.getElementById('cameraUpload');
-            const overlay = document.getElementById('loadingOverlay');
             
             if (mode !== 'settings' && section === "Birthdays" && document.getElementById('selectedStudentRowIndex').value === "") {
-                alert("Please select a valid student from the search box to update their photo.");
+                showCustomAlert("Please select a valid student from the search box to update their photo.");
                 return;
             }
             if (mode === 'settings' && fileInput.files.length === 0 && cameraInput.files.length === 0) {
-                alert("Please upload or take an image first to update settings.");
+                showCustomAlert("Please upload or take an image first to update settings.");
                 return;
             }
 
@@ -951,14 +1178,23 @@
                     rowIndex = document.getElementById('selectedStudentRowIndex').value;
                 } else if (mode === 'edit' && actionType !== 'create') {
                     rowIndex = document.getElementById('editPostSelect').value;
-                    if(!rowIndex) { alert("Please select a post first."); return; }
+                    if(!rowIndex) { showCustomAlert("Please select a post first."); return; }
                 }
             }
 
             if(actionType === 'delete') {
-                if(!confirm("Are you sure you want to completely delete this post?")) return;
+                // Modified to use Custom Confirm Dialog
+                showCustomConfirm("Are you sure you want to completely delete this post?", () => {
+                    executeSubmitData(actionType, mode, section, fileInput, cameraInput, rowIndex);
+                });
+            } else {
+                executeSubmitData(actionType, mode, section, fileInput, cameraInput, rowIndex);
             }
+        }
 
+        // --- Core submit logic split out for async custom modal compatibility ---
+        async function executeSubmitData(actionType, mode, section, fileInput, cameraInput, rowIndex) {
+            const overlay = document.getElementById('loadingOverlay');
             closeModals();
             overlay.classList.add('active');
 
@@ -977,8 +1213,16 @@
                         const imgbbData = await imgbbRes.json();
                         
                         if (imgbbData.success) { finalMediaLink = imgbbData.data.url; } 
-                        else { alert("ImgBB Upload Failed: " + imgbbData.error.message); overlay.classList.remove('active'); return; }
-                    } catch(e) { alert("Network error uploading image."); overlay.classList.remove('active'); return; }
+                        else { 
+                            overlay.classList.remove('active'); 
+                            showCustomAlert("ImgBB Upload Failed: " + imgbbData.error.message); 
+                            return; 
+                        }
+                    } catch(e) { 
+                        overlay.classList.remove('active'); 
+                        showCustomAlert("Network error uploading image."); 
+                        return; 
+                    }
                 }
             }
 
@@ -1022,40 +1266,6 @@
         }
 
         function scrollNav(amt) { document.getElementById('nav-track').scrollBy({left: amt, behavior: 'smooth'}); }
-    // --- AGGRESSIVE AUTO FULLSCREEN LOGIC ---
-        function forceFullScreen() {
-            if (!document.fullscreenElement && !localStorage.getItem('fullscreenIgnored')) {
-                let fs = document.documentElement.requestFullscreen || 
-                         document.documentElement.webkitRequestFullscreen || 
-                         document.documentElement.msRequestFullscreen;
-                if (fs) fs.call(document.documentElement).catch(err => console.log("Waiting for interaction"));
-            }
-        }
-        
-        // Trigger on ANY first action (click, touch, scroll)
-        ['click', 'touchstart', 'scroll', 'keydown'].forEach(evt => {
-            document.addEventListener(evt, function initFS() {
-                forceFullScreen();
-                // We keep it active so if they exit, the next click puts it back (unless ignored)
-            }, {passive: true});
-        });
-
-        document.addEventListener('fullscreenchange', () => {
-            const btn = document.getElementById('exitFullScreenBtn');
-            if (document.fullscreenElement || document.webkitIsFullScreen) {
-                btn.style.display = 'block';
-            } else {
-                btn.style.display = 'none';
-                localStorage.setItem('fullscreenIgnored', 'true'); // Stops forcing if user clicked exit
-            }
-        });
-
-        function exitFullScreen() {
-            if (document.fullscreenElement || document.webkitIsFullScreen) {
-                let efs = document.exitFullscreen || document.webkitExitFullscreen || document.msExitFullscreen;
-                if (efs) efs.call(document);
-            }
-        }
     </script>
 </body>
 </html>
