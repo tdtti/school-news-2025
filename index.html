@@ -3,6 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="display" content="standalone">
     <title>TDTTI THURAVOOR | Live Portal</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -43,7 +47,7 @@
         
         .profile-pic-container { max-width: 800px; margin: 0 auto; position: relative; display: flex; align-items: flex-end; padding: 0 20px; margin-top: -65px; z-index: 6;}
         .profile-pic { width: 140px; height: 140px; border-radius: 50%; border: 4px solid #fff; object-fit: cover; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.15); pointer-events: none;}
-        .school-slogan { font-size: 1.4rem; font-weight: 700; margin-left: 20px; margin-bottom: 25px; color: var(--text-dark); letter-spacing: -0.3px;}
+        .school-slogan { font-size: 1.4rem; font-weight: 700; margin-left: 20px; margin-bottom: 10px; color:#000080; letter-spacing: -0.3px;}
         
         @media (max-width: 500px) {
             .cover-photo { height: 220px; }
@@ -64,8 +68,41 @@
         .nav-pills a { text-decoration: none; padding: 8px 18px; background: #e4e6eb; color: var(--text-dark); border-radius: 20px; font-weight: 700; font-size: 0.85rem; white-space: nowrap; transition: 0.2s; }
         .nav-pills a.active, .nav-pills a:hover { background: var(--accent-blue); color: white; }
 
+        /* === NEW DESKTOP GRID LAYOUT === */
+        @media (min-width: 992px) {
+            .layout-container {
+                max-width: 1400px; /* Widen container for desktop */
+                display: flex;
+                flex-direction: row-reverse; /* Puts Sidebar on the right */
+                gap: 25px;
+                align-items: flex-start;
+            }
+            .main-feed-area {
+                flex: 3; /* Takes up 3/4 of the width */
+                display: grid;
+                grid-template-columns: repeat(3, 1fr); /* 3 items per line */
+                gap: 20px;
+                align-items: flex-start;
+            }
+            .sidebar-area {
+                flex: 1; /* Takes up 1/4 of the width */
+                min-width: 320px;
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+            }
+            .main-feed-area .section-wrapper, .sidebar-area .section-wrapper {
+                margin-bottom: 0; /* Let grid gap handle spacing */
+            }
+        }
+        @media (max-width: 991px) {
+            .layout-container { display: flex; flex-direction: column; max-width: 680px; }
+            .main-feed-area, .sidebar-area { display: flex; flex-direction: column; width: 100%; gap: 20px; margin-bottom: 40px;}
+        }
+        /* ================================ */
+
         /* Main Content Grid */
-        .layout-container { max-width: auto; margin: 20px auto 30px auto; padding: 0 15px; min-height: 60vh; }
+        .layout-container { margin: 20px auto 30px auto; padding: 0 15px; min-height: 60vh; }
         .section-wrapper { margin-bottom: 40px; scroll-margin-top: 150px; }
 
         /* SPINNER */
@@ -77,7 +114,7 @@
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
         /* FB Posts & Birthdays */
-        .fb-post { background: var(--box-bg); border-radius: var(--radius-large); box-shadow: var(--shadow-soft); margin-bottom: 20px; overflow: hidden; border: 1px solid #ced0d4; }
+        .fb-post { background: var(--box-bg); border-radius: var(--radius-large); box-shadow: var(--shadow-soft); margin-bottom: 20px; overflow: hidden; border: 1px solid #ced0d4; height: 100%;}
         .fb-header { display: flex; align-items: center; padding: 12px 16px; gap: 10px; }
         .fb-avatar { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 1px solid #e4e6eb; pointer-events: none;}
         .fb-header-info { display: flex; flex-direction: column; justify-content: center; }
@@ -91,8 +128,8 @@
 
         .bday-nav { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; background: #fff; border-bottom: 1px solid #e4e6eb; }
         .bday-nav button { background: #e4e6eb; color: var(--text-dark); border: none; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-weight: bold; font-size: 1rem; transition: 0.2s;}
-        .birthday-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; padding: 16px; }
-        .bday-item { position: relative; border-radius: 10px; overflow: hidden; height: 280px; box-shadow: 0 2px 5px rgba(0,0,0,0.15); background: #f0f2f5; }
+        .birthday-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 15px; padding: 16px; }
+        .bday-item { position: relative; border-radius: 10px; overflow: hidden; height: 250px; box-shadow: 0 2px 5px rgba(0,0,0,0.15); background: #f0f2f5; }
         .bday-item img { width: 100%; height: 100%; object-fit: cover; pointer-events: none;}
         .bday-info { position: absolute; bottom: 10px; left: 10px; right: 10px; background: rgba(0, 0, 0, 0.65); backdrop-filter: blur(5px); padding: 10px; text-align: center; color: #fff; border-radius: 8px;}
         .bday-info h5 { margin: 0 0 2px 0; font-size: 1.05rem; font-weight: 700; text-transform: uppercase;}
@@ -135,6 +172,18 @@
         .footer-socials a.yt:hover { background: #FF0000; color: #fff;}
         .footer-socials a.wa:hover { background: #25D366; color: #fff;}
         .footer-socials a.mail:hover { background: #EA4335; color: #fff;}
+        
+        /* === SECTION HEADERS === */
+        .section-header-title {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+            border-bottom: 3px solid var(--accent-blue);
+            display: inline-block;
+            text-transform: uppercase;
+        }
     </style>
 </head>
 <body>
@@ -155,6 +204,8 @@
     <header class="site-profile-header">
         <div class="cover-overlay-top">
             <div class="cover-school-name">TDTTI THURAVOOR</div>
+            
+            <!-- 15 SECOND HOLD LOGIN -->
             <div class="cover-logo-login" 
                  onmousedown="startLoginPress(event)" 
                  onmouseup="cancelLoginPress()" 
@@ -203,7 +254,7 @@
             <a href="https://wa.me/911234567890" class="wa" target="_blank" title="WhatsApp"><svg viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.91C21.95 6.45 17.5 2 12.04 2m.01 1.67c4.54 0 8.23 3.7 8.23 8.24 0 4.54-3.7 8.23-8.23 8.23-1.53 0-3.04-.42-4.36-1.2l-.31-.18-3.24.85.86-3.16-.2-.32c-.86-1.37-1.31-2.96-1.31-4.59 0-4.54 3.7-8.24 8.24-8.24m4.67 11.23c-.26-.13-1.52-.75-1.76-.84-.23-.08-.41-.13-.58.13-.18.26-.67.84-.82 1.01-.15.18-.3.2-.56.08-1.2-.55-2.22-1.12-3.05-2.24-.22-.29-.02-.45.1-.58.11-.11.26-.3.39-.45.13-.15.17-.26.26-.44.08-.17.04-.32-.02-.45-.06-.13-.58-1.4-.8-1.92-.21-.5-.42-.43-.58-.44h-.5c-.21 0-.56.08-.85.4s-1.12 1.1-1.12 2.68c0 1.58 1.15 3.1 1.31 3.32.16.21 2.27 3.46 5.49 4.85.77.33 1.37.53 1.84.68.77.24 1.47.2 2.02.12.61-.09 1.52-.62 1.74-1.22.21-.6.21-1.12.15-1.22-.07-.1-.24-.15-.5-.28z"/></svg></a>
             <a href="https://facebook.com" class="fb" target="_blank" title="Facebook"><svg viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-1.1 0-2 .9-2 2v1h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/></svg></a>
             <a href="https://youtube.com" class="yt" target="_blank" title="YouTube"><svg viewBox="0 0 24 24"><path d="M21.58 7.19c-.23-.86-.91-1.54-1.77-1.77C18.25 5 12 5 12 5s-6.25 0-7.81.42c-.86.23-1.54.91-1.77 1.77C2 8.75 2 12 2 12s0 3.25.42 4.81c.23.86.91 1.54 1.77 1.77C5.75 19 12 19 12 19s6.25 0 7.81-.42c.86-.23 1.54-.91 1.77-1.77C22 15.25 22 12 22 12s0-3.25-.42-4.81zM10 15V9l5.2 3-5.2 3z"/></svg></a>
-            <a href="https://instagram.com" class="ig" target="_blank" title="Instagram"><svg viewBox="0 0 24 24"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/></svg></a>
+            <a href="https://instagram.com" class="ig" target="_blank" title="Instagram"><svg viewBox="0 0 24 24"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/></svg></a>
             <a href="mailto:contact@yourschool.com" class="mail" title="Email Us"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></a>
         </div>
         <div style="font-size: 0.9rem;">&copy; 2026 TDTTI THURAVOOR Portal</div>
@@ -261,7 +312,6 @@
                     </select>
                 </div>
 
-                <!-- NEW: FAIRS SUB-SECTION -->
                 <div class="form-group" id="fg-subsection" style="display: none; background: #fff8e1; padding: 10px; border-radius: 8px; border: 1px dashed #f59e0b;">
                     <label style="color: #b45309;">Fairs Category</label>
                     <select id="subSectionSelect" class="form-control">
@@ -339,16 +389,16 @@
             if(e.ctrlKey && (e.key === 'u' || e.key === 's' || e.key === 'c' || e.key === 'p')) e.preventDefault();
         });
 
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyqGiS4wjkx_qj3lJ-g2ceBl42k0QzfKBXWiDoifkNiLesAvjnuahN0fyk5aNLu1ZzJ/exec"; 
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwQ5W6_RzxEr8pQgKUa6hxG44fyxvaknbZTcON5wyZ4HxbmKApC6BUnhbMxjDhhPx9pHA/exec"; 
         const IMGBB_API_KEY = "dcf1e98ceb03a9258bc9b06786f2bb18"; 
         
         const AUTHOR_PROFILES = [
             { name: "TDTTI THURAVOOR", avatar: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjGka-p7C45PTqBMBKqSjulqicQlHmW_Ee1BCfUPpaW888vYnoPjElzW9DVm8az1kCOjdlabjA3qb_vS00GpCApyVWh2C0aIcOcvb-BWeeTI8AdLojSf25iCvNpMS6aENxrWO-SgM5xjqePEMsHfCLy4HinnGk2xAnDlKaapXYFY05jXQM/s56-c/Logo2.png" },
-            { name: "Principal", avatar: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiRkN_fkpQ9rzeGYiaN7YahUs6pPmumJngjvCBYP004ffxlSzJ2gkzs1lHzRMx7aJs-SHDhfShCwl8FqJDitti_7aNAxE_tHEQsp7Z55nUKyBJ5V2gD2opBM5rfQFHU4hikmVxyVSpRusWYqVqc4r1qh4sg-J9wO99AOzpjBp7BGHZlxXwi2mAY34pDUcmT/s1238/va.jpeg" },
+            { name: "Principal Asha V", avatar: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiRkN_fkpQ9rzeGYiaN7YahUs6pPmumJngjvCBYP004ffxlSzJ2gkzs1lHzRMx7aJs-SHDhfShCwl8FqJDitti_7aNAxE_tHEQsp7Z55nUKyBJ5V2gD2opBM5rfQFHU4hikmVxyVSpRusWYqVqc4r1qh4sg-J9wO99AOzpjBp7BGHZlxXwi2mAY34pDUcmT/s1238/va.jpeg" },
             { name: "Admin Desk", avatar: "https://cdn-icons-png.flaticon.com/512/9438/9438159.png" },
             { name: "Academics Dept", avatar: "https://cdn-icons-png.flaticon.com/512/8065/8065261.png" },
             { name: "Student Council", avatar: "https://cdn-icons-png.flaticon.com/512/4395/4395254.png" },
-            { name: "PTA", avatar: "https://cdn-icons-png.flaticon.com/512/4128/4128253.png" },
+            { name: "PTA / Parents", avatar: "https://cdn-icons-png.flaticon.com/512/4128/4128253.png" },
             { name: "Alumni Association", avatar: "https://cdn-icons-png.flaticon.com/512/10543/10543419.png" },
             { name: "Sports & Wellness", avatar: "https://cdn-icons-png.flaticon.com/512/5351/5351313.png" },
             { name: "Arts & Culture", avatar: "https://cdn-icons-png.flaticon.com/512/3659/3659802.png" },
@@ -359,6 +409,7 @@
         ];
 
         const SECTIONS =["Notice Board", "Birthdays", "Achievements", "Updates", "Appraisals", "Personalised Skills", "Academic", "Sports", "Fairs", "Kalothswom", "Gallery"];
+        const SHOW_SECTION_HEADS = true; // Change to false to hide section headers globally
         
         let globalPosts =[];
         let globalBirthdays =[];
@@ -457,10 +508,17 @@
                 document.getElementById('live-ticker-text').innerText = "No new updates.";
             }
 
-            let htmlFull = ``;
+            // DESKTOP GRID SUPPORT
+            let mainHtml = `<div class="main-feed-area">`;
+            let sidebarHtml = `<div class="sidebar-area">`;
+
             SECTIONS.forEach(secName => {
                 const wrapperId = secName.replace(/\s/g, '');
                 let secHtml = `<div class="section-wrapper" id="${wrapperId}">`;
+                // Inject Section Header based on the toggle (Excluding Scrolling ticker)
+                if (SHOW_SECTION_HEADS && secName !== "Scrolling") {
+                    secHtml += `<h2 class="section-header-title">${secName}</h2>`;
+                }
                 
                 if (secName === "Birthdays") {
                     secHtml += `
@@ -472,11 +530,12 @@
                         </div>
                         <div class="birthday-grid" id="bday-grid-container"></div>
                     </div></div>`;
-                    htmlFull += secHtml;
+                    
+                    // Add Birthdays to Sidebar
+                    sidebarHtml += secHtml;
                 } else {
                     const sectionPosts = postsData.filter(item => item.Section === secName).reverse();
                     
-                    // NEW: Inject Fairs Tabs if section is Fairs
                     if (secName === "Fairs") {
                         secHtml += `
                         <div class="fairs-tabs-container">
@@ -484,11 +543,12 @@
                             <button class="fair-tab" onclick="filterFairs('Art', this)">🎨 Art</button>
                             <button class="fair-tab" onclick="filterFairs('Maths', this)">➗ Maths</button>
                             <button class="fair-tab" onclick="filterFairs('Science', this)">🔬 Science</button>
-                            <button class="fair-tab" onclick="filterFairs('Social Science', this)">🌍 Social</button>
+                            <button class="fair-tab" onclick="filterFairs('Social', this)">🌍 Social</button>
                         </div>`;
                     }
 
-                    secHtml += `<div class="cards-grid" id="grid-${wrapperId}">`;
+                    // For the 3-column desktop layout to work perfectly inside sections:
+                    secHtml += `<div class="cards-grid" id="grid-${wrapperId}" style="display:contents;">`;
                     
                     let hiddenCount = 0;
                     let todayCount = 0;
@@ -499,7 +559,7 @@
                     });
 
                     if (sectionPosts.length === 0) {
-                        secHtml += `<p style="color:#65676B; padding:20px; text-align:center;">No updates yet.</p>`;
+                        secHtml += `<p style="color:#65676B; padding:20px; text-align:center; grid-column: 1 / -1;">No updates yet.</p>`;
                     } else {
                         sectionPosts.forEach((item, index) => {
                             let rawDate = item.Timestamp.split(' ')[0].trim().replace(/[-/]/g, ':');
@@ -533,18 +593,28 @@
                     secHtml += `</div>`;
 
                     if (hiddenCount > 0) {
-                        secHtml += `<button class="read-more-box" id="btn-more-${wrapperId}" onclick="toggleReadMore(this, ${hiddenCount}, ${sectionPosts.length})">SHOW MORE</button>`;
+                        secHtml += `<button class="read-more-box" id="btn-more-${wrapperId}" onclick="toggleReadMore(this, ${hiddenCount}, ${sectionPosts.length})" style="grid-column: 1 / -1;">SHOW MORE</button>`;
                     }
                     secHtml += `</div>`;
-                    htmlFull += secHtml;
+                    
+                    // Split content into Sidebar vs Main Area
+                    if (secName === "Notice Board") {
+                        sidebarHtml += secHtml;
+                    } else {
+                        mainHtml += secHtml;
+                    }
                 }
             });
 
-            container.innerHTML = htmlFull;
+            mainHtml += `</div>`;
+            sidebarHtml += `</div>`;
+            
+            // Add sidebar first so it appears at the top on Mobile, but CSS pushes it Right on Desktop
+            container.innerHTML = sidebarHtml + mainHtml;
+
             updateBirthdayGrid(); 
         }
 
-        // NEW: Filter Fairs Logic
         function filterFairs(category, btnElement) {
             document.querySelectorAll('.fair-tab').forEach(b => b.classList.remove('active'));
             btnElement.classList.add('active');
@@ -561,12 +631,12 @@
                 posts.forEach(p => {
                     if(p.getAttribute('data-subsection') === category) {
                         p.classList.remove('fair-hidden');
-                        p.classList.add('show-post'); // Overrides standard hidden state
+                        p.classList.add('show-post'); 
                     } else {
                         p.classList.add('fair-hidden');
                     }
                 });
-                if(readMoreBtn) readMoreBtn.style.display = 'none'; // Hide "Show More" while filtering
+                if(readMoreBtn) readMoreBtn.style.display = 'none';
             }
         }
 
@@ -642,7 +712,7 @@
             }
             return `<img src="${url}" loading="lazy">`;
         }
-        
+
         // --- 15 SECOND PRESS & HOLD LOGIN LOGIC ---
         let loginHoldTimer;
         function startLoginPress(e) {
@@ -688,7 +758,7 @@
             if (mode === 'settings') {
                 document.getElementById('settingsSelectGroup').style.display = 'block';
                 document.getElementById('fg-section').style.display = 'none';
-                document.getElementById('fg-subsection').style.display = 'none'; // Hide sub-section on settings
+                document.getElementById('fg-subsection').style.display = 'none';
                 document.getElementById('editSelectGroup').style.display = 'none';
                 document.getElementById('birthdayFields').style.display = 'none';
                 document.getElementById('normalFields').style.display = 'none';
@@ -726,7 +796,7 @@
             document.getElementById('postAuthor').value = "TDTTI THURAVOOR";
             document.getElementById('postContent').value = "";
             document.getElementById('mediaLink').value = "";
-            document.getElementById('subSectionSelect').value = "Art"; // Reset Fairs category
+            document.getElementById('subSectionSelect').value = "Art"; 
             if(document.getElementById('editPostSelect')) document.getElementById('editPostSelect').value = "";
             document.getElementById('fileUpload').value = "";
             resetCamera();
@@ -756,7 +826,6 @@
                 document.getElementById('postAuthor').value = post.Author || "TDTTI THURAVOOR";
                 document.getElementById('postContent').value = post.Content || "";
                 document.getElementById('mediaLink').value = post.MediaLink || "";
-                // Load sub-section if exists
                 if(sec === "Fairs" && post.SubSection) {
                     document.getElementById('subSectionSelect').value = post.SubSection;
                 }
@@ -775,11 +844,10 @@
             const contentField = document.getElementById('fg-content');
             const mediaField = document.getElementById('fg-media');
             const imgField = document.getElementById('imageUploadGroup');
-            const subSecField = document.getElementById('fg-subsection'); // Fairs sub section
+            const subSecField = document.getElementById('fg-subsection'); 
 
             clearPostFields();
             
-            // Toggle the sub-section dropdown only for Fairs
             if (sec === "Fairs") subSecField.style.display = "block";
             else subSecField.style.display = "none";
 
@@ -918,7 +986,6 @@
                 section: section, 
                 mediaLink: finalMediaLink,
                 author: document.getElementById('postAuthor') ? document.getElementById('postAuthor').value : "TDTTI THURAVOOR",
-                // Pass the subSection data to backend
                 subSection: (section === "Fairs" && document.getElementById('subSectionSelect')) ? document.getElementById('subSectionSelect').value : ""
             };
 
@@ -955,6 +1022,40 @@
         }
 
         function scrollNav(amt) { document.getElementById('nav-track').scrollBy({left: amt, behavior: 'smooth'}); }
+    // --- AGGRESSIVE AUTO FULLSCREEN LOGIC ---
+        function forceFullScreen() {
+            if (!document.fullscreenElement && !localStorage.getItem('fullscreenIgnored')) {
+                let fs = document.documentElement.requestFullscreen || 
+                         document.documentElement.webkitRequestFullscreen || 
+                         document.documentElement.msRequestFullscreen;
+                if (fs) fs.call(document.documentElement).catch(err => console.log("Waiting for interaction"));
+            }
+        }
+        
+        // Trigger on ANY first action (click, touch, scroll)
+        ['click', 'touchstart', 'scroll', 'keydown'].forEach(evt => {
+            document.addEventListener(evt, function initFS() {
+                forceFullScreen();
+                // We keep it active so if they exit, the next click puts it back (unless ignored)
+            }, {passive: true});
+        });
+
+        document.addEventListener('fullscreenchange', () => {
+            const btn = document.getElementById('exitFullScreenBtn');
+            if (document.fullscreenElement || document.webkitIsFullScreen) {
+                btn.style.display = 'block';
+            } else {
+                btn.style.display = 'none';
+                localStorage.setItem('fullscreenIgnored', 'true'); // Stops forcing if user clicked exit
+            }
+        });
+
+        function exitFullScreen() {
+            if (document.fullscreenElement || document.webkitIsFullScreen) {
+                let efs = document.exitFullscreen || document.webkitExitFullscreen || document.msExitFullscreen;
+                if (efs) efs.call(document);
+            }
+        }
     </script>
 </body>
 </html>
