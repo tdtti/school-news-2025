@@ -38,7 +38,24 @@
         .site-profile-header { background: var(--box-bg); padding-bottom: 20px; border-bottom: 1px solid #ced0d4; position: relative;}
         
         .cover-overlay-top { position: absolute; top: 20px; left: 20px; right: 20px; display: flex; justify-content: space-between; align-items: flex-start; z-index: 5; max-width: 1000px; margin: 0 auto; }
-        .cover-school-name { background: rgba(255, 255, 255, 0.9); color: var(--accent-blue); padding: 10px 20px; border-radius: var(--radius-large); font-weight: 800; font-size: 1.3rem; box-shadow: 0 4px 15px rgba(0,0,0,0.15); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); letter-spacing: 0.5px; }
+        .cover-school-name { 
+        background: rgba(255, 255, 255, 0.9); 
+        color: var(--accent-blue); 
+        padding: 10px 20px; 
+        border-radius: var(--radius-large); 
+        font-weight: 800; 
+        font-size: 1.3rem; 
+        box-shadow: 0 4px 15px rgba(0,0,0,0.15); 
+        backdrop-filter: blur(8px); 
+        -webkit-backdrop-filter: blur(8px); 
+        letter-spacing: 0.5px; 
+        cursor: pointer; 
+        transition: transform 0.2s; 
+        }
+        .cover-school-name:hover { 
+        transform: translateY(-3px); 
+        box-shadow: 0 6px 20px rgba(0,0,0,0.2); 
+        }
         .cover-logo-login { background: rgba(255, 255, 255, 0.9); padding: 6px; border-radius: var(--radius-large); box-shadow: 0 4px 15px rgba(0,0,0,0.15); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); cursor: pointer; transition: transform 0.2s; display: flex; align-items: center; justify-content: center; }
         .cover-logo-login:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,0.2); }
         .cover-logo-login img { width: 45px; height: 45px; object-fit: contain; border-radius: 8px; }
@@ -228,7 +245,7 @@
     <!-- MAIN HEADER -->
     <header class="site-profile-header">
         <div class="cover-overlay-top">
-            <div class="cover-school-name">TDTTI THURAVOOR</div>
+            <div class="cover-school-name" onclick="document.getElementById('pwaPromptModal').classList.add('active');" title="Install Web App">TDTTI THURAVOOR</div>
             
             <!-- 15 SECOND HOLD LOGIN -->
             <div class="cover-logo-login" 
