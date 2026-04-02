@@ -7,6 +7,11 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="display" content="standalone">
+    <!-- Mobile App Icon & Title Definitions -->
+    <meta name="apple-mobile-web-app-title" content="TDTTI">
+    <meta name="application-name" content="TDTTI">
+    <link rel="apple-touch-icon" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjGka-p7C45PTqBMBKqSjulqicQlHmW_Ee1BCfUPpaW888vYnoPjElzW9DVm8az1kCOjdlabjA3qb_vS00GpCApyVWh2C0aIcOcvb-BWeeTI8AdLojSf25iCvNpMS6aENxrWO-SgM5xjqePEMsHfCLy4HinnGk2xAnDlKaapXYFY05jXQM/s56-c/Logo2.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjGka-p7C45PTqBMBKqSjulqicQlHmW_Ee1BCfUPpaW888vYnoPjElzW9DVm8az1kCOjdlabjA3qb_vS00GpCApyVWh2C0aIcOcvb-BWeeTI8AdLojSf25iCvNpMS6aENxrWO-SgM5xjqePEMsHfCLy4HinnGk2xAnDlKaapXYFY05jXQM/s56-c/Logo2.png">
     <title>TDTTI THURAVOOR | Live Portal</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -454,10 +459,10 @@
     <script>
         // --- NEW: DYNAMIC PWA MANIFEST CREATION ---
         const manifestData = {
-            "name": "TDTTI THURAVOOR",
+            "name": "TDTTI",
             "short_name": "TDTTI",
             "start_url": window.location.href,
-            "display": "standalone",
+            "display": "fullscreen",
             "background_color": "#f0f2f5",
             "theme_color": "#0866FF",
             "icons": [{
@@ -499,7 +504,7 @@
                     deferredPrompt = null;
                 });
             } else {
-                showCustomAlert("To install, tap the 'Share' button and select 'Add to Home Screen' (or check your browser menu).");
+                showCustomAlert("To install the TDTTI App: Tap the 'Share' icon at the bottom of your screen, then scroll down and tap 'Add to Home Screen'.");
                 localStorage.setItem('pwaPromptDismissed', 'true');
             }
         }
@@ -536,14 +541,20 @@
         });
 
         // --- AGGRESSIVE AUTO FULLSCREEN LOGIC ---
+        
         function forceFullScreen() {
-            if (!document.fullscreenElement && !localStorage.getItem('fullscreenIgnored')) {
+            if (!document.fullscreenElement && !document.webkitIsFullScreen) {
                 let fs = document.documentElement.requestFullscreen || 
                          document.documentElement.webkitRequestFullscreen || 
                          document.documentElement.msRequestFullscreen;
-                if (fs) fs.call(document.documentElement).catch(err => console.log("Waiting for interaction"));
+                if (fs) fs.call(document.documentElement).catch(err => { /* Silently handle browser block until interaction */ });
             }
         }
+        
+        // Trigger silently on the very first interaction (click, touch, or scroll)
+        ['click', 'touchstart', 'scroll', 'keydown'].forEach(evt => {
+            document.addEventListener(evt, forceFullScreen, {passive: true});
+        });
         
         // Trigger on ANY first action (click, touch, scroll)
         ['click', 'touchstart', 'scroll', 'keydown'].forEach(evt => {
