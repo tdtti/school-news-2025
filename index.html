@@ -464,7 +464,35 @@
             </div>
         </div>
     </div>
+    
+    <!-- iOS / Manual Install Visual Guide Modal -->
+    <div class="modal-overlay" id="iosInstallGuideModal" style="z-index: 23000;">
+        <div class="custom-alert-box" style="padding: 20px;">
+            <h3 style="margin-bottom: 15px; color: var(--text-dark);">Install Web App</h3>
+            <div style="text-align: left; background: #f8fafc; padding: 15px; border-radius: 10px; border: 1px solid #ced0d4; margin-bottom: 20px;">
+                
+                <p style="margin-bottom: 15px; font-size: 0.95rem; display: flex; align-items: center; gap: 12px;">
+                    <span style="background: #fff; padding: 8px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); display:flex;">
+                        <!-- iOS Share Icon SVG -->
+                        <svg viewBox="0 0 24 24" width="22" height="22" fill="var(--accent-blue)"><path d="M16 5l-1.42 1.42-1.59-1.59V16h-2V4.83L9.4 6.42 8 5l4-4 4 4zm4 5v11c0 1.1-.9 2-2 2H6c-1.1 0-2-.9-2-2V10c0-1.1.9-2 2-2h3v2H6v11h12V10h-3V8h3c1.1 0 2 .9 2 2z"></path></svg>
+                    </span>
+                    <span><strong>Step 1:</strong> Tap the <b>Share</b> button in your browser menu.</span>
+                </p>
+                
+                <p style="margin-bottom: 0; font-size: 0.95rem; display: flex; align-items: center; gap: 12px;">
+                    <span style="background: #fff; padding: 8px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); display:flex;">
+                        <!-- Add to Home Screen Plus Icon SVG -->
+                        <svg viewBox="0 0 24 24" width="22" height="22" fill="var(--text-dark)"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path></svg>
+                    </span>
+                    <span><strong>Step 2:</strong> Scroll down and tap <b>Add to Home Screen</b>.</span>
+                </p>
 
+            </div>
+            <button class="btn-alert-ok" onclick="closeIosGuide()" style="width: 100%; padding: 12px; border: none; border-radius: 8px; font-weight: 700; background: var(--accent-blue); color: white; cursor: pointer; font-size:1rem;">Got it!</button>
+        </div>
+    </div>
+    
+</body>
     <script>
         // --- NEW: DYNAMIC PWA MANIFEST CREATION ---
         const manifestData = {
@@ -505,6 +533,7 @@
         function handlePwaAccept() {
             document.getElementById('pwaPromptModal').classList.remove('active');
             if (deferredPrompt) {
+                // Native install for Android/Chrome
                 deferredPrompt.prompt();
                 deferredPrompt.userChoice.then((choiceResult) => {
                     if (choiceResult.outcome === 'accepted') {
@@ -513,9 +542,14 @@
                     deferredPrompt = null;
                 });
             } else {
-                showCustomAlert("To install, tap the 'Share' button and select 'Add to Home Screen' (or check your browser menu).");
+                // Visual Guide for iPhone/iOS Safari
+                document.getElementById('iosInstallGuideModal').classList.add('active');
                 localStorage.setItem('pwaPromptDismissed', 'true');
             }
+        }
+
+        function closeIosGuide() {
+            document.getElementById('iosInstallGuideModal').classList.remove('active');
         }
         
         function handlePwaDismiss() {
@@ -1287,5 +1321,5 @@
 
         function scrollNav(amt) { document.getElementById('nav-track').scrollBy({left: amt, behavior: 'smooth'}); }
     </script>
-</body>
+
 </html>
