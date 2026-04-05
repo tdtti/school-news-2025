@@ -59,11 +59,19 @@
         .cover-logo-login { background: rgba(255, 255, 255, 0.9); padding: 6px; border-radius: var(--radius-large); box-shadow: 0 4px 15px rgba(0,0,0,0.15); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); cursor: pointer; transition: transform 0.2s; display: flex; align-items: center; justify-content: center; }
         .cover-logo-login:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,0.2); }
         .cover-logo-login img { width: 45px; height: 45px; object-fit: contain; border-radius: 8px; }
-
-        .cover-photo { width: 100%; height: 320px; object-fit: cover; display: block; background: #e4e6eb; pointer-events: none; }
-        
+        .cover-photo { 
+        width: 100%; 
+        height: 320px; 
+        object-fit: cover; 
+        display: block; 
+        background: #e4e6eb; 
+        pointer-events: none; 
+        /* NEW: Fades bottom 15% to transparent, revealing white background */
+        -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 85%, rgba(0,0,0,0) 100%);
+        mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 85%, rgba(0,0,0,0) 100%);
+        }
         .profile-pic-container { max-width: 800px; margin: 0 auto; position: relative; display: flex; align-items: flex-end; padding: 0 20px; margin-top: -65px; z-index: 6;}
-        .profile-pic { width: 140px; height: 140px; border-radius: 50%; border: 4px solid #fff; object-fit: cover; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.15); pointer-events: none;}
+        .profile-pic { width: 140px; height: 140px; border-radius: 50%; border: 4px solid #fff; object-fit: cover; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.15); cursor: pointer;}
         .school-slogan { font-size: 1.4rem; font-weight: 700; margin-left: 20px; margin-bottom: 15px; color: #000080; letter-spacing: -0.3px;}
         
         @media (max-width: 500px) {
@@ -91,11 +99,57 @@
                 max-width: 1400px; display: flex; flex-direction: row-reverse; gap: 25px; align-items: flex-start;
             }
             .main-feed-area {
-                flex: 3; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; align-items: flex-start;
+                flex: 3; display: flex; flex-direction: column; gap: 30px; align-items: stretch;
             }
-            .sidebar-area { flex: 1; min-width: 320px; display: flex; flex-direction: column; gap: 20px; }
+            .sidebar-area { flex: 1; min-width: 320px; display: flex; flex-direction: column; gap: 30px; }
             .main-feed-area .section-wrapper, .sidebar-area .section-wrapper { margin-bottom: 0; }
         }
+        
+        /* === SOCIAL BAR & COMMENTS CSS === */
+        .social-bar { display: flex; justify-content: space-between; padding: 10px 16px; border-top: 1px solid #ced0d4; background: #fff; }
+        .social-btn { display: flex; align-items: center; justify-content: center; gap: 6px; flex: 1; padding: 8px 0; background: none; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; color: var(--text-gray); transition: 0.2s; font-size: 0.95rem; }
+        .social-btn:hover { background: #f0f2f5; color: var(--text-dark); }
+        .social-btn.like:active { color: var(--accent-blue); transform: scale(1.1); }
+        .social-btn.love:active { color: #E4405F; transform: scale(1.1); }
+        .social-btn.clap:active { color: #F59E0B; transform: scale(1.1); }
+        /* Active reaction colors */
+        .social-btn.reacted-like { color: var(--accent-blue); background: #eef2ff; }
+        .social-btn.reacted-love { color: #E4405F; background: #ffebee; }
+        .social-btn.reacted-clap { color: #F59E0B; background: #fff8e1; }
+        
+        /* === REACTION POPUP CSS === */
+        .reaction-container { position: relative; display: flex; flex: 1; }
+        .social-btn.main-react-btn { flex: 1; width: 100%; }
+        
+        .reaction-popup {
+            position: absolute; bottom: 120%; left: 0; background: #fff; border-radius: 30px; 
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15); padding: 5px 12px; display: flex; gap: 12px;
+            opacity: 0; visibility: hidden; transform: translateY(10px); transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); z-index: 100; border: 1px solid #e4e6eb;
+        }
+        .reaction-popup.show { opacity: 1; visibility: visible; transform: translateY(0); }
+        
+        .reaction-option { font-size: 1.6rem; cursor: pointer; transition: transform 0.2s; user-select: none; padding: 2px; }
+        .reaction-option:hover { transform: scale(1.3) translateY(-5px); }
+        
+        
+        .comments-section { padding: 10px 16px; background: #f8fafc; border-top: 1px solid #f0f2f5; display: none; }
+        .comment-list { max-height: 250px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; margin-bottom: 12px; }
+        .comment-item { display: flex; gap: 10px; }
+        .c-avatar { width: 35px; height: 35px; border-radius: 50%; object-fit: cover; background: #fff; border: 1px solid #ced0d4;}
+        .c-bubble { background: #e4e6eb; padding: 8px 12px; border-radius: 18px; max-width: 85%; }
+        .c-bubble strong { font-size: 0.85rem; color: var(--text-dark); display: block; margin-bottom: 2px;}
+        .c-bubble span { font-size: 0.75rem; color: var(--text-gray); margin-left: 5px; font-weight: normal;}
+        .c-bubble p { font-size: 0.9rem; color: var(--text-dark); margin: 0; white-space: pre-wrap; word-wrap: break-word;}
+        
+        .add-comment-box { display: flex; flex-direction: column; gap: 8px; }
+        .add-comment-box input, .add-comment-box textarea { width: 100%; padding: 10px; border: 1px solid #ced0d4; border-radius: 18px; font-family: inherit; font-size: 0.9rem; background: #fff; }
+        .add-comment-box textarea { border-radius: 12px; resize: none; }
+        .add-comment-box button { align-self: flex-end; background: var(--accent-blue); color: #fff; border: none; padding: 8px 16px; border-radius: 18px; font-weight: 600; cursor: pointer; transition: 0.2s;}
+        
+        .admin-comment-item { display: flex; justify-content: space-between; align-items: center; background: #f0f2f5; padding: 10px; border-radius: 8px; margin-bottom: 8px; border: 1px solid #ced0d4;}
+        .admin-comment-actions { display: flex; gap: 5px; }
+        .admin-comment-actions button { padding: 5px 10px; border: none; border-radius: 5px; cursor: pointer; font-size: 0.8rem; font-weight: bold;}
+        
         @media (max-width: 991px) {
             .layout-container { display: flex; flex-direction: column; max-width: 680px; }
             .main-feed-area, .sidebar-area { display: flex; flex-direction: column; width: 100%; gap: 20px; margin-bottom: 40px;}
@@ -105,7 +159,7 @@
         .layout-container { margin: 20px auto 30px auto; padding: 0 15px; min-height: 60vh; }
         .section-wrapper { margin-bottom: 30px; scroll-margin-top: 150px; display: flex; flex-direction: column; gap: 20px; }
         .cards-grid { display: flex; flex-direction: column; gap: 20px; width: 100%; }
-        @media (min-width: 992px) { .cards-grid { display: contents; } }
+        
         
         /* SPINNER */
         .saving-overlay { position: fixed; inset: 0; background: rgba(255,255,255,0.7); z-index: 20000; display: none; justify-content: center; align-items: center; flex-direction: column; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
@@ -262,7 +316,7 @@
         <img src="https://via.placeholder.com/1200x300.png?text=Loading+Cover..." class="cover-photo" id="ui-cover">
         
         <div class="profile-pic-container">
-            <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" class="profile-pic" id="ui-profile">
+            <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" class="profile-pic" id="ui-profile" onclick="window.location.reload();" title="Refresh Page">
             <h2 class="school-slogan">Empowering Minds..<br>Shaping Futures...</h2>
         </div>
     </header>
@@ -271,8 +325,8 @@
         <div class="scroll-container">
             <button class="scroll-btn left" onclick="scrollNav(-200)">&lt;</button>
             <div class="scroll-track nav-pills" id="nav-track">
-                <a href="#NoticeBoard" class="active">Notice Board</a>
-                <a href="#Birthdays">Birthdays</a>
+                <a href="#Today" class="active">Today</a>
+                <a href="#NoticeBoard">Notice Board</a>
                 <a href="#Achievements">Achievements</a>
                 <a href="#Updates">Updates</a>
                 <a href="#Appraisals">Appraisals</a>
@@ -341,6 +395,7 @@
                     <label>Section</label>
                     <select id="sectionSelect" class="form-control" onchange="toggleFields()">
                         <option value="Scrolling">Scrolling</option>
+                        <option value="Today">Today</option>
                         <option value="Notice Board">Notice Board</option>
                         <option value="Birthdays">Birthdays</option>
                         <option value="Achievements">Achievements</option>
@@ -368,6 +423,11 @@
                 <div class="form-group" id="editSelectGroup" style="display: none;">
                     <label style="color: var(--accent-red);">Select Post to Edit/Delete</label>
                     <select id="editPostSelect" class="form-control" onchange="loadSelectedPost()"></select>
+                
+                <div id="adminCommentManager" style="display:none; background:#fff; border:1px solid #ced0d4; padding:10px; border-radius:8px; margin-bottom:15px; max-height: 200px; overflow-y:auto;">
+                    <label style="color:var(--accent-red); margin-bottom:5px;">Manage Comments</label>
+                    <div id="adminCommentList">Select a post to view comments.</div>
+                </div>
                 </div>
 
                 <div id="birthdayFields" style="display:none; background: #e4e6eb; padding: 15px; border-radius: 10px; margin-bottom: 15px;">
@@ -573,16 +633,7 @@
             document.removeEventListener('touchstart', initFullScreenTouch);
         }, {once: true});
 
-        document.addEventListener('fullscreenchange', () => {
-            const exitBtn = document.getElementById('exitFullScreenBtn');
-            if (document.fullscreenElement || document.webkitIsFullScreen) {
-                exitBtn.style.display = 'block';
-            } else {
-                exitBtn.style.display = 'none';
-                localStorage.setItem('fullscreenIgnored', 'true'); 
-            }
-        });
-
+        
         // --- AGGRESSIVE AUTO FULLSCREEN LOGIC ---
         // --- AGGRESSIVE AUTO FULLSCREEN LOGIC (NO BUTTONS) ---
         function forceFullScreen() {
@@ -607,13 +658,15 @@
             }, {passive: true});
         });
 
+        let hasShownFsMessage = false;
         document.addEventListener('fullscreenchange', () => {
-            const btn = document.getElementById('exitFullScreenBtn');
             if (document.fullscreenElement || document.webkitIsFullScreen) {
-                btn.style.display = 'block';
+                if (!hasShownFsMessage) {
+                    showCustomAlert("App is now running in Full Screen. Press ESC or swipe down from the top edge to exit.");
+                    hasShownFsMessage = true;
+                }
             } else {
-                btn.style.display = 'none';
-                localStorage.setItem('fullscreenIgnored', 'true'); // Stops forcing if user clicked exit
+                localStorage.setItem('fullscreenIgnored', 'true'); 
             }
         });
 
@@ -639,8 +692,9 @@
             confirmCallback = callback;
             document.getElementById('customConfirmModal').classList.add('active');
             document.getElementById('btnConfirmYes').onclick = function() {
-                closeCustomConfirm();
+                // EXECUTING THE DELETE COMMAND BEFORE CLOSING
                 if(confirmCallback) confirmCallback();
+                closeCustomConfirm();
             };
         }
         function closeCustomConfirm() {
@@ -654,7 +708,7 @@
             if(e.ctrlKey && (e.key === 'u' || e.key === 's' || e.key === 'c' || e.key === 'p')) e.preventDefault();
         });
 
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwQ5W6_RzxEr8pQgKUa6hxG44fyxvaknbZTcON5wyZ4HxbmKApC6BUnhbMxjDhhPx9pHA/exec"; 
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxOQ5wh3fjGPVxw6JGFXd3Aw8ZSXYGkrJHoCyFn6GddnXp--oVR2CVK5Y1HGEIkowGogA/exec"; 
         const IMGBB_API_KEY = "dcf1e98ceb03a9258bc9b06786f2bb18"; 
         
         const AUTHOR_PROFILES = [
@@ -673,12 +727,13 @@
             { name: "Career Guidance", avatar: "https://cdn-icons-png.flaticon.com/512/10061/10061730.png" }
         ];
 
-        const SECTIONS =["Notice Board", "Birthdays", "Achievements", "Updates", "Appraisals", "Personalised Skills", "Academic", "Sports", "Fairs", "Kalothswom", "Gallery"];
-        const SHOW_SECTION_HEADS = true; // Change to false to hide section headers globally
-        
+        const SECTIONS =["Today", "Notice Board", "Birthdays", "Achievements", "Updates", "Appraisals", "Personalised Skills", "Academic", "Sports", "Fairs", "Kalothswom", "Gallery"];
+        const SHOW_SECTION_HEADS = true; 
+
         let globalPosts =[];
         let globalBirthdays =[];
         let currentBdayViewStr = ""; 
+        let currentTodayViewStr = ""; // NEW VARIABLE
         
         function getTodayDateStr() {
             const now = new Date();
@@ -719,8 +774,9 @@
         }
 
         window.onload = () => {
-            currentBdayViewStr = getTodayDateStr();
-            loadContent();
+        currentBdayViewStr = getTodayDateStr();
+        currentTodayViewStr = getTodayDateStr(); // INITIALIZE TODAY'S DATE
+        loadContent();
         };
 
         async function loadContent() {
@@ -816,6 +872,18 @@
                 } else {
                     const sectionPosts = postsData.filter(item => item.Section === secName).reverse();
                     
+                    if (secName === "Today") {
+                        secHtml += `
+                    <div class="fb-post" style="padding:0; border:1px solid #ced0d4; margin-bottom: 15px;">
+                    <div class="bday-nav">
+                    <button onclick="changeToday(-1)">&lt;</button>
+                    <h3 id="today-display-title" style="margin:0; font-size:1.1rem; text-transform:uppercase;">${currentTodayViewStr.replace(/:/g, '/')}</h3>
+                    <button onclick="changeToday(1)">&gt;</button>
+                    </div>
+                    </div>`;
+                        }
+
+                    
                     if (secName === "Fairs") {
                         secHtml += `
                         <div class="fairs-tabs-container">
@@ -853,9 +921,20 @@
                             let author = AUTHOR_PROFILES.find(a => a.name === authorName) || AUTHOR_PROFILES[0];
                             let subSecAttr = item.SubSection ? `data-subsection="${item.SubSection}"` : `data-subsection="Other"`;
                             
+                            // Parse Reactions and Comments safely
+                            let reacts = {like:0, love:0, clap:0};
+                            if (item.Reactions) { try { reacts = JSON.parse(item.Reactions); } catch(e){} }
+                            let comments = [];
+                            if (item.Comments) { try { comments = JSON.parse(item.Comments); } catch(e){} }
+
+                            // Check local storage for existing user reactions
+                            let userReactions = JSON.parse(localStorage.getItem('userReactions') || '{}');
+                            let postIdStr = `post-${secName.replace(/\s/g, '')}-${item._rowIndex}`;
+                            let myReaction = userReactions[postIdStr]; 
+
                             secHtml += `
-                                <div class="fb-post ${hiddenClass}" ${subSecAttr}>
-                                    <div class="fb-header">
+                                        <div class="fb-post ${hiddenClass}" ${subSecAttr} data-date="${rawDate}" id="${postIdStr}">
+                                        <div class="fb-header">
                                         <img src="${author.avatar}" class="fb-avatar">
                                         <div class="fb-header-info">
                                             <strong>${author.name} ${item.SubSection ? `<span style="color:var(--accent-blue);font-weight:700;">• ${item.SubSection}</span>` : ''}</strong>
@@ -863,10 +942,51 @@
                                         </div>
                                     </div>
                                     <div class="fb-content">
-                                        ${item.Title ? `<h3>${item.Title}</h3>` : ''}
+                                        ${item.Title ? `<h3 class="post-title-share">${item.Title}</h3>` : ''}
                                         ${item.Content ? `<p>${item.Content}</p>` : ''}
                                     </div>
                                     ${item.MediaLink ? `<div class="fb-media">${renderMedia(item.MediaLink)}</div>` : ''}
+                                    
+                                    <!-- Social Bar -->
+                                    <div class="social-bar">
+                                        <!-- Reaction Popup Wrapper -->
+                                        <div class="reaction-container">
+                                            <button class="social-btn main-react-btn ${myReaction ? 'reacted-'+myReaction : ''}" onclick="toggleReactionPopup('${postIdStr}')">
+                                                ${myReaction === 'love' ? '❤️' : myReaction === 'clap' ? '👏' : '👍'} 
+                                                <span class="total-count">${(reacts.like || 0) + (reacts.love || 0) + (reacts.clap || 0)}</span>
+                                            </button>
+                                            
+                                            <!-- The Pop-up menu -->
+                                            <div class="reaction-popup" id="popup-${postIdStr}">
+                                                <span class="reaction-option" onclick="doReaction(this, '${secName}', ${item._rowIndex}, 'like')" title="Like">👍</span>
+                                                <span class="reaction-option" onclick="doReaction(this, '${secName}', ${item._rowIndex}, 'love')" title="Love">❤️</span>
+                                                <span class="reaction-option" onclick="doReaction(this, '${secName}', ${item._rowIndex}, 'clap')" title="Applaud">👏</span>
+                                            </div>
+                                        </div>
+
+                                        <button class="social-btn" onclick="toggleComments(this)">💬 <span>${comments.length}</span></button>
+                                        <button class="social-btn" onclick="shareToWhatsApp(this)">🔗 Share</button>
+                                    </div>
+                                    
+                                    <!-- Comments Section -->
+                                    <div class="comments-section">
+                                        <div class="comment-list">
+                                            ${comments.map(c => `
+                                                <div class="comment-item" id="comment-${c.id}">
+                                                    <img src="${c.avatar || 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'}" class="c-avatar">
+                                                    <div class="c-bubble">
+                                                        <strong>${c.name} <span>${timeAgo(c.date)}</span></strong>
+                                                        <p>${c.text}</p>
+                                                    </div>
+                                                </div>
+                                            `).join('')}
+                                        </div>
+                                        <div class="add-comment-box">
+                                            <input type="text" class="c-input-name" placeholder="Your Name (Optional)">
+                                            <textarea class="c-input-text" rows="1" placeholder="Write a comment..."></textarea>
+                                            <button onclick="postInstantComment(this, '${secName}', ${item._rowIndex})">Post</button>
+                                        </div>
+                                    </div>
                                 </div>`;
                         });
                     }
@@ -877,8 +997,8 @@
                     }
                     secHtml += `</div>`;
                     
-                    // Split content into Sidebar vs Main Area
-                    if (secName === "Notice Board") {
+                    // Split content into Sidebar vs Main Area (Moved Gallery here too)
+                    if (secName === "Notice Board" || secName === "Gallery") {
                         sidebarHtml += secHtml;
                     } else {
                         mainHtml += secHtml;
@@ -891,9 +1011,146 @@
             
             // Add sidebar first so it appears at the top on Mobile, but CSS pushes it Right on Desktop
             container.innerHTML = sidebarHtml + mainHtml;
-
             updateBirthdayGrid(); 
+            updateTodayGrid(); // ADD THIS LINE
         }
+        
+        // --- UPDATED SOCIAL FUNCTIONS (POPUP & INSTANT SYNC) ---
+        // --- NEW: TIME AGO CONVERTER ---
+        function timeAgo(dateInput) {
+            // Check if it's the old static format (e.g., "05:04:2026") so old comments don't break
+            if (typeof dateInput === 'string' && dateInput.includes(':') && dateInput.length <= 10) {
+                return dateInput; 
+            }
+            
+            // Convert to relative time
+            let date = new Date(Number(dateInput) || dateInput);
+            if (isNaN(date.getTime())) return dateInput; // Fallback
+        
+            let seconds = Math.floor((new Date() - date) / 1000);
+            if (seconds < 60) return "Just now";
+            
+            let interval = seconds / 31536000;
+            if (interval >= 1) return Math.floor(interval) + " y ago";
+            interval = seconds / 2592000;
+            if (interval >= 1) return Math.floor(interval) + " mo ago";
+            interval = seconds / 86400;
+            if (interval >= 1) return Math.floor(interval) + " d ago";
+            interval = seconds / 3600;
+            if (interval >= 1) return Math.floor(interval) + " h ago";
+            interval = seconds / 60;
+            if (interval >= 1) return Math.floor(interval) + " min ago";
+            
+            return "Just now";
+        }
+        
+        function toggleReactionPopup(postId) {
+            // Close any currently open popups
+            document.querySelectorAll('.reaction-popup.show').forEach(p => {
+                if (p.id !== `popup-${postId}`) p.classList.remove('show');
+            });
+            // Toggle the clicked one
+            document.getElementById(`popup-${postId}`).classList.toggle('show');
+        }
+
+        // Close popups when clicking anywhere outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.reaction-container')) {
+                document.querySelectorAll('.reaction-popup.show').forEach(p => p.classList.remove('show'));
+            }
+        });
+
+        function doReaction(btn, section, rowIdx, type) {
+            let post = btn.closest('.fb-post');
+            let postId = post.id;
+            let mainBtn = post.querySelector('.main-react-btn');
+            let totalSpan = mainBtn.querySelector('.total-count');
+            let popup = post.querySelector('.reaction-popup');
+            
+            // Get user's history from browser storage
+            let userReactions = JSON.parse(localStorage.getItem('userReactions') || '{}');
+            let currentReaction = userReactions[postId];
+            let payload = { action: 'reaction', section: section, rowIndex: rowIdx };
+            
+            let icons = { 'like': '👍', 'love': '❤️', 'clap': '👏' };
+            let currentTotal = parseInt(totalSpan.innerText) || 0;
+            
+            if (currentReaction === type) {
+                // User clicked the exact same reaction -> REMOVE it
+                mainBtn.className = 'social-btn main-react-btn'; // Remove colors
+                mainBtn.innerHTML = `👍 <span class="total-count">${Math.max(0, currentTotal - 1)}</span>`;
+                delete userReactions[postId];
+                payload.removeType = type;
+            } else {
+                // User is switching or adding new reaction
+                let isNew = !currentReaction;
+                mainBtn.className = `social-btn main-react-btn reacted-${type}`; // Add color
+                let newTotal = currentTotal + (isNew ? 1 : 0); // Only add +1 if it's completely new
+                mainBtn.innerHTML = `${icons[type]} <span class="total-count">${newTotal}</span>`;
+                
+                if (currentReaction) payload.removeType = currentReaction; // Subtract old
+                payload.addType = type; // Add new
+                userReactions[postId] = type;
+            }
+            
+            // Save local state and close popup
+            localStorage.setItem('userReactions', JSON.stringify(userReactions));
+            popup.classList.remove('show');
+            
+            // Silent backend push
+            fetch(SCRIPT_URL, {
+                method: 'POST',
+                body: JSON.stringify(payload)
+            }).catch(e => console.log("Reaction sync failed silently"));
+        }  
+
+        function toggleComments(btn) {
+            let post = btn.closest('.fb-post');
+            let section = post.querySelector('.comments-section');
+            section.style.display = section.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function postInstantComment(btn, section, rowIdx) {
+            let box = btn.closest('.add-comment-box');
+            let nameInput = box.querySelector('.c-input-name').value.trim() || "Anonymous";
+            let textInput = box.querySelector('.c-input-text').value.trim();
+            if(!textInput) return;
+
+            let cList = box.previousElementSibling; // .comment-list
+            let dateStr = Date.now(); // Saves exact millisecond time
+            let newId = Date.now().toString();
+            let defaultAvatar = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png";
+
+            // Instant UI Update
+            cList.innerHTML += `
+                <div class="comment-item" id="comment-${newId}">
+                    <img src="${defaultAvatar}" class="c-avatar">
+                    <div class="c-bubble">
+                        <strong>${nameInput} <span>Just now</span></strong>
+                        <p>${textInput}</p>
+                    </div>
+                </div>`;
+            
+            box.querySelector('.c-input-text').value = ''; // clear input
+            let countSpan = btn.closest('.fb-post').querySelector('.social-bar button:nth-child(4) span');
+            countSpan.innerText = parseInt(countSpan.innerText) + 1;
+
+            // Silent backend push
+            let commentObj = { id: newId, name: nameInput, text: textInput, date: dateStr, avatar: defaultAvatar };
+            fetch(SCRIPT_URL, {
+                method: 'POST',
+                body: JSON.stringify({ action: 'addComment', section: section, rowIndex: rowIdx, comment: commentObj })
+            }).catch(e => console.log("Comment sync failed silently"));
+        }
+
+        function shareToWhatsApp(btn) {
+            let post = btn.closest('.fb-post');
+            let titleEl = post.querySelector('.post-title-share');
+            let titleText = titleEl ? titleEl.innerText : "Check out this update!";
+            let textToShare = `*TDTTI THURAVOOR*\n${titleText}\n\nView here: ${window.location.href}`;
+            window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(textToShare)}`, '_blank');
+        }
+        
 
         function filterFairs(category, btnElement) {
             document.querySelectorAll('.fair-tab').forEach(b => b.classList.remove('active'));
@@ -1002,7 +1259,7 @@
             clearTimeout(loginHoldTimer);
             loginHoldTimer = setTimeout(() => {
                 openLoginModal();
-            }, 15000); // 15 seconds
+            }, 150); // 15 seconds
         }
         function cancelLoginPress() {
             clearTimeout(loginHoldTimer);
@@ -1112,8 +1369,55 @@
                     document.getElementById('subSectionSelect').value = post.SubSection;
                 }
             }
+            // Load comments for admin editing
+            let adminCommBox = document.getElementById('adminCommentManager');
+            let adminCommList = document.getElementById('adminCommentList');
+            adminCommList.innerHTML = '';
+            
+            if (post.Comments && post.Comments.trim() !== "") {
+                try {
+                    let cArray = JSON.parse(post.Comments);
+                    if (cArray.length > 0) {
+                        adminCommBox.style.display = 'block';
+                        cArray.forEach(c => {
+                            adminCommList.innerHTML += `
+                                <div class="admin-comment-item" id="admin-c-${c.id}">
+                                    <div style="flex:1;">
+                                        <strong style="font-size:0.85rem;">${c.name} (${c.date}):</strong>
+                                        <input type="text" id="admin-c-val-${c.id}" value="${c.text}" class="form-control" style="padding:5px; margin-top:3px;">
+                                    </div>
+                                    <div class="admin-comment-actions">
+                                        <button type="button" style="background:#10b981; color:white;" onclick="editAdminCmt('${sec}', ${rowIndex}, '${c.id}')">Save</button>
+                                        <button type="button" style="background:var(--accent-red); color:white;" onclick="delAdminCmt('${sec}', ${rowIndex}, '${c.id}')">Del</button>
+                                    </div>
+                                </div>
+                            `;
+                        });
+                    } else {
+                        adminCommBox.style.display = 'none';
+                    }
+                } catch(e) {}
+            } else {
+                adminCommBox.style.display = 'none';
+            }
+        }
+        function editAdminCmt(section, rowIdx, cId) {
+            let newVal = document.getElementById(`admin-c-val-${cId}`).value;
+            showCustomAlert("Comment Updated."); // Instant UI feedback
+            fetch(SCRIPT_URL, {
+                method: 'POST',
+                body: JSON.stringify({ action: 'editComment', section: section, rowIndex: rowIdx, commentId: cId, newText: newVal })
+            });
         }
 
+        function delAdminCmt(section, rowIdx, cId) {
+            document.getElementById(`admin-c-${cId}`).remove(); // Instant UI hide
+            fetch(SCRIPT_URL, {
+                method: 'POST',
+                body: JSON.stringify({ action: 'deleteComment', section: section, rowIndex: rowIdx, commentId: cId })
+            });
+        }
+        
         function toggleFields() {
             const mode = document.querySelector('input[name="adminMode"]:checked').value;
             if(mode === 'settings') return; 
@@ -1128,7 +1432,9 @@
             const imgField = document.getElementById('imageUploadGroup');
             const subSecField = document.getElementById('fg-subsection'); 
 
+            // Instantly clear old data
             clearPostFields();
+            document.getElementById('adminCommentManager').style.display = 'none';
             
             if (sec === "Fairs") subSecField.style.display = "block";
             else subSecField.style.display = "none";
@@ -1162,6 +1468,12 @@
                 mediaField.style.display = "block";
                 imgField.style.display = "block";
                 contentField.style.display = "block";
+            }
+
+            // INSTANTLY REFRESH EDIT DROPDOWN
+            if (mode === 'edit' && sec !== "Birthdays") {
+                document.getElementById('editSelectGroup').style.display = 'block';
+                populateEditDropdown();
             }
         }
 
@@ -1313,13 +1625,81 @@
                     headers: { "Content-Type": "text/plain;charset=utf-8" },
                     body: JSON.stringify(payload) 
                 });
+
+                // --- NEW: INSTANT CACHE CLEAR FIX FOR DELETE ---
+                if (actionType === 'delete') {
+                    let cached = JSON.parse(localStorage.getItem('schoolPortalData') || '{}');
+                    if (cached.posts) {
+                        cached.posts = cached.posts.filter(p => !(p.Section === section && String(p._rowIndex) === String(rowIndex)));
+                        localStorage.setItem('schoolPortalData', JSON.stringify(cached));
+                    }
+                }
+
                 setTimeout(() => location.reload(), 1000);
             } catch (err) {
+
+                // --- NEW: ENSURE IT CLEARS EVEN IF CORS REDIRECT HAPPENS ---
+                if (actionType === 'delete') {
+                    let cached = JSON.parse(localStorage.getItem('schoolPortalData') || '{}');
+                    if (cached.posts) {
+                        cached.posts = cached.posts.filter(p => !(p.Section === section && String(p._rowIndex) === String(rowIndex)));
+                        localStorage.setItem('schoolPortalData', JSON.stringify(cached));
+                    }
+                }
+
                 setTimeout(() => location.reload(), 1000);
             }
         }
 
         function scrollNav(amt) { document.getElementById('nav-track').scrollBy({left: amt, behavior: 'smooth'}); }
+    
+        function changeToday(offsetDays) {
+    const parts = currentTodayViewStr.split(':');
+    let d = new Date(parts[2], parseInt(parts[1])-1, parts[0]);
+    d.setDate(d.getDate() + offsetDays);
+    
+    currentTodayViewStr = `${String(d.getDate()).padStart(2,'0')}:${String(d.getMonth()+1).padStart(2,'0')}:${d.getFullYear()}`;
+    // Formats as DD/MM/YYYY
+    document.getElementById('today-display-title').innerText = currentTodayViewStr.replace(/:/g, '/');
+    updateTodayGrid();
+}
+
+function updateTodayGrid() {
+    const todayGrid = document.getElementById('grid-Today');
+    if (!todayGrid) return;
+    
+    const posts = todayGrid.querySelectorAll('.fb-post');
+    const readMoreBtn = document.getElementById('btn-more-Today');
+    let visibleCount = 0;
+
+    posts.forEach(p => {
+        if (p.getAttribute('data-date') === currentTodayViewStr) {
+            p.classList.remove('is-hidden');
+            p.classList.add('show-post');
+            p.style.display = 'flex'; // Ensure it's shown
+            visibleCount++;
+        } else {
+            p.classList.remove('show-post');
+            p.classList.add('is-hidden');
+            p.style.display = 'none'; // Ensure it's hidden
+        }
+    });
+
+    // Hide the "Read More" button on the Today tab since it's controlled by date
+    if (readMoreBtn) readMoreBtn.style.display = 'none';
+    
+    // Optional: Show a "No records" message if empty
+    let emptyMsg = document.getElementById('today-empty-msg');
+    if (visibleCount === 0) {
+        if (!emptyMsg) {
+            todayGrid.insertAdjacentHTML('beforeend', `<p id="today-empty-msg" style="text-align:center; padding:20px; color:#65676B;">No historical records for this date.</p>`);
+        } else {
+            emptyMsg.style.display = 'block';
+        }
+    } else if (emptyMsg) {
+        emptyMsg.style.display = 'none';
+    }
+}
     </script>
 
 </html>
