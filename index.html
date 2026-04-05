@@ -185,9 +185,11 @@
         .bday-nav { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; background: #fff; border-bottom: 1px solid #e4e6eb; }
         .bday-nav button { background: #e4e6eb; color: var(--text-dark); border: none; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-weight: bold; font-size: 1rem; transition: 0.2s;}
         .birthday-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 15px; padding: 16px; }
-        .bday-item { position: relative; border-radius: 10px; overflow: hidden; height: 250px; box-shadow: 0 2px 5px rgba(0,0,0,0.15); background: #f0f2f5; }
-        .bday-item img { width: 100%; height: 100%; object-fit: cover; pointer-events: none;}
-        .bday-info { position: absolute; bottom: 10px; left: 10px; right: 10px; background: rgba(0, 0, 0, 0.65); backdrop-filter: blur(5px); padding: 10px; text-align: center; color: #fff; border-radius: 8px;}
+        /* Updated Birthday CSS to support Comments/Reactions */
+        .bday-item { position: relative; border-radius: 10px; height: auto; box-shadow: 0 2px 5px rgba(0,0,0,0.15); background: #fff; display: flex; flex-direction: column; overflow: visible; z-index: 1;}
+        .bday-img-wrapper { position: relative; height: 220px; width: 100%; border-radius: 10px 10px 0 0; overflow: hidden; z-index: 1;}
+        .bday-img-wrapper img { width: 100%; height: 100%; object-fit: cover; pointer-events: none;}
+        .bday-info { position: absolute; bottom: 10px; left: 10px; right: 10px; background: rgba(0, 0, 0, 0.65); backdrop-filter: blur(5px); padding: 8px; text-align: center; color: #fff; border-radius: 8px;}
         .bday-info h5 { margin: 0 0 2px 0; font-size: 1.05rem; font-weight: 700; text-transform: uppercase;}
         .bday-info p { margin: 0; font-size: 0.85rem; font-weight: 600; color: #e4e6eb; }
 
@@ -708,7 +710,7 @@
             if(e.ctrlKey && (e.key === 'u' || e.key === 's' || e.key === 'c' || e.key === 'p')) e.preventDefault();
         });
 
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwbaULnSG8CONjrR3sOHOOcOP4oADcIJ0H5mhgkXqVW7yGts7JEjvRxC2yA4F_CZm3x/exec"; 
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbywhWxIA_6TKcGxADbzHCTpONYnZwyFRvxRX0gyj-nHIGJWqLr4zKNJkauqy7IDJmKU/exec"; 
         const IMGBB_API_KEY = "dcf1e98ceb03a9258bc9b06786f2bb18"; 
         
         const AUTHOR_PROFILES = [
@@ -1061,13 +1063,12 @@
         });
 
         function doReaction(btn, section, rowIdx, type) {
-            let post = btn.closest('.fb-post');
+            let post = btn.closest('.fb-post') || btn.closest('.bday-item');
             let postId = post.id;
             let mainBtn = post.querySelector('.main-react-btn');
             let totalSpan = mainBtn.querySelector('.total-count');
             let popup = post.querySelector('.reaction-popup');
             
-            // Get user's history from browser storage
             let userReactions = JSON.parse(localStorage.getItem('userReactions') || '{}');
             let currentReaction = userReactions[postId];
             let payload = { action: 'reaction', section: section, rowIndex: rowIdx };
@@ -1076,33 +1077,30 @@
             let currentTotal = parseInt(totalSpan.innerText) || 0;
             
             if (currentReaction === type) {
-                // User clicked the exact same reaction -> REMOVE it
-                mainBtn.className = 'social-btn main-react-btn'; // Remove colors
+                mainBtn.className = 'social-btn main-react-btn'; 
                 mainBtn.innerHTML = `👍 <span class="total-count">${Math.max(0, currentTotal - 1)}</span>`;
                 delete userReactions[postId];
                 payload.removeType = type;
             } else {
-                // User is switching or adding new reaction
                 let isNew = !currentReaction;
-                mainBtn.className = `social-btn main-react-btn reacted-${type}`; // Add color
-                let newTotal = currentTotal + (isNew ? 1 : 0); // Only add +1 if it's completely new
+                mainBtn.className = `social-btn main-react-btn reacted-${type}`;
+                let newTotal = currentTotal + (isNew ? 1 : 0); 
                 mainBtn.innerHTML = `${icons[type]} <span class="total-count">${newTotal}</span>`;
                 
-                if (currentReaction) payload.removeType = currentReaction; // Subtract old
-                payload.addType = type; // Add new
+                if (currentReaction) payload.removeType = currentReaction; 
+                payload.addType = type; 
                 userReactions[postId] = type;
             }
             
-            // Save local state and close popup
             localStorage.setItem('userReactions', JSON.stringify(userReactions));
             popup.classList.remove('show');
             
-            // Silent backend push
             fetch(SCRIPT_URL, {
                 method: 'POST',
+                headers: { "Content-Type": "text/plain;charset=utf-8" },
                 body: JSON.stringify(payload)
             }).catch(e => console.log("Reaction sync failed silently"));
-        }  
+        }
 
         function toggleComments(btn) {
             let post = btn.closest('.fb-post');
@@ -1116,12 +1114,11 @@
             let textInput = box.querySelector('.c-input-text').value.trim();
             if(!textInput) return;
 
-            let cList = box.previousElementSibling; // .comment-list
-            let dateStr = Date.now(); // Saves exact millisecond time
+            let cList = box.previousElementSibling; 
+            let dateStr = Date.now(); 
             let newId = Date.now().toString();
             let defaultAvatar = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png";
 
-            // Instant UI Update
             cList.innerHTML += `
                 <div class="comment-item" id="comment-${newId}">
                     <img src="${defaultAvatar}" class="c-avatar">
@@ -1131,14 +1128,19 @@
                     </div>
                 </div>`;
             
-            box.querySelector('.c-input-text').value = ''; // clear input
-            let countSpan = btn.closest('.fb-post').querySelector('.social-bar button:nth-child(4) span');
-            countSpan.innerText = parseInt(countSpan.innerText) + 1;
+            box.querySelector('.c-input-text').value = ''; 
+            
+            // Safely target the comment count for BOTH normal posts and birthday cards
+            let postContainer = btn.closest('.fb-post') || btn.closest('.bday-item');
+            let countSpan = postContainer.querySelector('.comment-count') || postContainer.querySelector('.social-bar button:nth-child(2) span') || postContainer.querySelector('.social-bar button:nth-child(4) span');
+            if (countSpan) {
+                countSpan.innerText = parseInt(countSpan.innerText) + 1;
+            }
 
-            // Silent backend push
             let commentObj = { id: newId, name: nameInput, text: textInput, date: dateStr, avatar: defaultAvatar };
             fetch(SCRIPT_URL, {
                 method: 'POST',
+                headers: { "Content-Type": "text/plain;charset=utf-8" },
                 body: JSON.stringify({ action: 'addComment', section: section, rowIndex: rowIdx, comment: commentObj })
             }).catch(e => console.log("Comment sync failed silently"));
         }
@@ -1230,12 +1232,60 @@
                 }
                 const imgLink = (rawImg && rawImg.trim() !== '') ? rawImg.trim() : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png';
 
+                // Setup Reactions & Comments arrays
+                let reacts = {like:0, love:0, clap:0};
+                if (student.Reactions) { try { reacts = JSON.parse(student.Reactions); } catch(e){} }
+                let comments = [];
+                if (student.Comments) { try { comments = JSON.parse(student.Comments); } catch(e){} }
+
+                let postIdStr = `post-Birthdays-${student._rowIndex}`;
+                let userReactions = JSON.parse(localStorage.getItem('userReactions') || '{}');
+                let myReaction = userReactions[postIdStr];
+
                 html += `
-                <div class="bday-item">
-                    <img src="${imgLink}" alt="${student['Student Name'] || 'Student'}">
-                    <div class="bday-info">
-                        <h5>${student['Student Name'] || ''}</h5>
-                        <p>${student['Class'] || ''}${student['Division'] || ''}</p>
+                <div class="bday-item" id="${postIdStr}">
+                    <div class="bday-img-wrapper">
+                        <img src="${imgLink}" alt="${student['Student Name'] || 'Student'}">
+                        <div class="bday-info">
+                            <h5>${student['Student Name'] || ''}</h5>
+                            <p>${student['Class'] || ''} '${student['Division'] || ''}'</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Social Bar -->
+                    <div class="social-bar" style="padding: 6px 10px;">
+                        <div class="reaction-container">
+                            <button class="social-btn main-react-btn ${myReaction ? 'reacted-'+myReaction : ''}" onclick="toggleReactionPopup('${postIdStr}')">
+                                ${myReaction === 'love' ? '❤️' : myReaction === 'clap' ? '👏' : '👍'} 
+                                <span class="total-count">${(reacts.like || 0) + (reacts.love || 0) + (reacts.clap || 0)}</span>
+                            </button>
+                            <div class="reaction-popup" id="popup-${postIdStr}">
+                                <span class="reaction-option" onclick="doReaction(this, 'Birthdays', ${student._rowIndex}, 'like')">👍</span>
+                                <span class="reaction-option" onclick="doReaction(this, 'Birthdays', ${student._rowIndex}, 'love')">❤️</span>
+                                <span class="reaction-option" onclick="doReaction(this, 'Birthdays', ${student._rowIndex}, 'clap')">👏</span>
+                            </div>
+                        </div>
+                        <button class="social-btn" onclick="toggleComments(this)">💬 <span class="comment-count">${comments.length}</span></button>
+                    </div>
+
+                    <!-- Comments Section -->
+                    <div class="comments-section" style="padding: 10px;">
+                        <div class="comment-list">
+                            ${comments.map(c => `
+                                <div class="comment-item" id="comment-${c.id}">
+                                    <img src="${c.avatar || 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'}" class="c-avatar">
+                                    <div class="c-bubble">
+                                        <strong>${c.name} <span>${timeAgo(c.date)}</span></strong>
+                                        <p>${c.text}</p>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                        <div class="add-comment-box">
+                            <input type="text" class="c-input-name" placeholder="Name (Optional)">
+                            <textarea class="c-input-text" rows="1" placeholder="Add comment..."></textarea>
+                            <button onclick="postInstantComment(this, 'Birthdays', ${student._rowIndex})">Post</button>
+                        </div>
                     </div>
                 </div>`;
             });
@@ -1411,9 +1461,10 @@
         }
 
         function delAdminCmt(section, rowIdx, cId) {
-            document.getElementById(`admin-c-${cId}`).remove(); // Instant UI hide
+            document.getElementById(`admin-c-${cId}`).remove(); 
             fetch(SCRIPT_URL, {
                 method: 'POST',
+                headers: { "Content-Type": "text/plain;charset=utf-8" }, // FIX ADDED
                 body: JSON.stringify({ action: 'deleteComment', section: section, rowIndex: rowIdx, commentId: cId })
             });
         }
