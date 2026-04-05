@@ -425,11 +425,12 @@
                 <div class="form-group" id="editSelectGroup" style="display: none;">
                     <label style="color: var(--accent-red);">Select Post to Edit/Delete</label>
                     <select id="editPostSelect" class="form-control" onchange="loadSelectedPost()"></select>
+                </div>
                 
+                <!-- MOVED OUTSIDE SO BIRTHDAYS CAN USE IT -->
                 <div id="adminCommentManager" style="display:none; background:#fff; border:1px solid #ced0d4; padding:10px; border-radius:8px; margin-bottom:15px; max-height: 200px; overflow-y:auto;">
                     <label style="color:var(--accent-red); margin-bottom:5px;">Manage Comments</label>
                     <div id="adminCommentList">Select a post to view comments.</div>
-                </div>
                 </div>
 
                 <div id="birthdayFields" style="display:none; background: #e4e6eb; padding: 15px; border-radius: 10px; margin-bottom: 15px;">
@@ -1557,13 +1558,49 @@
                 let text = `${b['Student Name'] || 'Unknown'} - ${b.Date} (${b.Class} '${b.Division}')`;
                 return text === searchValue;
             });
+            
+            let adminCommBox = document.getElementById('adminCommentManager');
+            let adminCommList = document.getElementById('adminCommentList');
+            adminCommList.innerHTML = '';
+
             if (student) {
                 document.getElementById('selectedStudentRowIndex').value = student._rowIndex;
                 document.getElementById('bdayStudentName').value = student['Student Name'] || "";
                 document.getElementById('bdayDate').value = student.Date || "";
                 document.getElementById('studentClass').value = student.Class || "";
                 document.getElementById('studentDiv').value = student.Division || "";
-            } else { resetBdayFields(); }
+
+                // POPULATE COMMENTS FOR BIRTHDAYS
+                if (student.Comments && student.Comments.trim() !== "") {
+                    try {
+                        let cArray = JSON.parse(student.Comments);
+                        if (cArray.length > 0) {
+                            adminCommBox.style.display = 'block';
+                            cArray.forEach(c => {
+                                adminCommList.innerHTML += `
+                                    <div class="admin-comment-item" id="admin-c-${c.id}">
+                                        <div style="flex:1;">
+                                            <strong style="font-size:0.85rem;">${c.name} (${timeAgo(c.date)}):</strong>
+                                            <input type="text" id="admin-c-val-${c.id}" value="${c.text}" class="form-control" style="padding:5px; margin-top:3px;">
+                                        </div>
+                                        <div class="admin-comment-actions">
+                                            <button type="button" style="background:#10b981; color:white;" onclick="editAdminCmt('Birthdays', ${student._rowIndex}, '${c.id}')">Save</button>
+                                            <button type="button" style="background:var(--accent-red); color:white;" onclick="delAdminCmt('Birthdays', ${student._rowIndex}, '${c.id}')">Del</button>
+                                        </div>
+                                    </div>
+                                `;
+                            });
+                        } else {
+                            adminCommBox.style.display = 'none';
+                        }
+                    } catch(e) { adminCommBox.style.display = 'none'; }
+                } else {
+                    adminCommBox.style.display = 'none';
+                }
+
+            } else { 
+                resetBdayFields(); 
+            }
         }
 
         function resetBdayFields() {
@@ -1572,6 +1609,10 @@
             document.getElementById('bdayDate').value = "";
             document.getElementById('studentClass').value = "";
             document.getElementById('studentDiv').value = "";
+            
+            // HIDE COMMENTS WHEN SEARCH IS CLEARED
+            document.getElementById('adminCommentManager').style.display = 'none';
+            document.getElementById('adminCommentList').innerHTML = '';
         }
 
         function submitData(actionType = 'create') {
