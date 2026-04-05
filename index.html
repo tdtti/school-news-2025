@@ -985,7 +985,7 @@
                                             `).join('')}
                                         </div>
                                         <div class="add-comment-box">
-                                            <input type="text" class="c-input-name" placeholder="Your Name (Optional)">
+                                            <input type="text" class="c-input-name" placeholder="Your Name (Required)" style="text-transform: uppercase;">
                                             <textarea class="c-input-text" rows="1" placeholder="Write a comment..."></textarea>
                                             <button onclick="postInstantComment(this, '${secName}', ${item._rowIndex})">Post</button>
                                         </div>
@@ -1111,9 +1111,28 @@
 
         function postInstantComment(btn, section, rowIdx) {
             let box = btn.closest('.add-comment-box');
-            let nameInput = box.querySelector('.c-input-name').value.trim() || "Anonymous";
-            let textInput = box.querySelector('.c-input-text').value.trim();
-            if(!textInput) return;
+            let nameField = box.querySelector('.c-input-name');
+            let textField = box.querySelector('.c-input-text');
+            
+            let nameInput = nameField.value.trim();
+            let textInput = textField.value.trim();
+            
+            // 1. Ensure Name is provided
+            if (!nameInput) {
+                showCustomAlert("Please enter your Name to post a comment.");
+                nameField.focus();
+                return;
+            }
+
+            // 2. Ensure Comment text is provided
+            if (!textInput) {
+                showCustomAlert("Please write a comment before posting.");
+                textField.focus();
+                return;
+            }
+
+            // 3. Force Name to be ALL CAPS
+            nameInput = nameInput.toUpperCase();
 
             let cList = box.previousElementSibling; 
             let dateStr = Date.now(); 
@@ -1129,10 +1148,10 @@
                     </div>
                 </div>`;
             
-            box.querySelector('.c-input-text').value = ''; 
+            // Clear only the comment text, leaving the name so they don't have to retype it for their next comment
+            textField.value = ''; 
             
-            // Safely target the comment count for BOTH normal posts and birthday cards
-            let postContainer = btn.closest('.fb-post') || btn.closest('.bday-item');
+            let postContainer = btn.closest('.bday-item') || btn.closest('.fb-post');
             let countSpan = postContainer.querySelector('.comment-count') || postContainer.querySelector('.social-bar button:nth-child(2) span') || postContainer.querySelector('.social-bar button:nth-child(4) span');
             if (countSpan) {
                 countSpan.innerText = parseInt(countSpan.innerText) + 1;
@@ -1283,7 +1302,7 @@
                             `).join('')}
                         </div>
                         <div class="add-comment-box">
-                            <input type="text" class="c-input-name" placeholder="Name (Optional)">
+                            <input type="text" class="c-input-name" placeholder="Your Name (Required)" style="text-transform: uppercase;">
                             <textarea class="c-input-text" rows="1" placeholder="Add comment..."></textarea>
                             <button onclick="postInstantComment(this, 'Birthdays', ${student._rowIndex})">Post</button>
                         </div>
