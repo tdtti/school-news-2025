@@ -239,7 +239,7 @@
         .admin-mode-toggles input[type="radio"] { transform: scale(1.2); cursor: pointer; }
 
         /* === NEW: QUICK LINKS STYLES === */
-        .quick-links-wrapper { background: var(--box-bg); border-radius: var(--radius-large); padding: 20px; margin-bottom: 20px; box-shadow: var(--shadow-soft); border: 1px solid #ced0d4; }
+        .quick-links-wrapper { background: var(--box-bg); border-radius: var(--radius-large); padding: 20px; margin-bottom: 20px; }
         .quick-links-wrapper h3 { font-size: 1.1rem; margin-bottom: 15px; color: var(--text-dark); display: flex; align-items: center; gap: 8px; border-bottom: 2px solid #f0f2f5; padding-bottom: 10px;}
         .ql-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         .ql-btn { display: flex; align-items: center; justify-content: center; background: #f8fafc; color: var(--text-dark); padding: 12px; text-align: center; border-radius: 8px; font-weight: 700; text-decoration: none; border: 1px solid #ced0d4; font-size: 0.85rem; transition: 0.2s; box-shadow: 0 1px 2px rgba(0,0,0,0.05);}
@@ -562,10 +562,6 @@
             }
         }
         
-        // Trigger silently on the very first interaction (click, touch, or scroll)
-        ['click', 'touchstart', 'scroll', 'keydown'].forEach(evt => {
-            document.addEventListener(evt, forceFullScreen, {passive: true});
-        });
         
         // Trigger on ANY first action (click, touch, scroll)
         ['click', 'touchstart', 'scroll', 'keydown'].forEach(evt => {
@@ -575,17 +571,7 @@
             }, {passive: true});
         });
 
-        let hasShownFsMessage = false;
-        document.addEventListener('fullscreenchange', () => {
-            if (document.fullscreenElement || document.webkitIsFullScreen) {
-                if (!hasShownFsMessage) {
-                    showCustomAlert("App is now running in Full Screen. Press ESC or swipe down from the top edge to exit.");
-                    hasShownFsMessage = true;
-                }
-            } else {
-                localStorage.setItem('fullscreenIgnored', 'true'); 
-            }
-        });
+        
 
         function exitFullScreen() {
             if (document.fullscreenElement || document.webkitIsFullScreen) {
@@ -754,37 +740,48 @@
             let mainHtml = `<div class="main-feed-area">`;
             let sidebarHtml = `<div class="sidebar-area">`;
 
-            SECTIONS.forEach(secName => {
+            // --- 1. INJECT QUICK LINKS AT THE TOP OF SIDEBAR ---
+            sidebarHtml += `
+            <div class="quick-links-wrapper" style="border: none; box-shadow: none;">
+                <h3>⚡ Quick Links</h3>
+                <div class="ql-grid">
+                    <a href="#" class="ql-btn">🚌 SCHOOL BUS</a>
+                    <a href="#" class="ql-btn">🧒 CM KIDS</a>
+                    <a href="#" class="ql-btn">🗳️ SCHOOL ELECTION</a>
+                    <a href="#" class="ql-btn">🎪 UTHSAV</a>
+                </div>
+            </div>`;
+
+            // --- 2. SORT SECTIONS DYNAMICALLY BY LATEST POST ---
+            let dynamicSections = [...SECTIONS];
+            dynamicSections.sort((a, b) => {
+                let postsA = postsData.filter(p => p.Section === a);
+                let postsB = postsData.filter(p => p.Section === b);
+                let maxA = postsA.length > 0 ? Math.max(...postsA.map(p => parseInt(p._rowIndex) || 0)) : 0;
+                let maxB = postsB.length > 0 ? Math.max(...postsB.map(p => parseInt(p._rowIndex) || 0)) : 0;
+                return maxB - maxA; // Sort descending (newest section first)
+            });
+
+            // Iterate over the newly sorted sections
+            dynamicSections.forEach(secName => {
                 const wrapperId = secName.replace(/\s/g, '');
                 let secHtml = `<div class="section-wrapper" id="${wrapperId}">`;
+                
                 // Inject Section Header based on the toggle (Excluding Scrolling ticker)
                 if (SHOW_SECTION_HEADS && secName !== "Scrolling") {
                     secHtml += `<h2 class="section-header-title">${secName}</h2>`;
                 }
-
-                // --- NEW: INJECT QUICK LINKS BEFORE NOTICE BOARD ---
-                if (secName === "Notice Board") {
-                    let quickLinksHtml = `
-                    <div class="quick-links-wrapper">
-                        <h3>⚡ Quick Links</h3>
-                        <div class="ql-grid">
-                            <a href="#" class="ql-btn">🚌 SCHOOL BUS</a>
-                            <a href="#" class="ql-btn">🧒 CM KIDS</a>
-                            <a href="#" class="ql-btn">🗳️ SCHOOL ELECTION</a>
-                            <a href="#" class="ql-btn">🎪 UTHSAV</a>
-                        </div>
-                    </div>`;
-                    sidebarHtml += quickLinksHtml; 
-                }
                 
                 if (secName === "Birthdays") {
+                    // --- 3. BORDER REMOVED & HAPPY BIRTHDAY HEADING ADDED ---
                     secHtml += `
-                    <div class="fb-post" style="padding:0; border:1px solid #ced0d4;">
+                    <div class="fb-post" style="padding:0; border:none;">
                         <div class="bday-nav">
                             <button onclick="changeBday(-1)">&lt;</button>
                             <h3 id="bday-display-title" style="margin:0; font-size:1.1rem; text-transform:uppercase;">${getFormattedDateDisplay(currentBdayViewStr)}</h3>
                             <button onclick="changeBday(1)">&gt;</button>
                         </div>
+                        <h4 style="text-align:center; color:var(--accent-red); margin: 10px 0 5px 0; font-weight:800; letter-spacing:1px; text-transform:uppercase;">Happy Birth Day</h4>
                         <div class="birthday-grid" id="bday-grid-container"></div>
                     </div></div>`;
                     
@@ -794,17 +791,18 @@
                     const sectionPosts = postsData.filter(item => item.Section === secName).reverse();
                     
                     if (secName === "Today") {
+                        // --- 4. BORDER REMOVED & TODAY IN HISTORY HEADING ADDED ---
                         secHtml += `
-                    <div class="fb-post" style="padding:0; border:1px solid #ced0d4; margin-bottom: 15px;">
-                    <div class="bday-nav">
-                    <button onclick="changeToday(-1)">&lt;</button>
-                    <h3 id="today-display-title" style="margin:0; font-size:1.1rem; text-transform:uppercase;">${currentTodayViewStr.replace(/:/g, '/')}</h3>
-                    <button onclick="changeToday(1)">&gt;</button>
-                    </div>
-                    </div>`;
-                        }
+                        <div class="fb-post" style="padding:0; border:none; margin-bottom: 15px;">
+                            <div class="bday-nav">
+                                <button onclick="changeToday(-1)">&lt;</button>
+                                <h3 id="today-display-title" style="margin:0; font-size:1.1rem; text-transform:uppercase;">${currentTodayViewStr.replace(/:/g, '/')}</h3>
+                                <button onclick="changeToday(1)">&gt;</button>
+                            </div>
+                            <h4 style="text-align:center; color:var(--accent-blue); margin: 10px 0 5px 0; font-weight:800; letter-spacing:1px; text-transform:uppercase;">Today in History</h4>
+                        </div>`;
+                    }
 
-                    
                     if (secName === "Fairs") {
                         secHtml += `
                         <div class="fairs-tabs-container">
@@ -855,8 +853,8 @@
                             let myReaction = userReactions[postIdStr]; 
 
                             secHtml += `
-                                        <div class="fb-post ${hiddenClass}" ${subSecAttr} data-date="${rawDate}" id="${postIdStr}">
-                                        <div class="fb-header">
+                                <div class="fb-post ${hiddenClass}" ${subSecAttr} data-date="${rawDate}" id="${postIdStr}">
+                                    <div class="fb-header">
                                         <img src="${author.avatar}" class="fb-avatar">
                                         <div class="fb-header-info">
                                             <strong>${author.name} ${item.SubSection ? `<span style="color:var(--accent-blue);font-weight:700;">• ${item.SubSection}</span>` : ''}</strong>
@@ -935,7 +933,7 @@
             // Add sidebar first so it appears at the top on Mobile, but CSS pushes it Right on Desktop
             container.innerHTML = sidebarHtml + mainHtml;
             updateBirthdayGrid(); 
-            updateTodayGrid(); // ADD THIS LINE
+            updateTodayGrid();
         }
         
         // --- UPDATED SOCIAL FUNCTIONS (POPUP & INSTANT SYNC) ---
