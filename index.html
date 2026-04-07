@@ -714,16 +714,27 @@
         function renderAll(postsData, settingsData) {
             const container = document.getElementById('main-content');
             
+            // Force CSS to allow perfect chronological weaving on Mobile
+            if (!document.getElementById('mobile-sort-css')) {
+                let style = document.createElement('style');
+                style.id = 'mobile-sort-css';
+                style.innerHTML = `
+                @media (max-width: 991px) { 
+                    .main-feed-area, .sidebar-area { display: contents !important; } 
+                    .section-wrapper { width: 100%; margin-bottom: 20px; }
+                }`;
+                document.head.appendChild(style);
+            }
+            
             let defaultCover = "https://via.placeholder.com/1200x300.png?text=Welcome+to+TDTTI+THURAVOOR";
-            let defaultLogo = AUTHOR_PROFILES[0].avatar; // The default avatar link
+            let defaultLogo = AUTHOR_PROFILES[0].avatar; 
             
             let coverImg = settingsData["CoverPhoto"] || defaultCover;
             let profileImg = settingsData["ProfilePicture"];
 
-            // STRICT CHECK: If it's missing OR it's still the default logo, use the Birthday photo
             if (!profileImg || profileImg === defaultLogo || profileImg.trim() === "") {
                 let dailyPhoto = getDailyBirthdayPhoto();
-                profileImg = dailyPhoto ? dailyPhoto : defaultLogo; // Fallback to logo if no birthdays
+                profileImg = dailyPhoto ? dailyPhoto : defaultLogo; 
             }
 
             document.getElementById('ui-cover').src = coverImg;
@@ -736,44 +747,45 @@
                 document.getElementById('live-ticker-text').innerText = "No new updates.";
             }
 
-            // DESKTOP GRID SUPPORT
-            let mainHtml = `<div class="main-feed-area">`;
-            let sidebarHtml = `<div class="sidebar-area">`;
-
-            // --- 1. INJECT QUICK LINKS AT THE TOP OF SIDEBAR ---
-            sidebarHtml += `
-            <div class="quick-links-wrapper" style="border: none; box-shadow: none;">
-                <h3>⚡ Quick Links</h3>
-                <div class="ql-grid">
-                    <a href="#" class="ql-btn">🚌 SCHOOL BUS</a>
-                    <a href="#" class="ql-btn">🧒 CM KIDS</a>
-                    <a href="#" class="ql-btn">🗳️ SCHOOL ELECTION</a>
-                    <a href="#" class="ql-btn">🎪 UTHSAV</a>
-                </div>
-            </div>`;
-
-            // --- 2. SORT SECTIONS DYNAMICALLY BY LATEST POST ---
-            let dynamicSections = [...SECTIONS];
-            dynamicSections.sort((a, b) => {
-                let postsA = postsData.filter(p => p.Section === a);
-                let postsB = postsData.filter(p => p.Section === b);
-                let maxA = postsA.length > 0 ? Math.max(...postsA.map(p => parseInt(p._rowIndex) || 0)) : 0;
-                let maxB = postsB.length > 0 ? Math.max(...postsB.map(p => parseInt(p._rowIndex) || 0)) : 0;
-                return maxB - maxA; // Sort descending (newest section first)
+            // --- 1. FIND ABSOLUTE NEWEST TIME FOR EACH SECTION ---
+            globalBirthdays.forEach(b => b.Section = "Birthdays"); 
+            let sectionLatestTime = {};
+            SECTIONS.forEach(s => sectionLatestTime[s] = 0);
+            
+            [...postsData, ...globalBirthdays].forEach(item => {
+                if (item.Section) {
+                    let t = parseCustomDate(item.Timestamp);
+                    if (t > sectionLatestTime[item.Section]) {
+                        sectionLatestTime[item.Section] = t;
+                    }
+                }
             });
 
-            // Iterate over the newly sorted sections
-            dynamicSections.forEach(secName => {
+            // --- 2. SORT SECTIONS BASED ON TIMESTAMPS ---
+            let sortedSections = [...SECTIONS].filter(s => s !== "Scrolling");
+            sortedSections.sort((a, b) => sectionLatestTime[b] - sectionLatestTime[a]);
+
+            // --- 3. REORDER NAV TABS ---
+            let navHtml = '';
+            sortedSections.forEach((sec, idx) => {
+                navHtml += `<a href="#${sec.replace(/\s/g, '')}" class="${idx === 0 ? 'active' : ''}">${sec}</a>`;
+            });
+            document.getElementById('nav-track').innerHTML = navHtml;
+
+            // --- 4. GENERATE HTML FOR EACH SECTION ---
+            let sectionHtmlMap = {};
+            const sidebarSecs = ["Notice Board", "Gallery", "Birthdays"]; 
+
+            sortedSections.forEach((secName, idx) => {
                 const wrapperId = secName.replace(/\s/g, '');
-                let secHtml = `<div class="section-wrapper" id="${wrapperId}">`;
+                let orderStyle = `order: ${idx + 1};`; // order:1 goes to the absolute newest
+                let secHtml = `<div class="section-wrapper" id="${wrapperId}" style="${orderStyle}">`;
                 
-                // Inject Section Header based on the toggle (Excluding Scrolling ticker)
                 if (SHOW_SECTION_HEADS && secName !== "Scrolling") {
                     secHtml += `<h2 class="section-header-title">${secName}</h2>`;
                 }
                 
                 if (secName === "Birthdays") {
-                    // --- 3. BORDER REMOVED & HAPPY BIRTHDAY HEADING ADDED ---
                     secHtml += `
                     <div class="fb-post" style="padding:0; border:none;">
                         <div class="bday-nav">
@@ -784,14 +796,14 @@
                         <h4 style="text-align:center; color:var(--accent-red); margin: 10px 0 5px 0; font-weight:800; letter-spacing:1px; text-transform:uppercase;">Happy Birth Day</h4>
                         <div class="birthday-grid" id="bday-grid-container"></div>
                     </div></div>`;
-                    
-                    // Add Birthdays to Sidebar
-                    sidebarHtml += secHtml;
+                    sectionHtmlMap[secName] = secHtml;
+
                 } else {
-                    const sectionPosts = postsData.filter(item => item.Section === secName).reverse();
+                    // EXPLICIT TIME SORTING INSTEAD OF .reverse()
+                    const sectionPosts = postsData.filter(item => item.Section === secName);
+                    sectionPosts.sort((a, b) => parseCustomDate(b.Timestamp) - parseCustomDate(a.Timestamp));
                     
                     if (secName === "Today") {
-                        // --- 4. BORDER REMOVED & TODAY IN HISTORY HEADING ADDED ---
                         secHtml += `
                         <div class="fb-post" style="padding:0; border:none; margin-bottom: 15px;">
                             <div class="bday-nav">
@@ -814,14 +826,13 @@
                         </div>`;
                     }
 
-                    // For the 3-column desktop layout to work perfectly inside sections:
                     secHtml += `<div class="cards-grid" id="grid-${wrapperId}" style="display:contents;">`;
                     
                     let hiddenCount = 0;
                     let todayCount = 0;
 
                     sectionPosts.forEach(item => {
-                        let rawDate = item.Timestamp.split(' ')[0].trim().replace(/[-/]/g, ':');
+                        let rawDate = (item.Timestamp || "").split(' ')[0].trim().replace(/[-/]/g, ':');
                         if (rawDate === getTodayDateStr()) todayCount++;
                     });
 
@@ -829,7 +840,7 @@
                         secHtml += `<p style="color:#65676B; padding:20px; text-align:center; grid-column: 1 / -1;">No updates yet.</p>`;
                     } else {
                         sectionPosts.forEach((item, index) => {
-                            let rawDate = item.Timestamp.split(' ')[0].trim().replace(/[-/]/g, ':');
+                            let rawDate = (item.Timestamp || "").split(' ')[0].trim().replace(/[-/]/g, ':');
                             let displayDate = rawDate.replace(/:/g, '/'); 
                             let isToday = (rawDate === getTodayDateStr());
                             let forceShow = (todayCount === 0 && index === 0);
@@ -840,14 +851,15 @@
                             let author = AUTHOR_PROFILES.find(a => a.name === authorName) || AUTHOR_PROFILES[0];
                             let subSecAttr = item.SubSection ? `data-subsection="${item.SubSection}"` : `data-subsection="Other"`;
                             
-                            // Parse Reactions and Comments safely
+                            // PRINT TIME AGO
+                            let timeAgoStr = getPostTimeAgo(item.Timestamp);
+                            
                             let reacts = {like:0, love:0, clap:0};
                             if (item.Reactions) { try { reacts = JSON.parse(item.Reactions); } catch(e){} }
                             let comments = [];
                             if (item.Comments) { try { comments = JSON.parse(item.Comments); } catch(e){} }
                             let shares = parseInt(item.Shares) || 0;
                             
-                            // Check local storage for existing user reactions
                             let userReactions = JSON.parse(localStorage.getItem('userReactions') || '{}');
                             let postIdStr = `post-${secName.replace(/\s/g, '')}-${item._rowIndex}`;
                             let myReaction = userReactions[postIdStr]; 
@@ -858,7 +870,7 @@
                                         <img src="${author.avatar}" class="fb-avatar">
                                         <div class="fb-header-info">
                                             <strong>${author.name} ${item.SubSection ? `<span style="color:var(--accent-blue);font-weight:700;">• ${item.SubSection}</span>` : ''}</strong>
-                                            <span>${displayDate}</span>
+                                            <span>${displayDate} • <b style="color:var(--accent-blue);">${timeAgoStr}</b></span>
                                         </div>
                                     </div>
                                     <div class="fb-content">
@@ -867,16 +879,12 @@
                                     </div>
                                     ${item.MediaLink ? `<div class="fb-media">${renderMedia(item.MediaLink)}</div>` : ''}
                                     
-                                    <!-- Social Bar -->
                                     <div class="social-bar">
-                                        <!-- Reaction Popup Wrapper -->
                                         <div class="reaction-container">
                                             <button class="social-btn main-react-btn ${myReaction ? 'reacted-'+myReaction : ''}" onclick="toggleReactionPopup('${postIdStr}')">
                                                 ${myReaction === 'love' ? '❤️' : myReaction === 'clap' ? '👏' : '👍'} 
                                                 <span class="total-count">${(reacts.like || 0) + (reacts.love || 0) + (reacts.clap || 0)}</span>
                                             </button>
-                                            
-                                            <!-- The Pop-up menu -->
                                             <div class="reaction-popup" id="popup-${postIdStr}">
                                                 <span class="reaction-option" onclick="doReaction(this, '${secName}', ${item._rowIndex}, 'like')" title="Like">👍</span>
                                                 <span class="reaction-option" onclick="doReaction(this, '${secName}', ${item._rowIndex}, 'love')" title="Love">❤️</span>
@@ -888,7 +896,6 @@
                                         <button class="social-btn" onclick="sharePost(this, '${secName}', ${item._rowIndex})">✈️ Share <span>${shares}</span></button>
                                     </div>
                                     
-                                    <!-- Comments Section -->
                                     <div class="comments-section">
                                         <div class="comment-list">
                                             ${comments.map(c => `
@@ -918,23 +925,95 @@
                     }
                     secHtml += `</div>`;
                     
-                    // Split content into Sidebar vs Main Area (Moved Gallery here too)
-                    if (secName === "Notice Board" || secName === "Gallery") {
-                        sidebarHtml += secHtml;
-                    } else {
-                        mainHtml += secHtml;
-                    }
+                    sectionHtmlMap[secName] = secHtml;
                 }
             });
 
-            mainHtml += `</div>`;
-            sidebarHtml += `</div>`;
+            // --- 5. BUILD FINAL HTML ---
+            let sidebarHtml = `<div class="sidebar-area">`;
             
-            // Add sidebar first so it appears at the top on Mobile, but CSS pushes it Right on Desktop
+            // QUICK LINKS HARDCODED TO TOP OF SIDEBAR WITH ORDER 0
+            sidebarHtml += `
+            <div class="quick-links-wrapper" style="order: 0; border: none; box-shadow: none;">
+                <h3>⚡ Quick Links</h3>
+                <div class="ql-grid">
+                    <a href="#" class="ql-btn">🚌 SCHOOL BUS</a>
+                    <a href="#" class="ql-btn">🧒 CM KIDS</a>
+                    <a href="#" class="ql-btn">🗳️ SCHOOL ELECTION</a>
+                    <a href="#" class="ql-btn">🎪 UTHSAV</a>
+                </div>
+            </div>`;
+
+            sortedSections.forEach(sec => {
+                if (sidebarSecs.includes(sec) && sectionHtmlMap[sec]) {
+                    sidebarHtml += sectionHtmlMap[sec];
+                }
+            });
+            sidebarHtml += `</div>`;
+
+            let mainHtml = `<div class="main-feed-area">`;
+            sortedSections.forEach(sec => {
+                if (!sidebarSecs.includes(sec) && sectionHtmlMap[sec]) {
+                    mainHtml += sectionHtmlMap[sec];
+                }
+            });
+            mainHtml += `</div>`;
+            
             container.innerHTML = sidebarHtml + mainHtml;
             updateBirthdayGrid(); 
-            updateTodayGrid();
+            updateTodayGrid(); 
         }
+        
+        // 1. Bulletproof Google Sheets Date Parser
+        function parseCustomDate(ts) {
+            if (!ts) return 0;
+            let tsStr = String(ts).trim();
+            let parts = tsStr.split(' ');
+            
+            // Format is exactly dd:MM:yyyy HH:mm:ss
+            let d = parts[0].split(/[:\/\-]/);
+            let t = parts[1] ? parts[1].split(':') : [0,0,0];
+            
+            if (d.length === 3) {
+                let day = parseInt(d[0], 10);
+                let month = parseInt(d[1], 10) - 1; // JavaScript months are 0-11
+                let year = parseInt(d[2], 10);
+                
+                // If it was written backwards as YYYY:MM:DD accidentally
+                if (year < 1000 && day > 1000) { let temp = year; year = day; day = temp; }
+
+                let hr = parseInt(t[0] || 0, 10);
+                let min = parseInt(t[1] || 0, 10);
+                let sec = parseInt(t[2] || 0, 10);
+
+                let time = new Date(year, month, day, hr, min, sec).getTime();
+                if (!isNaN(time) && time > 0) return time;
+            }
+
+            // Fallback
+            let fallback = new Date(tsStr).getTime();
+            return isNaN(fallback) ? 0 : fallback;
+        }
+
+        // 2. Time Ago Converter
+        function getPostTimeAgo(ts) {
+            let postTime = parseCustomDate(ts);
+            if (postTime === 0) return ""; 
+            let seconds = Math.floor((Date.now() - postTime) / 1000);
+            
+            if (seconds < 60) return "Just now"; // Covers 0-59 secs
+            let mins = Math.floor(seconds / 60);
+            if (mins < 60) return mins + " min ago";
+            let hrs = Math.floor(mins / 60);
+            if (hrs < 24) return hrs + " hr ago";
+            let days = Math.floor(hrs / 24);
+            if (days < 30) return days + " d ago";
+            let mos = Math.floor(days / 30);
+            if (mos < 12) return mos + " mo ago";
+            return Math.floor(days / 365) + " yr ago";
+        }
+        
+        
         
         // --- UPDATED SOCIAL FUNCTIONS (POPUP & INSTANT SYNC) ---
         // --- NEW: TIME AGO CONVERTER ---
@@ -964,6 +1043,7 @@
             
             return "Just now";
         }
+        
         
         function toggleReactionPopup(postId) {
             // Close any currently open popups
@@ -1829,6 +1909,32 @@ function updateTodayGrid() {
         emptyMsg.style.display = 'none';
     }
 }
+
+function getPostTimeAgo(ts) {
+            if (!ts) return "";
+            let parts = ts.split(' ');
+            if (parts.length !== 2) return "";
+            let d = parts[0].split(':'); // dd:MM:yyyy
+            let t = parts[1].split(':'); // HH:mm:ss
+            if (d.length !== 3 || t.length !== 3) return "";
+            
+            let postDate = new Date(d[2], d[1] - 1, d[0], t[0], t[1], t[2]);
+            let seconds = Math.floor((new Date() - postDate) / 1000);
+            
+            if (seconds < 60) return "Just now";
+            let mins = Math.floor(seconds / 60);
+            if (mins < 60) return mins + " min ago";
+            let hrs = Math.floor(mins / 60);
+            if (hrs < 24) return hrs + " hr ago";
+            let days = Math.floor(hrs / 24);
+            if (days < 30) return days + " d ago";
+            let mos = Math.floor(days / 30);
+            if (mos < 12) return mos + " mo ago";
+            return Math.floor(days / 365) + " yr ago";
+        }
+        
+        
+        
     </script>
 
 </html>
