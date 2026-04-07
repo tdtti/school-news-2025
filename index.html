@@ -19,7 +19,7 @@
         /* ========================== */
 
         :root {
-            --bg-color: #f0f2f5; --box-bg: #ffffff; --text-dark: #050505; --text-gray: #65676B;
+            --bg-color: white; --box-bg: #ffffff; --text-dark: #050505; --text-gray: #65676B;
             --accent-blue: #0866FF; --accent-red: #ef4444;
             --radius-large: 12px; --radius-medium: 8px; --shadow-soft: 0 1px 2px rgba(0,0,0,0.1);
         }
@@ -156,9 +156,10 @@
         }
 
         /* Main Content Grid */
-        .layout-container { margin: 20px auto 30px auto; padding: 0 15px; min-height: 60vh; }
-        .section-wrapper { margin-bottom: 30px; scroll-margin-top: 150px; display: flex; flex-direction: column; gap: 20px; }
-        .cards-grid { display: flex; flex-direction: column; gap: 20px; width: 100%; }
+        /* Main Content Grid */
+        .layout-container { margin: 20px auto 30px auto; padding: 0; min-height: 60vh; } /* Padding 0 for full width edge-to-edge */
+        .section-wrapper { margin-bottom: 5px; scroll-margin-top: 10px; display: flex; flex-direction: column; gap: 0; }
+        .cards-grid { display: flex; flex-direction: column; gap: 5px; width: 100%; }
         
         
         /* SPINNER */
@@ -170,7 +171,8 @@
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
         /* FB Posts & Birthdays */
-        .fb-post { background: var(--box-bg); border-radius: var(--radius-large); box-shadow: var(--shadow-soft); margin-bottom: 0; overflow: hidden; border: 1px solid #ced0d4; height: 100%; display: flex; flex-direction: column; }
+        /* FB Posts & Birthdays */
+        .fb-post { background: var(--box-bg); border-radius: 0; box-shadow: none; margin-bottom: 0; overflow: hidden; border: none; border-bottom: 4px solid #e4e6eb; height: 100%; display: flex; flex-direction: column; }
         .fb-header { display: flex; align-items: center; padding: 12px 16px; gap: 10px; }
         .fb-avatar { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 1px solid #e4e6eb; pointer-events: none;}
         .fb-header-info { display: flex; flex-direction: column; justify-content: center; }
@@ -195,8 +197,9 @@
 
         .is-hidden { display: none !important; }
         .show-post { display: block !important; }
-        .read-more-box { width: 100%; padding: 12px; background: #e4e6eb; border: none; border-radius: 8px; font-weight: 700; color: var(--text-dark); cursor: pointer; margin-bottom: 20px; transition: 0.2s; }
-
+        .read-more-box { width: 100%; padding: 15px; background: #fff; border: none; border-bottom: 6px solid #ced0d4; font-weight: 800; color: var(--accent-blue); cursor: pointer; margin-bottom: 10px; transition: background-color 0.2s; font-size: 0.95rem; display: flex; align-items: center; justify-content: center; gap: 8px; text-transform: uppercase;}
+        .read-more-box:hover { background: #f8fafc; }
+        
         /* === FAIRS TABS CSS === */
         .fairs-tabs-container { display: flex; gap: 10px; overflow-x: auto; margin-bottom: 15px; padding: 5px 0; scrollbar-width: none; }
         .fairs-tabs-container::-webkit-scrollbar { display: none; }
@@ -488,7 +491,22 @@
             </form>
         </div>
     </div>
-
+    
+    <!-- Custom Integrated Wish Modal -->
+    <div class="modal-overlay" id="customWishModal" style="z-index: 21000;">
+        <div class="custom-alert-box">
+            <h3 style="margin-bottom: 10px; color: var(--accent-blue);">🎁 Send a Wish!</h3>
+            <p style="font-size: 0.95rem; margin-bottom: 20px; color: var(--text-gray); font-weight: 600;" id="wishModalText">Enter your Name to wish them a Happy Birthday:</p>
+            
+            <input type="text" id="wishSenderName" class="form-control" placeholder="Your Name" value="TEAM TDTTI" style="margin-bottom: 25px; text-transform: uppercase; text-align: center; font-weight: 800; font-size: 1.1rem; color: var(--text-dark);">
+            
+            <div class="custom-msg-btns">
+                <button class="btn-confirm-yes" onclick="executeBirthdayWish()" style="background: #25D366;">Send to WhatsApp</button>
+                <button class="btn-confirm-no" onclick="closeWishModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+    
     <!-- Custom Alert Modal (Replaces standard alert) -->
     <div class="modal-overlay" id="customAlertModal" style="z-index: 21000;">
         <div class="custom-alert-box">
@@ -528,116 +546,12 @@
         </div>
     </div>
     
-    <!-- iOS / Manual Install Visual Guide Modal -->
-    <div class="modal-overlay" id="iosInstallGuideModal" style="z-index: 23000;">
-        <div class="custom-alert-box" style="padding: 20px;">
-            <h3 style="margin-bottom: 15px; color: var(--text-dark);">Install Web App</h3>
-            <div style="text-align: left; background: #f8fafc; padding: 15px; border-radius: 10px; border: 1px solid #ced0d4; margin-bottom: 20px;">
-                
-                <p style="margin-bottom: 15px; font-size: 0.95rem; display: flex; align-items: center; gap: 12px;">
-                    <span style="background: #fff; padding: 8px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); display:flex;">
-                        <!-- iOS Share Icon SVG -->
-                        <svg viewBox="0 0 24 24" width="22" height="22" fill="var(--accent-blue)"><path d="M16 5l-1.42 1.42-1.59-1.59V16h-2V4.83L9.4 6.42 8 5l4-4 4 4zm4 5v11c0 1.1-.9 2-2 2H6c-1.1 0-2-.9-2-2V10c0-1.1.9-2 2-2h3v2H6v11h12V10h-3V8h3c1.1 0 2 .9 2 2z"></path></svg>
-                    </span>
-                    <span><strong>Step 1:</strong> Tap the <b>Share</b> button in your browser menu.</span>
-                </p>
-                
-                <p style="margin-bottom: 0; font-size: 0.95rem; display: flex; align-items: center; gap: 12px;">
-                    <span style="background: #fff; padding: 8px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); display:flex;">
-                        <!-- Add to Home Screen Plus Icon SVG -->
-                        <svg viewBox="0 0 24 24" width="22" height="22" fill="var(--text-dark)"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path></svg>
-                    </span>
-                    <span><strong>Step 2:</strong> Scroll down and tap <b>Add to Home Screen</b>.</span>
-                </p>
-
-            </div>
-            <button class="btn-alert-ok" onclick="closeIosGuide()" style="width: 100%; padding: 12px; border: none; border-radius: 8px; font-weight: 700; background: var(--accent-blue); color: white; cursor: pointer; font-size:1rem;">Got it!</button>
-        </div>
-    </div>
     
 </body>
     <script>
-        // --- NEW: DYNAMIC PWA MANIFEST CREATION ---
-        const manifestData = {
-            "name": "TDTTI THURAVOOR",
-            "short_name": "TDTTI",
-            "start_url": window.location.href,
-            "display": "fullscreen",
-            "background_color": "#f0f2f5",
-            "theme_color": "#0866FF",
-            "icons": [{
-                "src": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjGka-p7C45PTqBMBKqSjulqicQlHmW_Ee1BCfUPpaW888vYnoPjElzW9DVm8az1kCOjdlabjA3qb_vS00GpCApyVWh2C0aIcOcvb-BWeeTI8AdLojSf25iCvNpMS6aENxrWO-SgM5xjqePEMsHfCLy4HinnGk2xAnDlKaapXYFY05jXQM/s56-c/Logo2.png",
-                "sizes": "192x192",
-                "type": "image/png"
-            }]
-        };
-        const manifestBlob = new Blob([JSON.stringify(manifestData)], {type: 'application/json'});
-        const manifestURL = URL.createObjectURL(manifestBlob);
-        const link = document.createElement('link');
-        link.rel = 'manifest';
-        link.href = manifestURL;
-        document.head.appendChild(link);
-
-        // --- NEW: PWA PROMPT LOGIC ---
-        let deferredPrompt;
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-        });
-
-        setTimeout(() => {
-            // Do not show if already running as standalone or if dismissed
-            if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) return;
-            if (!localStorage.getItem('pwaPromptDismissed')) {
-                document.getElementById('pwaPromptModal').classList.add('active');
-            }
-        }, 2500);
-
-        function handlePwaAccept() {
-            document.getElementById('pwaPromptModal').classList.remove('active');
-            if (deferredPrompt) {
-                // Native install for Android/Chrome
-                deferredPrompt.prompt();
-                deferredPrompt.userChoice.then((choiceResult) => {
-                    if (choiceResult.outcome === 'accepted') {
-                        localStorage.setItem('pwaPromptDismissed', 'true');
-                    }
-                    deferredPrompt = null;
-                });
-            } else {
-                // Visual Guide for iPhone/iOS Safari
-                document.getElementById('iosInstallGuideModal').classList.add('active');
-                localStorage.setItem('pwaPromptDismissed', 'true');
-            }
-        }
-
-        function closeIosGuide() {
-            document.getElementById('iosInstallGuideModal').classList.remove('active');
-        }
         
-        function handlePwaDismiss() {
-            localStorage.setItem('pwaPromptDismissed', 'true');
-            document.getElementById('pwaPromptModal').classList.remove('active');
-        }
-
-        // --- NEW: AUTO FULLSCREEN LOGIC ---
-        document.addEventListener('click', function initFullScreen() {
-            if (!document.fullscreenElement && !localStorage.getItem('fullscreenIgnored')) {
-                // Browsers require user interaction to trigger fullscreen
-                document.documentElement.requestFullscreen().catch(err => console.log("Fullscreen blocked implicitly."));
-            }
-            document.removeEventListener('click', initFullScreen);
-        }, {once: true});
-
-        document.addEventListener('touchstart', function initFullScreenTouch() {
-            if (!document.fullscreenElement && !localStorage.getItem('fullscreenIgnored')) {
-                document.documentElement.requestFullscreen().catch(err => console.log("Fullscreen blocked implicitly."));
-            }
-            document.removeEventListener('touchstart', initFullScreenTouch);
-        }, {once: true});
 
         
-        // --- AGGRESSIVE AUTO FULLSCREEN LOGIC ---
         // --- AGGRESSIVE AUTO FULLSCREEN LOGIC (NO BUTTONS) ---
         function forceFullScreen() {
             if (!document.fullscreenElement && !document.webkitIsFullScreen) {
@@ -711,7 +625,7 @@
             if(e.ctrlKey && (e.key === 'u' || e.key === 's' || e.key === 'c' || e.key === 'p')) e.preventDefault();
         });
 
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxa1TZ6XCu-vyZ-w1kvNpqDOhVTNAmBg5deUWUnrubjLR9HHN-TDdOYeo5YbOALvfSu/exec"; 
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxiEhQ7NmbDZJSEwl5aJm9tB3fppblnw4kP1XGLCdGo0iIZSbhZQQjcP-A7ynEwHTd_/exec"; 
         const IMGBB_API_KEY = "dcf1e98ceb03a9258bc9b06786f2bb18"; 
         
         const AUTHOR_PROFILES = [
@@ -731,7 +645,7 @@
         ];
 
         const SECTIONS =["Today", "Notice Board", "Birthdays", "Achievements", "Updates", "Appraisals", "Personalised Skills", "Academic", "Sports", "Fairs", "Kalothswom", "Gallery"];
-        const SHOW_SECTION_HEADS = true; 
+        const SHOW_SECTION_HEADS = false; 
 
         let globalPosts =[];
         let globalBirthdays =[];
@@ -742,11 +656,13 @@
             const now = new Date();
             return `${String(now.getDate()).padStart(2,'0')}:${String(now.getMonth()+1).padStart(2,'0')}:${now.getFullYear()}`;
         }
+        
         function getFormattedDateDisplay(dateStr) {
             const parts = dateStr.split(':');
             const d = new Date(parts[2], parseInt(parts[1]) - 1, parts[0]);
             const days =['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
-            return `${parts[0]}/${parts[1]} - ${days[d.getDay()]}`; 
+            // Formats to: DD/MM/YYYY DAY
+            return `${parts[0]}/${parts[1]}/${parts[2]} ${days[d.getDay()]}`; 
         }
 
         function getDailyBirthdayPhoto() {
@@ -790,6 +706,7 @@
                     globalPosts = parsed.posts ||[];
                     globalBirthdays = parsed.birthdays ||[];
                     renderAll(globalPosts, parsed.settings || {});
+                    // INSTANTLY REMOVE SPINNER FOR MAXIMUM SPEED
                     document.getElementById('loadingOverlay').classList.remove('active'); 
                 } catch(e) {}
             }
@@ -812,14 +729,15 @@
             const container = document.getElementById('main-content');
             
             let defaultCover = "https://via.placeholder.com/1200x300.png?text=Welcome+to+TDTTI+THURAVOOR";
-            let fallbackProfile = AUTHOR_PROFILES[0].avatar; 
+            let defaultLogo = AUTHOR_PROFILES[0].avatar; // The default avatar link
             
             let coverImg = settingsData["CoverPhoto"] || defaultCover;
             let profileImg = settingsData["ProfilePicture"];
 
-            if (!profileImg || profileImg === fallbackProfile || profileImg.trim() === "") {
+            // STRICT CHECK: If it's missing OR it's still the default logo, use the Birthday photo
+            if (!profileImg || profileImg === defaultLogo || profileImg.trim() === "") {
                 let dailyPhoto = getDailyBirthdayPhoto();
-                profileImg = dailyPhoto ? dailyPhoto : fallbackProfile;
+                profileImg = dailyPhoto ? dailyPhoto : defaultLogo; // Fallback to logo if no birthdays
             }
 
             document.getElementById('ui-cover').src = coverImg;
@@ -929,7 +847,8 @@
                             if (item.Reactions) { try { reacts = JSON.parse(item.Reactions); } catch(e){} }
                             let comments = [];
                             if (item.Comments) { try { comments = JSON.parse(item.Comments); } catch(e){} }
-
+                            let shares = parseInt(item.Shares) || 0;
+                            
                             // Check local storage for existing user reactions
                             let userReactions = JSON.parse(localStorage.getItem('userReactions') || '{}');
                             let postIdStr = `post-${secName.replace(/\s/g, '')}-${item._rowIndex}`;
@@ -968,7 +887,7 @@
                                         </div>
 
                                         <button class="social-btn" onclick="toggleComments(this)">💬 <span>${comments.length}</span></button>
-                                        <button class="social-btn" onclick="shareToWhatsApp(this)">🔗 Share</button>
+                                        <button class="social-btn" onclick="shareToWhatsApp(thisthis, '${secName}', ${item._rowIndex})">✈️ <span>${shares}</span></button>
                                     </div>
                                     
                                     <!-- Comments Section -->
@@ -985,7 +904,7 @@
                                             `).join('')}
                                         </div>
                                         <div class="add-comment-box">
-                                            <input type="text" class="c-input-name" placeholder="Your Name (Required)" style="text-transform: uppercase;">
+                                            <input type="text" class="c-input-name" placeholder="Your Name (Optional)">
                                             <textarea class="c-input-text" rows="1" placeholder="Write a comment..."></textarea>
                                             <button onclick="postInstantComment(this, '${secName}', ${item._rowIndex})">Post</button>
                                         </div>
@@ -996,7 +915,8 @@
                     secHtml += `</div>`;
 
                     if (hiddenCount > 0) {
-                        secHtml += `<button class="read-more-box" id="btn-more-${wrapperId}" onclick="toggleReadMore(this, ${hiddenCount}, ${sectionPosts.length})" style="grid-column: 1 / -1;">SHOW MORE</button>`;
+                        let btnText = (hiddenCount === sectionPosts.length) ? 'SHOW PREVIOUS POSTS <span>🔽</span>' : 'SHOW MORE <span>🔽</span>';
+                        secHtml += `<button class="read-more-box" id="btn-more-${wrapperId}" onclick="toggleReadMore(this, ${hiddenCount}, ${sectionPosts.length})" style="grid-column: 1 / -1;">${btnText}</button>`;
                     }
                     secHtml += `</div>`;
                     
@@ -1064,7 +984,8 @@
         });
 
         function doReaction(btn, section, rowIdx, type) {
-            let post = btn.closest('.fb-post') || btn.closest('.bday-item');
+            // Strictly target the nearest card, preventing crossover
+            let post = btn.closest('.bday-item, .fb-post');
             let postId = post.id;
             let mainBtn = post.querySelector('.main-react-btn');
             let totalSpan = mainBtn.querySelector('.total-count');
@@ -1083,6 +1004,12 @@
                 delete userReactions[postId];
                 payload.removeType = type;
             } else {
+                try {
+                    let audio = new Audio('https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3');
+                    audio.volume = 0.5;
+                    audio.play();
+                } catch(e) {}
+
                 let isNew = !currentReaction;
                 mainBtn.className = `social-btn main-react-btn reacted-${type}`;
                 let newTotal = currentTotal + (isNew ? 1 : 0); 
@@ -1104,9 +1031,12 @@
         }
 
         function toggleComments(btn) {
-            let post = btn.closest('.fb-post');
+            // Strictly target the nearest card, preventing crossover
+            let post = btn.closest('.bday-item, .fb-post');
             let section = post.querySelector('.comments-section');
-            section.style.display = section.style.display === 'block' ? 'none' : 'block';
+            if (section) {
+                section.style.display = section.style.display === 'block' ? 'none' : 'block';
+            }
         }
 
         function postInstantComment(btn, section, rowIdx) {
@@ -1117,21 +1047,18 @@
             let nameInput = nameField.value.trim();
             let textInput = textField.value.trim();
             
-            // 1. Ensure Name is provided
             if (!nameInput) {
                 showCustomAlert("Please enter your Name to post a comment.");
                 nameField.focus();
                 return;
             }
 
-            // 2. Ensure Comment text is provided
             if (!textInput) {
                 showCustomAlert("Please write a comment before posting.");
                 textField.focus();
                 return;
             }
 
-            // 3. Force Name to be ALL CAPS
             nameInput = nameInput.toUpperCase();
 
             let cList = box.previousElementSibling; 
@@ -1148,10 +1075,10 @@
                     </div>
                 </div>`;
             
-            // Clear only the comment text, leaving the name so they don't have to retype it for their next comment
             textField.value = ''; 
             
-            let postContainer = btn.closest('.bday-item') || btn.closest('.fb-post');
+            // Strictly target the nearest card for updating the comment count
+            let postContainer = btn.closest('.bday-item, .fb-post');
             let countSpan = postContainer.querySelector('.comment-count') || postContainer.querySelector('.social-bar button:nth-child(2) span') || postContainer.querySelector('.social-bar button:nth-child(4) span');
             if (countSpan) {
                 countSpan.innerText = parseInt(countSpan.innerText) + 1;
@@ -1165,12 +1092,40 @@
             }).catch(e => console.log("Comment sync failed silently"));
         }
 
-        function shareToWhatsApp(btn) {
-            let post = btn.closest('.fb-post');
-            let titleEl = post.querySelector('.post-title-share');
+        function sharePost(btn, section, rowIdx) {
+            // STRICT SELECTOR: Stops exactly at the card you clicked to prevent crossover
+            let post = btn.closest('.bday-item, .fb-post');
+            
+            // Failsafe: Get title or default text
+            let titleEl = post ? (post.querySelector('.post-title-share') || post.querySelector('.bday-info h5')) : null;
             let titleText = titleEl ? titleEl.innerText : "Check out this update!";
-            let textToShare = `*TDTTI THURAVOOR*\n${titleText}\n\nView here: ${window.location.href}`;
-            window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(textToShare)}`, '_blank');
+            
+            let shareTitle = "TDTTI THURAVOOR";
+            let shareText = `${titleText}\n\nRead more on our Live Portal:`;
+            let shareUrl = window.location.href;
+
+            // 1. Instantly add +1 to the UI counter
+            let countSpan = btn.querySelector('span');
+            if (countSpan) countSpan.innerText = parseInt(countSpan.innerText || 0) + 1;
+
+            // 2. Silently sync the +1 to Google Sheets in the background
+            fetch(SCRIPT_URL, {
+                method: 'POST',
+                headers: { "Content-Type": "text/plain;charset=utf-8" },
+                body: JSON.stringify({ action: 'share', section: section, rowIndex: rowIdx })
+            }).catch(e => console.log("Share sync failed"));
+
+            // 3. Trigger Share Menu (or fallback to WhatsApp) INSTANTLY
+            if (navigator.share) {
+                navigator.share({ 
+                    title: shareTitle, 
+                    text: shareText, 
+                    url: shareUrl 
+                }).catch(err => console.log("Share cancelled by user."));
+            } else {
+                let waText = `*${shareTitle}*\n${titleText}\n\nView here: ${shareUrl}`;
+                window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(waText)}`, '_blank');
+            }
         }
         
 
@@ -1202,12 +1157,16 @@
         function toggleReadMore(btn, hiddenCount, totalCount) {
             const grid = btn.previousElementSibling;
             const hiddenItems = grid.querySelectorAll('.is-hidden');
-            if (btn.innerText === 'SHOW MORE' || btn.innerText === 'SHOW PREVIOUS POSTS') {
+            
+            // Checking if the button currently says "SHOW MORE" or "SHOW PREVIOUS POSTS" (ignoring the arrow icons)
+            if (btn.innerText.includes('SHOW MORE') || btn.innerText.includes('SHOW PREVIOUS POSTS')) {
                 hiddenItems.forEach(p => p.classList.add('show-post'));
-                btn.innerText = 'SHOW LESS';
+                btn.innerHTML = 'SHOW LESS <span>🔼</span>';
             } else {
                 hiddenItems.forEach(p => p.classList.remove('show-post'));
-                btn.innerText = (hiddenCount === totalCount) ? 'SHOW PREVIOUS POSTS' : 'SHOW MORE';
+                btn.innerHTML = (hiddenCount === totalCount) ? 'SHOW PREVIOUS POSTS <span>🔽</span>' : 'SHOW MORE <span>🔽</span>';
+                
+                // Scroll back up to the top of the grid smoothly
                 grid.parentElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
         }
@@ -1239,6 +1198,8 @@
             }
 
             let html = "";
+            let defaultLogo = AUTHOR_PROFILES[0].avatar;
+
             dayBirthdays.forEach(student => {
                 let rawImg = "";
                 for (let key in student) {
@@ -1252,23 +1213,28 @@
                 }
                 const imgLink = (rawImg && rawImg.trim() !== '') ? rawImg.trim() : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png';
 
-                // Setup Reactions & Comments arrays
                 let reacts = {like:0, love:0, clap:0};
                 if (student.Reactions) { try { reacts = JSON.parse(student.Reactions); } catch(e){} }
                 let comments = [];
                 if (student.Comments) { try { comments = JSON.parse(student.Comments); } catch(e){} }
-
+                let shares = parseInt(student.Shares) || 0;
+                let wishes = parseInt(student.Wishes) || 0;
                 let postIdStr = `post-Birthdays-${student._rowIndex}`;
                 let userReactions = JSON.parse(localStorage.getItem('userReactions') || '{}');
                 let myReaction = userReactions[postIdStr];
+                
+                let sName = student['Student Name'] || '';
+                let sClass = student['Class'] || '';
+                let sDiv = student['Division'] || '';
 
+                // Notice: <p>${sClass}${sDiv}</p> is now formatted as 7D instead of 7 'D'
                 html += `
                 <div class="bday-item" id="${postIdStr}">
                     <div class="bday-img-wrapper">
-                        <img src="${imgLink}" alt="${student['Student Name'] || 'Student'}">
+                        <img src="${imgLink}" alt="${sName}">
                         <div class="bday-info">
-                            <h5>${student['Student Name'] || ''}</h5>
-                            <p>${student['Class'] || ''} '${student['Division'] || ''}'</p>
+                            <h5>${sName}</h5>
+                            <p>${sClass}${sDiv}</p>
                         </div>
                     </div>
                     
@@ -1286,14 +1252,21 @@
                             </div>
                         </div>
                         <button class="social-btn" onclick="toggleComments(this)">💬 <span class="comment-count">${comments.length}</span></button>
+                        
+                        <!-- NEW: WhatsApp Wish Button -->
+                        <!-- NEW: WhatsApp Wish Button with Counter -->
+                        <button class="social-btn" onclick="sendBirthdayWish(this, '${sName}', ${student._rowIndex})">🎁 <span>${wishes}</span></button>
+                        
+                        <!-- NEW: Share Button with Counter -->
+                        <button class="social-btn" onclick="sharePost(this, 'Birthdays', ${student._rowIndex})">✈️ <span>${shares}</span></button>
                     </div>
 
                     <!-- Comments Section -->
                     <div class="comments-section" style="padding: 10px;">
                         <div class="comment-list">
                             ${comments.map(c => `
-                                <div class="comment-item" id="comment-${c.id}">
-                                    <img src="${c.avatar || 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'}" class="c-avatar">
+                                <div class="comment-item" id="comment-${postIdStr}-${c.id}">
+                                    <img src="${c.avatar || defaultLogo}" class="c-avatar">
                                     <div class="c-bubble">
                                         <strong>${c.name} <span>${timeAgo(c.date)}</span></strong>
                                         <p>${c.text}</p>
@@ -1311,7 +1284,60 @@
             });
             gridContainer.innerHTML = html;
         }
+        
+        // Global variable to hold data while the modal is open
+        let currentWishData = null;
 
+        function sendBirthdayWish(btn, studentName, rowIdx) {
+            // Save the data to be used when they click Send
+            currentWishData = { btn: btn, studentName: studentName, rowIdx: rowIdx };
+            
+            // Update the text and default value in the custom modal
+            document.getElementById('wishModalText').innerText = `Enter your Name to wish ${studentName} a Happy Birthday:`;
+            document.getElementById('wishSenderName').value = "TEAM TDTTI";
+            
+            // Show the custom modal
+            document.getElementById('customWishModal').classList.add('active');
+            document.getElementById('wishSenderName').focus();
+        }
+
+        function closeWishModal() {
+            document.getElementById('customWishModal').classList.remove('active');
+            currentWishData = null; // Clear data
+        }
+
+        function executeBirthdayWish() {
+            if (!currentWishData) return;
+            
+            let senderName = document.getElementById('wishSenderName').value;
+            if (!senderName || senderName.trim() === "") {
+                showCustomAlert("Please enter a name to send the wish.");
+                return;
+            }
+            
+            let studentName = currentWishData.studentName;
+            let rowIdx = currentWishData.rowIdx;
+            let btn = currentWishData.btn;
+
+            // 1. Instantly add +1 to the UI counter
+            let countSpan = btn.querySelector('span');
+            if (countSpan) countSpan.innerText = parseInt(countSpan.innerText || 0) + 1;
+
+            // 2. Silently sync the +1 to Google Sheets in the background
+            fetch(SCRIPT_URL, {
+                method: 'POST',
+                headers: { "Content-Type": "text/plain;charset=utf-8" },
+                body: JSON.stringify({ action: 'wish', section: 'Birthdays', rowIndex: rowIdx })
+            }).catch(e => console.log("Wish sync failed"));
+
+            // 3. Format text and open WhatsApp
+            let text = `🎉 *Happy Birthday ${studentName}!* 🎂\n\nWishing you a fantastic day filled with joy and success!\n\nBest wishes from: *${senderName.toUpperCase()}*\n\nView today's birthdays here: ${window.location.href}`;
+            window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank');
+            
+            // Close the modal
+            closeWishModal();
+        }
+        
         function renderMedia(url) {
             if (url.includes('youtube.com') || url.includes('youtu.be')) {
                 const id = url.split('v=')[1] || url.split('/').pop();
@@ -1556,7 +1582,8 @@
 
             globalBirthdays.forEach(b => {
                 let opt = document.createElement('option');
-                let searchText = `${b['Student Name'] || 'Unknown'} - ${b.Date} (${b.Class} '${b.Division}')`;
+                // Updated format here to (7D)
+                let searchText = `${b['Student Name'] || 'Unknown'} - ${b.Date} (${b.Class || ''}${b.Division || ''})`;
                 opt.value = searchText;
                 datalist.appendChild(opt);
 
@@ -1574,7 +1601,8 @@
         function autoFillStudent() {
             const searchValue = document.getElementById('bdayStudentSearch').value;
             const student = globalBirthdays.find(b => {
-                let text = `${b['Student Name'] || 'Unknown'} - ${b.Date} (${b.Class} '${b.Division}')`;
+                // Updated format here to (7D)
+                let text = `${b['Student Name'] || 'Unknown'} - ${b.Date} (${b.Class || ''}${b.Division || ''})`;
                 return text === searchValue;
             });
             
@@ -1589,7 +1617,6 @@
                 document.getElementById('studentClass').value = student.Class || "";
                 document.getElementById('studentDiv').value = student.Division || "";
 
-                // POPULATE COMMENTS FOR BIRTHDAYS
                 if (student.Comments && student.Comments.trim() !== "") {
                     try {
                         let cArray = JSON.parse(student.Comments);
@@ -1609,17 +1636,10 @@
                                     </div>
                                 `;
                             });
-                        } else {
-                            adminCommBox.style.display = 'none';
-                        }
+                        } else { adminCommBox.style.display = 'none'; }
                     } catch(e) { adminCommBox.style.display = 'none'; }
-                } else {
-                    adminCommBox.style.display = 'none';
-                }
-
-            } else { 
-                resetBdayFields(); 
-            }
+                } else { adminCommBox.style.display = 'none'; }
+            } else { resetBdayFields(); }
         }
 
         function resetBdayFields() {
