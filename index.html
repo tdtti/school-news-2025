@@ -300,7 +300,7 @@
 </head>
 <body>
 
-    <!-- Exit Full Screen Button -->
+    
     <!-- Floating Top Actions -->
     
 
@@ -319,7 +319,7 @@
     <!-- MAIN HEADER -->
     <header class="site-profile-header">
         <div class="cover-overlay-top">
-            <div class="cover-school-name" onclick="document.getElementById('pwaPromptModal').classList.add('active');" title="Install Web App">TDTTI THURAVOOR</div>
+            <div class="cover-school-name">TDTTI THURAVOOR</div>
             
             <!-- 15 SECOND HOLD LOGIN -->
             <div class="cover-logo-login" 
@@ -395,7 +395,7 @@
             <form id="uploadForm">
                 <div class="form-group" id="settingsSelectGroup" style="display: none;">
                     <label>Select Image to Update</label>
-                    <select id="settingKey" class="form-control">
+                    <select id="settingKey" class="form-control" onchange="toggleAdminMode()">
                         <option value="ProfilePicture">Profile Picture (Overrides Daily Random Photo)</option>
                         <option value="CoverPhoto">Cover Photo</option>
                     </select>
@@ -489,8 +489,8 @@
                     </div>
                     <div id="cameraFileName" style="font-size: 0.8rem; color: var(--accent-blue); margin-top: 5px; display: none;">✅ Photo captured via camera</div>
                 </div>
-
                 <button type="button" class="btn-submit" id="submitBtn" onclick="submitData('create')">Publish Now</button>
+                <button type="button" class="btn-submit" id="resetProfileBtn" style="display:none; background:#65676B; margin-top:5px;" onclick="resetProfileToAuto()">Revert Profile to Auto Random</button>
                 <button type="button" class="btn-submit" id="updateBtn" style="display:none; background:#10b981;" onclick="submitData('update')">Update Post</button>
                 <button type="button" class="btn-submit btn-delete" id="deleteBtn" style="display:none;" onclick="submitData('delete')">Delete Post</button>
             </form>
@@ -557,33 +557,7 @@
         
 
         
-        // --- AGGRESSIVE AUTO FULLSCREEN LOGIC (NO BUTTONS) ---
-        function forceFullScreen() {
-            if (!document.fullscreenElement && !document.webkitIsFullScreen) {
-                let fs = document.documentElement.requestFullscreen || 
-                         document.documentElement.webkitRequestFullscreen || 
-                         document.documentElement.msRequestFullscreen;
-                if (fs) fs.call(document.documentElement).catch(err => { /* Silently handle browser block until interaction */ });
-            }
-        }
         
-        
-        // Trigger on ANY first action (click, touch, scroll)
-        ['click', 'touchstart', 'scroll', 'keydown'].forEach(evt => {
-            document.addEventListener(evt, function initFS() {
-                forceFullScreen();
-                // We keep it active so if they exit, the next click puts it back (unless ignored)
-            }, {passive: true});
-        });
-
-        
-
-        function exitFullScreen() {
-            if (document.fullscreenElement || document.webkitIsFullScreen) {
-                let efs = document.exitFullscreen || document.webkitExitFullscreen || document.msExitFullscreen;
-                if (efs) efs.call(document);
-            }
-        }
 
         // --- NEW: CUSTOM ALERT & CONFIRM FUNCTIONS ---
         function showCustomAlert(msg) {
@@ -636,7 +610,7 @@
         ];
 
         const SECTIONS =["Today", "Notice Board", "Birthdays", "Achievements", "Updates", "Appraisals", "Personalised Skills", "Academic", "Sports", "Fairs", "Kalothswom", "Gallery"];
-        const SHOW_SECTION_HEADS = false; 
+        const SHOW_SECTION_HEADS = true; 
 
         let globalPosts =[];
         let globalBirthdays =[];
@@ -661,12 +635,8 @@
             let validPhotos =[];
             
             globalBirthdays.forEach(student => {
-                let rawImg = "";
-                for (let key in student) {
-                    let lowerKey = key.trim().toLowerCase();
-                    if (['imagelink', 'image link', 'image', 'photo', 'medialink'].includes(lowerKey)) { rawImg = student[key]; break; }
-                }
-                if (!rawImg || rawImg.trim() === '') {
+                let rawImg = student['ImageLink'] || student['Image Link'] || student['Image'] || student['Photo'] || student['MediaLink'];
+                if (!rawImg) {
                     for (let key in student) {
                         if (typeof student[key] === 'string' && student[key].startsWith('http')) { rawImg = student[key]; break; }
                     }
@@ -677,10 +647,13 @@
             });
 
             if (validPhotos.length === 0) return null;
+            
             let today = new Date();
-            let seed = today.getFullYear() * 10000 + (today.getMonth() + 1) * 100 + today.getDate();
-            let index = seed % validPhotos.length;
-            return validPhotos[index];
+            // Calculate seed based on Date + AM/PM (changes every 12 hours)
+            let halfDay = Math.floor(today.getHours() / 12); 
+            let seed = (today.getFullYear() * 1000) + (today.getDate() * 10) + halfDay;
+            
+            return validPhotos[seed % validPhotos.length];
         }
 
         window.onload = () => {
@@ -787,7 +760,8 @@ if(document.getElementById('sectionFilter')) document.getElementById('sectionFil
 
             sortedSections.forEach((secName, idx) => {
                 const wrapperId = secName.replace(/\s/g, '');
-                let orderStyle = `order: ${idx + 1};`; // order:1 goes to the absolute newest
+                // Forces Gallery to always be at the very bottom (order 9999)
+                let orderStyle = secName === "Gallery" ? `order: 9999;` : `order: ${idx + 1};`;// order:1 goes to the absolute newest
                 let secHtml = `<div class="section-wrapper" id="${wrapperId}" style="${orderStyle}">`;
                 
                 if (SHOW_SECTION_HEADS && secName !== "Scrolling") {
@@ -978,34 +952,33 @@ if(document.getElementById('sectionFilter')) document.getElementById('sectionFil
         
         // 1. Bulletproof Google Sheets Date Parser
         function parseCustomDate(ts) {
-            if (!ts) return 0;
-            let tsStr = String(ts).trim();
-            let parts = tsStr.split(' ');
-            
-            // Format is exactly dd:MM:yyyy HH:mm:ss
-            let d = parts[0].split(/[:\/\-]/);
-            let t = parts[1] ? parts[1].split(':') : [0,0,0];
-            
-            if (d.length === 3) {
-                let day = parseInt(d[0], 10);
-                let month = parseInt(d[1], 10) - 1; // JavaScript months are 0-11
-                let year = parseInt(d[2], 10);
-                
-                // If it was written backwards as YYYY:MM:DD accidentally
-                if (year < 1000 && day > 1000) { let temp = year; year = day; day = temp; }
+    if (!ts) return 0;
+    let tsStr = String(ts).trim();
+    let parts = tsStr.split(' ');
+    
+    // Parses DD:MM:YYYY HH:mm:ss OR DD/MM/YYYY OR DD-MM-YYYY
+    let d = parts[0].split(/[:\/\-]/);
+    let t = parts[1] ? parts[1].split(':') : [0,0,0];
+    
+    if (d.length >= 3) {
+        let day = parseInt(d[0], 10);
+        let month = parseInt(d[1], 10) - 1; 
+        let year = parseInt(d[2], 10);
+        
+        // Failsafe: if year is written first (YYYY-MM-DD)
+        if (year < 1000 && day > 1000) { let temp = year; year = day; day = temp; }
 
-                let hr = parseInt(t[0] || 0, 10);
-                let min = parseInt(t[1] || 0, 10);
-                let sec = parseInt(t[2] || 0, 10);
+        let hr = parseInt(t[0] || 0, 10);
+        let min = parseInt(t[1] || 0, 10);
+        let sec = parseInt(t[2] || 0, 10);
 
-                let time = new Date(year, month, day, hr, min, sec).getTime();
-                if (!isNaN(time) && time > 0) return time;
-            }
+        let time = new Date(year, month, day, hr, min, sec).getTime();
+        if (!isNaN(time) && time > 0) return time;
+    }
 
-            // Fallback
-            let fallback = new Date(tsStr).getTime();
-            return isNaN(fallback) ? 0 : fallback;
-        }
+    let fallback = new Date(tsStr).getTime();
+    return isNaN(fallback) ? 0 : fallback;
+}
 
         // 2. Time Ago Converter
         function getPostTimeAgo(ts) {
@@ -1479,43 +1452,66 @@ if(document.getElementById('sectionFilter')) document.getElementById('sectionFil
         }
 
         function toggleAdminMode() {
-            const mode = document.querySelector('input[name="adminMode"]:checked').value;
+    const mode = document.querySelector('input[name="adminMode"]:checked').value;
 
-            if (mode === 'settings') {
-                document.getElementById('settingsSelectGroup').style.display = 'block';
-                document.getElementById('fg-section').style.display = 'none';
-                document.getElementById('fg-subsection').style.display = 'none';
-                document.getElementById('editSelectGroup').style.display = 'none';
-                document.getElementById('birthdayFields').style.display = 'none';
-                document.getElementById('normalFields').style.display = 'none';
-                document.getElementById('imageUploadGroup').style.display = 'block';
-                
-                document.getElementById('submitBtn').style.display = 'block';
-                document.getElementById('submitBtn').innerText = "Update Image";
-                document.getElementById('updateBtn').style.display = 'none';
-                document.getElementById('deleteBtn').style.display = 'none';
-            } 
-            else {
-                document.getElementById('settingsSelectGroup').style.display = 'none';
-                document.getElementById('fg-section').style.display = 'block';
-                document.getElementById('submitBtn').innerText = "Publish Now";
-                
-                toggleFields(); 
-                
-                if (mode === 'edit' && document.getElementById('sectionSelect').value !== "Birthdays") {
-                    document.getElementById('editSelectGroup').style.display = 'block';
-                    document.getElementById('submitBtn').style.display = 'none';
-                    document.getElementById('updateBtn').style.display = 'block';
-                    document.getElementById('deleteBtn').style.display = 'block';
-                    populateEditDropdown();
-                } else {
-                    document.getElementById('editSelectGroup').style.display = 'none';
-                    document.getElementById('submitBtn').style.display = 'block';
-                    document.getElementById('updateBtn').style.display = 'none';
-                    document.getElementById('deleteBtn').style.display = 'none';
-                }
-            }
+    if (mode === 'settings') {
+        document.getElementById('settingsSelectGroup').style.display = 'block';
+        document.getElementById('fg-section').style.display = 'none';
+        document.getElementById('fg-subsection').style.display = 'none';
+        document.getElementById('editSelectGroup').style.display = 'none';
+        document.getElementById('birthdayFields').style.display = 'none';
+        document.getElementById('normalFields').style.display = 'none';
+        document.getElementById('imageUploadGroup').style.display = 'block';
+        
+        document.getElementById('submitBtn').style.display = 'block';
+        document.getElementById('submitBtn').innerText = "Update Image";
+        document.getElementById('updateBtn').style.display = 'none';
+        document.getElementById('deleteBtn').style.display = 'none';
+
+        // ONLY show the Revert button if "ProfilePicture" is actively selected
+        let setKey = document.getElementById('settingKey').value;
+        let resetBtn = document.getElementById('resetProfileBtn');
+        if(resetBtn) resetBtn.style.display = (setKey === 'ProfilePicture') ? 'block' : 'none';
+    } 
+    else {
+        document.getElementById('settingsSelectGroup').style.display = 'none';
+        document.getElementById('fg-section').style.display = 'block';
+        document.getElementById('submitBtn').innerText = "Publish Now";
+        
+        if(document.getElementById('resetProfileBtn')) document.getElementById('resetProfileBtn').style.display = 'none';
+        
+        toggleFields(); 
+        
+        if (mode === 'edit' && document.getElementById('sectionSelect').value !== "Birthdays") {
+            document.getElementById('editSelectGroup').style.display = 'block';
+            document.getElementById('submitBtn').style.display = 'none';
+            document.getElementById('updateBtn').style.display = 'block';
+            document.getElementById('deleteBtn').style.display = 'block';
+            populateEditDropdown();
+        } else {
+            document.getElementById('editSelectGroup').style.display = 'none';
+            document.getElementById('submitBtn').style.display = 'block';
+            document.getElementById('updateBtn').style.display = 'none';
+            document.getElementById('deleteBtn').style.display = 'none';
         }
+    }
+}
+        
+        function resetProfileToAuto() {
+    document.getElementById('loadingOverlay').classList.add('active');
+    fetch(SCRIPT_URL, {
+        method: 'POST',
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify({ action: 'updateSettings', settingKey: 'ProfilePicture', mediaLink: '' })
+    }).then(() => {
+        // Instantly wipe manual photo from local memory so it randomizes immediately
+        let cached = JSON.parse(localStorage.getItem('schoolPortalData') || '{}');
+        if (cached.settings) cached.settings['ProfilePicture'] = "";
+        localStorage.setItem('schoolPortalData', JSON.stringify(cached));
+        location.reload(); // Refresh to apply new random photo instantly
+    });
+}
+
 
         function clearPostFields() {
             document.getElementById('postTitle').value = "";
@@ -1946,36 +1942,64 @@ function getPostTimeAgo(ts) {
             return Math.floor(days / 365) + " yr ago";
         }
         
-        // Live Search Function
+        
 // Live Search & Section Filter Function
 function searchPosts() {
-    let textInput = document.getElementById('globalSearch').value.toLowerCase();
+    let textInput = document.getElementById('globalSearch').value.toLowerCase().trim();
     let selectedSection = document.getElementById('sectionFilter').value;
+    let isSearchingText = textInput !== "";
+
+    // 1. Hide UI extras during search
+    let ql = document.querySelector('.quick-links-wrapper');
+    if (ql) ql.style.display = (isSearchingText || selectedSection !== "All") ? 'none' : '';
     
-    // 1. Hide/Show main section wrappers based on Dropdown
-    document.querySelectorAll('.section-wrapper').forEach(wrapper => {
-        let matchesDropdown = (selectedSection === "All" || wrapper.id === selectedSection.replace(/\s/g, ''));
-        wrapper.style.display = matchesDropdown ? '' : 'none';
+    let fairTabs = document.querySelector('.fairs-tabs-container');
+    if (fairTabs) fairTabs.style.display = isSearchingText ? 'none' : 'flex';
+
+    document.querySelectorAll('.read-more-box').forEach(btn => {
+        btn.style.display = isSearchingText ? 'none' : '';
     });
 
-    // 2. Hide/Show individual posts based on Text Search
+    // 2. Hide/Show main Section Containers
+    document.querySelectorAll('.section-wrapper').forEach(wrapper => {
+        if (isSearchingText && (wrapper.id === 'Today' || wrapper.id === 'Birthdays')) {
+            wrapper.style.display = 'none';
+            return;
+        }
+        let matchesDropdown = (selectedSection === "All" || wrapper.id === selectedSection.replace(/\s/g, ''));
+        wrapper.style.display = matchesDropdown ? 'flex' : 'none'; 
+    });
+
+    // 3. Deep Search into EVERY Post
     document.querySelectorAll('.fb-post, .bday-item').forEach(post => {
-        // Skip control UI like date navigators
-        if(post.querySelector('.bday-nav')) return; 
-        
+        if(post.querySelector('.bday-nav')) return; // Skip title headers
+
         let textContent = post.innerText.toLowerCase();
-        if (textInput === "" || textContent.includes(textInput)) {
-            post.style.display = ''; 
+        
+        if (isSearchingText) {
+            // Strip ALL hidden limitations so it can be seen
+            post.classList.remove('is-hidden', 'fair-hidden');
+            post.classList.add('show-post');
+
+            // Show if it matches, hide if it doesn't
+            post.style.display = textContent.includes(textInput) ? 'flex' : 'none';
         } else {
-            post.style.display = 'none';
+            // IF SEARCH IS CLEARED: Revert to normal logic
+            post.style.display = ''; 
+            
+            // Fix Fairs tab sorting if search is cleared
+            if (post.closest('#grid-Fairs')) {
+                let activeFairTab = document.querySelector('.fair-tab.active');
+                if (activeFairTab && activeFairTab.innerText !== "All Fairs") {
+                    let cat = activeFairTab.innerText.replace(/[🎨➗🔬🌍]/g, '').trim();
+                    if (post.getAttribute('data-subsection') !== cat) {
+                        post.classList.add('fair-hidden');
+                        post.classList.remove('show-post');
+                    }
+                }
+            }
         }
     });
-    
-    // 3. Hide Quick Links while user is actively searching/filtering
-    let ql = document.querySelector('.quick-links-wrapper');
-    if(ql) {
-        ql.style.display = (textInput === "" && selectedSection === "All") ? '' : 'none';
-    }
 }
         
     </script>
