@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#0866FF">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -11,8 +11,8 @@
     <meta name="display" content="standalone">
     <title>TDTTI THURAVOOR | Live Portal</title>
 
-    <!-- Embedded Web App Manifest for PWA -->
-    <link rel="manifest" href="data:application/manifest+json;charset=utf-8,%7B%22name%22%3A%22TDTTI%20THURAVOOR%20Live%20Portal%22%2C%22short_name%22%3A%22TDTTI%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23ffffff%22%2C%22theme_color%22%3A%22%230866FF%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22https%3A%2F%2Fblogger.googleusercontent.com%2Fimg%2Fb%2FR29vZ2xl%2FAVvXsEjGka-p7C45PTqBMBKqSjulqicQlHmW_Ee1BCfUPpaW888vYnoPjElzW9DVm8az1kCOjdlabjA3qb_vS00GpCApyVWh2C0aIcOcvb-BWeeTI8AdLojSf25iCvNpMS6aENxrWO-SgM5xjqePEMsHfCLy4HinnGk2xAnDlKaapXYFY05jXQM%2Fs56-c%2FLogo2.png%22%2C%22sizes%22%3A%22192x192%22%2C%22type%22%3A%22image%2Fpng%22%7D%5D%7D">
+    <!-- Manifest link for PWA Installability -->
+    <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjGka-p7C45PTqBMBKqSjulqicQlHmW_Ee1BCfUPpaW888vYnoPjElzW9DVm8az1kCOjdlabjA3qb_vS00GpCApyVWh2C0aIcOcvb-BWeeTI8AdLojSf25iCvNpMS6aENxrWO-SgM5xjqePEMsHfCLy4HinnGk2xAnDlKaapXYFY05jXQM/s56-c/Logo2.png">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -23,7 +23,6 @@
         /* === WEB PROTECTION CSS === */
         body { -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; }
         img { -webkit-user-drag: none; -khtml-user-drag: none; -moz-user-drag: none; -o-user-drag: none; }
-        /* ========================== */
 
         :root {
             --bg-color: white; --box-bg: #ffffff; --text-dark: #050505; --text-gray: #65676B;
@@ -34,23 +33,23 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--bg-color); color: var(--text-dark); overflow-x: hidden; }
 
-        /* === YOUTUBE-STYLE TOP LOADER === */
+        /* === YOUTUBE-STYLE TOP PROGRESSIVE LOADER (Replaces ALL Spinners) === */
         .yt-loader {
             position: fixed;
             top: 0;
             left: 0;
-            height: 3px;
+            height: 3.5px;
             width: 0%;
-            background: linear-gradient(90deg, #ff0000, #ff4e50, #f9d423);
+            background: linear-gradient(90deg, #0866FF, #ff0055, #ffaa00);
             z-index: 999999;
-            box-shadow: 0 0 10px rgba(255, 0, 0, 0.7), 0 0 5px rgba(255, 78, 80, 0.5);
+            box-shadow: 0 0 12px rgba(8, 102, 255, 0.8), 0 0 6px rgba(255, 0, 85, 0.6);
             transition: width 0.25s ease-out, opacity 0.3s ease;
             opacity: 0;
             pointer-events: none;
         }
         .yt-loader.loading { opacity: 1; }
 
-        /* === TOP PWA INSTALL INSTRUCTIONS BANNER === */
+        /* === PWA TOP INSTALL BANNER === */
         .pwa-top-banner {
             background: #ffffff;
             border-bottom: 2px solid #e4e6eb;
@@ -68,56 +67,22 @@
             from { transform: translateY(-100%); opacity: 0; }
             to { transform: translateY(0); opacity: 1; }
         }
-        .pwa-banner-content {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            flex: 1;
-            min-width: 0;
-        }
-        .pwa-banner-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 10px;
-            object-fit: contain;
-            background: #f0f2f5;
-            padding: 2px;
-            flex-shrink: 0;
-            border: 1px solid #ced0d4;
-        }
-        .pwa-banner-text {
-            display: flex;
-            flex-direction: column;
-            min-width: 0;
-        }
-        .pwa-banner-text strong {
-            font-size: 0.95rem;
-            color: var(--text-dark);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        .pwa-banner-text span {
-            font-size: 0.78rem;
-            color: var(--text-gray);
-            font-weight: 600;
-        }
-        .pwa-banner-actions {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            flex-shrink: 0;
-        }
+        .pwa-banner-content { display: flex; align-items: center; gap: 12px; flex: 1; min-width: 0; }
+        .pwa-banner-icon { width: 42px; height: 42px; border-radius: 10px; object-fit: contain; background: #f0f2f5; padding: 2px; flex-shrink: 0; border: 1px solid #ced0d4; }
+        .pwa-banner-text { display: flex; flex-direction: column; min-width: 0; }
+        .pwa-banner-text strong { font-size: 0.95rem; color: var(--text-dark); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .pwa-banner-text span { font-size: 0.78rem; color: var(--text-gray); font-weight: 600; }
+        .pwa-banner-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
         .pwa-btn-install {
             background: var(--accent-blue);
             color: #ffffff;
             border: none;
-            padding: 7px 16px;
+            padding: 8px 18px;
             border-radius: 18px;
             font-weight: 800;
             font-size: 0.85rem;
             cursor: pointer;
-            transition: background 0.2s, transform 0.1s;
+            transition: all 0.2s;
         }
         .pwa-btn-install:hover { background: var(--accent-blue-dark); transform: scale(1.03); }
         .pwa-btn-close {
@@ -126,8 +91,8 @@
             color: var(--text-gray);
             font-size: 1.2rem;
             font-weight: bold;
-            width: 30px;
-            height: 30px;
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
             cursor: pointer;
             display: flex;
@@ -162,10 +127,9 @@
 
         /* === MAIN HEADER (COVER & PROFILE) === */
         .site-profile-header { background: var(--box-bg); padding-bottom: 20px; border-bottom: 1px solid #ced0d4; position: relative;}
-        
         .cover-overlay-top { position: absolute; top: 20px; left: 20px; right: 20px; display: flex; justify-content: space-between; align-items: flex-start; z-index: 5; max-width: 1000px; margin: 0 auto; }
         .cover-school-name { 
-            background: rgba(255, 255, 255, 0.9); 
+            background: rgba(255, 255, 255, 0.95); 
             color: var(--accent-blue); 
             padding: 10px 20px; 
             border-radius: var(--radius-large); 
@@ -173,17 +137,13 @@
             font-size: 1.3rem; 
             box-shadow: 0 4px 15px rgba(0,0,0,0.15); 
             backdrop-filter: blur(8px); 
-            -webkit-backdrop-filter: blur(8px); 
             letter-spacing: 0.5px; 
             cursor: pointer; 
             transition: transform 0.2s; 
         }
-        .cover-school-name:hover { 
-            transform: translateY(-3px); 
-            box-shadow: 0 6px 20px rgba(0,0,0,0.2); 
-        }
-        .cover-logo-login { background: rgba(255, 255, 255, 0.9); padding: 6px; border-radius: var(--radius-large); box-shadow: 0 4px 15px rgba(0,0,0,0.15); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); cursor: pointer; transition: transform 0.2s; display: flex; align-items: center; justify-content: center; }
-        .cover-logo-login:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,0.2); }
+        .cover-school-name:hover { transform: translateY(-3px); }
+        .cover-logo-login { background: rgba(255, 255, 255, 0.95); padding: 6px; border-radius: var(--radius-large); box-shadow: 0 4px 15px rgba(0,0,0,0.15); backdrop-filter: blur(8px); cursor: pointer; transition: transform 0.2s; display: flex; align-items: center; justify-content: center; }
+        .cover-logo-login:hover { transform: translateY(-3px); }
         .cover-logo-login img { width: 45px; height: 45px; object-fit: contain; border-radius: 8px; }
         .cover-photo { 
             width: 100%; 
@@ -201,17 +161,15 @@
         
         @media (max-width: 500px) {
             .cover-photo { height: 220px; }
-            .cover-overlay-top { top: 15px; left: 15px; right: 15px; align-items: center;}
+            .cover-overlay-top { top: 15px; left: 15px; right: 15px; }
             .cover-school-name { font-size: 1rem; padding: 8px 15px; }
             .cover-logo-login img { width: 35px; height: 35px; }
             .profile-pic-container { flex-direction: column; align-items: center; text-align: center; margin-top: -70px; }
             .school-slogan { margin-left: 0; margin-top: 10px; margin-bottom: 0; font-size: 1.2rem;}
         }
 
-        /* Nav (Sticky top) */
+        /* Nav & Search */
         .nav-wrapper { background: var(--box-bg); border-bottom: 1px solid #e2e8f0; padding: 10px 5%; position: sticky; top: 0; z-index: 900; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
-
-        /* Search Bar & Filter */
         .search-container { background: #fff; border-bottom: 1px solid #e2e8f0; }
         .search-container input, .search-container select { 
             padding: 12px 15px; 
@@ -226,7 +184,7 @@
         .search-container select { font-weight: 700; color: var(--text-dark); cursor: pointer; max-width: 140px; }
         .search-container input:focus, .search-container select:focus { border-color: var(--accent-blue); background: #fff; }
 
-        /* === DESKTOP GRID LAYOUT === */
+        /* Layout */
         @media (min-width: 992px) {
             .layout-container { max-width: 1400px; display: flex; flex-direction: row-reverse; gap: 25px; align-items: flex-start; }
             .main-feed-area { flex: 3; display: flex; flex-direction: column; gap: 30px; align-items: stretch; }
@@ -243,7 +201,7 @@
         .section-wrapper { margin-bottom: 5px; scroll-margin-top: 10px; display: flex; flex-direction: column; gap: 0; }
         .cards-grid { display: flex; flex-direction: column; gap: 5px; width: 100%; }
 
-        /* === NEW FACEBOOK STYLE: LEFT-ALIGNED SOCIAL BAR (ICON + NUMBER ONLY) === */
+        /* === LEFT-ALIGNED SOCIAL BAR (ICON + NUMBER ONLY) === */
         .social-bar { 
             display: flex; 
             justify-content: flex-start; 
@@ -304,14 +262,6 @@
         .admin-comment-actions { display: flex; gap: 5px; }
         .admin-comment-actions button { padding: 5px 10px; border: none; border-radius: 5px; cursor: pointer; font-size: 0.8rem; font-weight: bold;}
 
-        /* Admin Saving Overlay */
-        .saving-overlay { position: fixed; inset: 0; background: rgba(255,255,255,0.7); z-index: 20000; display: none; justify-content: center; align-items: center; flex-direction: column; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
-        .saving-overlay.active { display: flex; }
-        .loader-wrapper { display: flex; justify-content: center; align-items: center; position: relative; height: 90px; }
-        .spinner-ring { width: 60px; height: 60px; border: 4px solid #e2e8f0; border-top-color: var(--accent-blue); border-radius: 50%; animation: spin 1s linear infinite; position: absolute; }
-        .spinner-logo { width: 38px; height: 38px; border-radius: 50%; position: absolute; object-fit: cover; }
-        @keyframes spin { 100% { transform: rotate(360deg); } }
-
         /* FB Posts & Birthdays */
         .fb-post { background: var(--box-bg); border-radius: 0; box-shadow: none; margin-bottom: 0; overflow: hidden; border: none; border-bottom: none; height: 100%; display: flex; flex-direction: column; }
         .fb-header { display: flex; align-items: center; padding: 12px 16px; gap: 10px; }
@@ -340,14 +290,13 @@
         .read-more-box { width: 100%; padding: 15px; background: #fff; border: none; border-bottom: 1px solid #ced0d4; font-weight: 800; color: var(--accent-blue); cursor: pointer; margin-bottom: 10px; transition: background-color 0.2s; font-size: 0.95rem; display: flex; align-items: center; justify-content: center; gap: 8px; text-transform: uppercase;}
         .read-more-box:hover { background: #f8fafc; }
         
-        /* === FAIRS TABS CSS === */
+        /* Fairs Tabs */
         .fairs-tabs-container { display: flex; gap: 10px; overflow-x: auto; margin-bottom: 15px; padding: 5px 0; scrollbar-width: none; }
         .fairs-tabs-container::-webkit-scrollbar { display: none; }
         .fair-tab { padding: 8px 32px; background: #e4e6eb; border: 1px solid #ced0d4; border-radius: 20px; font-weight: 700; color: var(--text-dark); cursor: pointer; white-space: nowrap; transition: 0.2s; font-size: 0.85rem; }
         .fair-tab.active, .fair-tab:hover { background: var(--accent-blue); color: white; border-color: var(--accent-blue); }
         .fair-hidden { display: none !important; }
         
-        /* === SECTION HEADERS === */
         .section-header-title {
             font-size: 1.4rem;
             font-weight: 800;
@@ -362,7 +311,7 @@
         /* Modals & Forms */
         .modal-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(5px); z-index: 10000; display: none; align-items: center; justify-content: center; padding: 20px; }
         .modal-overlay.active { display: flex; }
-        .modal-box { background: white; padding: 30px; border-radius: var(--radius-large); width: 100%; max-width: 500px; position: relative; max-height: 90vh; overflow-y: auto; box-shadow: 0 10px 40px rgba(0,0,0,0.2); border: 1px solid #ced0d4; }
+        .modal-box { background: white; padding: 25px; border-radius: var(--radius-large); width: 100%; max-width: 500px; position: relative; max-height: 90vh; overflow-y: auto; box-shadow: 0 10px 40px rgba(0,0,0,0.2); border: 1px solid #ced0d4; }
         .close-modal { position: absolute; top: 15px; right: 20px; font-size: 2rem; cursor: pointer; border: none; background: none; color: #65676B; }
         .form-group { margin-bottom: 15px; }
         .form-group label { display: block; font-weight: 700; margin-bottom: 5px; font-size: 0.9rem; }
@@ -370,13 +319,37 @@
         .form-control:read-only { background-color: #e4e6eb; cursor: not-allowed; }
         
         .btn-submit { width: 100%; padding: 12px; background: var(--accent-blue); color: white; border: none; border-radius: 8px; font-weight: 700; font-size: 1rem; cursor: pointer; margin-top: 10px; transition: 0.2s;}
+        .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; }
         .btn-delete { background: var(--accent-red); margin-top: 5px; }
         
-        /* Admin Dashboard Styles */
         .admin-mode-toggles { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
         .admin-mode-toggles label { background: #eef2ff; border: 1px solid var(--accent-blue); font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 10px; color: var(--accent-blue); font-size: 1.05rem; padding: 12px 20px; border-radius: 10px; transition: 0.3s;}
         .admin-mode-toggles label:hover { background: var(--accent-blue); color: #fff; }
         .admin-mode-toggles input[type="radio"] { transform: scale(1.2); cursor: pointer; }
+
+        /* Image Sizing Guide Badge in Admin Modal */
+        .image-guide-box {
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            border-radius: 8px;
+            padding: 10px 12px;
+            margin-bottom: 12px;
+            font-size: 0.8rem;
+            color: #1e40af;
+            line-height: 1.4;
+        }
+        .image-guide-box strong { color: #1d4ed8; }
+        .compression-status-badge {
+            background: #dcfce7;
+            color: #166534;
+            border: 1px solid #86efac;
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            margin-top: 8px;
+            display: none;
+            font-weight: 700;
+        }
 
         /* Quick Links */
         .quick-links-wrapper { background: var(--box-bg); border-radius: var(--radius-large); padding: 20px; margin-bottom: 20px; }
@@ -394,14 +367,6 @@
         .btn-confirm-no { background: #e4e6eb; color: var(--text-dark); }
         .btn-alert-ok:hover, .btn-confirm-yes:hover { opacity: 0.9; }
 
-        /* PWA Fallback Modal */
-        .pwa-header { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; text-align: left; background: #f8fafc; padding: 15px; border-radius: 10px; border: 1px solid #ced0d4;}
-        .pwa-header img { width: 55px; height: 55px; border-radius: 12px; object-fit: contain; background: white; padding: 2px;}
-        .pwa-header div { display: flex; flex-direction: column; }
-        .pwa-header strong { font-size: 1.1rem; color: var(--text-dark); }
-        .pwa-header span { font-size: 0.85rem; color: var(--text-gray); }
-
-        /* Footer */
         .site-footer { text-align: center; padding: 40px 20px; color: var(--text-gray); font-weight: 700; background: #ffffff; border-top: 1px solid #ced0d4; margin-top: 40px; }
         .footer-socials { display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; flex-wrap: wrap;}
         .footer-socials a { display: flex; align-items: center; justify-content: center; width: 45px; height: 45px; border-radius: 50%; background: #e4e6eb; color: var(--text-dark); text-decoration: none; transition: all 0.3s ease; }
@@ -415,10 +380,10 @@
 </head>
 <body>
 
-    <!-- YouTube-Style Top Progress Bar -->
+    <!-- YouTube-Style Progressive Bar (Used for all loading & publishing operations) -->
     <div id="yt-loader" class="yt-loader"></div>
 
-    <!-- === PWA TOP INSTALL INSTRUCTIONS BANNER === -->
+    <!-- PWA Top Install Instructions Banner -->
     <div id="pwa-top-banner" class="pwa-top-banner" style="display: none;">
         <div class="pwa-banner-content">
             <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjGka-p7C45PTqBMBKqSjulqicQlHmW_Ee1BCfUPpaW888vYnoPjElzW9DVm8az1kCOjdlabjA3qb_vS00GpCApyVWh2C0aIcOcvb-BWeeTI8AdLojSf25iCvNpMS6aENxrWO-SgM5xjqePEMsHfCLy4HinnGk2xAnDlKaapXYFY05jXQM/s56-c/Logo2.png" alt="TDTTI" class="pwa-banner-icon">
@@ -433,14 +398,6 @@
         </div>
     </div>
 
-    <!-- Admin Action Loader (Triggered only when saving/deleting) -->
-    <div class="saving-overlay" id="loadingOverlay">
-        <div class="loader-wrapper">
-            <div class="spinner-ring"></div>
-            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjGka-p7C45PTqBMBKqSjulqicQlHmW_Ee1BCfUPpaW888vYnoPjElzW9DVm8az1kCOjdlabjA3qb_vS00GpCApyVWh2C0aIcOcvb-BWeeTI8AdLojSf25iCvNpMS6aENxrWO-SgM5xjqePEMsHfCLy4HinnGk2xAnDlKaapXYFY05jXQM/s56-c/Logo2.png" class="spinner-logo" alt="Loading...">
-        </div>
-    </div>
-
     <!-- LIVE NOTICE (BLUE THEME) -->
     <div class="ticker-wrapper">
         <div class="ticker-badge">Notice</div>
@@ -452,7 +409,6 @@
         <div class="cover-overlay-top">
             <div class="cover-school-name">TDTTI THURAVOOR</div>
             
-            <!-- Admin Login Hold -->
             <div class="cover-logo-login" 
                  onmousedown="startLoginPress(event)" 
                  onmouseup="cancelLoginPress()" 
@@ -482,7 +438,7 @@
     </nav>
 
     <main class="layout-container" id="main-content">
-        <!-- Content injects here instantly from memory cache -->
+        <!-- Injected via memory cache instantly -->
     </main>
 
     <footer class="site-footer">
@@ -524,7 +480,7 @@
             <form id="uploadForm">
                 <div class="form-group" id="settingsSelectGroup" style="display: none;">
                     <label>Select Image to Update</label>
-                    <select id="settingKey" class="form-control" onchange="toggleAdminMode()">
+                    <select id="settingKey" class="form-control" onchange="toggleAdminMode(); updateImageGuide();">
                         <option value="ProfilePicture">Profile Picture (Overrides Daily Random Photo)</option>
                         <option value="CoverPhoto">Cover Photo</option>
                     </select>
@@ -532,7 +488,7 @@
 
                 <div class="form-group" id="fg-section">
                     <label>Section</label>
-                    <select id="sectionSelect" class="form-control" onchange="toggleFields()">
+                    <select id="sectionSelect" class="form-control" onchange="toggleFields(); updateImageGuide();">
                         <option value="Scrolling">Scrolling</option>
                         <option value="Today">Today</option>
                         <option value="Notice Board">Notice Board</option>
@@ -608,15 +564,24 @@
                     <div class="form-group" id="fg-media"><label>Media Link (YouTube/Direct URL)</label><input type="url" id="mediaLink" class="form-control" placeholder="Leave blank if uploading image below"></div>
                 </div>
 
+                <!-- IMAGE UPLOAD WITH SIZING GUIDE & AUTO-COMPRESSOR -->
                 <div class="form-group" id="imageUploadGroup" style="background: #eef2ff; padding: 15px; border-radius: 10px; border: 1px dashed var(--accent-blue);">
-                    <label style="color: var(--accent-blue);">Upload Image or Take Photo</label>
-                    <div style="display: flex; gap: 10px;">
-                        <input type="file" id="fileUpload" class="form-control" style="background:#fff; flex: 1;" accept="image/*" onchange="resetCamera()">
-                        <label for="cameraUpload" class="form-control" style="background:var(--accent-blue); color:white; width: 60px; text-align:center; cursor:pointer; font-size: 1.2rem; display:flex; align-items:center; justify-content:center; border:none; margin:0;" title="Take Photo">📷</label>
-                        <input type="file" id="cameraUpload" accept="image/*" capture="environment" style="display:none;" onchange="syncCameraText()">
+                    <label style="color: var(--accent-blue); font-weight: 800;">Upload Image or Take Photo</label>
+                    
+                    <div class="image-guide-box" id="imageGuideText">
+                        📐 <strong>Recommended size:</strong> 1280 × 720 px (Max 15MB).<br>
+                        ⚡ Images are automatically compressed before uploading.
                     </div>
-                    <div id="cameraFileName" style="font-size: 0.8rem; color: var(--accent-blue); margin-top: 5px; display: none;">✅ Photo captured via camera</div>
+
+                    <div style="display: flex; gap: 10px;">
+                        <input type="file" id="fileUpload" class="form-control" style="background:#fff; flex: 1;" accept="image/*" onchange="handleImageSelection(this)">
+                        <label for="cameraUpload" class="form-control" style="background:var(--accent-blue); color:white; width: 60px; text-align:center; cursor:pointer; font-size: 1.2rem; display:flex; align-items:center; justify-content:center; border:none; margin:0;" title="Take Photo">📷</label>
+                        <input type="file" id="cameraUpload" accept="image/*" capture="environment" style="display:none;" onchange="handleImageSelection(this, true)">
+                    </div>
+
+                    <div id="compressionStatusBadge" class="compression-status-badge"></div>
                 </div>
+
                 <button type="button" class="btn-submit" id="submitBtn" onclick="submitData('create')">Publish Now</button>
                 <button type="button" class="btn-submit" id="resetProfileBtn" style="display:none; background:#65676B; margin-top:5px;" onclick="resetProfileToAuto()">Revert Profile to Auto Random</button>
                 <button type="button" class="btn-submit" id="updateBtn" style="display:none; background:#10b981;" onclick="submitData('update')">Update Post</button>
@@ -625,14 +590,12 @@
         </div>
     </div>
     
-    <!-- Custom Integrated Wish Modal -->
+    <!-- Custom Wish Modal -->
     <div class="modal-overlay" id="customWishModal" style="z-index: 21000;">
         <div class="custom-alert-box">
             <h3 style="margin-bottom: 10px; color: var(--accent-blue);">🎁 Send a Wish!</h3>
             <p style="font-size: 0.95rem; margin-bottom: 20px; color: var(--text-gray); font-weight: 600;" id="wishModalText">Enter your Name to wish them a Happy Birthday:</p>
-            
             <input type="text" id="wishSenderName" class="form-control" placeholder="Your Name" value="TEAM TDTTI" style="margin-bottom: 25px; text-transform: uppercase; text-align: center; font-weight: 800; font-size: 1.1rem; color: var(--text-dark);">
-            
             <div class="custom-msg-btns">
                 <button class="btn-confirm-yes" onclick="executeBirthdayWish()" style="background: #25D366;">Send to WhatsApp</button>
                 <button class="btn-confirm-no" onclick="closeWishModal()">Cancel</button>
@@ -661,39 +624,47 @@
         </div>
     </div>
 
-    <!-- PWA Fallback / Direct Info Modal -->
+    <!-- PWA Install Guide Modal -->
     <div class="modal-overlay" id="pwaPromptModal" style="z-index: 22000;">
         <div class="modal-box" style="max-width: 400px; text-align: center; padding: 25px;">
-            <div class="pwa-header">
-                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjGka-p7C45PTqBMBKqSjulqicQlHmW_Ee1BCfUPpaW888vYnoPjElzW9DVm8az1kCOjdlabjA3qb_vS00GpCApyVWh2C0aIcOcvb-BWeeTI8AdLojSf25iCvNpMS6aENxrWO-SgM5xjqePEMsHfCLy4HinnGk2xAnDlKaapXYFY05jXQM/s56-c/Logo2.png" alt="TDTTI Logo">
+            <div style="display:flex; align-items:center; gap:12px; margin-bottom:15px; text-align:left; background:#f8fafc; padding:12px; border-radius:10px; border:1px solid #ced0d4;">
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjGka-p7C45PTqBMBKqSjulqicQlHmW_Ee1BCfUPpaW888vYnoPjElzW9DVm8az1kCOjdlabjA3qb_vS00GpCApyVWh2C0aIcOcvb-BWeeTI8AdLojSf25iCvNpMS6aENxrWO-SgM5xjqePEMsHfCLy4HinnGk2xAnDlKaapXYFY05jXQM/s56-c/Logo2.png" style="width:48px; height:48px; border-radius:8px;">
                 <div>
-                    <strong>TDTTI THURAVOOR</strong>
-                    <span>Install our Live Web App</span>
+                    <strong style="display:block; font-size:1rem;">TDTTI THURAVOOR</strong>
+                    <span style="font-size:0.8rem; color:var(--text-gray);">Official Web App</span>
                 </div>
             </div>
-            <p id="pwa-modal-instructions" style="margin-bottom: 20px; font-weight: 600; color: var(--text-dark);">Add TDTTI to your home screen for instant access to the latest updates.</p>
+            <div id="pwa-modal-instructions" style="margin-bottom: 20px; font-size: 0.95rem; color: var(--text-dark); line-height: 1.5; text-align: left;">
+                Tap <strong>Install</strong> below to add this portal directly to your phone's home screen for fast live updates.
+            </div>
             <div class="custom-msg-btns">
-                <button class="btn-alert-ok" onclick="handlePwaAccept()">Install App</button>
+                <button class="btn-alert-ok" id="pwa-modal-action-btn" onclick="executePwaInstall()">Install Now</button>
                 <button class="btn-confirm-no" onclick="closeModals()">Close</button>
             </div>
         </div>
     </div>
 
     <script>
-        // === YOUTUBE-STYLE TOP PROGRESS BAR CONTROLLER ===
+        // === YOUTUBE-STYLE TOP PROGRESSIVE BAR (Zero Spinners) ===
         let ytTimer = null;
-        function startYtLoader() {
+        function startYtLoader(initial = 25) {
             const bar = document.getElementById('yt-loader');
             if (!bar) return;
             bar.classList.add('loading');
-            bar.style.width = '20%';
+            bar.style.width = initial + '%';
             clearInterval(ytTimer);
             ytTimer = setInterval(() => {
-                let currentWidth = parseFloat(bar.style.width) || 20;
-                if (currentWidth < 85) {
-                    bar.style.width = (currentWidth + Math.random() * 12) + '%';
+                let currentWidth = parseFloat(bar.style.width) || initial;
+                if (currentWidth < 90) {
+                    bar.style.width = (currentWidth + Math.random() * 10) + '%';
                 }
             }, 250);
+        }
+
+        function setYtProgress(percent) {
+            const bar = document.getElementById('yt-loader');
+            if (!bar) return;
+            bar.style.width = percent + '%';
         }
 
         function finishYtLoader() {
@@ -710,7 +681,7 @@
             }, 200);
         }
 
-        // === PWA APP INSTALLATION & BANNER LOGIC ===
+        // === PWA APP INSTALLATION CONTROLLER ===
         let deferredPrompt = null;
 
         function isAppInstalled() {
@@ -720,7 +691,6 @@
         }
 
         function checkAndShowPwaBanner() {
-            // NEVER show banner if already installed as standalone app or dismissed
             if (isAppInstalled()) return;
             if (localStorage.getItem('pwaBannerDismissed') === 'true') return;
 
@@ -744,30 +714,49 @@
         }
 
         function triggerPwaInstall() {
-            if (deferredPrompt) {
+            const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+            const modal = document.getElementById('pwaPromptModal');
+            const modalText = document.getElementById('pwa-modal-instructions');
+            const actionBtn = document.getElementById('pwa-modal-action-btn');
+
+            if (isIOS) {
+                if (modalText) {
+                    modalText.innerHTML = `
+                    <strong>iOS Installation:</strong><br>
+                    1. Tap the <strong>Share</strong> button <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L6.5 7.5l1.4 1.4L11 5.8V16h2V5.8l3.1 3.1 1.4-1.4L12 2zm-7 14v4h14v-4h2v6H3v-6h2z"/></svg> in Safari.<br>
+                    2. Scroll down and tap <strong>'Add to Home Screen'</strong>.<br>
+                    3. Tap <strong>Add</strong> at the top right.`;
+                }
+                if (actionBtn) actionBtn.style.display = 'none';
+                if (modal) modal.classList.add('active');
+            } else if (deferredPrompt) {
                 deferredPrompt.prompt();
-                deferredPrompt.userChoice.then((choiceResult) => {
-                    if (choiceResult.outcome === 'accepted') {
+                deferredPrompt.userChoice.then((choice) => {
+                    if (choice.outcome === 'accepted') {
                         dismissPwaBanner();
+                        showCustomAlert("App Installed Successfully!");
                     }
                     deferredPrompt = null;
                 });
             } else {
-                const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-                const modal = document.getElementById('pwaPromptModal');
-                const modalText = document.getElementById('pwa-modal-instructions');
-                if (isIOS && modalText) {
-                    modalText.innerHTML = "To install:<br>1. Tap the <strong>Share</strong> button in Safari.<br>2. Scroll down & tap <strong>'Add to Home Screen'</strong>.";
+                if (modalText) {
+                    modalText.innerHTML = `To install, open your browser menu (⋮) and choose <strong>'Install app'</strong> or <strong>'Add to Home Screen'</strong>.`;
                 }
                 if (modal) modal.classList.add('active');
             }
         }
 
-        function handlePwaAccept() {
+        function executePwaInstall() {
             closeModals();
             if (deferredPrompt) {
                 deferredPrompt.prompt();
-                deferredPrompt = null;
+                deferredPrompt.userChoice.then((choice) => {
+                    if (choice.outcome === 'accepted') {
+                        dismissPwaBanner();
+                        showCustomAlert("App Installed Successfully!");
+                    }
+                    deferredPrompt = null;
+                });
             }
         }
 
@@ -782,23 +771,146 @@
 
         window.addEventListener('appinstalled', () => {
             deferredPrompt = null;
-            const banner = document.getElementById('pwa-top-banner');
-            if (banner) banner.style.display = 'none';
+            dismissPwaBanner();
+            showCustomAlert("🎉 TDTTI App has been installed on your device!");
         });
 
-        // Register Inline Service Worker for PWA
+        // Register Service Worker from sw.js
         if ('serviceWorker' in navigator) {
-            const swCode = `
-                self.addEventListener('install', (e) => { self.skipWaiting(); });
-                self.addEventListener('activate', (e) => { e.waitUntil(clients.claim()); });
-                self.addEventListener('fetch', (e) => {
-                    e.respondWith(fetch(e.request).catch(() => caches.match(e.request)));
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js').catch((err) => {
+                    console.log('SW registration fallback', err);
                 });
-            `;
+            });
+        }
+
+        // --- CLIENT-SIDE AUTOMATIC IMAGE COMPRESSION ENGINE ---
+        let compressedBlobToUpload = null;
+
+        function updateImageGuide() {
+            const mode = document.querySelector('input[name="adminMode"]:checked').value;
+            const sec = document.getElementById('sectionSelect').value;
+            const guide = document.getElementById('imageGuideText');
+            if (!guide) return;
+
+            if (mode === 'settings') {
+                const setKey = document.getElementById('settingKey').value;
+                if (setKey === 'CoverPhoto') {
+                    guide.innerHTML = `📐 <strong>Recommended size:</strong> 1200 × 350 px (Landscape cover).<br>⚡ Max 15MB. Automatically compressed to ~200KB.`;
+                } else {
+                    guide.innerHTML = `📐 <strong>Recommended size:</strong> 500 × 500 px (Square 1:1 avatar).<br>⚡ Max 15MB. Automatically compressed to ~80KB.`;
+                }
+            } else if (sec === 'Birthdays') {
+                guide.innerHTML = `📐 <strong>Recommended size:</strong> 600 × 750 px (Student photo portrait).<br>⚡ Max 15MB. Automatically compressed to ~120KB.`;
+            } else {
+                guide.innerHTML = `📐 <strong>Recommended size:</strong> 1280 × 720 px (Posts & Gallery).<br>⚡ Max 15MB. Automatically compressed to ~250KB.`;
+            }
+        }
+
+        function compressImageFile(file, maxWidth, maxHeight, quality = 0.82) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = (event) => {
+                    const img = new Image();
+                    img.src = event.target.result;
+                    img.onload = () => {
+                        let width = img.width;
+                        let height = img.height;
+
+                        if (width > maxWidth || height > maxHeight) {
+                            if (width / height > maxWidth / maxHeight) {
+                                height = Math.round((height * maxWidth) / width);
+                                width = maxWidth;
+                            } else {
+                                width = Math.round((width * maxHeight) / height);
+                                height = maxHeight;
+                            }
+                        }
+
+                        const canvas = document.createElement('canvas');
+                        canvas.width = width;
+                        canvas.height = height;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, width, height);
+
+                        canvas.toBlob((blob) => {
+                            if (!blob) { reject(new Error("Compression failed")); return; }
+                            resolve({
+                                blob: blob,
+                                originalSizeKB: (file.size / 1024).toFixed(1),
+                                compressedSizeKB: (blob.size / 1024).toFixed(1),
+                                dimensions: `${width} × ${height} px`
+                            });
+                        }, 'image/jpeg', quality);
+                    };
+                    img.onerror = reject;
+                };
+                reader.onerror = reject;
+            });
+        }
+
+        async function handleImageSelection(inputElement, isCamera = false) {
+            const badge = document.getElementById('compressionStatusBadge');
+            if (isCamera) {
+                document.getElementById('fileUpload').value = '';
+            } else {
+                document.getElementById('cameraUpload').value = '';
+            }
+
+            if (!inputElement.files || inputElement.files.length === 0) {
+                compressedBlobToUpload = null;
+                badge.style.display = 'none';
+                return;
+            }
+
+            const file = inputElement.files[0];
+
+            // 15MB Maximum Size Check
+            if (file.size > 15 * 1024 * 1024) {
+                showCustomAlert("⚠️ Image is too large! Maximum allowed raw image size is 15 MB. Please select a smaller file.");
+                inputElement.value = '';
+                compressedBlobToUpload = null;
+                badge.style.display = 'none';
+                return;
+            }
+
+            badge.style.display = 'block';
+            badge.style.background = '#fef3c7';
+            badge.style.color = '#92400e';
+            badge.style.borderColor = '#fcd34d';
+            badge.innerText = '⏳ Optimizing & Compressing image in memory...';
+
+            startYtLoader(40);
+
             try {
-                const blob = new Blob([swCode], { type: 'application/javascript' });
-                navigator.serviceWorker.register(URL.createObjectURL(blob)).catch(() => {});
-            } catch(e) {}
+                const mode = document.querySelector('input[name="adminMode"]:checked').value;
+                const sec = document.getElementById('sectionSelect').value;
+
+                let maxW = 1280, maxH = 1280, q = 0.80;
+                if (mode === 'settings') {
+                    if (document.getElementById('settingKey').value === 'CoverPhoto') { maxW = 1200; maxH = 450; q = 0.84; }
+                    else { maxW = 500; maxH = 500; q = 0.85; }
+                } else if (sec === 'Birthdays') {
+                    maxW = 600; maxH = 750; q = 0.85;
+                }
+
+                const result = await compressImageFile(file, maxW, maxH, q);
+                compressedBlobToUpload = result.blob;
+
+                badge.style.background = '#dcfce7';
+                badge.style.color = '#166534';
+                badge.style.borderColor = '#86efac';
+                badge.innerHTML = `✅ <strong>Ready:</strong> ${result.originalSizeKB} KB ➔ <strong>${result.compressedSizeKB} KB</strong> (${result.dimensions})`;
+                finishYtLoader();
+            } catch (err) {
+                badge.style.background = '#fee2e2';
+                badge.style.color = '#991b1b';
+                badge.style.borderColor = '#fca5a5';
+                badge.innerText = '❌ Failed to optimize image. Using original file.';
+                compressedBlobToUpload = file;
+                finishYtLoader();
+            }
         }
 
         // --- CUSTOM ALERT & CONFIRM FUNCTIONS ---
@@ -825,7 +937,7 @@
             confirmCallback = null;
         }
 
-        // --- WEB PROTECTION CODE ---
+        // --- WEB PROTECTION ---
         document.addEventListener('contextmenu', event => event.preventDefault()); 
         document.addEventListener('keydown', function(e) {
             if(e.ctrlKey && (e.key === 'u' || e.key === 's' || e.key === 'c' || e.key === 'p')) e.preventDefault();
@@ -893,7 +1005,6 @@
             return validPhotos[seed % validPhotos.length];
         }
 
-        // Instant startup on DOM Ready
         document.addEventListener('DOMContentLoaded', () => {
             currentBdayViewStr = getTodayDateStr();
             currentTodayViewStr = getTodayDateStr();
@@ -902,9 +1013,8 @@
         });
 
         async function loadContent() {
-            startYtLoader();
+            startYtLoader(20);
 
-            // 1. Instant load from local memory (0ms delay)
             const cachedData = localStorage.getItem('schoolPortalData');
             if (cachedData) {
                 try {
@@ -912,12 +1022,9 @@
                     globalPosts = parsed.posts || [];
                     globalBirthdays = parsed.birthdays || [];
                     renderAll(globalPosts, parsed.settings || {});
-                } catch(e) {
-                    console.warn("Cache read error", e);
-                }
+                } catch(e) {}
             }
 
-            // 2. Background Sync
             try {
                 const response = await fetch(SCRIPT_URL);
                 const data = await response.json();
@@ -928,9 +1035,8 @@
                     renderAll(globalPosts, data.settings || {});
                 }
             } catch (e) {
-                console.error("Network sync failed", e);
                 if (!cachedData) {
-                    document.getElementById('main-content').innerHTML = `<p style="text-align:center; padding:50px; font-weight:700;">Failed to load data. Please refresh.</p>`;
+                    document.getElementById('main-content').innerHTML = `<p style="text-align:center; padding:50px; font-weight:700;">Failed to load data. Tap your profile picture to refresh.</p>`;
                 }
             } finally {
                 finishYtLoader();
@@ -972,7 +1078,6 @@
                 document.getElementById('live-ticker-text').innerText = "No new updates.";
             }
 
-            // Sort sections based on timestamps
             globalBirthdays.forEach(b => b.Section = "Birthdays"); 
             let sectionLatestTime = {};
             SECTIONS.forEach(s => sectionLatestTime[s] = 0);
@@ -991,14 +1096,12 @@
             sortedSections.unshift("Today");
             sortedSections.unshift("Birthdays");
 
-            // Populate Filter Dropdown
             let filterHtml = '<option value="All">All Sections</option>';
             sortedSections.forEach((sec) => {
                 filterHtml += `<option value="${sec}">${sec}</option>`;
             });
             if(document.getElementById('sectionFilter')) document.getElementById('sectionFilter').innerHTML = filterHtml;
 
-            // Generate HTML
             let sectionHtmlMap = {};
             const sidebarSecs = ["Notice Board", "Gallery", "Birthdays"]; 
 
@@ -1105,7 +1208,6 @@
                                 </div>
                                 ${item.MediaLink ? `<div class="fb-media">${renderMedia(item.MediaLink)}</div>` : ''}
                                 
-                                <!-- LEFT-ALIGNED SOCIAL BAR (ICON + NUMBER ONLY) -->
                                 <div class="social-bar">
                                     <div class="reaction-container">
                                         <button class="social-btn main-react-btn ${myReaction ? 'reacted-'+myReaction : ''}" onclick="toggleReactionPopup('${postIdStr}')">
@@ -1155,7 +1257,6 @@
                 }
             });
 
-            // Build Final HTML
             let sidebarHtml = `<div class="sidebar-area">`;
             sidebarHtml += `
             <div class="quick-links-wrapper" style="order: 0; border: none; border-bottom: 1px solid #ced0d4; border-radius: 0; box-shadow: none;">
@@ -1305,7 +1406,7 @@
                 method: 'POST',
                 headers: { "Content-Type": "text/plain;charset=utf-8" },
                 body: JSON.stringify(payload)
-            }).catch(e => console.log("Reaction sync failed silently"));
+            }).catch(e => {});
         }
 
         function toggleComments(btn) {
@@ -1363,7 +1464,7 @@
                 method: 'POST',
                 headers: { "Content-Type": "text/plain;charset=utf-8" },
                 body: JSON.stringify({ action: 'addComment', section: section, rowIndex: rowIdx, comment: commentObj })
-            }).catch(e => console.log("Comment sync failed silently"));
+            }).catch(e => {});
         }
 
         function sharePost(btn, section, rowIdx) {
@@ -1381,7 +1482,7 @@
                 method: 'POST',
                 headers: { "Content-Type": "text/plain;charset=utf-8" },
                 body: JSON.stringify({ action: 'share', section: section, rowIndex: rowIdx })
-            }).catch(e => console.log("Share sync failed"));
+            }).catch(e => {});
 
             if (navigator.share) {
                 navigator.share({ title: shareTitle, text: shareText, url: shareUrl }).catch(err => {});
@@ -1496,7 +1597,6 @@
                         </div>
                     </div>
                     
-                    <!-- LEFT-ALIGNED SOCIAL BAR (ICON + NUMBER ONLY) -->
                     <div class="social-bar">
                         <div class="reaction-container">
                             <button class="social-btn main-react-btn ${myReaction ? 'reacted-'+myReaction : ''}" onclick="toggleReactionPopup('${postIdStr}')">
@@ -1570,7 +1670,7 @@
                 method: 'POST',
                 headers: { "Content-Type": "text/plain;charset=utf-8" },
                 body: JSON.stringify({ action: 'wish', section: 'Birthdays', rowIndex: rowIdx })
-            }).catch(e => console.log("Wish sync failed"));
+            }).catch(e => {});
 
             let text = `🎉 *Happy Birthday ${studentName}!* 🎂\n\nWishing you a fantastic day filled with joy and success!\n\nBest wishes from: *${senderName.toUpperCase()}*\n\nView today's birthdays here: ${window.location.href}`;
             window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank');
@@ -1606,24 +1706,15 @@
                 populateStudentSearch(); 
                 document.getElementById('uploadModal').classList.add('active');
                 toggleAdminMode();
+                updateImageGuide();
             } else { 
                 showCustomAlert("Invalid Credentials");
             }
         }
 
-        function syncCameraText() {
-            if(document.getElementById('cameraUpload').files.length > 0) {
-                document.getElementById('fileUpload').value = ''; 
-                document.getElementById('cameraFileName').style.display = 'block';
-            }
-        }
-        function resetCamera() {
-            document.getElementById('cameraUpload').value = ''; 
-            document.getElementById('cameraFileName').style.display = 'none';
-        }
-
         function toggleAdminMode() {
             const mode = document.querySelector('input[name="adminMode"]:checked').value;
+            updateImageGuide();
 
             if (mode === 'settings') {
                 document.getElementById('settingsSelectGroup').style.display = 'block';
@@ -1668,7 +1759,7 @@
         }
         
         function resetProfileToAuto() {
-            document.getElementById('loadingOverlay').classList.add('active');
+            startYtLoader(40);
             fetch(SCRIPT_URL, {
                 method: 'POST',
                 headers: { "Content-Type": "text/plain;charset=utf-8" },
@@ -1677,6 +1768,7 @@
                 let cached = JSON.parse(localStorage.getItem('schoolPortalData') || '{}');
                 if (cached.settings) cached.settings['ProfilePicture'] = "";
                 localStorage.setItem('schoolPortalData', JSON.stringify(cached));
+                finishYtLoader();
                 location.reload();
             });
         }
@@ -1689,7 +1781,9 @@
             document.getElementById('subSectionSelect').value = "Art"; 
             if(document.getElementById('editPostSelect')) document.getElementById('editPostSelect').value = "";
             document.getElementById('fileUpload').value = "";
-            resetCamera();
+            document.getElementById('cameraUpload').value = "";
+            document.getElementById('compressionStatusBadge').style.display = 'none';
+            compressedBlobToUpload = null;
         }
 
         function populateEditDropdown() {
@@ -1743,14 +1837,11 @@
                                 </div>
                             `;
                         });
-                    } else {
-                        adminCommBox.style.display = 'none';
-                    }
+                    } else { adminCommBox.style.display = 'none'; }
                 } catch(e) {}
-            } else {
-                adminCommBox.style.display = 'none';
-            }
+            } else { adminCommBox.style.display = 'none'; }
         }
+
         function editAdminCmt(section, rowIdx, cId) {
             let newVal = document.getElementById(`admin-c-val-${cId}`).value;
             showCustomAlert("Comment Updated.");
@@ -1910,7 +2001,7 @@
                 showCustomAlert("Please select a valid student from the search box to update their photo.");
                 return;
             }
-            if (mode === 'settings' && fileInput.files.length === 0 && cameraInput.files.length === 0) {
+            if (mode === 'settings' && !compressedBlobToUpload && fileInput.files.length === 0 && cameraInput.files.length === 0) {
                 showCustomAlert("Please upload or take an image first to update settings.");
                 return;
             }
@@ -1927,40 +2018,47 @@
 
             if(actionType === 'delete') {
                 showCustomConfirm("Are you sure you want to completely delete this post?", () => {
-                    executeSubmitData(actionType, mode, section, fileInput, cameraInput, rowIndex);
+                    executeSubmitData(actionType, mode, section, rowIndex);
                 });
             } else {
-                executeSubmitData(actionType, mode, section, fileInput, cameraInput, rowIndex);
+                executeSubmitData(actionType, mode, section, rowIndex);
             }
         }
 
-        async function executeSubmitData(actionType, mode, section, fileInput, cameraInput, rowIndex) {
-            const overlay = document.getElementById('loadingOverlay');
+        async function executeSubmitData(actionType, mode, section, rowIndex) {
             closeModals();
-            overlay.classList.add('active');
+            startYtLoader(30); // Progressive YouTube Loader Activated
 
             let finalMediaLink = document.getElementById('mediaLink') ? document.getElementById('mediaLink').value : "";
 
             if (actionType !== 'delete' && (mode === 'settings' || section !== "Scrolling")) {
-                let fileToUpload = null;
-                if(cameraInput.files.length > 0) fileToUpload = cameraInput.files[0];
-                else if(fileInput.files.length > 0) fileToUpload = fileInput.files[0];
+                let fileToUpload = compressedBlobToUpload;
+
+                if (!fileToUpload) {
+                    const cameraInput = document.getElementById('cameraUpload');
+                    const fileInput = document.getElementById('fileUpload');
+                    if (cameraInput.files.length > 0) fileToUpload = cameraInput.files[0];
+                    else if (fileInput.files.length > 0) fileToUpload = fileInput.files[0];
+                }
 
                 if (fileToUpload) {
                     try {
+                        setYtProgress(55);
                         const formData = new FormData();
                         formData.append("image", fileToUpload);
                         const imgbbRes = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, { method: "POST", body: formData });
                         const imgbbData = await imgbbRes.json();
                         
-                        if (imgbbData.success) { finalMediaLink = imgbbData.data.url; } 
-                        else { 
-                            overlay.classList.remove('active'); 
+                        if (imgbbData.success) { 
+                            finalMediaLink = imgbbData.data.url; 
+                            setYtProgress(80);
+                        } else { 
+                            finishYtLoader();
                             showCustomAlert("ImgBB Upload Failed: " + imgbbData.error.message); 
                             return; 
                         }
                     } catch(e) { 
-                        overlay.classList.remove('active'); 
+                        finishYtLoader();
                         showCustomAlert("Network error uploading image."); 
                         return; 
                     }
@@ -1995,6 +2093,7 @@
             }
 
             try {
+                setYtProgress(90);
                 await fetch(SCRIPT_URL, {
                     method: 'POST',
                     headers: { "Content-Type": "text/plain;charset=utf-8" },
@@ -2008,7 +2107,8 @@
                         localStorage.setItem('schoolPortalData', JSON.stringify(cached));
                     }
                 }
-                setTimeout(() => location.reload(), 800);
+                finishYtLoader();
+                setTimeout(() => location.reload(), 500);
             } catch (err) {
                 if (actionType === 'delete') {
                     let cached = JSON.parse(localStorage.getItem('schoolPortalData') || '{}');
@@ -2017,7 +2117,8 @@
                         localStorage.setItem('schoolPortalData', JSON.stringify(cached));
                     }
                 }
-                setTimeout(() => location.reload(), 800);
+                finishYtLoader();
+                setTimeout(() => location.reload(), 500);
             }
         }
 
