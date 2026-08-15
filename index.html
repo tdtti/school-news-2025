@@ -2,783 +2,528 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    
-    <!-- PWA Primary Meta Tags -->
-    <title>TDTTI THURAVOOR | Live Portal</title>
-    <meta name="title" content="TDTTI THURAVOOR | Live Portal">
-    <meta name="description" content="Official Live Dynamic Community & Academic Portal of TDTTI Thuravoor.">
-    <meta name="theme-color" content="#4f46e5">
-    <link rel="manifest" href="manifest.json">
-    
-    <!-- iOS Meta Tags -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0866FF">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="TDTTI Live">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="display" content="standalone">
+    <title>TDTTI THURAVOOR | Live Portal</title>
+
+    <!-- Embedded Web App Manifest for PWA -->
+    <link rel="manifest" href="data:application/manifest+json;charset=utf-8,%7B%22name%22%3A%22TDTTI%20THURAVOOR%20Live%20Portal%22%2C%22short_name%22%3A%22TDTTI%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23ffffff%22%2C%22theme_color%22%3A%22%230866FF%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22https%3A%2F%2Fblogger.googleusercontent.com%2Fimg%2Fb%2FR29vZ2xl%2FAVvXsEjGka-p7C45PTqBMBKqSjulqicQlHmW_Ee1BCfUPpaW888vYnoPjElzW9DVm8az1kCOjdlabjA3qb_vS00GpCApyVWh2C0aIcOcvb-BWeeTI8AdLojSf25iCvNpMS6aENxrWO-SgM5xjqePEMsHfCLy4HinnGk2xAnDlKaapXYFY05jXQM%2Fs56-c%2FLogo2.png%22%2C%22sizes%22%3A%22192x192%22%2C%22type%22%3A%22image%2Fpng%22%7D%5D%7D">
     <link rel="apple-touch-icon" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjGka-p7C45PTqBMBKqSjulqicQlHmW_Ee1BCfUPpaW888vYnoPjElzW9DVm8az1kCOjdlabjA3qb_vS00GpCApyVWh2C0aIcOcvb-BWeeTI8AdLojSf25iCvNpMS6aENxrWO-SgM5xjqePEMsHfCLy4HinnGk2xAnDlKaapXYFY05jXQM/s56-c/Logo2.png">
 
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
     
     <style>
-        /* === DESIGN SYSTEM & CSS VARIABLES === */
-        :root {
-            --bg-canvas: #f8fafc;
-            --glass-bg: rgba(255, 255, 255, 0.88);
-            --glass-border: rgba(255, 255, 255, 0.6);
-            --text-dark: #0f172a;
-            --text-muted: #64748b;
-            --primary-gradient: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
-            --accent-indigo: #4f46e5;
-            --accent-violet: #7c3aed;
-            --accent-rose: #f43f5e;
-            --accent-amber: #f59e0b;
-            --accent-emerald: #10b981;
-            --shadow-card: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
-            --shadow-float: 0 20px 30px -10px rgba(79, 70, 229, 0.2);
-            --radius-large: 18px;
-            --radius-medium: 12px;
-            --radius-pill: 9999px;
-            --glass-blur: blur(16px);
-        }
-
-        /* === GLOBAL BASE & AMBIENT MESH GRADIENT === */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-            background-color: var(--bg-canvas);
-            background-image: 
-                radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.08) 0px, transparent 50%),
-                radial-gradient(at 100% 0%, rgba(124, 58, 237, 0.07) 0px, transparent 50%),
-                radial-gradient(at 50% 100%, rgba(244, 63, 94, 0.05) 0px, transparent 50%);
-            background-attachment: fixed;
-            color: var(--text-dark);
-            overflow-x: hidden;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-        }
-
-        input, textarea, select {
-            -webkit-user-select: text;
-            -moz-user-select: text;
-            -ms-user-select: text;
-            user-select: text;
-        }
-
+        /* === WEB PROTECTION CSS === */
+        body { -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; }
         img { -webkit-user-drag: none; -khtml-user-drag: none; -moz-user-drag: none; -o-user-drag: none; }
+        /* ========================== */
 
-        /* === YOUTUBE-STYLE TOP PROGRESS BAR === */
-        #yt-progress-bar {
+        :root {
+            --bg-color: white; --box-bg: #ffffff; --text-dark: #050505; --text-gray: #65676B;
+            --accent-blue: #0866FF; --accent-blue-dark: #0052cc; --accent-red: #ef4444;
+            --radius-large: 12px; --radius-medium: 8px; --shadow-soft: 0 1px 2px rgba(0,0,0,0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--bg-color); color: var(--text-dark); overflow-x: hidden; }
+
+        /* === YOUTUBE-STYLE TOP LOADER === */
+        .yt-loader {
             position: fixed;
             top: 0;
             left: 0;
             height: 3px;
             width: 0%;
-            background: linear-gradient(90deg, #ff0000 0%, #f43f5e 50%, #f59e0b 100%);
+            background: linear-gradient(90deg, #ff0000, #ff4e50, #f9d423);
             z-index: 999999;
-            box-shadow: 0 0 12px rgba(244, 63, 94, 0.8), 0 0 4px rgba(255, 0, 0, 0.6);
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.7), 0 0 5px rgba(255, 78, 80, 0.5);
             transition: width 0.25s ease-out, opacity 0.3s ease;
             opacity: 0;
             pointer-events: none;
         }
-        #yt-progress-bar.loading { opacity: 1; }
+        .yt-loader.loading { opacity: 1; }
 
-        /* === TICKER (LIVESTREAM NOTICE) === */
-        .ticker-wrapper {
-            background: #090d16;
-            color: #fff;
+        /* === TOP PWA INSTALL INSTRUCTIONS BANNER === */
+        .pwa-top-banner {
+            background: #ffffff;
+            border-bottom: 2px solid #e4e6eb;
+            padding: 10px 16px;
             display: flex;
             align-items: center;
-            font-size: 0.88rem;
-            font-weight: 600;
-            border-bottom: 1px solid rgba(255,255,255,0.08);
-            position: relative;
-            z-index: 100;
-        }
-        .ticker-badge {
-            background: linear-gradient(135deg, var(--accent-rose), #e11d48);
-            padding: 8px 18px;
-            text-transform: uppercase;
-            font-size: 0.78rem;
-            letter-spacing: 0.8px;
-            font-weight: 800;
-            z-index: 10;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .ticker-badge::before {
-            content: '';
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: #fff;
-            animation: pulse 1.5s infinite;
-        }
-        @keyframes pulse { 0% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.8); } 100% { opacity: 1; transform: scale(1); } }
-        .ticker-track { overflow: hidden; white-space: nowrap; width: 100%; }
-        .ticker-track span { display: inline-block; padding-left: 100%; animation: scroll 32s linear infinite; }
-        @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
-
-        /* === SITE PROFILE HEADER === */
-        .site-profile-header {
-            position: relative;
-            background: transparent;
-            padding-bottom: 24px;
-        }
-        .cover-overlay-top {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            right: 20px;
-            display: flex;
             justify-content: space-between;
-            align-items: center;
-            z-index: 20;
-            max-width: 1300px;
-            margin: 0 auto;
-        }
-        .cover-school-name {
-            background: var(--glass-bg);
-            backdrop-filter: var(--glass-blur);
-            -webkit-backdrop-filter: var(--glass-blur);
-            border: 1px solid var(--glass-border);
-            color: var(--accent-indigo);
-            padding: 10px 22px;
-            border-radius: var(--radius-pill);
-            font-weight: 800;
-            font-size: 1.15rem;
-            letter-spacing: 0.5px;
-            box-shadow: var(--shadow-card);
-            cursor: pointer;
-            transition: all 0.25s ease;
-        }
-        .cover-school-name:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-float);
-        }
-        .cover-logo-login {
-            background: var(--glass-bg);
-            backdrop-filter: var(--glass-blur);
-            -webkit-backdrop-filter: var(--glass-blur);
-            border: 1px solid var(--glass-border);
-            padding: 7px;
-            border-radius: var(--radius-medium);
-            box-shadow: var(--shadow-card);
-            cursor: pointer;
-            transition: all 0.25s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .cover-logo-login:hover { transform: scale(1.06); box-shadow: var(--shadow-float); }
-        .cover-logo-login img { width: 42px; height: 42px; object-fit: contain; border-radius: 8px; }
-
-        .cover-photo {
-            width: 100%;
-            height: 320px;
-            object-fit: cover;
-            display: block;
-            background: #e2e8f0;
-            pointer-events: none;
-            -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 80%, rgba(0,0,0,0) 100%);
-            mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 80%, rgba(0,0,0,0) 100%);
-        }
-        
-        .profile-pic-container {
-            max-width: 1300px;
-            margin: -70px auto 0 auto;
-            position: relative;
-            display: flex;
-            align-items: flex-end;
-            padding: 0 25px;
-            z-index: 30;
-            gap: 20px;
-        }
-        .profile-pic {
-            width: 140px;
-            height: 140px;
-            border-radius: 50%;
-            border: 4px solid #fff;
-            object-fit: cover;
-            background: #fff;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.12);
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
-        .profile-pic:hover { transform: scale(1.04) rotate(-2deg); }
-        .school-slogan {
-            font-size: 1.35rem;
-            font-weight: 800;
-            background: var(--primary-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            line-height: 1.25;
-            margin-bottom: 12px;
-        }
-
-        @media (max-width: 600px) {
-            .cover-photo { height: 210px; }
-            .cover-school-name { font-size: 0.95rem; padding: 8px 16px; }
-            .cover-logo-login img { width: 34px; height: 34px; }
-            .profile-pic-container { flex-direction: column; align-items: center; text-align: center; margin-top: -65px; gap: 8px; }
-            .profile-pic { width: 115px; height: 115px; }
-            .school-slogan { font-size: 1.15rem; margin-bottom: 0; }
-        }
-
-        /* === SEARCH & STICKY FILTER BAR === */
-        .nav-wrapper {
-            background: var(--glass-bg);
-            backdrop-filter: var(--glass-blur);
-            -webkit-backdrop-filter: var(--glass-blur);
-            border-top: 1px solid var(--glass-border);
-            border-bottom: 1px solid rgba(226, 232, 240, 0.8);
-            position: sticky;
-            top: 0;
-            z-index: 500;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
-            padding: 10px 0;
-        }
-        .search-container {
-            max-width: 1300px;
-            margin: 0 auto;
-            display: flex;
             gap: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            position: relative;
+            z-index: 950;
+            animation: slideDown 0.3s ease;
+        }
+        @keyframes slideDown {
+            from { transform: translateY(-100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .pwa-banner-content {
+            display: flex;
             align-items: center;
-            padding: 0 20px;
+            gap: 12px;
+            flex: 1;
+            min-width: 0;
         }
-        .search-container select, .search-container input {
-            padding: 12px 18px;
-            border-radius: var(--radius-pill);
-            border: 1px solid #cbd5e1;
-            background: rgba(255, 255, 255, 0.95);
-            font-family: inherit;
-            font-size: 0.92rem;
-            outline: none;
-            transition: all 0.2s ease;
+        .pwa-banner-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            object-fit: contain;
+            background: #f0f2f5;
+            padding: 2px;
+            flex-shrink: 0;
+            border: 1px solid #ced0d4;
         }
-        .search-container input { flex: 1; }
-        .search-container select { font-weight: 700; color: var(--text-dark); cursor: pointer; min-width: 140px; }
-        .search-container input:focus, .search-container select:focus {
-            border-color: var(--accent-indigo);
-            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
-            background: #fff;
-        }
-
-        /* === 2-COLUMN DESKTOP & 1-COLUMN MOBILE LAYOUT === */
-        .layout-container {
-            max-width: 1300px;
-            margin: 25px auto 40px auto;
-            padding: 0 20px;
-            min-height: 70vh;
-        }
-        @media (min-width: 992px) {
-            .layout-container {
-                display: flex;
-                flex-direction: row;
-                gap: 28px;
-                align-items: flex-start;
-            }
-            .sidebar-area {
-                flex: 1;
-                min-width: 340px;
-                max-width: 380px;
-                position: sticky;
-                top: 80px;
-                display: flex;
-                flex-direction: column;
-                gap: 24px;
-            }
-            .main-feed-area {
-                flex: 2.2;
-                display: flex;
-                flex-direction: column;
-                gap: 24px;
-            }
-        }
-        @media (max-width: 991px) {
-            .layout-container { display: flex; flex-direction: column; gap: 20px; }
-            .sidebar-area, .main-feed-area { width: 100%; display: flex; flex-direction: column; gap: 20px; }
-        }
-
-        /* === FROSTED GLASS CARDS & PANELS === */
-        .section-wrapper {
-            margin-bottom: 0;
+        .pwa-banner-text {
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            min-width: 0;
         }
-        .section-header-title {
-            font-size: 1.25rem;
-            font-weight: 800;
-            letter-spacing: -0.2px;
+        .pwa-banner-text strong {
+            font-size: 0.95rem;
             color: var(--text-dark);
-            display: inline-flex;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .pwa-banner-text span {
+            font-size: 0.78rem;
+            color: var(--text-gray);
+            font-weight: 600;
+        }
+        .pwa-banner-actions {
+            display: flex;
             align-items: center;
             gap: 8px;
-            text-transform: uppercase;
+            flex-shrink: 0;
         }
-        .section-header-title::after {
-            content: '';
-            display: block;
-            height: 4px;
-            width: 24px;
-            background: var(--primary-gradient);
-            border-radius: var(--radius-pill);
-        }
-
-        .fb-post, .bday-item, .quick-links-wrapper {
-            background: var(--glass-bg);
-            backdrop-filter: var(--glass-blur);
-            -webkit-backdrop-filter: var(--glass-blur);
-            border: 1px solid var(--glass-border);
-            border-radius: var(--radius-large);
-            box-shadow: var(--shadow-card);
-            overflow: hidden;
-            transition: transform 0.25s ease, box-shadow 0.25s ease;
-        }
-        .fb-post:hover { box-shadow: 0 15px 30px -10px rgba(0,0,0,0.07); }
-
-        .fb-header {
-            display: flex;
-            align-items: center;
-            padding: 14px 18px;
-            gap: 12px;
-            border-bottom: 1px solid rgba(241, 245, 249, 0.8);
-        }
-        .fb-avatar {
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid #fff;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-            pointer-events: none;
-        }
-        .fb-header-info { display: flex; flex-direction: column; justify-content: center; }
-        .fb-header-info strong { font-size: 0.95rem; font-weight: 700; color: var(--text-dark); }
-        .fb-header-info span { font-size: 0.8rem; color: var(--text-muted); margin-top: 1px;}
-        
-        .fb-content { padding: 16px 18px 14px 18px; }
-        .fb-content h3 { font-size: 1.12rem; font-weight: 700; margin-bottom: 8px; color: var(--text-dark); }
-        .fb-content p { font-size: 0.95rem; line-height: 1.6; white-space: pre-wrap; color: #334155; }
-        .fb-media { width: 100%; background: #000; overflow: hidden; }
-        .fb-media img, .fb-media video { width: 100%; max-height: 580px; object-fit: cover; display: block; }
-
-        /* Social Action Bar */
-        .social-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 14px;
-            background: rgba(255, 255, 255, 0.65);
-            border-top: 1px solid rgba(226, 232, 240, 0.7);
-            gap: 6px;
-        }
-        .social-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            flex: 1;
-            padding: 8px 10px;
-            background: transparent;
+        .pwa-btn-install {
+            background: var(--accent-blue);
+            color: #ffffff;
             border: none;
-            border-radius: var(--radius-medium);
-            cursor: pointer;
-            font-weight: 600;
-            color: var(--text-muted);
-            font-size: 0.88rem;
-            transition: all 0.2s ease;
-        }
-        .social-btn:hover { background: rgba(241, 245, 249, 0.8); color: var(--text-dark); }
-        .social-btn.reacted-like { color: var(--accent-indigo); background: #eef2ff; }
-        .social-btn.reacted-love { color: var(--accent-rose); background: #ffe4e6; }
-        .social-btn.reacted-clap { color: var(--accent-amber); background: #fef3c7; }
-
-        .reaction-container { position: relative; display: flex; flex: 1; }
-        .reaction-popup {
-            position: absolute;
-            bottom: 125%;
-            left: 0;
-            background: #fff;
-            border-radius: var(--radius-pill);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-            padding: 6px 14px;
-            display: flex;
-            gap: 12px;
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(8px);
-            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            z-index: 100;
-            border: 1px solid #e2e8f0;
-        }
-        .reaction-popup.show { opacity: 1; visibility: visible; transform: translateY(0); }
-        .reaction-option { font-size: 1.5rem; cursor: pointer; transition: transform 0.2s ease; padding: 2px; }
-        .reaction-option:hover { transform: scale(1.3) translateY(-4px); }
-
-        /* Comments */
-        .comments-section {
-            padding: 14px 18px;
-            background: rgba(248, 250, 252, 0.8);
-            border-top: 1px solid rgba(226, 232, 240, 0.8);
-            display: none;
-        }
-        .comment-list { max-height: 240px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; margin-bottom: 12px; }
-        .comment-item { display: flex; gap: 10px; align-items: flex-start; }
-        .c-avatar { width: 34px; height: 34px; border-radius: 50%; object-fit: cover; }
-        .c-bubble { background: #fff; padding: 8px 14px; border-radius: 16px; border: 1px solid #e2e8f0; max-width: 85%; }
-        .c-bubble strong { font-size: 0.84rem; color: var(--text-dark); display: block; margin-bottom: 2px; }
-        .c-bubble span { font-size: 0.72rem; color: var(--text-muted); font-weight: normal; margin-left: 4px; }
-        .c-bubble p { font-size: 0.88rem; color: #334155; margin: 0; }
-        .add-comment-box { display: flex; flex-direction: column; gap: 8px; }
-        .add-comment-box input, .add-comment-box textarea {
-            width: 100%;
-            padding: 10px 14px;
-            border: 1px solid #cbd5e1;
-            border-radius: var(--radius-medium);
-            font-family: inherit;
-            font-size: 0.88rem;
-            background: #fff;
-        }
-        .add-comment-box button {
-            align-self: flex-end;
-            background: var(--primary-gradient);
-            color: #fff;
-            border: none;
-            padding: 8px 18px;
-            border-radius: var(--radius-pill);
-            font-weight: 700;
+            padding: 7px 16px;
+            border-radius: 18px;
+            font-weight: 800;
             font-size: 0.85rem;
             cursor: pointer;
-            transition: opacity 0.2s;
+            transition: background 0.2s, transform 0.1s;
         }
-
-        /* Birthdays & History Nav */
-        .bday-nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 14px 18px;
-            background: rgba(255, 255, 255, 0.7);
-            border-bottom: 1px solid rgba(226, 232, 240, 0.6);
-        }
-        .bday-nav button {
-            background: #f1f5f9;
-            color: var(--text-dark);
-            border: 1px solid #e2e8f0;
-            width: 34px;
-            height: 34px;
-            border-radius: 50%;
-            cursor: pointer;
+        .pwa-btn-install:hover { background: var(--accent-blue-dark); transform: scale(1.03); }
+        .pwa-btn-close {
+            background: #f0f2f5;
+            border: none;
+            color: var(--text-gray);
+            font-size: 1.2rem;
             font-weight: bold;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s ease;
-        }
-        .bday-nav button:hover { background: var(--accent-indigo); color: #fff; border-color: var(--accent-indigo); }
-        .birthday-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
-            gap: 14px;
-            padding: 16px;
-        }
-        .bday-img-wrapper {
-            position: relative;
-            height: 200px;
-            width: 100%;
-            border-radius: var(--radius-large) var(--radius-large) 0 0;
-            overflow: hidden;
-        }
-        .bday-img-wrapper img { width: 100%; height: 100%; object-fit: cover; }
-        .bday-info {
-            position: absolute;
-            bottom: 8px;
-            left: 8px;
-            right: 8px;
-            background: rgba(15, 23, 42, 0.75);
-            backdrop-filter: blur(8px);
-            padding: 8px;
-            text-align: center;
-            color: #fff;
-            border-radius: var(--radius-medium);
-        }
-        .bday-info h5 { margin: 0 0 2px 0; font-size: 0.95rem; font-weight: 700; text-transform: uppercase; }
-        .bday-info p { margin: 0; font-size: 0.8rem; font-weight: 600; color: #cbd5e1; }
-
-        .quick-links-wrapper { padding: 20px; }
-        .quick-links-wrapper h3 { font-size: 1.05rem; font-weight: 800; margin-bottom: 14px; color: var(--text-dark); }
-        .ql-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .ql-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(255, 255, 255, 0.9);
-            color: var(--text-dark);
-            padding: 12px 10px;
-            text-align: center;
-            border-radius: var(--radius-medium);
-            font-weight: 700;
-            text-decoration: none;
-            border: 1px solid #e2e8f0;
-            font-size: 0.82rem;
-            transition: all 0.2s ease;
-        }
-        .ql-btn:hover {
-            background: var(--primary-gradient);
-            color: #fff;
-            border-color: transparent;
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-float);
-        }
-
-        .fairs-tabs-container { display: flex; gap: 8px; overflow-x: auto; margin-bottom: 10px; padding: 4px 0; scrollbar-width: none; }
-        .fairs-tabs-container::-webkit-scrollbar { display: none; }
-        .fair-tab {
-            padding: 8px 24px;
-            background: rgba(255, 255, 255, 0.9);
-            border: 1px solid #cbd5e1;
-            border-radius: var(--radius-pill);
-            font-weight: 700;
-            color: var(--text-dark);
-            cursor: pointer;
-            white-space: nowrap;
-            transition: all 0.2s ease;
-            font-size: 0.84rem;
-        }
-        .fair-tab.active, .fair-tab:hover { background: var(--primary-gradient); color: white; border-color: transparent; }
-        .fair-hidden, .is-hidden { display: none !important; }
-        .show-post { display: flex !important; }
-
-        .read-more-box {
-            width: 100%;
-            padding: 14px;
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: var(--radius-large);
-            font-weight: 800;
-            color: var(--accent-indigo);
-            cursor: pointer;
-            transition: all 0.2s ease;
-            font-size: 0.88rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            text-transform: uppercase;
-        }
-        .read-more-box:hover { background: #fff; box-shadow: var(--shadow-card); }
-
-        /* === SPINNER & ADMIN OVERLAY === */
-        .yt-spinner-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(15, 23, 42, 0.45);
-            z-index: 20000;
-            display: none;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-        }
-        .yt-spinner-overlay.active { display: flex; }
-        .loader-wrapper { display: flex; justify-content: center; align-items: center; position: relative; height: 90px; }
-        .spinner-ring {
-            width: 65px;
-            height: 65px;
-            border: 4px solid rgba(255, 255, 255, 0.3);
-            border-top-color: var(--accent-indigo);
+            width: 30px;
+            height: 30px;
             border-radius: 50%;
-            animation: spin 0.9s linear infinite;
-            position: absolute;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
         }
-        .spinner-logo { width: 42px; height: 42px; border-radius: 50%; position: absolute; object-fit: cover; }
+        .pwa-btn-close:hover { background: #e4e6eb; color: var(--text-dark); }
+
+        /* === LIVE NOTICE TICKER (BLUE THEME) === */
+        .ticker-wrapper { 
+            background: var(--accent-blue); 
+            color: #ffffff; 
+            display: flex; 
+            align-items: center; 
+            font-size: 0.9rem; 
+            font-weight: 700; 
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .ticker-badge { 
+            background: #003db3; 
+            color: #ffffff;
+            padding: 10px 18px; 
+            text-transform: uppercase; 
+            z-index: 10; 
+            font-weight: 800;
+            letter-spacing: 0.5px;
+        }
+        .ticker-track { overflow: hidden; white-space: nowrap; width: 100%; }
+        .ticker-track span { display: inline-block; padding-left: 100%; animation: scroll 30s linear infinite; }
+        @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+
+        /* === MAIN HEADER (COVER & PROFILE) === */
+        .site-profile-header { background: var(--box-bg); padding-bottom: 20px; border-bottom: 1px solid #ced0d4; position: relative;}
+        
+        .cover-overlay-top { position: absolute; top: 20px; left: 20px; right: 20px; display: flex; justify-content: space-between; align-items: flex-start; z-index: 5; max-width: 1000px; margin: 0 auto; }
+        .cover-school-name { 
+            background: rgba(255, 255, 255, 0.9); 
+            color: var(--accent-blue); 
+            padding: 10px 20px; 
+            border-radius: var(--radius-large); 
+            font-weight: 800; 
+            font-size: 1.3rem; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15); 
+            backdrop-filter: blur(8px); 
+            -webkit-backdrop-filter: blur(8px); 
+            letter-spacing: 0.5px; 
+            cursor: pointer; 
+            transition: transform 0.2s; 
+        }
+        .cover-school-name:hover { 
+            transform: translateY(-3px); 
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2); 
+        }
+        .cover-logo-login { background: rgba(255, 255, 255, 0.9); padding: 6px; border-radius: var(--radius-large); box-shadow: 0 4px 15px rgba(0,0,0,0.15); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); cursor: pointer; transition: transform 0.2s; display: flex; align-items: center; justify-content: center; }
+        .cover-logo-login:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,0.2); }
+        .cover-logo-login img { width: 45px; height: 45px; object-fit: contain; border-radius: 8px; }
+        .cover-photo { 
+            width: 100%; 
+            height: 320px; 
+            object-fit: cover; 
+            display: block; 
+            background: #e4e6eb; 
+            pointer-events: none; 
+            -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 85%, rgba(0,0,0,0) 100%);
+            mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 85%, rgba(0,0,0,0) 100%);
+        }
+        .profile-pic-container { max-width: 800px; margin: 0 auto; position: relative; display: flex; align-items: flex-end; padding: 0 20px; margin-top: -65px; z-index: 6;}
+        .profile-pic { width: 140px; height: 140px; border-radius: 50%; border: 4px solid #fff; object-fit: cover; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.15); cursor: pointer;}
+        .school-slogan { font-size: 1.4rem; font-weight: 700; margin-left: 20px; margin-bottom: 15px; color: #000080; letter-spacing: -0.3px;}
+        
+        @media (max-width: 500px) {
+            .cover-photo { height: 220px; }
+            .cover-overlay-top { top: 15px; left: 15px; right: 15px; align-items: center;}
+            .cover-school-name { font-size: 1rem; padding: 8px 15px; }
+            .cover-logo-login img { width: 35px; height: 35px; }
+            .profile-pic-container { flex-direction: column; align-items: center; text-align: center; margin-top: -70px; }
+            .school-slogan { margin-left: 0; margin-top: 10px; margin-bottom: 0; font-size: 1.2rem;}
+        }
+
+        /* Nav (Sticky top) */
+        .nav-wrapper { background: var(--box-bg); border-bottom: 1px solid #e2e8f0; padding: 10px 5%; position: sticky; top: 0; z-index: 900; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+
+        /* Search Bar & Filter */
+        .search-container { background: #fff; border-bottom: 1px solid #e2e8f0; }
+        .search-container input, .search-container select { 
+            padding: 12px 15px; 
+            border-radius: 20px; 
+            border: 1px solid #ced0d4; 
+            background: #f0f2f5; 
+            font-family: inherit; 
+            font-size: 0.95rem; 
+            outline: none; 
+        }
+        .search-container input { flex: 1; }
+        .search-container select { font-weight: 700; color: var(--text-dark); cursor: pointer; max-width: 140px; }
+        .search-container input:focus, .search-container select:focus { border-color: var(--accent-blue); background: #fff; }
+
+        /* === DESKTOP GRID LAYOUT === */
+        @media (min-width: 992px) {
+            .layout-container { max-width: 1400px; display: flex; flex-direction: row-reverse; gap: 25px; align-items: flex-start; }
+            .main-feed-area { flex: 3; display: flex; flex-direction: column; gap: 30px; align-items: stretch; }
+            .sidebar-area { flex: 1; min-width: 320px; display: flex; flex-direction: column; gap: 30px; }
+            .main-feed-area .section-wrapper, .sidebar-area .section-wrapper { margin-bottom: 0; }
+        }
+        
+        @media (max-width: 991px) {
+            .layout-container { display: flex; flex-direction: column; max-width: 680px; }
+            .main-feed-area, .sidebar-area { display: flex; flex-direction: column; width: 100%; gap: 20px; margin-bottom: 40px;}
+        }
+
+        .layout-container { margin: 20px auto 30px auto; padding: 0; min-height: 60vh; }
+        .section-wrapper { margin-bottom: 5px; scroll-margin-top: 10px; display: flex; flex-direction: column; gap: 0; }
+        .cards-grid { display: flex; flex-direction: column; gap: 5px; width: 100%; }
+
+        /* === NEW FACEBOOK STYLE: LEFT-ALIGNED SOCIAL BAR (ICON + NUMBER ONLY) === */
+        .social-bar { 
+            display: flex; 
+            justify-content: flex-start; 
+            align-items: center; 
+            gap: 8px; 
+            padding: 8px 16px; 
+            background: #fff; 
+            border-top: 1px solid #f0f2f5;
+        }
+        .social-btn { 
+            display: inline-flex; 
+            align-items: center; 
+            justify-content: center; 
+            gap: 5px; 
+            padding: 6px 12px; 
+            background: #f0f2f5; 
+            border: 1px solid transparent; 
+            border-radius: 18px; 
+            cursor: pointer; 
+            font-weight: 700; 
+            color: var(--text-dark); 
+            transition: all 0.2s ease; 
+            font-size: 0.9rem; 
+            user-select: none;
+        }
+        .social-btn:hover { background: #e4e6eb; border-color: #ced0d4; }
+        .social-btn.reacted-like { color: var(--accent-blue); background: #eef2ff; border-color: #c7d2fe; }
+        .social-btn.reacted-love { color: #E4405F; background: #ffebee; border-color: #fecdd3; }
+        .social-btn.reacted-clap { color: #F59E0B; background: #fff8e1; border-color: #fef08a; }
+        
+        .reaction-container { position: relative; display: inline-flex; }
+        .social-btn.main-react-btn { min-width: 55px; }
+        
+        .reaction-popup {
+            position: absolute; bottom: 125%; left: 0; background: #fff; border-radius: 30px; 
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15); padding: 5px 12px; display: flex; gap: 12px;
+            opacity: 0; visibility: hidden; transform: translateY(10px); transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); z-index: 100; border: 1px solid #e4e6eb;
+        }
+        .reaction-popup.show { opacity: 1; visibility: visible; transform: translateY(0); }
+        .reaction-option { font-size: 1.5rem; cursor: pointer; transition: transform 0.2s; user-select: none; padding: 2px; }
+        .reaction-option:hover { transform: scale(1.3) translateY(-5px); }
+        
+        .comments-section { padding: 10px 16px; background: #f8fafc; border-top: 1px solid #f0f2f5; display: none; }
+        .comment-list { max-height: 250px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; margin-bottom: 12px; }
+        .comment-item { display: flex; gap: 10px; }
+        .c-avatar { width: 35px; height: 35px; border-radius: 50%; object-fit: cover; background: #fff; border: 1px solid #ced0d4;}
+        .c-bubble { background: #e4e6eb; padding: 8px 12px; border-radius: 18px; max-width: 85%; }
+        .c-bubble strong { font-size: 0.85rem; color: var(--text-dark); display: block; margin-bottom: 2px;}
+        .c-bubble span { font-size: 0.75rem; color: var(--text-gray); margin-left: 5px; font-weight: normal;}
+        .c-bubble p { font-size: 0.9rem; color: var(--text-dark); margin: 0; white-space: pre-wrap; word-wrap: break-word;}
+        
+        .add-comment-box { display: flex; flex-direction: column; gap: 8px; }
+        .add-comment-box input, .add-comment-box textarea { width: 100%; padding: 10px; border: 1px solid #ced0d4; border-radius: 18px; font-family: inherit; font-size: 0.9rem; background: #fff; }
+        .add-comment-box textarea { border-radius: 12px; resize: none; }
+        .add-comment-box button { align-self: flex-end; background: var(--accent-blue); color: #fff; border: none; padding: 8px 16px; border-radius: 18px; font-weight: 600; cursor: pointer; transition: 0.2s;}
+        
+        .admin-comment-item { display: flex; justify-content: space-between; align-items: center; background: #f0f2f5; padding: 10px; border-radius: 8px; margin-bottom: 8px; border: 1px solid #ced0d4;}
+        .admin-comment-actions { display: flex; gap: 5px; }
+        .admin-comment-actions button { padding: 5px 10px; border: none; border-radius: 5px; cursor: pointer; font-size: 0.8rem; font-weight: bold;}
+
+        /* Admin Saving Overlay */
+        .saving-overlay { position: fixed; inset: 0; background: rgba(255,255,255,0.7); z-index: 20000; display: none; justify-content: center; align-items: center; flex-direction: column; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+        .saving-overlay.active { display: flex; }
+        .loader-wrapper { display: flex; justify-content: center; align-items: center; position: relative; height: 90px; }
+        .spinner-ring { width: 60px; height: 60px; border: 4px solid #e2e8f0; border-top-color: var(--accent-blue); border-radius: 50%; animation: spin 1s linear infinite; position: absolute; }
+        .spinner-logo { width: 38px; height: 38px; border-radius: 50%; position: absolute; object-fit: cover; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
-        /* Modals */
-        .modal-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(15, 23, 42, 0.6);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            z-index: 10000;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-        .modal-overlay.active { display: flex; }
-        .modal-box {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: var(--glass-blur);
-            border: 1px solid rgba(255, 255, 255, 0.8);
-            padding: 28px;
-            border-radius: var(--radius-large);
-            width: 100%;
-            max-width: 480px;
-            position: relative;
-            max-height: 90vh;
-            overflow-y: auto;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-        }
-        .close-modal { position: absolute; top: 16px; right: 20px; font-size: 1.8rem; cursor: pointer; border: none; background: none; color: var(--text-muted); }
-        .form-group { margin-bottom: 14px; }
-        .form-group label { display: block; font-weight: 700; margin-bottom: 6px; font-size: 0.86rem; color: #334155; }
-        .form-control { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: var(--radius-medium); font-family: inherit; background: #f8fafc; font-size: 0.9rem;}
-        .form-control:read-only { background-color: #e2e8f0; cursor: not-allowed; }
+        /* FB Posts & Birthdays */
+        .fb-post { background: var(--box-bg); border-radius: 0; box-shadow: none; margin-bottom: 0; overflow: hidden; border: none; border-bottom: none; height: 100%; display: flex; flex-direction: column; }
+        .fb-header { display: flex; align-items: center; padding: 12px 16px; gap: 10px; }
+        .fb-avatar { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 1px solid #e4e6eb; pointer-events: none;}
+        .fb-header-info { display: flex; flex-direction: column; justify-content: center; }
+        .fb-header-info strong { font-size: 0.95rem; font-weight: 700; color: var(--text-dark); }
+        .fb-header-info span { font-size: 0.8rem; color: var(--text-gray); }
+        .fb-content { padding: 0 16px 12px 16px; }
+        .fb-content h3 { font-size: 1.1rem; margin-bottom: 5px; color: var(--text-dark); }
+        .fb-content p { font-size: 0.95rem; line-height: 1.5; white-space: pre-wrap; color: var(--text-dark); }
+        .fb-media { width: 100%; background: #000; border-top: 1px solid #f0f2f5; border-bottom: 1px solid #f0f2f5; }
+        .fb-media img, .fb-media video { width: 100%; max-height: 600px; object-fit: cover; display: block; pointer-events: none;}
+
+        .bday-nav { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; background: #fff; border-bottom: none; }
+        .bday-nav button { background: #e4e6eb; color: var(--text-dark); border: none; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-weight: bold; font-size: 1rem; transition: 0.2s;}
+        .birthday-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 15px; padding: 16px; }
+        .bday-item { position: relative; border-radius: 10px; height: auto; box-shadow: 0 2px 5px rgba(0,0,0,0.15); background: #fff; display: flex; flex-direction: column; overflow: visible; z-index: 1;}
+        .bday-img-wrapper { position: relative; height: 220px; width: 100%; border-radius: 10px 10px 0 0; overflow: hidden; z-index: 1;}
+        .bday-img-wrapper img { width: 100%; height: 100%; object-fit: cover; pointer-events: none;}
+        .bday-info { position: absolute; bottom: 10px; left: 10px; right: 10px; background: rgba(0, 0, 0, 0.65); backdrop-filter: blur(5px); padding: 8px; text-align: center; color: #fff; border-radius: 8px;}
+        .bday-info h5 { margin: 0 0 2px 0; font-size: 1.05rem; font-weight: 700; text-transform: uppercase;}
+        .bday-info p { margin: 0; font-size: 0.85rem; font-weight: 600; color: #e4e6eb; }
+
+        .is-hidden { display: none !important; }
+        .show-post { display: block !important; }
+        .read-more-box { width: 100%; padding: 15px; background: #fff; border: none; border-bottom: 1px solid #ced0d4; font-weight: 800; color: var(--accent-blue); cursor: pointer; margin-bottom: 10px; transition: background-color 0.2s; font-size: 0.95rem; display: flex; align-items: center; justify-content: center; gap: 8px; text-transform: uppercase;}
+        .read-more-box:hover { background: #f8fafc; }
         
-        .btn-submit {
-            width: 100%;
-            padding: 12px;
-            background: var(--primary-gradient);
-            color: white;
-            border: none;
-            border-radius: var(--radius-medium);
-            font-weight: 700;
-            font-size: 0.95rem;
-            cursor: pointer;
-            margin-top: 10px;
-            transition: all 0.2s;
+        /* === FAIRS TABS CSS === */
+        .fairs-tabs-container { display: flex; gap: 10px; overflow-x: auto; margin-bottom: 15px; padding: 5px 0; scrollbar-width: none; }
+        .fairs-tabs-container::-webkit-scrollbar { display: none; }
+        .fair-tab { padding: 8px 32px; background: #e4e6eb; border: 1px solid #ced0d4; border-radius: 20px; font-weight: 700; color: var(--text-dark); cursor: pointer; white-space: nowrap; transition: 0.2s; font-size: 0.85rem; }
+        .fair-tab.active, .fair-tab:hover { background: var(--accent-blue); color: white; border-color: var(--accent-blue); }
+        .fair-hidden { display: none !important; }
+        
+        /* === SECTION HEADERS === */
+        .section-header-title {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+            border-bottom: 3px solid var(--accent-blue);
+            display: inline-block;
+            text-transform: uppercase;
         }
-        .btn-delete { background: var(--accent-rose); margin-top: 6px; }
+        
+        /* Modals & Forms */
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(5px); z-index: 10000; display: none; align-items: center; justify-content: center; padding: 20px; }
+        .modal-overlay.active { display: flex; }
+        .modal-box { background: white; padding: 30px; border-radius: var(--radius-large); width: 100%; max-width: 500px; position: relative; max-height: 90vh; overflow-y: auto; box-shadow: 0 10px 40px rgba(0,0,0,0.2); border: 1px solid #ced0d4; }
+        .close-modal { position: absolute; top: 15px; right: 20px; font-size: 2rem; cursor: pointer; border: none; background: none; color: #65676B; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; font-weight: 700; margin-bottom: 5px; font-size: 0.9rem; }
+        .form-control { width: 100%; padding: 12px; border: 1px solid #ced0d4; border-radius: 8px; font-family: inherit; background: #f0f2f5; }
+        .form-control:read-only { background-color: #e4e6eb; cursor: not-allowed; }
+        
+        .btn-submit { width: 100%; padding: 12px; background: var(--accent-blue); color: white; border: none; border-radius: 8px; font-weight: 700; font-size: 1rem; cursor: pointer; margin-top: 10px; transition: 0.2s;}
+        .btn-delete { background: var(--accent-red); margin-top: 5px; }
+        
+        /* Admin Dashboard Styles */
+        .admin-mode-toggles { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+        .admin-mode-toggles label { background: #eef2ff; border: 1px solid var(--accent-blue); font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 10px; color: var(--accent-blue); font-size: 1.05rem; padding: 12px 20px; border-radius: 10px; transition: 0.3s;}
+        .admin-mode-toggles label:hover { background: var(--accent-blue); color: #fff; }
+        .admin-mode-toggles input[type="radio"] { transform: scale(1.2); cursor: pointer; }
+
+        /* Quick Links */
+        .quick-links-wrapper { background: var(--box-bg); border-radius: var(--radius-large); padding: 20px; margin-bottom: 20px; }
+        .quick-links-wrapper h3 { font-size: 1.1rem; margin-bottom: 15px; color: var(--text-dark); display: flex; align-items: center; gap: 8px; border-bottom: 2px solid #f0f2f5; padding-bottom: 10px;}
+        .ql-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .ql-btn { display: flex; align-items: center; justify-content: center; background: #f8fafc; color: var(--text-dark); padding: 12px; text-align: center; border-radius: 8px; font-weight: 700; text-decoration: none; border: 1px solid #ced0d4; font-size: 0.85rem; transition: 0.2s; box-shadow: 0 1px 2px rgba(0,0,0,0.05);}
+        .ql-btn:hover { background: var(--accent-blue); color: white; border-color: var(--accent-blue); transform: translateY(-2px);}
+
+        /* Custom Alert & Confirm */
+        .custom-alert-box, .custom-confirm-box { background: white; padding: 30px; border-radius: var(--radius-large); width: 100%; max-width: 400px; text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,0.3); }
+        .custom-msg-text { font-size: 1.1rem; margin-bottom: 25px; color: var(--text-dark); font-weight: 600; line-height: 1.5;}
+        .custom-msg-btns { display: flex; gap: 10px; justify-content: center; }
+        .custom-msg-btns button { flex: 1; padding: 12px; border-radius: 8px; font-weight: 700; cursor: pointer; border: none; font-size: 1rem; transition: 0.2s;}
+        .btn-alert-ok, .btn-confirm-yes { background: var(--accent-blue); color: white; }
+        .btn-confirm-no { background: #e4e6eb; color: var(--text-dark); }
+        .btn-alert-ok:hover, .btn-confirm-yes:hover { opacity: 0.9; }
+
+        /* PWA Fallback Modal */
+        .pwa-header { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; text-align: left; background: #f8fafc; padding: 15px; border-radius: 10px; border: 1px solid #ced0d4;}
+        .pwa-header img { width: 55px; height: 55px; border-radius: 12px; object-fit: contain; background: white; padding: 2px;}
+        .pwa-header div { display: flex; flex-direction: column; }
+        .pwa-header strong { font-size: 1.1rem; color: var(--text-dark); }
+        .pwa-header span { font-size: 0.85rem; color: var(--text-gray); }
 
         /* Footer */
-        .site-footer {
-            text-align: center;
-            padding: 35px 20px;
-            color: var(--text-muted);
-            font-weight: 600;
-            background: transparent;
-            border-top: 1px solid rgba(226, 232, 240, 0.7);
-            margin-top: 40px;
-        }
-        .footer-socials { display: flex; justify-content: center; gap: 12px; margin-bottom: 15px; flex-wrap: wrap;}
-        .footer-socials a {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 42px;
-            height: 42px;
-            border-radius: 50%;
-            background: #fff;
-            color: var(--text-dark);
-            border: 1px solid #e2e8f0;
-            transition: all 0.3s ease;
-        }
-        .footer-socials a svg { width: 20px; height: 20px; fill: currentColor; }
-        .footer-socials a:hover { transform: translateY(-3px); box-shadow: var(--shadow-card); }
-        .footer-socials a.fb:hover { background: #1877F2; color: #fff; }
-        .footer-socials a.ig:hover { background: #E4405F; color: #fff; }
-        .footer-socials a.yt:hover { background: #FF0000; color: #fff; }
-        .footer-socials a.wa:hover { background: #25D366; color: #fff; }
-        .footer-socials a.mail:hover { background: #EA4335; color: #fff; }
+        .site-footer { text-align: center; padding: 40px 20px; color: var(--text-gray); font-weight: 700; background: #ffffff; border-top: 1px solid #ced0d4; margin-top: 40px; }
+        .footer-socials { display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; flex-wrap: wrap;}
+        .footer-socials a { display: flex; align-items: center; justify-content: center; width: 45px; height: 45px; border-radius: 50%; background: #e4e6eb; color: var(--text-dark); text-decoration: none; transition: all 0.3s ease; }
+        .footer-socials a svg { width: 22px; height: 22px; fill: currentColor; }
+        .footer-socials a.fb:hover { background: #1877F2; color: #fff;}
+        .footer-socials a.ig:hover { background: #E4405F; color: #fff;}
+        .footer-socials a.yt:hover { background: #FF0000; color: #fff;}
+        .footer-socials a.wa:hover { background: #25D366; color: #fff;}
+        .footer-socials a.mail:hover { background: #EA4335; color: #fff;}
     </style>
 </head>
 <body>
 
-    <!-- Top YouTube Progress Bar -->
-    <div id="yt-progress-bar"></div>
+    <!-- YouTube-Style Top Progress Bar -->
+    <div id="yt-loader" class="yt-loader"></div>
 
-    <!-- Centered Blur Spinner Overlay for Admin Operations -->
-    <div class="yt-spinner-overlay" id="loadingOverlay">
-        <div class="loader-wrapper">
-            <div class="spinner-ring"></div>
-            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjGka-p7C45PTqBMBKqSjulqicQlHmW_Ee1BCfUPpaW888vYnoPjElzW9DVm8az1kCOjdlabjA3qb_vS00GpCApyVWh2C0aIcOcvb-BWeeTI8AdLojSf25iCvNpMS6aENxrWO-SgM5xjqePEMsHfCLy4HinnGk2xAnDlKaapXYFY05jXQM/s56-c/Logo2.png" class="spinner-logo" alt="Portal Logo">
+    <!-- === PWA TOP INSTALL INSTRUCTIONS BANNER === -->
+    <div id="pwa-top-banner" class="pwa-top-banner" style="display: none;">
+        <div class="pwa-banner-content">
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjGka-p7C45PTqBMBKqSjulqicQlHmW_Ee1BCfUPpaW888vYnoPjElzW9DVm8az1kCOjdlabjA3qb_vS00GpCApyVWh2C0aIcOcvb-BWeeTI8AdLojSf25iCvNpMS6aENxrWO-SgM5xjqePEMsHfCLy4HinnGk2xAnDlKaapXYFY05jXQM/s56-c/Logo2.png" alt="TDTTI" class="pwa-banner-icon">
+            <div class="pwa-banner-text">
+                <strong>TDTTI THURAVOOR App</strong>
+                <span id="pwa-instructions-text">Install our app for fastest live updates!</span>
+            </div>
+        </div>
+        <div class="pwa-banner-actions">
+            <button id="pwa-install-btn" class="pwa-btn-install" onclick="triggerPwaInstall()">Install</button>
+            <button class="pwa-btn-close" onclick="dismissPwaBanner()" title="Close">&times;</button>
         </div>
     </div>
 
-    <!-- Ticker Notice Bar -->
-    <div class="ticker-wrapper">
-        <div class="ticker-badge">Live Notice</div>
-        <div class="ticker-track"><span id="live-ticker-text">Fetching latest updates...</span></div>
+    <!-- Admin Action Loader (Triggered only when saving/deleting) -->
+    <div class="saving-overlay" id="loadingOverlay">
+        <div class="loader-wrapper">
+            <div class="spinner-ring"></div>
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjGka-p7C45PTqBMBKqSjulqicQlHmW_Ee1BCfUPpaW888vYnoPjElzW9DVm8az1kCOjdlabjA3qb_vS00GpCApyVWh2C0aIcOcvb-BWeeTI8AdLojSf25iCvNpMS6aENxrWO-SgM5xjqePEMsHfCLy4HinnGk2xAnDlKaapXYFY05jXQM/s56-c/Logo2.png" class="spinner-logo" alt="Loading...">
+        </div>
     </div>
 
-    <!-- Main Header -->
+    <!-- LIVE NOTICE (BLUE THEME) -->
+    <div class="ticker-wrapper">
+        <div class="ticker-badge">Notice</div>
+        <div class="ticker-track"><span id="live-ticker-text">Loading latest updates...</span></div>
+    </div>
+
+    <!-- MAIN HEADER -->
     <header class="site-profile-header">
         <div class="cover-overlay-top">
-            <div class="cover-school-name" onclick="window.location.reload();">TDTTI THURAVOOR</div>
+            <div class="cover-school-name">TDTTI THURAVOOR</div>
+            
+            <!-- Admin Login Hold -->
             <div class="cover-logo-login" 
                  onmousedown="startLoginPress(event)" 
                  onmouseup="cancelLoginPress()" 
                  onmouseleave="cancelLoginPress()" 
                  ontouchstart="startLoginPress(event)" 
                  ontouchend="cancelLoginPress()" 
-                 title="Admin Panel"
+                 title="Admin Login"
                  style="-webkit-touch-callout: none;">
-                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjGka-p7C45PTqBMBKqSjulqicQlHmW_Ee1BCfUPpaW888vYnoPjElzW9DVm8az1kCOjdlabjA3qb_vS00GpCApyVWh2C0aIcOcvb-BWeeTI8AdLojSf25iCvNpMS6aENxrWO-SgM5xjqePEMsHfCLy4HinnGk2xAnDlKaapXYFY05jXQM/s56-c/Logo2.png" alt="TDTTI Logo" decoding="async">
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjGka-p7C45PTqBMBKqSjulqicQlHmW_Ee1BCfUPpaW888vYnoPjElzW9DVm8az1kCOjdlabjA3qb_vS00GpCApyVWh2C0aIcOcvb-BWeeTI8AdLojSf25iCvNpMS6aENxrWO-SgM5xjqePEMsHfCLy4HinnGk2xAnDlKaapXYFY05jXQM/s56-c/Logo2.png" alt="School Logo" decoding="async">
             </div>
         </div>
-        <img src="https://via.placeholder.com/1200x300.png?text=TDTTI+THURAVOOR" class="cover-photo" id="ui-cover" decoding="async">
+        <img src="https://via.placeholder.com/1200x300.png?text=Loading+Cover..." class="cover-photo" id="ui-cover" decoding="async">
         
         <div class="profile-pic-container">
-            <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" class="profile-pic" id="ui-profile" onclick="window.location.reload();" title="Refresh Live Portal" decoding="async">
+            <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" class="profile-pic" id="ui-profile" onclick="window.location.reload();" title="Refresh Page" decoding="async">
             <h2 class="school-slogan">Empowering Minds..<br>Shaping Futures...</h2>
         </div>
     </header>
 
-    <!-- Sticky Navigation & Search -->
-    <nav class="nav-wrapper">
-        <div class="search-container">
+    <nav class="nav-wrapper" style="padding:0;">
+        <div class="search-container" style="display: flex; gap: 10px; align-items: center; padding: 10px 5%;">
             <select id="sectionFilter" onchange="searchPosts()">
                 <option value="All">All Sections</option>
             </select>
-            <input type="text" id="globalSearch" placeholder="🔍 Search events, notices, achievements..." onkeyup="searchPosts()">
+            <input type="text" id="globalSearch" placeholder="🔍 Search..." onkeyup="searchPosts()">
         </div>
     </nav>
 
-    <!-- Main 2-Column Responsive Feed Layout -->
     <main class="layout-container" id="main-content">
-        <!-- Content will mount immediately from local memory cache -->
+        <!-- Content injects here instantly from memory cache -->
     </main>
 
-    <!-- Footer -->
     <footer class="site-footer">
         <div class="footer-socials">
             <a href="https://wa.me/911234567890" class="wa" target="_blank" title="WhatsApp"><svg viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.91C21.95 6.45 17.5 2 12.04 2m.01 1.67c4.54 0 8.23 3.7 8.23 8.24 0 4.54-3.7 8.23-8.23 8.23-1.53 0-3.04-.42-4.36-1.2l-.31-.18-3.24.85.86-3.16-.2-.32c-.86-1.37-1.31-2.96-1.31-4.59 0-4.54 3.7-8.24 8.24-8.24m4.67 11.23c-.26-.13-1.52-.75-1.76-.84-.23-.08-.41-.13-.58.13-.18.26-.67.84-.82 1.01-.15.18-.3.2-.56.08-1.2-.55-2.22-1.12-3.05-2.24-.22-.29-.02-.45.1-.58.11-.11.26-.3.39-.45.13-.15.17-.26.26-.44.08-.17.04-.32-.02-.45-.06-.13-.58-1.4-.8-1.92-.21-.5-.42-.43-.58-.44h-.5c-.21 0-.56.08-.85.4s-1.12 1.1-1.12 2.68c0 1.58 1.15 3.1 1.31 3.32.16.21 2.27 3.46 5.49 4.85.77.33 1.37.53 1.84.68.77.24 1.47.2 2.02.12.61-.09 1.52-.62 1.74-1.22.21-.6.21-1.12.15-1.22-.07-.1-.24-.15-.5-.28z"/></svg></a>
             <a href="https://facebook.com" class="fb" target="_blank" title="Facebook"><svg viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-1.1 0-2 .9-2 2v1h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/></svg></a>
             <a href="https://youtube.com" class="yt" target="_blank" title="YouTube"><svg viewBox="0 0 24 24"><path d="M21.58 7.19c-.23-.86-.91-1.54-1.77-1.77C18.25 5 12 5 12 5s-6.25 0-7.81.42c-.86.23-1.54.91-1.77 1.77C2 8.75 2 12 2 12s0 3.25.42 4.81c.23.86.91 1.54 1.77 1.77C5.75 19 12 19 12 19s6.25 0 7.81-.42c.86-.23 1.54-.91 1.77-1.77C22 15.25 22 12 22 12s0-3.25-.42-4.81zM10 15V9l5.2 3-5.2 3z"/></svg></a>
             <a href="https://instagram.com" class="ig" target="_blank" title="Instagram"><svg viewBox="0 0 24 24"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/></svg></a>
-            <a href="mailto:contact@tdttithuravoor.com" class="mail" title="Email Us"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></a>
+            <a href="mailto:contact@yourschool.com" class="mail" title="Email Us"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></a>
         </div>
-        <div style="font-size: 0.88rem;">&copy; 2026 TDTTI THURAVOOR Portal. All Rights Reserved.</div>
+        <div style="font-size: 0.9rem;">&copy; 2026 TDTTI THURAVOOR Portal</div>
     </footer>
 
     <!-- Admin Login Modal -->
     <div class="modal-overlay" id="loginModal">
         <div class="modal-box">
             <button class="close-modal" onclick="closeModals()">&times;</button>
-            <h2 style="margin-bottom: 20px; font-weight: 800;">Admin Login</h2>
+            <h2 style="margin-bottom: 20px;">Admin Login</h2>
             <form onsubmit="verifyLogin(event)">
-                <div class="form-group"><label>Admin ID</label><input type="text" id="adminId" class="form-control" required></div>
+                <div class="form-group"><label>ID</label><input type="text" id="adminId" class="form-control" required></div>
                 <div class="form-group"><label>Password</label><input type="password" id="adminPass" class="form-control" required></div>
-                <button type="submit" class="btn-submit">Sign In</button>
+                <button type="submit" class="btn-submit">Login</button>
             </form>
         </div>
     </div>
 
-    <!-- Admin Control Center Modal -->
+    <!-- Admin Upload & Edit Modal -->
     <div class="modal-overlay" id="uploadModal">
         <div class="modal-box">
             <button class="close-modal" onclick="closeModals()">&times;</button>
-            <h2 style="margin-bottom: 15px; font-weight: 800;">Admin Control Center</h2>
+            <h2 style="margin-bottom: 15px;">Admin Dashboard</h2>
 
-            <div class="admin-mode-toggles" style="display:flex; flex-direction:column; gap:10px; margin-bottom:18px;">
-                <label style="background:#eef2ff; border:1px solid var(--accent-indigo); padding:10px 16px; border-radius:10px; font-weight:700; color:var(--accent-indigo); cursor:pointer;"><input type="radio" name="adminMode" value="create" checked onchange="toggleAdminMode()"> 📝 Create New Post</label>
-                <label style="background:#eef2ff; border:1px solid var(--accent-indigo); padding:10px 16px; border-radius:10px; font-weight:700; color:var(--accent-indigo); cursor:pointer;"><input type="radio" name="adminMode" value="edit" onchange="toggleAdminMode()"> ✏️ Edit or Delete Post</label>
-                <label style="background:#eef2ff; border:1px solid var(--accent-indigo); padding:10px 16px; border-radius:10px; font-weight:700; color:var(--accent-indigo); cursor:pointer;"><input type="radio" name="adminMode" value="settings" onchange="toggleAdminMode()"> 🖼️ Update Profile & Cover</label>
+            <div class="admin-mode-toggles">
+                <label><input type="radio" name="adminMode" value="create" checked onchange="toggleAdminMode()"> 📝 Create Post</label>
+                <label><input type="radio" name="adminMode" value="edit" onchange="toggleAdminMode()"> ✏️ Edit / Delete</label>
+                <label><input type="radio" name="adminMode" value="settings" onchange="toggleAdminMode()"> 🖼️ Update Profile & Cover</label>
             </div>
 
             <form id="uploadForm">
                 <div class="form-group" id="settingsSelectGroup" style="display: none;">
-                    <label>Setting Key</label>
+                    <label>Select Image to Update</label>
                     <select id="settingKey" class="form-control" onchange="toggleAdminMode()">
                         <option value="ProfilePicture">Profile Picture (Overrides Daily Random Photo)</option>
                         <option value="CoverPhoto">Cover Photo</option>
@@ -788,7 +533,7 @@
                 <div class="form-group" id="fg-section">
                     <label>Section</label>
                     <select id="sectionSelect" class="form-control" onchange="toggleFields()">
-                        <option value="Scrolling">Scrolling Ticker</option>
+                        <option value="Scrolling">Scrolling</option>
                         <option value="Today">Today</option>
                         <option value="Notice Board">Notice Board</option>
                         <option value="Birthdays">Birthdays</option>
@@ -804,33 +549,38 @@
                     </select>
                 </div>
 
-                <div class="form-group" id="fg-subsection" style="display: none; background: #fffbeb; padding: 12px; border-radius: 10px; border: 1px dashed var(--accent-amber);">
+                <div class="form-group" id="fg-subsection" style="display: none; background: #fff8e1; padding: 10px; border-radius: 8px; border: 1px dashed #f59e0b;">
                     <label style="color: #b45309;">Fairs Category</label>
                     <select id="subSectionSelect" class="form-control">
                         <option value="Art">🎨 Art</option>
                         <option value="Maths">➗ Maths</option>
                         <option value="Science">🔬 Science</option>
-                        <option value="Social Science">🌍 Social Science</option>
+                        <option value="Social Science">🌍 Social</option>
                     </select>
                 </div>
 
                 <div class="form-group" id="editSelectGroup" style="display: none;">
-                    <label style="color: var(--accent-rose);">Select Post to Edit/Delete</label>
+                    <label style="color: var(--accent-red);">Select Post to Edit/Delete</label>
                     <select id="editPostSelect" class="form-control" onchange="loadSelectedPost()"></select>
                 </div>
+                
+                <div id="adminCommentManager" style="display:none; background:#fff; border:1px solid #ced0d4; padding:10px; border-radius:8px; margin-bottom:15px; max-height: 200px; overflow-y:auto;">
+                    <label style="color:var(--accent-red); margin-bottom:5px;">Manage Comments</label>
+                    <div id="adminCommentList">Select a post to view comments.</div>
+                </div>
 
-                <div id="birthdayFields" style="display:none; background: #f1f5f9; padding: 14px; border-radius: 10px; margin-bottom: 15px;">
-                    <div class="form-group">
-                        <label style="color: var(--accent-indigo);">🔍 Search Student</label>
-                        <input type="text" id="bdayStudentSearch" list="bdayStudentList" class="form-control" placeholder="Search name or date" oninput="autoFillStudent()">
+                <div id="birthdayFields" style="display:none; background: #e4e6eb; padding: 15px; border-radius: 10px; margin-bottom: 15px;">
+                    <div class="form-group" style="position: relative;">
+                        <label style="color: var(--accent-blue);">🔍 Search Student (By Name or Date)</label>
+                        <input type="text" id="bdayStudentSearch" list="bdayStudentList" class="form-control" placeholder="Type name or date" oninput="autoFillStudent()">
                         <datalist id="bdayStudentList"></datalist>
                         <input type="hidden" id="selectedStudentRowIndex">
                     </div>
                     <div class="form-group"><label>Student Name</label><input type="text" id="bdayStudentName" class="form-control" readonly></div>
-                    <div class="form-group"><label>Birthday</label><input type="text" id="bdayDate" class="form-control" readonly></div>
-                    <div style="display: flex; gap: 10px;">
+                    <div class="form-group"><label>Birthday Date</label><input type="text" id="bdayDate" class="form-control" readonly></div>
+                    <div style="display: flex; gap: 15px;">
                         <div class="form-group" style="flex: 1;"><label>Class</label><input type="text" id="studentClass" class="form-control" readonly></div>
-                        <div class="form-group" style="flex: 1;"><label>Div</label><input type="text" id="studentDiv" class="form-control" readonly></div>
+                        <div class="form-group" style="flex: 1;"><label>Division</label><input type="text" id="studentDiv" class="form-control" readonly></div>
                     </div>
                 </div>
 
@@ -849,95 +599,105 @@
                             <option value="Sports & Wellness">Sports & Wellness</option>
                             <option value="Arts & Culture">Arts & Culture</option>
                             <option value="STEM & Tech Lab">STEM & Tech Lab</option>
+                            <option value="Library & Media">Library & Media</option>
+                            <option value="Counselor’s Corner">Counselor’s Corner</option>
+                            <option value="Career Guidance">Career Guidance</option>
                         </select>
                     </div>
-                    <div class="form-group" id="fg-content"><label>Content Body</label><textarea id="postContent" class="form-control" rows="3"></textarea></div>
-                    <div class="form-group" id="fg-media"><label>Media Link (YouTube URL)</label><input type="url" id="mediaLink" class="form-control" placeholder="Or upload an image below"></div>
+                    <div class="form-group" id="fg-content"><label>Content</label><textarea id="postContent" class="form-control" rows="3"></textarea></div>
+                    <div class="form-group" id="fg-media"><label>Media Link (YouTube/Direct URL)</label><input type="url" id="mediaLink" class="form-control" placeholder="Leave blank if uploading image below"></div>
                 </div>
 
-                <div class="form-group" id="imageUploadGroup" style="background: #eef2ff; padding: 14px; border-radius: 12px; border: 1px dashed var(--accent-indigo);">
-                    <label style="color: var(--accent-indigo);">Upload Image or Snap Photo</label>
+                <div class="form-group" id="imageUploadGroup" style="background: #eef2ff; padding: 15px; border-radius: 10px; border: 1px dashed var(--accent-blue);">
+                    <label style="color: var(--accent-blue);">Upload Image or Take Photo</label>
                     <div style="display: flex; gap: 10px;">
                         <input type="file" id="fileUpload" class="form-control" style="background:#fff; flex: 1;" accept="image/*" onchange="resetCamera()">
-                        <label for="cameraUpload" class="form-control" style="background:var(--accent-indigo); color:white; width: 55px; text-align:center; cursor:pointer; font-size: 1.2rem; display:flex; align-items:center; justify-content:center; border:none; margin:0;" title="Snap Photo">📷</label>
+                        <label for="cameraUpload" class="form-control" style="background:var(--accent-blue); color:white; width: 60px; text-align:center; cursor:pointer; font-size: 1.2rem; display:flex; align-items:center; justify-content:center; border:none; margin:0;" title="Take Photo">📷</label>
                         <input type="file" id="cameraUpload" accept="image/*" capture="environment" style="display:none;" onchange="syncCameraText()">
                     </div>
-                    <div id="cameraFileName" style="font-size: 0.8rem; color: var(--accent-indigo); margin-top: 5px; display: none;">✅ Photo captured via camera</div>
+                    <div id="cameraFileName" style="font-size: 0.8rem; color: var(--accent-blue); margin-top: 5px; display: none;">✅ Photo captured via camera</div>
                 </div>
-
-                <button type="button" class="btn-submit" id="submitBtn" onclick="submitData('create')">Publish Post</button>
-                <button type="button" class="btn-submit" id="resetProfileBtn" style="display:none; background:#64748b; margin-top:6px;" onclick="resetProfileToAuto()">Revert Profile to Auto Rotation</button>
-                <button type="button" class="btn-submit" id="updateBtn" style="display:none; background:var(--accent-emerald);" onclick="submitData('update')">Update Post</button>
+                <button type="button" class="btn-submit" id="submitBtn" onclick="submitData('create')">Publish Now</button>
+                <button type="button" class="btn-submit" id="resetProfileBtn" style="display:none; background:#65676B; margin-top:5px;" onclick="resetProfileToAuto()">Revert Profile to Auto Random</button>
+                <button type="button" class="btn-submit" id="updateBtn" style="display:none; background:#10b981;" onclick="submitData('update')">Update Post</button>
                 <button type="button" class="btn-submit btn-delete" id="deleteBtn" style="display:none;" onclick="submitData('delete')">Delete Post</button>
             </form>
         </div>
     </div>
     
-    <!-- Custom Birthday Wish Modal -->
+    <!-- Custom Integrated Wish Modal -->
     <div class="modal-overlay" id="customWishModal" style="z-index: 21000;">
-        <div class="modal-box" style="text-align: center;">
-            <h3 style="margin-bottom: 8px; color: var(--accent-indigo); font-weight: 800;">🎁 Send Birthday Wish!</h3>
-            <p style="font-size: 0.92rem; margin-bottom: 18px; color: var(--text-muted);" id="wishModalText">Enter your name:</p>
-            <input type="text" id="wishSenderName" class="form-control" placeholder="YOUR NAME" value="TEAM TDTTI" style="margin-bottom: 20px; text-transform: uppercase; text-align: center; font-weight: 800; font-size: 1.05rem;">
-            <div style="display:flex; gap:10px;">
-                <button class="btn-submit" onclick="executeBirthdayWish()" style="background: #25D366; margin:0;">Send to WhatsApp</button>
-                <button class="btn-submit" onclick="closeWishModal()" style="background:#e2e8f0; color:var(--text-dark); margin:0;">Cancel</button>
+        <div class="custom-alert-box">
+            <h3 style="margin-bottom: 10px; color: var(--accent-blue);">🎁 Send a Wish!</h3>
+            <p style="font-size: 0.95rem; margin-bottom: 20px; color: var(--text-gray); font-weight: 600;" id="wishModalText">Enter your Name to wish them a Happy Birthday:</p>
+            
+            <input type="text" id="wishSenderName" class="form-control" placeholder="Your Name" value="TEAM TDTTI" style="margin-bottom: 25px; text-transform: uppercase; text-align: center; font-weight: 800; font-size: 1.1rem; color: var(--text-dark);">
+            
+            <div class="custom-msg-btns">
+                <button class="btn-confirm-yes" onclick="executeBirthdayWish()" style="background: #25D366;">Send to WhatsApp</button>
+                <button class="btn-confirm-no" onclick="closeWishModal()">Cancel</button>
             </div>
         </div>
     </div>
     
-    <!-- Custom Alert / Confirm Modals -->
+    <!-- Custom Alert Modal -->
     <div class="modal-overlay" id="customAlertModal" style="z-index: 21000;">
-        <div class="modal-box" style="text-align: center; max-width: 380px;">
-            <div id="customAlertMsg" style="font-weight: 700; margin-bottom: 20px;">Notice</div>
-            <button class="btn-submit" onclick="closeCustomAlert()">OK</button>
-        </div>
-    </div>
-    <div class="modal-overlay" id="customConfirmModal" style="z-index: 21000;">
-        <div class="modal-box" style="text-align: center; max-width: 380px;">
-            <div id="customConfirmMsg" style="font-weight: 700; margin-bottom: 20px;">Are you sure?</div>
-            <div style="display:flex; gap:10px;">
-                <button class="btn-submit btn-delete" id="btnConfirmYes" style="margin:0;">Yes, Proceed</button>
-                <button class="btn-submit" onclick="closeCustomConfirm()" style="background:#e2e8f0; color:var(--text-dark); margin:0;">Cancel</button>
+        <div class="custom-alert-box">
+            <div class="custom-msg-text" id="customAlertMsg">Alert message goes here.</div>
+            <div class="custom-msg-btns">
+                <button class="btn-alert-ok" onclick="closeCustomAlert()">OK</button>
             </div>
         </div>
     </div>
 
-    <!-- PWA Install Prompt Modal -->
+    <!-- Custom Confirm Modal -->
+    <div class="modal-overlay" id="customConfirmModal" style="z-index: 21000;">
+        <div class="custom-confirm-box">
+            <div class="custom-msg-text" id="customConfirmMsg">Are you sure?</div>
+            <div class="custom-msg-btns">
+                <button class="btn-confirm-yes" id="btnConfirmYes">Yes, Delete</button>
+                <button class="btn-confirm-no" onclick="closeCustomConfirm()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- PWA Fallback / Direct Info Modal -->
     <div class="modal-overlay" id="pwaPromptModal" style="z-index: 22000;">
-        <div class="modal-box" style="text-align: center; max-width: 400px;">
-            <div style="display:flex; align-items:center; gap:14px; text-align:left; background:#f1f5f9; padding:12px 16px; border-radius:var(--radius-medium); margin-bottom:18px;">
-                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjGka-p7C45PTqBMBKqSjulqicQlHmW_Ee1BCfUPpaW888vYnoPjElzW9DVm8az1kCOjdlabjA3qb_vS00GpCApyVWh2C0aIcOcvb-BWeeTI8AdLojSf25iCvNpMS6aENxrWO-SgM5xjqePEMsHfCLy4HinnGk2xAnDlKaapXYFY05jXQM/s56-c/Logo2.png" style="width:48px; height:48px; border-radius:10px;" alt="App Icon">
+        <div class="modal-box" style="max-width: 400px; text-align: center; padding: 25px;">
+            <div class="pwa-header">
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjGka-p7C45PTqBMBKqSjulqicQlHmW_Ee1BCfUPpaW888vYnoPjElzW9DVm8az1kCOjdlabjA3qb_vS00GpCApyVWh2C0aIcOcvb-BWeeTI8AdLojSf25iCvNpMS6aENxrWO-SgM5xjqePEMsHfCLy4HinnGk2xAnDlKaapXYFY05jXQM/s56-c/Logo2.png" alt="TDTTI Logo">
                 <div>
-                    <strong style="display:block; font-size:1rem;">TDTTI THURAVOOR</strong>
-                    <span style="font-size:0.82rem; color:var(--text-muted);">Install our Official Web App</span>
+                    <strong>TDTTI THURAVOOR</strong>
+                    <span>Install our Live Web App</span>
                 </div>
             </div>
-            <p style="margin-bottom: 20px; font-weight: 600; font-size:0.92rem; color: var(--text-dark);">Install this portal on your home screen for instant updates and offline access.</p>
-            <div style="display:flex; gap:10px;">
-                <button class="btn-submit" onclick="triggerPwaInstall()" style="margin:0;">Install App</button>
-                <button class="btn-submit" onclick="closePwaModal()" style="background:#e2e8f0; color:var(--text-dark); margin:0;">Not Now</button>
+            <p id="pwa-modal-instructions" style="margin-bottom: 20px; font-weight: 600; color: var(--text-dark);">Add TDTTI to your home screen for instant access to the latest updates.</p>
+            <div class="custom-msg-btns">
+                <button class="btn-alert-ok" onclick="handlePwaAccept()">Install App</button>
+                <button class="btn-confirm-no" onclick="closeModals()">Close</button>
             </div>
         </div>
     </div>
 
     <script>
-        // === YOUTUBE PROGRESS BAR CONTROLLER ===
+        // === YOUTUBE-STYLE TOP PROGRESS BAR CONTROLLER ===
         let ytTimer = null;
         function startYtLoader() {
-            const bar = document.getElementById('yt-progress-bar');
+            const bar = document.getElementById('yt-loader');
             if (!bar) return;
             bar.classList.add('loading');
             bar.style.width = '20%';
             clearInterval(ytTimer);
             ytTimer = setInterval(() => {
-                let w = parseFloat(bar.style.width) || 20;
-                if (w < 85) bar.style.width = (w + Math.random() * 12) + '%';
+                let currentWidth = parseFloat(bar.style.width) || 20;
+                if (currentWidth < 85) {
+                    bar.style.width = (currentWidth + Math.random() * 12) + '%';
+                }
             }, 250);
         }
 
         function finishYtLoader() {
-            const bar = document.getElementById('yt-progress-bar');
+            const bar = document.getElementById('yt-loader');
             if (!bar) return;
             clearInterval(ytTimer);
             bar.style.width = '100%';
@@ -950,17 +710,128 @@
             }, 200);
         }
 
-        // === WEB PROTECTION (Blocked globally except in input/textarea) ===
-        document.addEventListener('contextmenu', e => e.preventDefault()); 
-        document.addEventListener('keydown', function(e) {
-            if (e.ctrlKey && ['u', 's', 'c', 'p'].includes(e.key.toLowerCase())) {
-                const target = e.target.tagName.toLowerCase();
-                if (target !== 'input' && target !== 'textarea') e.preventDefault();
+        // === PWA APP INSTALLATION & BANNER LOGIC ===
+        let deferredPrompt = null;
+
+        function isAppInstalled() {
+            return window.matchMedia('(display-mode: standalone)').matches || 
+                   window.navigator.standalone === true || 
+                   document.referrer.includes('android-app://');
+        }
+
+        function checkAndShowPwaBanner() {
+            // NEVER show banner if already installed as standalone app or dismissed
+            if (isAppInstalled()) return;
+            if (localStorage.getItem('pwaBannerDismissed') === 'true') return;
+
+            const banner = document.getElementById('pwa-top-banner');
+            const instructions = document.getElementById('pwa-instructions-text');
+            if (!banner) return;
+
+            const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+            if (isIOS) {
+                if (instructions) instructions.innerText = "Tap Share [⎋] then 'Add to Home Screen'";
+                const installBtn = document.getElementById('pwa-install-btn');
+                if (installBtn) installBtn.innerText = "Guide";
+            }
+            banner.style.display = 'flex';
+        }
+
+        function dismissPwaBanner() {
+            const banner = document.getElementById('pwa-top-banner');
+            if (banner) banner.style.display = 'none';
+            localStorage.setItem('pwaBannerDismissed', 'true');
+        }
+
+        function triggerPwaInstall() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        dismissPwaBanner();
+                    }
+                    deferredPrompt = null;
+                });
+            } else {
+                const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+                const modal = document.getElementById('pwaPromptModal');
+                const modalText = document.getElementById('pwa-modal-instructions');
+                if (isIOS && modalText) {
+                    modalText.innerHTML = "To install:<br>1. Tap the <strong>Share</strong> button in Safari.<br>2. Scroll down & tap <strong>'Add to Home Screen'</strong>.";
+                }
+                if (modal) modal.classList.add('active');
+            }
+        }
+
+        function handlePwaAccept() {
+            closeModals();
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt = null;
+            }
+        }
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            if (!isAppInstalled() && localStorage.getItem('pwaBannerDismissed') !== 'true') {
+                const banner = document.getElementById('pwa-top-banner');
+                if (banner) banner.style.display = 'flex';
             }
         });
 
-        // Config & Author Profiles
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzT-ialUUX-sXbCyLytxCCJRCAN0mI8WrZzuzO57O8wuUkmplzoZRfPzn9vdPhLIzPO/exec"; 
+        window.addEventListener('appinstalled', () => {
+            deferredPrompt = null;
+            const banner = document.getElementById('pwa-top-banner');
+            if (banner) banner.style.display = 'none';
+        });
+
+        // Register Inline Service Worker for PWA
+        if ('serviceWorker' in navigator) {
+            const swCode = `
+                self.addEventListener('install', (e) => { self.skipWaiting(); });
+                self.addEventListener('activate', (e) => { e.waitUntil(clients.claim()); });
+                self.addEventListener('fetch', (e) => {
+                    e.respondWith(fetch(e.request).catch(() => caches.match(e.request)));
+                });
+            `;
+            try {
+                const blob = new Blob([swCode], { type: 'application/javascript' });
+                navigator.serviceWorker.register(URL.createObjectURL(blob)).catch(() => {});
+            } catch(e) {}
+        }
+
+        // --- CUSTOM ALERT & CONFIRM FUNCTIONS ---
+        function showCustomAlert(msg) {
+            document.getElementById('customAlertMsg').innerText = msg;
+            document.getElementById('customAlertModal').classList.add('active');
+        }
+        function closeCustomAlert() {
+            document.getElementById('customAlertModal').classList.remove('active');
+        }
+        
+        let confirmCallback = null;
+        function showCustomConfirm(msg, callback) {
+            document.getElementById('customConfirmMsg').innerText = msg;
+            confirmCallback = callback;
+            document.getElementById('customConfirmModal').classList.add('active');
+            document.getElementById('btnConfirmYes').onclick = function() {
+                if(confirmCallback) confirmCallback();
+                closeCustomConfirm();
+            };
+        }
+        function closeCustomConfirm() {
+            document.getElementById('customConfirmModal').classList.remove('active');
+            confirmCallback = null;
+        }
+
+        // --- WEB PROTECTION CODE ---
+        document.addEventListener('contextmenu', event => event.preventDefault()); 
+        document.addEventListener('keydown', function(e) {
+            if(e.ctrlKey && (e.key === 'u' || e.key === 's' || e.key === 'c' || e.key === 'p')) e.preventDefault();
+        });
+
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxNVa3Y66OG8ptAErljabM3J7F1ODcbSt0ODf_jI390egtimUuUtJzveH9AZqJArGEo/exec"; 
         const IMGBB_API_KEY = "1032b8a5cf9568172cbc7caed6c58d69"; 
         
         const AUTHOR_PROFILES = [
@@ -973,16 +844,20 @@
             { name: "Alumni Association", avatar: "https://cdn-icons-png.flaticon.com/512/10543/10543419.png" },
             { name: "Sports & Wellness", avatar: "https://cdn-icons-png.flaticon.com/512/5351/5351313.png" },
             { name: "Arts & Culture", avatar: "https://cdn-icons-png.flaticon.com/512/3659/3659802.png" },
-            { name: "STEM & Tech Lab", avatar: "https://cdn-icons-png.flaticon.com/512/5024/5024467.png" }
+            { name: "STEM & Tech Lab", avatar: "https://cdn-icons-png.flaticon.com/512/5024/5024467.png" },
+            { name: "Library & Media", avatar: "https://cdn-icons-png.flaticon.com/512/3145/3145765.png" },
+            { name: "Counselor’s Corner", avatar: "https://cdn-icons-png.flaticon.com/512/6531/6531122.png" },
+            { name: "Career Guidance", avatar: "https://cdn-icons-png.flaticon.com/512/10061/10061730.png" }
         ];
 
         const SECTIONS = ["Today", "Notice Board", "Birthdays", "Achievements", "Updates", "Appraisals", "Personalised Skills", "Academic", "Sports", "Fairs", "Kalothswom", "Gallery"];
-        
+        const SHOW_SECTION_HEADS = true; 
+
         let globalPosts = [];
         let globalBirthdays = [];
         let currentBdayViewStr = ""; 
         let currentTodayViewStr = "";
-
+        
         function getTodayDateStr() {
             const now = new Date();
             return `${String(now.getDate()).padStart(2,'0')}:${String(now.getMonth()+1).padStart(2,'0')}:${now.getFullYear()}`;
@@ -998,12 +873,19 @@
         function getDailyBirthdayPhoto() {
             if (!globalBirthdays || globalBirthdays.length === 0) return null;
             let validPhotos = [];
+            
             globalBirthdays.forEach(student => {
                 let rawImg = student['ImageLink'] || student['Image Link'] || student['Image'] || student['Photo'] || student['MediaLink'];
-                if (rawImg && rawImg.trim() !== '' && !rawImg.includes('blank-profile') && !rawImg.includes('placeholder')) {
+                if (!rawImg) {
+                    for (let key in student) {
+                        if (typeof student[key] === 'string' && student[key].startsWith('http')) { rawImg = student[key]; break; }
+                    }
+                }
+                if (rawImg && rawImg.trim() !== '' && rawImg.indexOf('blank-profile') === -1 && rawImg.indexOf('placeholder') === -1) {
                     validPhotos.push(rawImg.trim());
                 }
             });
+
             if (validPhotos.length === 0) return null;
             let today = new Date();
             let halfDay = Math.floor(today.getHours() / 12); 
@@ -1011,17 +893,18 @@
             return validPhotos[seed % validPhotos.length];
         }
 
-        // Instant DOM Ready Paint
+        // Instant startup on DOM Ready
         document.addEventListener('DOMContentLoaded', () => {
             currentBdayViewStr = getTodayDateStr();
             currentTodayViewStr = getTodayDateStr();
+            checkAndShowPwaBanner();
             loadContent();
         });
 
         async function loadContent() {
             startYtLoader();
 
-            // 1. Instant Cached Paint from Memory
+            // 1. Instant load from local memory (0ms delay)
             const cachedData = localStorage.getItem('schoolPortalData');
             if (cachedData) {
                 try {
@@ -1029,10 +912,12 @@
                     globalPosts = parsed.posts || [];
                     globalBirthdays = parsed.birthdays || [];
                     renderAll(globalPosts, parsed.settings || {});
-                } catch(e) {}
+                } catch(e) {
+                    console.warn("Cache read error", e);
+                }
             }
 
-            // 2. Background Sync with Google Apps Script
+            // 2. Background Sync
             try {
                 const response = await fetch(SCRIPT_URL);
                 const data = await response.json();
@@ -1043,8 +928,9 @@
                     renderAll(globalPosts, data.settings || {});
                 }
             } catch (e) {
+                console.error("Network sync failed", e);
                 if (!cachedData) {
-                    document.getElementById('main-content').innerHTML = `<p style="text-align:center; padding:50px; font-weight:700;">Could not connect to live server. Tap logo to retry.</p>`;
+                    document.getElementById('main-content').innerHTML = `<p style="text-align:center; padding:50px; font-weight:700;">Failed to load data. Please refresh.</p>`;
                 }
             } finally {
                 finishYtLoader();
@@ -1054,8 +940,20 @@
         function renderAll(postsData, settingsData) {
             const container = document.getElementById('main-content');
             
+            if (!document.getElementById('mobile-sort-css')) {
+                let style = document.createElement('style');
+                style.id = 'mobile-sort-css';
+                style.innerHTML = `
+                @media (max-width: 991px) { 
+                    .main-feed-area, .sidebar-area { display: contents !important; } 
+                    .section-wrapper { width: 100%; margin-bottom: 20px; }
+                }`;
+                document.head.appendChild(style);
+            }
+            
             let defaultCover = "https://via.placeholder.com/1200x300.png?text=Welcome+to+TDTTI+THURAVOOR";
             let defaultLogo = AUTHOR_PROFILES[0].avatar; 
+            
             let coverImg = settingsData["CoverPhoto"] || defaultCover;
             let profileImg = settingsData["ProfilePicture"];
 
@@ -1068,10 +966,13 @@
             document.getElementById('ui-profile').src = profileImg;
 
             const notices = postsData.filter(i => i.Section === "Scrolling").slice(-3);
-            document.getElementById('live-ticker-text').innerText = notices.length > 0 
-                ? notices.map(n => `🔴 ${n.Content || n.Title}`).join("   |   ") 
-                : "No active notices.";
+            if(notices.length > 0) {
+                document.getElementById('live-ticker-text').innerText = notices.map(n => `🔴 ${n.Content || n.Title}`).join("   |   ");
+            } else {
+                document.getElementById('live-ticker-text').innerText = "No new updates.";
+            }
 
+            // Sort sections based on timestamps
             globalBirthdays.forEach(b => b.Section = "Birthdays"); 
             let sectionLatestTime = {};
             SECTIONS.forEach(s => sectionLatestTime[s] = 0);
@@ -1079,50 +980,63 @@
             [...postsData, ...globalBirthdays].forEach(item => {
                 if (item.Section) {
                     let t = parseCustomDate(item.Timestamp);
-                    if (t > sectionLatestTime[item.Section]) sectionLatestTime[item.Section] = t;
+                    if (t > sectionLatestTime[item.Section]) {
+                        sectionLatestTime[item.Section] = t;
+                    }
                 }
             });
 
-            let sortedSections = [...SECTIONS].filter(s => !["Scrolling", "Birthdays", "Today"].includes(s));
+            let sortedSections = [...SECTIONS].filter(s => s !== "Scrolling" && s !== "Birthdays" && s !== "Today");
             sortedSections.sort((a, b) => sectionLatestTime[b] - sectionLatestTime[a]);
             sortedSections.unshift("Today");
             sortedSections.unshift("Birthdays");
 
+            // Populate Filter Dropdown
             let filterHtml = '<option value="All">All Sections</option>';
-            sortedSections.forEach(sec => filterHtml += `<option value="${sec}">${sec}</option>`);
-            if (document.getElementById('sectionFilter')) document.getElementById('sectionFilter').innerHTML = filterHtml;
+            sortedSections.forEach((sec) => {
+                filterHtml += `<option value="${sec}">${sec}</option>`;
+            });
+            if(document.getElementById('sectionFilter')) document.getElementById('sectionFilter').innerHTML = filterHtml;
 
+            // Generate HTML
             let sectionHtmlMap = {};
-            const sidebarSecs = ["Birthdays", "Notice Board", "Gallery"]; 
+            const sidebarSecs = ["Notice Board", "Gallery", "Birthdays"]; 
 
             sortedSections.forEach((secName, idx) => {
                 const wrapperId = secName.replace(/\s/g, '');
-                let secHtml = `<div class="section-wrapper" id="${wrapperId}">`;
-                secHtml += `<h2 class="section-header-title">${secName}</h2>`;
+                let orderStyle = secName === "Gallery" ? `order: 9999;` : `order: ${idx + 1};`;
+                let secHtml = `<div class="section-wrapper" id="${wrapperId}" style="${orderStyle}">`;
+                
+                if (SHOW_SECTION_HEADS && secName !== "Scrolling") {
+                    secHtml += `<h2 class="section-header-title">${secName}</h2>`;
+                }
                 
                 if (secName === "Birthdays") {
                     secHtml += `
-                    <div class="fb-post">
+                    <div class="fb-post" style="padding:0; border:none;">
                         <div class="bday-nav">
                             <button onclick="changeBday(-1)">&lt;</button>
-                            <h3 id="bday-display-title" style="margin:0; font-size:0.95rem; font-weight:800; text-transform:uppercase;">${getFormattedDateDisplay(currentBdayViewStr)}</h3>
+                            <h3 id="bday-display-title" style="margin:0; font-size:1.1rem; text-transform:uppercase;">${getFormattedDateDisplay(currentBdayViewStr)}</h3>
                             <button onclick="changeBday(1)">&gt;</button>
                         </div>
+                        <h4 style="text-align:center; color:var(--accent-red); margin: 10px 0 5px 0; font-weight:800; letter-spacing:1px; text-transform:uppercase;">Happy Birthday</h4>
                         <div class="birthday-grid" id="bday-grid-container"></div>
                     </div></div>`;
                     sectionHtmlMap[secName] = secHtml;
+
                 } else {
                     const sectionPosts = postsData.filter(item => item.Section === secName);
                     sectionPosts.sort((a, b) => parseCustomDate(b.Timestamp) - parseCustomDate(a.Timestamp));
                     
                     if (secName === "Today") {
                         secHtml += `
-                        <div class="fb-post" style="margin-bottom: 12px;">
+                        <div class="fb-post" style="padding:0; border:none; margin-bottom: 15px;">
                             <div class="bday-nav">
                                 <button onclick="changeToday(-1)">&lt;</button>
-                                <h3 id="today-display-title" style="margin:0; font-size:0.95rem; font-weight:800; text-transform:uppercase;">${currentTodayViewStr.replace(/:/g, '/')}</h3>
+                                <h3 id="today-display-title" style="margin:0; font-size:1.1rem; text-transform:uppercase;">${currentTodayViewStr.replace(/:/g, '/')}</h3>
                                 <button onclick="changeToday(1)">&gt;</button>
                             </div>
+                            <h4 style="text-align:center; color:var(--accent-blue); margin: 10px 0 5px 0; font-weight:800; letter-spacing:1px; text-transform:uppercase;">Today in History</h4>
                         </div>`;
                     }
 
@@ -1137,17 +1051,18 @@
                         </div>`;
                     }
 
-                    secHtml += `<div class="cards-grid" id="grid-${wrapperId}" style="display:flex; flex-direction:column; gap:16px;">`;
+                    secHtml += `<div class="cards-grid" id="grid-${wrapperId}" style="display:contents;">`;
                     
                     let hiddenCount = 0;
                     let todayCount = 0;
+
                     sectionPosts.forEach(item => {
                         let rawDate = (item.Timestamp || "").split(' ')[0].trim().replace(/[-/]/g, ':');
                         if (rawDate === getTodayDateStr()) todayCount++;
                     });
 
                     if (sectionPosts.length === 0) {
-                        secHtml += `<p style="color:var(--text-muted); padding:20px; text-align:center;">No updates yet.</p>`;
+                        secHtml += `<p style="color:#65676B; padding:20px; text-align:center; grid-column: 1 / -1;">No updates yet.</p>`;
                     } else {
                         sectionPosts.forEach((item, index) => {
                             let rawDate = (item.Timestamp || "").split(' ')[0].trim().replace(/[-/]/g, ':');
@@ -1180,16 +1095,17 @@
                                 <div class="fb-header">
                                     <img src="${author.avatar}" class="fb-avatar" loading="lazy" decoding="async">
                                     <div class="fb-header-info">
-                                        <strong>${author.name} ${item.SubSection ? `<span style="color:var(--accent-indigo);">• ${item.SubSection}</span>` : ''}</strong>
-                                        <span>${displayDate} • <b style="color:var(--accent-indigo);">${timeAgoStr}</b></span>
+                                        <strong>${author.name} ${item.SubSection ? `<span style="color:var(--accent-blue);font-weight:700;">• ${item.SubSection}</span>` : ''}</strong>
+                                        <span>${displayDate} • <b style="color:var(--accent-blue);">${timeAgoStr}</b></span>
                                     </div>
                                 </div>` : ''}
                                 <div class="fb-content">
-                                    ${item.Title ? `<h3 class="post-title-share">${item.Title}</h3>` : ''}
+                                    ${item.Title ? `<h3 class="post-title-share" style="${!showHeader ? 'margin-top:15px;' : ''}">${item.Title}</h3>` : ''}
                                     ${(item.Content && showContent) ? `<p>${item.Content}</p>` : ''}
                                 </div>
                                 ${item.MediaLink ? `<div class="fb-media">${renderMedia(item.MediaLink)}</div>` : ''}
                                 
+                                <!-- LEFT-ALIGNED SOCIAL BAR (ICON + NUMBER ONLY) -->
                                 <div class="social-bar">
                                     <div class="reaction-container">
                                         <button class="social-btn main-react-btn ${myReaction ? 'reacted-'+myReaction : ''}" onclick="toggleReactionPopup('${postIdStr}')">
@@ -1197,9 +1113,9 @@
                                             <span class="total-count">${(reacts.like || 0) + (reacts.love || 0) + (reacts.clap || 0)}</span>
                                         </button>
                                         <div class="reaction-popup" id="popup-${postIdStr}">
-                                            <span class="reaction-option" onclick="doReaction(this, '${secName}', ${item._rowIndex}, 'like')">👍</span>
-                                            <span class="reaction-option" onclick="doReaction(this, '${secName}', ${item._rowIndex}, 'love')">❤️</span>
-                                            <span class="reaction-option" onclick="doReaction(this, '${secName}', ${item._rowIndex}, 'clap')">👏</span>
+                                            <span class="reaction-option" onclick="doReaction(this, '${secName}', ${item._rowIndex}, 'like')" title="Like">👍</span>
+                                            <span class="reaction-option" onclick="doReaction(this, '${secName}', ${item._rowIndex}, 'love')" title="Love">❤️</span>
+                                            <span class="reaction-option" onclick="doReaction(this, '${secName}', ${item._rowIndex}, 'clap')" title="Applaud">👏</span>
                                         </div>
                                     </div>
 
@@ -1211,7 +1127,7 @@
                                     <div class="comment-list">
                                         ${comments.map(c => `
                                             <div class="comment-item" id="comment-${c.id}">
-                                                <img src="${c.avatar || 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'}" class="c-avatar" loading="lazy">
+                                                <img src="${c.avatar || 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'}" class="c-avatar" loading="lazy" decoding="async">
                                                 <div class="c-bubble">
                                                     <strong>${c.name} <span>${timeAgo(c.date)}</span></strong>
                                                     <p>${c.text}</p>
@@ -1220,7 +1136,7 @@
                                         `).join('')}
                                     </div>
                                     <div class="add-comment-box">
-                                        <input type="text" class="c-input-name" placeholder="Your Name">
+                                        <input type="text" class="c-input-name" placeholder="Your Name (Optional)">
                                         <textarea class="c-input-text" rows="1" placeholder="Write a comment..."></textarea>
                                         <button onclick="postInstantComment(this, '${secName}', ${item._rowIndex})">Post</button>
                                     </div>
@@ -1231,81 +1147,117 @@
                     secHtml += `</div>`;
 
                     if (hiddenCount > 0) {
-                        secHtml += `<button class="read-more-box" id="btn-more-${wrapperId}" onclick="toggleReadMore(this, ${hiddenCount}, ${sectionPosts.length})">SHOW MORE <span>🔽</span></button>`;
+                        let btnText = (hiddenCount === sectionPosts.length) ? 'SHOW PREVIOUS POSTS <span>🔽</span>' : 'SHOW MORE <span>🔽</span>';
+                        secHtml += `<button class="read-more-box" id="btn-more-${wrapperId}" onclick="toggleReadMore(this, ${hiddenCount}, ${sectionPosts.length})" style="grid-column: 1 / -1;">${btnText}</button>`;
                     }
                     secHtml += `</div>`;
                     sectionHtmlMap[secName] = secHtml;
                 }
             });
 
-            // 2-Column Assembly: Left = Sticky Sidebar, Right = Feed
+            // Build Final HTML
             let sidebarHtml = `<div class="sidebar-area">`;
             sidebarHtml += `
-            <div class="quick-links-wrapper">
-                <h3>⚡ Quick Access</h3>
+            <div class="quick-links-wrapper" style="order: 0; border: none; border-bottom: 1px solid #ced0d4; border-radius: 0; box-shadow: none;">
+                <h3>⚡ Quick Links</h3>
                 <div class="ql-grid">
-                    <a href="#" class="ql-btn">🚌 School Bus</a>
-                    <a href="#" class="ql-btn">🧒 CM Kids</a>
-                    <a href="#" class="ql-btn">🗳️ Election</a>
-                    <a href="#" class="ql-btn">🎪 Uthsav</a>
+                    <a href="#" class="ql-btn">🚌 SCHOOL BUS</a>
+                    <a href="#" class="ql-btn">🧒 CM KIDS</a>
+                    <a href="#" class="ql-btn">🗳️ SCHOOL ELECTION</a>
+                    <a href="#" class="ql-btn">🎪 UTHSAV</a>
                 </div>
             </div>`;
 
-            sidebarSecs.forEach(sec => { if (sectionHtmlMap[sec]) sidebarHtml += sectionHtmlMap[sec]; });
+            sortedSections.forEach(sec => {
+                if (sidebarSecs.includes(sec) && sectionHtmlMap[sec]) {
+                    sidebarHtml += sectionHtmlMap[sec];
+                }
+            });
             sidebarHtml += `</div>`;
 
             let mainHtml = `<div class="main-feed-area">`;
-            sortedSections.forEach(sec => { if (!sidebarSecs.includes(sec) && sectionHtmlMap[sec]) mainHtml += sectionHtmlMap[sec]; });
+            sortedSections.forEach(sec => {
+                if (!sidebarSecs.includes(sec) && sectionHtmlMap[sec]) {
+                    mainHtml += sectionHtmlMap[sec];
+                }
+            });
             mainHtml += `</div>`;
             
             container.innerHTML = sidebarHtml + mainHtml;
             updateBirthdayGrid(); 
             updateTodayGrid(); 
         }
-
+        
         function parseCustomDate(ts) {
             if (!ts) return 0;
-            let parts = String(ts).trim().split(' ');
+            let tsStr = String(ts).trim();
+            let parts = tsStr.split(' ');
             let d = parts[0].split(/[:\/\-]/);
             let t = parts[1] ? parts[1].split(':') : [0,0,0];
+            
             if (d.length >= 3) {
-                let day = parseInt(d[0], 10), month = parseInt(d[1], 10) - 1, year = parseInt(d[2], 10);
+                let day = parseInt(d[0], 10);
+                let month = parseInt(d[1], 10) - 1; 
+                let year = parseInt(d[2], 10);
                 if (year < 1000 && day > 1000) { let temp = year; year = day; day = temp; }
-                return new Date(year, month, day, parseInt(t[0]||0), parseInt(t[1]||0), parseInt(t[2]||0)).getTime() || 0;
+                let hr = parseInt(t[0] || 0, 10);
+                let min = parseInt(t[1] || 0, 10);
+                let sec = parseInt(t[2] || 0, 10);
+
+                let time = new Date(year, month, day, hr, min, sec).getTime();
+                if (!isNaN(time) && time > 0) return time;
             }
-            return new Date(ts).getTime() || 0;
+            let fallback = new Date(tsStr).getTime();
+            return isNaN(fallback) ? 0 : fallback;
         }
 
         function getPostTimeAgo(ts) {
             let postTime = parseCustomDate(ts);
-            if (!postTime) return "";
-            let sec = Math.floor((Date.now() - postTime) / 1000);
-            if (sec < 60) return "Just now";
-            if (sec < 3600) return Math.floor(sec / 60) + "m ago";
-            if (sec < 86400) return Math.floor(sec / 3600) + "h ago";
-            if (sec < 2592000) return Math.floor(sec / 86400) + "d ago";
-            return Math.floor(sec / 31536000) + "y ago";
+            if (postTime === 0) return ""; 
+            let seconds = Math.floor((Date.now() - postTime) / 1000);
+            
+            if (seconds < 60) return "Just now";
+            let mins = Math.floor(seconds / 60);
+            if (mins < 60) return mins + " min ago";
+            let hrs = Math.floor(mins / 60);
+            if (hrs < 24) return hrs + " hr ago";
+            let days = Math.floor(hrs / 24);
+            if (days < 30) return days + " d ago";
+            let mos = Math.floor(days / 30);
+            if (mos < 12) return mos + " mo ago";
+            return Math.floor(days / 365) + " yr ago";
         }
-
+        
         function timeAgo(dateInput) {
+            if (typeof dateInput === 'string' && dateInput.includes(':') && dateInput.length <= 10) {
+                return dateInput; 
+            }
             let date = new Date(Number(dateInput) || dateInput);
-            if (isNaN(date.getTime())) return dateInput;
-            let sec = Math.floor((new Date() - date) / 1000);
-            if (sec < 60) return "Just now";
-            if (sec < 3600) return Math.floor(sec / 60) + "m ago";
-            if (sec < 86400) return Math.floor(sec / 3600) + "h ago";
-            return Math.floor(sec / 86400) + "d ago";
+            if (isNaN(date.getTime())) return dateInput; 
+        
+            let seconds = Math.floor((new Date() - date) / 1000);
+            if (seconds < 60) return "Just now";
+            let interval = seconds / 31536000;
+            if (interval >= 1) return Math.floor(interval) + " y ago";
+            interval = seconds / 2592000;
+            if (interval >= 1) return Math.floor(interval) + " mo ago";
+            interval = seconds / 86400;
+            if (interval >= 1) return Math.floor(interval) + " d ago";
+            interval = seconds / 3600;
+            if (interval >= 1) return Math.floor(interval) + " h ago";
+            interval = seconds / 60;
+            if (interval >= 1) return Math.floor(interval) + " min ago";
+            return "Just now";
         }
-
+        
         function toggleReactionPopup(postId) {
             document.querySelectorAll('.reaction-popup.show').forEach(p => {
                 if (p.id !== `popup-${postId}`) p.classList.remove('show');
             });
-            const pop = document.getElementById(`popup-${postId}`);
-            if (pop) pop.classList.toggle('show');
+            document.getElementById(`popup-${postId}`).classList.toggle('show');
         }
 
-        document.addEventListener('click', e => {
+        document.addEventListener('click', function(e) {
             if (!e.target.closest('.reaction-container')) {
                 document.querySelectorAll('.reaction-popup.show').forEach(p => p.classList.remove('show'));
             }
@@ -1330,68 +1282,96 @@
                 delete userReactions[postId];
                 payload.removeType = type;
             } else {
+                try {
+                    let audio = new Audio('https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3');
+                    audio.volume = 0.5;
+                    audio.play();
+                } catch(e) {}
+
+                let isNew = !currentReaction;
                 mainBtn.className = `social-btn main-react-btn reacted-${type}`;
-                let newTotal = currentTotal + (!currentReaction ? 1 : 0); 
+                let newTotal = currentTotal + (isNew ? 1 : 0); 
                 mainBtn.innerHTML = `${icons[type]} <span class="total-count">${newTotal}</span>`;
+                
                 if (currentReaction) payload.removeType = currentReaction; 
                 payload.addType = type; 
                 userReactions[postId] = type;
             }
             
             localStorage.setItem('userReactions', JSON.stringify(userReactions));
-            if (popup) popup.classList.remove('show');
+            popup.classList.remove('show');
             
             fetch(SCRIPT_URL, {
                 method: 'POST',
                 headers: { "Content-Type": "text/plain;charset=utf-8" },
                 body: JSON.stringify(payload)
-            }).catch(() => {});
+            }).catch(e => console.log("Reaction sync failed silently"));
         }
 
         function toggleComments(btn) {
             let post = btn.closest('.bday-item, .fb-post');
-            let sec = post.querySelector('.comments-section');
-            if (sec) sec.style.display = sec.style.display === 'block' ? 'none' : 'block';
+            let section = post.querySelector('.comments-section');
+            if (section) {
+                section.style.display = section.style.display === 'block' ? 'none' : 'block';
+            }
         }
 
         function postInstantComment(btn, section, rowIdx) {
             let box = btn.closest('.add-comment-box');
             let nameField = box.querySelector('.c-input-name');
             let textField = box.querySelector('.c-input-text');
-            let name = nameField.value.trim().toUpperCase();
-            let text = textField.value.trim();
             
-            if (!name || !text) { showCustomAlert("Please enter both name and comment."); return; }
+            let nameInput = nameField.value.trim();
+            let textInput = textField.value.trim();
+            
+            if (!nameInput) {
+                showCustomAlert("Please enter your Name to post a comment.");
+                nameField.focus();
+                return;
+            }
+            if (!textInput) {
+                showCustomAlert("Please write a comment before posting.");
+                textField.focus();
+                return;
+            }
 
-            let cList = box.previousElementSibling;
+            nameInput = nameInput.toUpperCase();
+            let cList = box.previousElementSibling; 
+            let dateStr = Date.now(); 
             let newId = Date.now().toString();
             let defaultAvatar = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png";
 
             cList.innerHTML += `
                 <div class="comment-item" id="comment-${newId}">
-                    <img src="${defaultAvatar}" class="c-avatar">
+                    <img src="${defaultAvatar}" class="c-avatar" loading="lazy" decoding="async">
                     <div class="c-bubble">
-                        <strong>${name} <span>Just now</span></strong>
-                        <p>${text}</p>
+                        <strong>${nameInput} <span>Just now</span></strong>
+                        <p>${textInput}</p>
                     </div>
                 </div>`;
-            textField.value = '';
+            
+            textField.value = ''; 
             
             let postContainer = btn.closest('.bday-item, .fb-post');
-            let countSpan = postContainer.querySelector('.social-bar button:nth-child(2) span');
-            if (countSpan) countSpan.innerText = parseInt(countSpan.innerText || 0) + 1;
+            let countSpan = postContainer.querySelector('.comment-count') || postContainer.querySelector('.social-bar button:nth-child(2) span');
+            if (countSpan) {
+                countSpan.innerText = parseInt(countSpan.innerText || 0) + 1;
+            }
 
+            let commentObj = { id: newId, name: nameInput, text: textInput, date: dateStr, avatar: defaultAvatar };
             fetch(SCRIPT_URL, {
                 method: 'POST',
                 headers: { "Content-Type": "text/plain;charset=utf-8" },
-                body: JSON.stringify({ action: 'addComment', section: section, rowIndex: rowIdx, comment: { id: newId, name: name, text: text, date: Date.now(), avatar: defaultAvatar } })
-            }).catch(() => {});
+                body: JSON.stringify({ action: 'addComment', section: section, rowIndex: rowIdx, comment: commentObj })
+            }).catch(e => console.log("Comment sync failed silently"));
         }
 
         function sharePost(btn, section, rowIdx) {
             let post = btn.closest('.bday-item, .fb-post');
             let titleEl = post ? (post.querySelector('.post-title-share') || post.querySelector('.bday-info h5')) : null;
-            let titleText = titleEl ? titleEl.innerText : "TDTTI Thuravoor Live Update";
+            let titleText = titleEl ? titleEl.innerText : "Check out this update!";
+            let shareTitle = "TDTTI THURAVOOR";
+            let shareText = `${titleText}\n\nRead more on our Live Portal:`;
             let shareUrl = window.location.href;
 
             let countSpan = btn.querySelector('span');
@@ -1401,116 +1381,202 @@
                 method: 'POST',
                 headers: { "Content-Type": "text/plain;charset=utf-8" },
                 body: JSON.stringify({ action: 'share', section: section, rowIndex: rowIdx })
-            }).catch(() => {});
+            }).catch(e => console.log("Share sync failed"));
 
             if (navigator.share) {
-                navigator.share({ title: "TDTTI Thuravoor", text: titleText, url: shareUrl }).catch(() => {});
+                navigator.share({ title: shareTitle, text: shareText, url: shareUrl }).catch(err => {});
             } else {
-                window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(titleText + "\n" + shareUrl)}`, '_blank');
+                let waText = `*${shareTitle}*\n${titleText}\n\nView here: ${shareUrl}`;
+                window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(waText)}`, '_blank');
             }
         }
 
-        function filterFairs(cat, btn) {
+        function filterFairs(category, btnElement) {
             document.querySelectorAll('.fair-tab').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            const grid = document.getElementById('grid-Fairs');
-            if (!grid) return;
-            grid.querySelectorAll('.fb-post').forEach(p => {
-                if (cat === 'All' || p.getAttribute('data-subsection') === cat) {
-                    p.classList.remove('fair-hidden');
-                    p.classList.add('show-post');
-                } else {
-                    p.classList.add('fair-hidden');
-                }
-            });
+            btnElement.classList.add('active');
+
+            const fairsGrid = document.getElementById('grid-Fairs');
+            if(!fairsGrid) return;
+            const posts = fairsGrid.querySelectorAll('.fb-post');
+            const readMoreBtn = document.getElementById('btn-more-Fairs');
+            
+            if(category === 'All') {
+                posts.forEach(p => p.classList.remove('fair-hidden'));
+                if(readMoreBtn) readMoreBtn.style.display = 'block';
+            } else {
+                posts.forEach(p => {
+                    if(p.getAttribute('data-subsection') === category) {
+                        p.classList.remove('fair-hidden');
+                        p.classList.add('show-post'); 
+                    } else {
+                        p.classList.add('fair-hidden');
+                    }
+                });
+                if(readMoreBtn) readMoreBtn.style.display = 'none';
+            }
         }
 
         function toggleReadMore(btn, hiddenCount, totalCount) {
             const grid = btn.previousElementSibling;
-            const items = grid.querySelectorAll('.is-hidden');
-            if (btn.innerText.includes('SHOW MORE')) {
-                items.forEach(p => p.classList.add('show-post'));
+            const hiddenItems = grid.querySelectorAll('.is-hidden');
+            
+            if (btn.innerText.includes('SHOW MORE') || btn.innerText.includes('SHOW PREVIOUS POSTS')) {
+                hiddenItems.forEach(p => p.classList.add('show-post'));
                 btn.innerHTML = 'SHOW LESS <span>🔼</span>';
             } else {
-                items.forEach(p => p.classList.remove('show-post'));
-                btn.innerHTML = 'SHOW MORE <span>🔽</span>';
+                hiddenItems.forEach(p => p.classList.remove('show-post'));
+                btn.innerHTML = (hiddenCount === totalCount) ? 'SHOW PREVIOUS POSTS <span>🔽</span>' : 'SHOW MORE <span>🔽</span>';
                 grid.parentElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
         }
 
-        function changeBday(offset) {
+        function changeBday(offsetDays) {
             const parts = currentBdayViewStr.split(':');
             let d = new Date(parts[2], parseInt(parts[1])-1, parts[0]);
-            d.setDate(d.getDate() + offset);
+            d.setDate(d.getDate() + offsetDays);
+            
             currentBdayViewStr = `${String(d.getDate()).padStart(2,'0')}:${String(d.getMonth()+1).padStart(2,'0')}:${d.getFullYear()}`;
             document.getElementById('bday-display-title').innerText = getFormattedDateDisplay(currentBdayViewStr);
             updateBirthdayGrid();
         }
 
         function updateBirthdayGrid() {
-            const grid = document.getElementById('bday-grid-container');
-            if (!grid) return;
-            const currentDayMonth = currentBdayViewStr.substring(0, 5);
-            const dayBirthdays = globalBirthdays.filter(b => b.Date && String(b.Date).replace(/[-/]/g, ':').startsWith(currentDayMonth));
+            const gridContainer = document.getElementById('bday-grid-container');
+            if(!gridContainer) return;
+            const dayBirthdays = globalBirthdays.filter(b => {
+                if (!b.Date) return false;
+                let safeDate = String(b.Date).replace(/[-/]/g, ':').replace(/'/g, '').trim(); 
+                let bdayDayMonth = safeDate.substring(0, 5); 
+                let currentDayMonth = currentBdayViewStr.substring(0, 5);
+                return bdayDayMonth === currentDayMonth; 
+            });
             
             if (dayBirthdays.length === 0) {
-                grid.innerHTML = `<p style="grid-column:1/-1; text-align:center; color:var(--text-muted); padding:16px;">No birthdays for this date.</p>`;
+                gridContainer.innerHTML = `<p style="grid-column: 1 / -1; text-align: center; color: var(--text-gray); padding: 20px;">No birthdays today.</p>`;
                 return;
             }
 
             let html = "";
+            let defaultLogo = AUTHOR_PROFILES[0].avatar;
+
             dayBirthdays.forEach(student => {
-                let img = student.ImageLink || student.Image || 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png';
-                let sName = student['Student Name'] || '';
-                let sClass = student['Class'] || '', sDiv = student['Division'] || '';
-                let wishes = parseInt(student.Wishes) || 0;
+                let rawImg = "";
+                for (let key in student) {
+                    let lowerKey = key.trim().toLowerCase();
+                    if (['imagelink', 'image link', 'image', 'photo', 'medialink'].includes(lowerKey)) { rawImg = student[key]; break; }
+                }
+                if (!rawImg || rawImg.trim() === '') {
+                    for (let key in student) {
+                        if (typeof student[key] === 'string' && student[key].startsWith('http')) { rawImg = student[key]; break; }
+                    }
+                }
+                const imgLink = (rawImg && rawImg.trim() !== '') ? rawImg.trim() : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png';
+
+                let reacts = {like:0, love:0, clap:0};
+                if (student.Reactions) { try { reacts = JSON.parse(student.Reactions); } catch(e){} }
+                let comments = [];
+                if (student.Comments) { try { comments = JSON.parse(student.Comments); } catch(e){} }
                 let shares = parseInt(student.Shares) || 0;
+                let wishes = parseInt(student.Wishes) || 0;
+                let postIdStr = `post-Birthdays-${student._rowIndex}`;
+                let userReactions = JSON.parse(localStorage.getItem('userReactions') || '{}');
+                let myReaction = userReactions[postIdStr];
+                
+                let sName = student['Student Name'] || '';
+                let sClass = student['Class'] || '';
+                let sDiv = student['Division'] || '';
 
                 html += `
-                <div class="bday-item" id="post-Birthdays-${student._rowIndex}">
+                <div class="bday-item" id="${postIdStr}">
                     <div class="bday-img-wrapper">
-                        <img src="${img}" alt="${sName}" loading="lazy">
+                        <img src="${imgLink}" alt="${sName}" loading="lazy" decoding="async">
                         <div class="bday-info">
                             <h5>${sName}</h5>
                             <p>${sClass}${sDiv}</p>
                         </div>
                     </div>
-                    <div class="social-bar" style="padding:6px 10px;">
-                        <button class="social-btn" onclick="sendBirthdayWish(this, '${sName}', ${student._rowIndex})" style="color:#25D366; font-weight:700;">🎁 <span>${wishes}</span></button>
+                    
+                    <!-- LEFT-ALIGNED SOCIAL BAR (ICON + NUMBER ONLY) -->
+                    <div class="social-bar">
+                        <div class="reaction-container">
+                            <button class="social-btn main-react-btn ${myReaction ? 'reacted-'+myReaction : ''}" onclick="toggleReactionPopup('${postIdStr}')">
+                                ${myReaction === 'love' ? '❤️' : myReaction === 'clap' ? '👏' : '👍'} 
+                                <span class="total-count">${(reacts.like || 0) + (reacts.love || 0) + (reacts.clap || 0)}</span>
+                            </button>
+                            <div class="reaction-popup" id="popup-${postIdStr}">
+                                <span class="reaction-option" onclick="doReaction(this, 'Birthdays', ${student._rowIndex}, 'like')">👍</span>
+                                <span class="reaction-option" onclick="doReaction(this, 'Birthdays', ${student._rowIndex}, 'love')">❤️</span>
+                                <span class="reaction-option" onclick="doReaction(this, 'Birthdays', ${student._rowIndex}, 'clap')">👏</span>
+                            </div>
+                        </div>
+                        <button class="social-btn" onclick="toggleComments(this)">💬 <span class="comment-count">${comments.length}</span></button>
+                        <button class="social-btn" onclick="sendBirthdayWish(this, '${sName}', ${student._rowIndex})">🎁 <span>${wishes}</span></button>
                         <button class="social-btn" onclick="sharePost(this, 'Birthdays', ${student._rowIndex})">✈️ <span>${shares}</span></button>
+                    </div>
+
+                    <div class="comments-section" style="padding: 10px;">
+                        <div class="comment-list">
+                            ${comments.map(c => `
+                                <div class="comment-item" id="comment-${postIdStr}-${c.id}">
+                                    <img src="${c.avatar || defaultLogo}" class="c-avatar" loading="lazy" decoding="async">
+                                    <div class="c-bubble">
+                                        <strong>${c.name} <span>${timeAgo(c.date)}</span></strong>
+                                        <p>${c.text}</p>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                        <div class="add-comment-box">
+                            <input type="text" class="c-input-name" placeholder="Your Name (Required)" style="text-transform: uppercase;">
+                            <textarea class="c-input-text" rows="1" placeholder="Add comment..."></textarea>
+                            <button onclick="postInstantComment(this, 'Birthdays', ${student._rowIndex})">Post</button>
+                        </div>
                     </div>
                 </div>`;
             });
-            grid.innerHTML = html;
+            gridContainer.innerHTML = html;
+        }
+        
+        let currentWishData = null;
+        function sendBirthdayWish(btn, studentName, rowIdx) {
+            currentWishData = { btn: btn, studentName: studentName, rowIdx: rowIdx };
+            document.getElementById('wishModalText').innerText = `Enter your Name to wish ${studentName} a Happy Birthday:`;
+            document.getElementById('wishSenderName').value = "TEAM TDTTI";
+            document.getElementById('customWishModal').classList.add('active');
+            document.getElementById('wishSenderName').focus();
         }
 
-        let currentWishData = null;
-        function sendBirthdayWish(btn, name, rowIdx) {
-            currentWishData = { btn, name, rowIdx };
-            document.getElementById('wishModalText').innerText = `Enter your name to wish ${name}:`;
-            document.getElementById('customWishModal').classList.add('active');
+        function closeWishModal() {
+            document.getElementById('customWishModal').classList.remove('active');
+            currentWishData = null;
         }
-        function closeWishModal() { document.getElementById('customWishModal').classList.remove('active'); }
 
         function executeBirthdayWish() {
             if (!currentWishData) return;
-            let sender = document.getElementById('wishSenderName').value.trim();
-            if (!sender) { showCustomAlert("Please enter your name."); return; }
+            let senderName = document.getElementById('wishSenderName').value;
+            if (!senderName || senderName.trim() === "") {
+                showCustomAlert("Please enter a name to send the wish.");
+                return;
+            }
             
-            let countSpan = currentWishData.btn.querySelector('span');
+            let studentName = currentWishData.studentName;
+            let rowIdx = currentWishData.rowIdx;
+            let btn = currentWishData.btn;
+
+            let countSpan = btn.querySelector('span');
             if (countSpan) countSpan.innerText = parseInt(countSpan.innerText || 0) + 1;
 
             fetch(SCRIPT_URL, {
                 method: 'POST',
                 headers: { "Content-Type": "text/plain;charset=utf-8" },
-                body: JSON.stringify({ action: 'wish', section: 'Birthdays', rowIndex: currentWishData.rowIdx })
-            }).catch(() => {});
+                body: JSON.stringify({ action: 'wish', section: 'Birthdays', rowIndex: rowIdx })
+            }).catch(e => console.log("Wish sync failed"));
 
-            let msg = `🎉 *Happy Birthday ${currentWishData.name}!* 🎂\nWishing you joy & success!\nFrom: *${sender.toUpperCase()}*`;
-            window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`, '_blank');
+            let text = `🎉 *Happy Birthday ${studentName}!* 🎂\n\nWishing you a fantastic day filled with joy and success!\n\nBest wishes from: *${senderName.toUpperCase()}*\n\nView today's birthdays here: ${window.location.href}`;
+            window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank');
             closeWishModal();
         }
-
+        
         function renderMedia(url) {
             if (!url) return '';
             if (url.includes('youtube.com') || url.includes('youtu.be')) {
@@ -1520,13 +1586,16 @@
             return `<img src="${url}" loading="lazy" decoding="async">`;
         }
 
-        // Admin Auth & Helpers
         let loginHoldTimer;
         function startLoginPress(e) {
+            if(e.type === 'touchstart' && e.touches.length === 1) e.preventDefault(); 
             clearTimeout(loginHoldTimer);
-            loginHoldTimer = setTimeout(() => openLoginModal(), 150);
+            loginHoldTimer = setTimeout(() => {
+                openLoginModal();
+            }, 150);
         }
         function cancelLoginPress() { clearTimeout(loginHoldTimer); }
+
         function openLoginModal() { document.getElementById('loginModal').classList.add('active'); }
         function closeModals() { document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('active')); }
 
@@ -1534,142 +1603,70 @@
             e.preventDefault();
             if (document.getElementById('adminId').value === "admin" && document.getElementById('adminPass').value === "12345") {
                 closeModals();
-                populateStudentSearch();
+                populateStudentSearch(); 
                 document.getElementById('uploadModal').classList.add('active');
                 toggleAdminMode();
-            } else {
-                showCustomAlert("Invalid credentials.");
+            } else { 
+                showCustomAlert("Invalid Credentials");
             }
         }
 
-        function showCustomAlert(msg) {
-            document.getElementById('customAlertMsg').innerText = msg;
-            document.getElementById('customAlertModal').classList.add('active');
-        }
-        function closeCustomAlert() { document.getElementById('customAlertModal').classList.remove('active'); }
-
-        let confirmCallback = null;
-        function showCustomConfirm(msg, cb) {
-            document.getElementById('customConfirmMsg').innerText = msg;
-            confirmCallback = cb;
-            document.getElementById('customConfirmModal').classList.add('active');
-            document.getElementById('btnConfirmYes').onclick = () => {
-                if (confirmCallback) confirmCallback();
-                closeCustomConfirm();
-            };
-        }
-        function closeCustomConfirm() { document.getElementById('customConfirmModal').classList.remove('active'); }
-
         function syncCameraText() {
-            if (document.getElementById('cameraUpload').files.length > 0) {
-                document.getElementById('fileUpload').value = '';
+            if(document.getElementById('cameraUpload').files.length > 0) {
+                document.getElementById('fileUpload').value = ''; 
                 document.getElementById('cameraFileName').style.display = 'block';
             }
         }
         function resetCamera() {
-            document.getElementById('cameraUpload').value = '';
+            document.getElementById('cameraUpload').value = ''; 
             document.getElementById('cameraFileName').style.display = 'none';
         }
 
         function toggleAdminMode() {
             const mode = document.querySelector('input[name="adminMode"]:checked').value;
-            const isSettings = (mode === 'settings');
-            document.getElementById('settingsSelectGroup').style.display = isSettings ? 'block' : 'none';
-            document.getElementById('fg-section').style.display = isSettings ? 'none' : 'block';
-            document.getElementById('normalFields').style.display = isSettings ? 'none' : 'block';
-            document.getElementById('birthdayFields').style.display = 'none';
-            document.getElementById('submitBtn').innerText = isSettings ? "Update Image" : "Publish Post";
-            document.getElementById('resetProfileBtn').style.display = (isSettings && document.getElementById('settingKey').value === 'ProfilePicture') ? 'block' : 'none';
-            
-            if (!isSettings) toggleFields();
-        }
-
-        function toggleFields() {
-            const sec = document.getElementById('sectionSelect').value;
-            const isBday = (sec === 'Birthdays');
-            document.getElementById('birthdayFields').style.display = isBday ? 'block' : 'none';
-            document.getElementById('normalFields').style.display = isBday ? 'none' : 'block';
-            document.getElementById('fg-subsection').style.display = (sec === 'Fairs') ? 'block' : 'none';
-        }
-
-        function populateStudentSearch() {
-            const datalist = document.getElementById('bdayStudentList');
-            datalist.innerHTML = '';
-            globalBirthdays.forEach(b => {
-                let opt = document.createElement('option');
-                opt.value = `${b['Student Name'] || 'Unknown'} - ${b.Date} (${b.Class || ''}${b.Division || ''})`;
-                datalist.appendChild(opt);
-            });
-        }
-
-        function autoFillStudent() {
-            const val = document.getElementById('bdayStudentSearch').value;
-            const student = globalBirthdays.find(b => `${b['Student Name'] || 'Unknown'} - ${b.Date} (${b.Class || ''}${b.Division || ''})` === val);
-            if (student) {
-                document.getElementById('selectedStudentRowIndex').value = student._rowIndex;
-                document.getElementById('bdayStudentName').value = student['Student Name'] || '';
-                document.getElementById('bdayDate').value = student.Date || '';
-                document.getElementById('studentClass').value = student.Class || '';
-                document.getElementById('studentDiv').value = student.Division || '';
-            }
-        }
-
-        function submitData(actionType = 'create') {
-            const mode = document.querySelector('input[name="adminMode"]:checked').value;
-            const sec = document.getElementById('sectionSelect').value;
-            const file = document.getElementById('fileUpload').files[0] || document.getElementById('cameraUpload').files[0];
-            
-            if (actionType === 'delete') {
-                showCustomConfirm("Delete this post permanently?", () => executeSubmit(actionType, mode, sec, file));
-            } else {
-                executeSubmit(actionType, mode, sec, file);
-            }
-        }
-
-        async function executeSubmit(actionType, mode, sec, file) {
-            closeModals();
-            document.getElementById('loadingOverlay').classList.add('active');
-
-            let mediaLink = document.getElementById('mediaLink') ? document.getElementById('mediaLink').value : "";
-            if (file) {
-                try {
-                    const fd = new FormData();
-                    fd.append("image", file);
-                    const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, { method: "POST", body: fd });
-                    const json = await res.json();
-                    if (json.success) mediaLink = json.data.url;
-                } catch(e) {}
-            }
-
-            let payload = {
-                section: sec,
-                mediaLink: mediaLink,
-                author: document.getElementById('postAuthor').value,
-                subSection: (sec === 'Fairs') ? document.getElementById('subSectionSelect').value : "",
-                title: document.getElementById('postTitle').value,
-                content: document.getElementById('postContent').value
-            };
 
             if (mode === 'settings') {
-                payload.action = "updateSettings";
-                payload.settingKey = document.getElementById('settingKey').value;
-            } else if (sec === 'Birthdays') {
-                payload.action = "updateBirthdayImage";
-                payload.rowIndex = document.getElementById('selectedStudentRowIndex').value;
-            } else {
-                payload.action = actionType === 'delete' ? 'deletePost' : (actionType === 'update' ? 'editPost' : 'createPost');
+                document.getElementById('settingsSelectGroup').style.display = 'block';
+                document.getElementById('fg-section').style.display = 'none';
+                document.getElementById('fg-subsection').style.display = 'none';
+                document.getElementById('editSelectGroup').style.display = 'none';
+                document.getElementById('birthdayFields').style.display = 'none';
+                document.getElementById('normalFields').style.display = 'none';
+                document.getElementById('imageUploadGroup').style.display = 'block';
+                
+                document.getElementById('submitBtn').style.display = 'block';
+                document.getElementById('submitBtn').innerText = "Update Image";
+                document.getElementById('updateBtn').style.display = 'none';
+                document.getElementById('deleteBtn').style.display = 'none';
+
+                let setKey = document.getElementById('settingKey').value;
+                let resetBtn = document.getElementById('resetProfileBtn');
+                if(resetBtn) resetBtn.style.display = (setKey === 'ProfilePicture') ? 'block' : 'none';
+            } 
+            else {
+                document.getElementById('settingsSelectGroup').style.display = 'none';
+                document.getElementById('fg-section').style.display = 'block';
+                document.getElementById('submitBtn').innerText = "Publish Now";
+                
+                if(document.getElementById('resetProfileBtn')) document.getElementById('resetProfileBtn').style.display = 'none';
+                
+                toggleFields(); 
+                
+                if (mode === 'edit' && document.getElementById('sectionSelect').value !== "Birthdays") {
+                    document.getElementById('editSelectGroup').style.display = 'block';
+                    document.getElementById('submitBtn').style.display = 'none';
+                    document.getElementById('updateBtn').style.display = 'block';
+                    document.getElementById('deleteBtn').style.display = 'block';
+                    populateEditDropdown();
+                } else {
+                    document.getElementById('editSelectGroup').style.display = 'none';
+                    document.getElementById('submitBtn').style.display = 'block';
+                    document.getElementById('updateBtn').style.display = 'none';
+                    document.getElementById('deleteBtn').style.display = 'none';
+                }
             }
-
-            await fetch(SCRIPT_URL, {
-                method: 'POST',
-                headers: { "Content-Type": "text/plain;charset=utf-8" },
-                body: JSON.stringify(payload)
-            }).catch(() => {});
-
-            localStorage.removeItem('schoolPortalData');
-            setTimeout(() => location.reload(), 600);
         }
-
+        
         function resetProfileToAuto() {
             document.getElementById('loadingOverlay').classList.add('active');
             fetch(SCRIPT_URL, {
@@ -1677,71 +1674,444 @@
                 headers: { "Content-Type": "text/plain;charset=utf-8" },
                 body: JSON.stringify({ action: 'updateSettings', settingKey: 'ProfilePicture', mediaLink: '' })
             }).then(() => {
-                localStorage.removeItem('schoolPortalData');
+                let cached = JSON.parse(localStorage.getItem('schoolPortalData') || '{}');
+                if (cached.settings) cached.settings['ProfilePicture'] = "";
+                localStorage.setItem('schoolPortalData', JSON.stringify(cached));
                 location.reload();
             });
         }
 
-        function changeToday(offset) {
+        function clearPostFields() {
+            document.getElementById('postTitle').value = "";
+            document.getElementById('postAuthor').value = "TDTTI THURAVOOR";
+            document.getElementById('postContent').value = "";
+            document.getElementById('mediaLink').value = "";
+            document.getElementById('subSectionSelect').value = "Art"; 
+            if(document.getElementById('editPostSelect')) document.getElementById('editPostSelect').value = "";
+            document.getElementById('fileUpload').value = "";
+            resetCamera();
+        }
+
+        function populateEditDropdown() {
+            const sec = document.getElementById('sectionSelect').value;
+            const select = document.getElementById('editPostSelect');
+            select.innerHTML = '<option value="">-- Select Post --</option>';
+            
+            const posts = globalPosts.filter(p => p.Section === sec).reverse();
+            posts.forEach(p => {
+                let text = p.Title || p.Content || "No Content";
+                if(text.length > 40) text = text.substring(0, 40) + "...";
+                select.innerHTML += `<option value="${p._rowIndex}">${p.Timestamp} - ${text}</option>`;
+            });
+        }
+
+        function loadSelectedPost() {
+            const rowIndex = document.getElementById('editPostSelect').value;
+            if(!rowIndex) return clearPostFields();
+            
+            const sec = document.getElementById('sectionSelect').value;
+            const post = globalPosts.find(p => p.Section === sec && String(p._rowIndex) === String(rowIndex));
+            if(post) {
+                document.getElementById('postTitle').value = post.Title || "";
+                document.getElementById('postAuthor').value = post.Author || "TDTTI THURAVOOR";
+                document.getElementById('postContent').value = post.Content || "";
+                document.getElementById('mediaLink').value = post.MediaLink || "";
+                if(sec === "Fairs" && post.SubSection) {
+                    document.getElementById('subSectionSelect').value = post.SubSection;
+                }
+            }
+            let adminCommBox = document.getElementById('adminCommentManager');
+            let adminCommList = document.getElementById('adminCommentList');
+            adminCommList.innerHTML = '';
+            
+            if (post.Comments && post.Comments.trim() !== "") {
+                try {
+                    let cArray = JSON.parse(post.Comments);
+                    if (cArray.length > 0) {
+                        adminCommBox.style.display = 'block';
+                        cArray.forEach(c => {
+                            adminCommList.innerHTML += `
+                                <div class="admin-comment-item" id="admin-c-${c.id}">
+                                    <div style="flex:1;">
+                                        <strong style="font-size:0.85rem;">${c.name} (${c.date}):</strong>
+                                        <input type="text" id="admin-c-val-${c.id}" value="${c.text}" class="form-control" style="padding:5px; margin-top:3px;">
+                                    </div>
+                                    <div class="admin-comment-actions">
+                                        <button type="button" style="background:#10b981; color:white;" onclick="editAdminCmt('${sec}', ${rowIndex}, '${c.id}')">Save</button>
+                                        <button type="button" style="background:var(--accent-red); color:white;" onclick="delAdminCmt('${sec}', ${rowIndex}, '${c.id}')">Del</button>
+                                    </div>
+                                </div>
+                            `;
+                        });
+                    } else {
+                        adminCommBox.style.display = 'none';
+                    }
+                } catch(e) {}
+            } else {
+                adminCommBox.style.display = 'none';
+            }
+        }
+        function editAdminCmt(section, rowIdx, cId) {
+            let newVal = document.getElementById(`admin-c-val-${cId}`).value;
+            showCustomAlert("Comment Updated.");
+            fetch(SCRIPT_URL, {
+                method: 'POST',
+                body: JSON.stringify({ action: 'editComment', section: section, rowIndex: rowIdx, commentId: cId, newText: newVal })
+            });
+        }
+
+        function delAdminCmt(section, rowIdx, cId) {
+            document.getElementById(`admin-c-${cId}`).remove(); 
+            fetch(SCRIPT_URL, {
+                method: 'POST',
+                headers: { "Content-Type": "text/plain;charset=utf-8" },
+                body: JSON.stringify({ action: 'deleteComment', section: section, rowIndex: rowIdx, commentId: cId })
+            });
+        }
+        
+        function toggleFields() {
+            const mode = document.querySelector('input[name="adminMode"]:checked').value;
+            if(mode === 'settings') return; 
+
+            const sec = document.getElementById('sectionSelect').value;
+            const bdayFields = document.getElementById('birthdayFields');
+            const normalFields = document.getElementById('normalFields');
+            const titleField = document.getElementById('fg-title');
+            const authorField = document.getElementById('fg-author');
+            const contentField = document.getElementById('fg-content');
+            const mediaField = document.getElementById('fg-media');
+            const imgField = document.getElementById('imageUploadGroup');
+            const subSecField = document.getElementById('fg-subsection'); 
+
+            clearPostFields();
+            document.getElementById('adminCommentManager').style.display = 'none';
+            
+            if (sec === "Fairs") subSecField.style.display = "block";
+            else subSecField.style.display = "none";
+
+            if (sec === "Birthdays") {
+                bdayFields.style.display = "block";
+                normalFields.style.display = "none";
+                imgField.style.display = "block";
+                
+                document.getElementById('editSelectGroup').style.display = 'none';
+                document.getElementById('submitBtn').style.display = 'block';
+                document.getElementById('updateBtn').style.display = 'none';
+                document.getElementById('deleteBtn').style.display = 'none';
+            } 
+            else if (sec === "Scrolling") {
+                bdayFields.style.display = "none";
+                normalFields.style.display = "block";
+                titleField.style.display = "none";
+                authorField.style.display = "none"; 
+                mediaField.style.display = "none";
+                imgField.style.display = "none";
+                contentField.style.display = "block";
+            } 
+            else {
+                bdayFields.style.display = "none";
+                normalFields.style.display = "block";
+                titleField.style.display = "block";
+                authorField.style.display = "block";
+                mediaField.style.display = "block";
+                imgField.style.display = "block";
+                contentField.style.display = "block";
+            }
+
+            if (mode === 'edit' && sec !== "Birthdays") {
+                document.getElementById('editSelectGroup').style.display = 'block';
+                populateEditDropdown();
+            }
+        }
+
+        function populateStudentSearch() {
+            const datalist = document.getElementById('bdayStudentList');
+            datalist.innerHTML = '';
+            const todayStr = getTodayDateStr().substring(0, 5);
+            let defaultStudentText = null;
+
+            globalBirthdays.forEach(b => {
+                let opt = document.createElement('option');
+                let searchText = `${b['Student Name'] || 'Unknown'} - ${b.Date} (${b.Class || ''}${b.Division || ''})`;
+                opt.value = searchText;
+                datalist.appendChild(opt);
+
+                let safeDate = String(b.Date || "").replace(/[-/]/g, ':').replace(/'/g, '').trim(); 
+                if (!defaultStudentText && safeDate.startsWith(todayStr)) { defaultStudentText = searchText; }
+            });
+
+            const searchInput = document.getElementById('bdayStudentSearch');
+            if (defaultStudentText) {
+                searchInput.value = defaultStudentText;
+                autoFillStudent();
+            } else { searchInput.value = ""; resetBdayFields(); }
+        }
+
+        function autoFillStudent() {
+            const searchValue = document.getElementById('bdayStudentSearch').value;
+            const student = globalBirthdays.find(b => {
+                let text = `${b['Student Name'] || 'Unknown'} - ${b.Date} (${b.Class || ''}${b.Division || ''})`;
+                return text === searchValue;
+            });
+            
+            let adminCommBox = document.getElementById('adminCommentManager');
+            let adminCommList = document.getElementById('adminCommentList');
+            adminCommList.innerHTML = '';
+
+            if (student) {
+                document.getElementById('selectedStudentRowIndex').value = student._rowIndex;
+                document.getElementById('bdayStudentName').value = student['Student Name'] || "";
+                document.getElementById('bdayDate').value = student.Date || "";
+                document.getElementById('studentClass').value = student.Class || "";
+                document.getElementById('studentDiv').value = student.Division || "";
+
+                if (student.Comments && student.Comments.trim() !== "") {
+                    try {
+                        let cArray = JSON.parse(student.Comments);
+                        if (cArray.length > 0) {
+                            adminCommBox.style.display = 'block';
+                            cArray.forEach(c => {
+                                adminCommList.innerHTML += `
+                                    <div class="admin-comment-item" id="admin-c-${c.id}">
+                                        <div style="flex:1;">
+                                            <strong style="font-size:0.85rem;">${c.name} (${timeAgo(c.date)}):</strong>
+                                            <input type="text" id="admin-c-val-${c.id}" value="${c.text}" class="form-control" style="padding:5px; margin-top:3px;">
+                                        </div>
+                                        <div class="admin-comment-actions">
+                                            <button type="button" style="background:#10b981; color:white;" onclick="editAdminCmt('Birthdays', ${student._rowIndex}, '${c.id}')">Save</button>
+                                            <button type="button" style="background:var(--accent-red); color:white;" onclick="delAdminCmt('Birthdays', ${student._rowIndex}, '${c.id}')">Del</button>
+                                        </div>
+                                    </div>
+                                `;
+                            });
+                        } else { adminCommBox.style.display = 'none'; }
+                    } catch(e) { adminCommBox.style.display = 'none'; }
+                } else { adminCommBox.style.display = 'none'; }
+            } else { resetBdayFields(); }
+        }
+
+        function resetBdayFields() {
+            document.getElementById('selectedStudentRowIndex').value = "";
+            document.getElementById('bdayStudentName').value = "";
+            document.getElementById('bdayDate').value = "";
+            document.getElementById('studentClass').value = "";
+            document.getElementById('studentDiv').value = "";
+            document.getElementById('adminCommentManager').style.display = 'none';
+            document.getElementById('adminCommentList').innerHTML = '';
+        }
+
+        function submitData(actionType = 'create') {
+            const mode = document.querySelector('input[name="adminMode"]:checked').value;
+            const section = document.getElementById('sectionSelect').value;
+            const fileInput = document.getElementById('fileUpload');
+            const cameraInput = document.getElementById('cameraUpload');
+            
+            if (mode !== 'settings' && section === "Birthdays" && document.getElementById('selectedStudentRowIndex').value === "") {
+                showCustomAlert("Please select a valid student from the search box to update their photo.");
+                return;
+            }
+            if (mode === 'settings' && fileInput.files.length === 0 && cameraInput.files.length === 0) {
+                showCustomAlert("Please upload or take an image first to update settings.");
+                return;
+            }
+
+            let rowIndex = "";
+            if (mode !== 'settings') {
+                if (section === "Birthdays") {
+                    rowIndex = document.getElementById('selectedStudentRowIndex').value;
+                } else if (mode === 'edit' && actionType !== 'create') {
+                    rowIndex = document.getElementById('editPostSelect').value;
+                    if(!rowIndex) { showCustomAlert("Please select a post first."); return; }
+                }
+            }
+
+            if(actionType === 'delete') {
+                showCustomConfirm("Are you sure you want to completely delete this post?", () => {
+                    executeSubmitData(actionType, mode, section, fileInput, cameraInput, rowIndex);
+                });
+            } else {
+                executeSubmitData(actionType, mode, section, fileInput, cameraInput, rowIndex);
+            }
+        }
+
+        async function executeSubmitData(actionType, mode, section, fileInput, cameraInput, rowIndex) {
+            const overlay = document.getElementById('loadingOverlay');
+            closeModals();
+            overlay.classList.add('active');
+
+            let finalMediaLink = document.getElementById('mediaLink') ? document.getElementById('mediaLink').value : "";
+
+            if (actionType !== 'delete' && (mode === 'settings' || section !== "Scrolling")) {
+                let fileToUpload = null;
+                if(cameraInput.files.length > 0) fileToUpload = cameraInput.files[0];
+                else if(fileInput.files.length > 0) fileToUpload = fileInput.files[0];
+
+                if (fileToUpload) {
+                    try {
+                        const formData = new FormData();
+                        formData.append("image", fileToUpload);
+                        const imgbbRes = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, { method: "POST", body: formData });
+                        const imgbbData = await imgbbRes.json();
+                        
+                        if (imgbbData.success) { finalMediaLink = imgbbData.data.url; } 
+                        else { 
+                            overlay.classList.remove('active'); 
+                            showCustomAlert("ImgBB Upload Failed: " + imgbbData.error.message); 
+                            return; 
+                        }
+                    } catch(e) { 
+                        overlay.classList.remove('active'); 
+                        showCustomAlert("Network error uploading image."); 
+                        return; 
+                    }
+                }
+            }
+
+            let payload = { 
+                section: section, 
+                mediaLink: finalMediaLink,
+                author: document.getElementById('postAuthor') ? document.getElementById('postAuthor').value : "TDTTI THURAVOOR",
+                subSection: (section === "Fairs" && document.getElementById('subSectionSelect')) ? document.getElementById('subSectionSelect').value : ""
+            };
+
+            if (mode === 'settings') {
+                payload.action = "updateSettings";
+                payload.settingKey = document.getElementById('settingKey').value;
+            } else if (actionType === 'delete') {
+                payload.action = "deletePost";
+                payload.rowIndex = rowIndex;
+            } else if (section === "Birthdays") {
+                payload.action = "updateBirthdayImage";
+                payload.rowIndex = rowIndex;
+            } else if (mode === 'edit' && actionType === 'update') {
+                payload.action = "editPost";
+                payload.rowIndex = rowIndex;
+                payload.title = document.getElementById('postTitle').value;
+                payload.content = document.getElementById('postContent').value;
+            } else {
+                payload.action = "createPost";
+                payload.title = document.getElementById('postTitle').value;
+                payload.content = document.getElementById('postContent').value;
+            }
+
+            try {
+                await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    headers: { "Content-Type": "text/plain;charset=utf-8" },
+                    body: JSON.stringify(payload) 
+                });
+
+                if (actionType === 'delete') {
+                    let cached = JSON.parse(localStorage.getItem('schoolPortalData') || '{}');
+                    if (cached.posts) {
+                        cached.posts = cached.posts.filter(p => !(p.Section === section && String(p._rowIndex) === String(rowIndex)));
+                        localStorage.setItem('schoolPortalData', JSON.stringify(cached));
+                    }
+                }
+                setTimeout(() => location.reload(), 800);
+            } catch (err) {
+                if (actionType === 'delete') {
+                    let cached = JSON.parse(localStorage.getItem('schoolPortalData') || '{}');
+                    if (cached.posts) {
+                        cached.posts = cached.posts.filter(p => !(p.Section === section && String(p._rowIndex) === String(rowIndex)));
+                        localStorage.setItem('schoolPortalData', JSON.stringify(cached));
+                    }
+                }
+                setTimeout(() => location.reload(), 800);
+            }
+        }
+
+        function changeToday(offsetDays) {
             const parts = currentTodayViewStr.split(':');
             let d = new Date(parts[2], parseInt(parts[1])-1, parts[0]);
-            d.setDate(d.getDate() + offset);
+            d.setDate(d.getDate() + offsetDays);
+            
             currentTodayViewStr = `${String(d.getDate()).padStart(2,'0')}:${String(d.getMonth()+1).padStart(2,'0')}:${d.getFullYear()}`;
             document.getElementById('today-display-title').innerText = currentTodayViewStr.replace(/:/g, '/');
             updateTodayGrid();
         }
 
         function updateTodayGrid() {
-            const grid = document.getElementById('grid-Today');
-            if (!grid) return;
-            grid.querySelectorAll('.fb-post').forEach(p => {
-                p.style.display = (p.getAttribute('data-date') === currentTodayViewStr) ? 'flex' : 'none';
+            const todayGrid = document.getElementById('grid-Today');
+            if (!todayGrid) return;
+            
+            const posts = todayGrid.querySelectorAll('.fb-post');
+            const readMoreBtn = document.getElementById('btn-more-Today');
+            let visibleCount = 0;
+
+            posts.forEach(p => {
+                if (p.getAttribute('data-date') === currentTodayViewStr) {
+                    p.classList.remove('is-hidden');
+                    p.classList.add('show-post');
+                    p.style.display = 'flex';
+                    visibleCount++;
+                } else {
+                    p.classList.remove('show-post');
+                    p.classList.add('is-hidden');
+                    p.style.display = 'none';
+                }
             });
+
+            if (readMoreBtn) readMoreBtn.style.display = 'none';
+            let emptyMsg = document.getElementById('today-empty-msg');
+            if (visibleCount === 0) {
+                if (!emptyMsg) {
+                    todayGrid.insertAdjacentHTML('beforeend', `<p id="today-empty-msg" style="text-align:center; padding:20px; color:#65676B;">No historical records for this date.</p>`);
+                } else {
+                    emptyMsg.style.display = 'block';
+                }
+            } else if (emptyMsg) {
+                emptyMsg.style.display = 'none';
+            }
         }
 
         function searchPosts() {
-            let q = document.getElementById('globalSearch').value.toLowerCase().trim();
-            let sec = document.getElementById('sectionFilter').value;
-            let isSearching = q !== "";
+            let textInput = document.getElementById('globalSearch').value.toLowerCase().trim();
+            let selectedSection = document.getElementById('sectionFilter').value;
+            let isSearchingText = textInput !== "";
 
-            document.querySelectorAll('.section-wrapper').forEach(w => {
-                w.style.display = (sec === "All" || w.id === sec.replace(/\s/g, '')) ? 'flex' : 'none';
+            let ql = document.querySelector('.quick-links-wrapper');
+            if (ql) ql.style.display = (isSearchingText || selectedSection !== "All") ? 'none' : '';
+            
+            let fairTabs = document.querySelector('.fairs-tabs-container');
+            if (fairTabs) fairTabs.style.display = isSearchingText ? 'none' : 'flex';
+
+            document.querySelectorAll('.read-more-box').forEach(btn => {
+                btn.style.display = isSearchingText ? 'none' : '';
+            });
+
+            document.querySelectorAll('.section-wrapper').forEach(wrapper => {
+                if (isSearchingText && (wrapper.id === 'Today' || wrapper.id === 'Birthdays')) {
+                    wrapper.style.display = 'none';
+                    return;
+                }
+                let matchesDropdown = (selectedSection === "All" || wrapper.id === selectedSection.replace(/\s/g, ''));
+                wrapper.style.display = matchesDropdown ? 'flex' : 'none'; 
             });
 
             document.querySelectorAll('.fb-post, .bday-item').forEach(post => {
-                if (post.querySelector('.bday-nav')) return;
-                let match = post.innerText.toLowerCase().includes(q);
-                post.style.display = (isSearching && !match) ? 'none' : '';
+                if(post.querySelector('.bday-nav')) return;
+
+                let textContent = post.innerText.toLowerCase();
+                if (isSearchingText) {
+                    post.classList.remove('is-hidden', 'fair-hidden');
+                    post.classList.add('show-post');
+                    post.style.display = textContent.includes(textInput) ? 'flex' : 'none';
+                } else {
+                    post.style.display = ''; 
+                    if (post.closest('#grid-Fairs')) {
+                        let activeFairTab = document.querySelector('.fair-tab.active');
+                        if (activeFairTab && activeFairTab.innerText !== "All Fairs") {
+                            let cat = activeFairTab.innerText.replace(/[🎨➗🔬🌍]/g, '').trim();
+                            if (post.getAttribute('data-subsection') !== cat) {
+                                post.classList.add('fair-hidden');
+                                post.classList.remove('show-post');
+                            }
+                        }
+                    }
+                }
             });
         }
-
-        // === PWA REGISTRATION & INSTALLATION HANDLER ===
-        let deferredPrompt;
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js')
-                    .then(reg => console.log('PWA Service Worker registered:', reg.scope))
-                    .catch(err => console.log('SW registration error:', err));
-            });
-        }
-
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            if (!sessionStorage.getItem('pwaPromptShown')) {
-                document.getElementById('pwaPromptModal').classList.add('active');
-                sessionStorage.setItem('pwaPromptShown', 'true');
-            }
-        });
-
-        function triggerPwaInstall() {
-            closePwaModal();
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                deferredPrompt.userChoice.then(() => { deferredPrompt = null; });
-            }
-        }
-        function closePwaModal() { document.getElementById('pwaPromptModal').classList.remove('active'); }
     </script>
 </body>
 </html>
