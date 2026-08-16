@@ -1,64 +1,84 @@
-const CACHE_NAME = 'tdtti-live-cache-v1';
-const ASSETS_TO_CACHE = [
-  './',
-  './index.html',
-  'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css',
-  'https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js',
-  'https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js'
+// =========================================================================
+// 🚀 TDTTI PRODUCTION SERVICE WORKER (sw.js)
+// =========================================================================
+const CACHE_VERSION = 'tdtti-pwa-v1.0.0';
+const STATIC_CACHE_NAME = `static-${CACHE_VERSION}`;
+const RUNTIME_CACHE_NAME = `runtime-${CACHE_VERSION}`;
+
+// Pre-cached App Shell Assets
+const PRECACHE_ASSETS = [
+    './',
+    './index.html',
+    'https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap',
+    'https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js',
+    'https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js',
+    'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjGka-p7C45PTqBMBKqSjulqicQlHmW_Ee1BCfUPpaW888vYnoPjElzW9DVm8az1kCOjdlabjA3qb_vS00GpCApyVWh2C0aIcOcvb-BWeeTI8AdLojSf25iCvNpMS6aENxrWO-SgM5xjqePEMsHfCLy4HinnGk2xAnDlKaapXYFY05jXQM/s56-c/Logo2.png'
 ];
 
-// Install Event - Pre-cache offline core assets
+// 1. INSTALL: Pre-cache App Shell
 self.addEventListener('install', (event) => {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      console.log('[Service Worker] Pre-caching offline assets');
-      return cache.addAll(ASSETS_TO_CACHE);
-    })
-  );
-  self.skipWaiting();
+    event.waitUntil(
+        caches.open(STATIC_CACHE_NAME)
+            .then((cache) => cache.addAll(PRECACHE_ASSETS))
+            .then(() => self.skipWaiting())
+    );
 });
 
-// Activate Event - Clean old caches
+// 2. ACTIVATE: Cleanup Old Cache Versions
 self.addEventListener('activate', (event) => {
-  event.waitUntil(
-    caches.keys().then((cacheNames) => {
-      return Promise.all(
-        cacheNames.map((cache) => {
-          if (cache !== CACHE_NAME) {
-            console.log('[Service Worker] Deleting old cache:', cache);
-            return caches.delete(cache);
-          }
-        })
-      );
-    })
-  );
-  self.clients.claim();
+    event.waitUntil(
+        caches.keys().then((cacheNames) => {
+            return Promise.all(
+                cacheNames.map((cacheName) => {
+                    if (cacheName !== STATIC_CACHE_NAME && cacheName !== RUNTIME_CACHE_NAME) {
+                        return caches.delete(cacheName);
+                    }
+                })
+            );
+        }).then(() => self.clients.claim())
+    );
 });
 
-// Fetch Event - Cache First, Network Fallback
+// 3. FETCH: Cache-First Strategy with Offline Fallback
 self.addEventListener('fetch', (event) => {
-  // Exclude non-GET requests or live Firestore sync requests from SW intercept
-  if (event.request.method !== 'GET' || event.request.url.includes('firestore.googleapis.com')) {
-    return;
-  }
+    const request = event.request;
+    const url = new URL(request.url);
 
-  event.respondWith(
-    caches.match(event.request).then((cachedResponse) => {
-      if (cachedResponse) {
-        return cachedResponse;
-      }
-      return fetch(event.request).then((networkResponse) => {
-        if (!networkResponse || networkResponse.status !== 200 || networkResponse.type !== 'basic') {
-          return networkResponse;
-        }
-        const responseToCache = networkResponse.clone();
-        caches.open(CACHE_NAME).then((cache) => {
-          cache.put(event.request, responseToCache);
-        });
-        return networkResponse;
-      });
-    }).catch(() => {
-      return caches.match('./index.html');
-    })
-  );
+    // Bypass Firebase Realtime / Firestore WebChannel & WebSocket Requests
+    if (
+        request.method !== 'GET' ||
+        url.hostname.includes('firestore.googleapis.com') ||
+        url.hostname.includes('firebaseio.com') ||
+        url.pathname.includes('/google.firestore.')
+    ) {
+        return;
+    }
+
+    event.respondWith(
+        caches.match(request).then((cachedResponse) => {
+            if (cachedResponse) {
+                return cachedResponse;
+            }
+
+            return fetch(request).then((networkResponse) => {
+                // Cache valid fonts and static assets dynamically
+                if (
+                    networkResponse && 
+                    networkResponse.status === 200 && 
+                    (url.origin === location.origin || url.hostname.includes('gstatic.com') || url.hostname.includes('googleapis.com'))
+                ) {
+                    const responseClone = networkResponse.clone();
+                    caches.open(RUNTIME_CACHE_NAME).then((cache) => {
+                        cache.put(request, responseClone);
+                    });
+                }
+                return networkResponse;
+            }).catch(() => {
+                // Return offline index.html fallback for navigation requests
+                if (request.mode === 'navigate') {
+                    return caches.match('./index.html');
+                }
+            });
+        })
+    );
 });
