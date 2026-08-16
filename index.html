@@ -4,20 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
-    <!-- === PWA CORE & PLATFORM META TAGS === -->
+    <!-- === PWA & MOBILE META TAGS === -->
     <meta name="theme-color" content="#0284c7">
-    <meta name="application-name" content="TDTTI SS 7">
     <meta name="mobile-web-app-capable" content="yes">
-
-    <!-- iOS Safari Configuration -->
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="TDTTI SS 7">
-    <link rel="apple-touch-icon" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjGka-p7C45PTqBMBKqSjulqicQlHmW_Ee1BCfUPpaW888vYnoPjElzW9DVm8az1kCOjdlabjA3qb_vS00GpCApyVWh2C0aIcOcvb-BWeeTI8AdLojSf25iCvNpMS6aENxrWO-SgM5xjqePEMsHfCLy4HinnGk2xAnDlKaapXYFY05jXQM/s56-c/Logo2.png">
-
-    <!-- Windows & Modern Browser Tile Settings -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="TD NEWS">
+    <meta name="application-name" content="TD NEWS">
     <meta name="msapplication-TileColor" content="#0284c7">
-    <meta name="msapplication-tap-highlight" content="no">
+
+    <!-- iOS Apple Touch Icons & Icons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjGka-p7C45PTqBMBKqSjulqicQlHmW_Ee1BCfUPpaW888vYnoPjElzW9DVm8az1kCOjdlabjA3qb_vS00GpCApyVWh2C0aIcOcvb-BWeeTI8AdLojSf25iCvNpMS6aENxrWO-SgM5xjqePEMsHfCLy4HinnGk2xAnDlKaapXYFY05jXQM/s56-c/Logo2.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjGka-p7C45PTqBMBKqSjulqicQlHmW_Ee1BCfUPpaW888vYnoPjElzW9DVm8az1kCOjdlabjA3qb_vS00GpCApyVWh2C0aIcOcvb-BWeeTI8AdLojSf25iCvNpMS6aENxrWO-SgM5xjqePEMsHfCLy4HinnGk2xAnDlKaapXYFY05jXQM/s56-c/Logo2.png">
 
     <title>TDTTI THURAVOOR | Live Portal</title>
 
@@ -44,7 +42,6 @@
             --accent-blue-dark: #0052cc;
             --accent-red: #ef4444;
             --accent-green: #22c55e;
-            --pwa-primary: #0284c7;
             --radius-large: 12px;
             --radius-medium: 8px;
             --shadow-subtle: 0 1px 3px rgba(0, 0, 0, 0.04), 0 4px 12px rgba(0, 0, 0, 0.03);
@@ -53,6 +50,37 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--bg-color); color: var(--text-dark); overflow-x: hidden; }
+
+        /* === TOP PWA INSTALL POPUP BANNER === */
+        .pwa-top-banner {
+            position: fixed; top: 0; left: 0; right: 0;
+            background: #0284c7; color: #ffffff; z-index: 100000;
+            padding: 10px 16px; display: flex; align-items: center; justify-content: space-between;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transform: translateY(-120%); transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .pwa-top-banner.show { transform: translateY(0); }
+        .pwa-banner-content { display: flex; align-items: center; gap: 12px; }
+        .pwa-app-icon { width: 40px; height: 40px; border-radius: 10px; background: #ffffff; object-fit: contain; padding: 2px; box-shadow: 0 2px 6px rgba(0,0,0,0.15); }
+        .pwa-text-wrap { display: flex; flex-direction: column; }
+        .pwa-text-wrap strong { font-size: 0.92rem; font-weight: 800; letter-spacing: 0.3px; }
+        .pwa-text-wrap span { font-size: 0.76rem; color: #e0f2fe; }
+        .pwa-actions-wrap { display: flex; align-items: center; gap: 8px; }
+        .btn-pwa-install {
+            background: #ffffff; color: #0284c7; border: none; padding: 7px 14px;
+            border-radius: 20px; font-weight: 800; font-size: 0.82rem; cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.12); transition: transform 0.15s ease, background 0.2s ease;
+            white-space: nowrap;
+        }
+        .btn-pwa-install:hover { background: #f0f9ff; transform: scale(1.04); }
+        .btn-pwa-dismiss { background: transparent; border: none; color: #ffffff; font-size: 1.5rem; line-height: 1; cursor: pointer; padding: 2px 6px; opacity: 0.8; }
+        .btn-pwa-dismiss:hover { opacity: 1; }
+
+        @media (max-width: 540px) {
+            .pwa-top-banner { padding: 8px 12px; }
+            .pwa-text-wrap span { display: none; }
+            .btn-pwa-install { padding: 6px 12px; font-size: 0.78rem; }
+        }
 
         /* === YOUTUBE-STYLE TOP PROGRESSIVE LOADER === */
         .yt-loader {
@@ -66,7 +94,7 @@
 
         /* === LIVE NOTICE TICKER === */
         .ticker-wrapper { 
-            background: var(--accent-blue); color: #ffffff; display: flex; align-items: center; 
+            background: #003db3;; color: #ffffff; display: flex; align-items: center; 
             font-size: 0.88rem; font-weight: 700; box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
         .ticker-badge { 
@@ -91,8 +119,8 @@
         .cover-school-name:hover { transform: translateY(-2px); }
 
         .live-viewers-badge {
-            background: rgba(0, 0, 0, 0.75); color: #ffffff; padding: 6px 12px;
-            border-radius: 20px; font-size: 0.78rem; font-weight: 700; display: inline-flex;
+            background: rgba(0, 0, 0, 0.1); color: #ffffff; padding: 6px 12px;
+            border-radius: 10px; font-size: 1.5rem; font-weight: 700; display: inline-flex;
             align-items: center; gap: 6px; backdrop-filter: blur(8px);
             box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
@@ -249,7 +277,7 @@
         .modal-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(4px); z-index: 10000; display: none; align-items: center; justify-content: center; padding: 16px; }
         .modal-overlay.active { display: flex; }
         .modal-box { background: white; padding: 22px; border-radius: var(--radius-large); width: 100%; max-width: 480px; position: relative; max-height: 90vh; overflow-y: auto; box-shadow: 0 10px 40px rgba(0,0,0,0.2); border: 1px solid #e5e7eb; }
-        .close-modal { position: absolute; top: 12px; right: 16px; font-size: 1.8rem; cursor: pointer; border: none; background: none; color: #6b7280; }
+        .close-modal { position: absolute; top: 12px; right: 16px; font-size: 1.8rem; cursor: border; background: none; color: #6b7280; }
         .form-group { margin-bottom: 12px; width: 100%; }
         .form-group label { display: block; font-weight: 700; margin-bottom: 4px; font-size: 0.86rem; }
         .form-control { width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 8px; font-family: inherit; background: #f9fafb; font-size: 0.9rem; }
@@ -433,69 +461,27 @@
         .footer-socials a.yt:hover { background: #FF0000; color: #fff;}
         .footer-socials a.wa:hover { background: #25D366; color: #fff;}
         .footer-socials a.mail:hover { background: #EA4335; color: #fff;}
-
-        
-        /* === PWA 1-CLICK FLOATING INSTALL BANNER === */
-        .pwa-install-banner {
-            position: fixed;
-            bottom: 24px;
-            left: 50%;
-            transform: translateX(-50%) translateY(140%);
-            background: #ffffff;
-            border: 1.5px solid #0284c7;
-            box-shadow: 0 12px 35px rgba(2, 132, 199, 0.3), 0 4px 14px rgba(0, 0, 0, 0.1);
-            border-radius: 50px;
-            padding: 8px 16px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            z-index: 99998;
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
-            opacity: 0;
-            max-width: 92vw;
-        }
-        .pwa-install-banner.visible {
-            transform: translateX(-50%) translateY(0);
-            opacity: 1;
-        }
-        .pwa-btn-install {
-            background: var(--pwa-primary);
-            color: #ffffff;
-            border: none;
-            padding: 8px 18px;
-            border-radius: 24px;
-            font-weight: 800;
-            font-size: 0.84rem;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            transition: transform 0.15s ease, background-color 0.2s ease;
-            box-shadow: 0 2px 8px rgba(2, 132, 199, 0.35);
-            white-space: nowrap;
-        }
-        .pwa-btn-install:hover { background: #0369a1; transform: scale(1.03); }
-        .pwa-btn-install:active { transform: scale(0.96); }
-        .pwa-btn-dismiss {
-            background: transparent;
-            border: none;
-            color: #94a3b8;
-            font-size: 1.3rem;
-            cursor: pointer;
-            line-height: 1;
-            padding: 4px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: color 0.2s ease;
-        }
-        .pwa-btn-dismiss:hover { color: #0f172a; }
     </style>
 </head>
 <body class="web-protected">
 
     <!-- Progressive YouTube-Style Loader -->
     <div id="yt-loader" class="yt-loader"></div>
+
+    <!-- 📲 TOP PWA INSTALL POPUP BANNER -->
+    <div id="pwa-install-banner" class="pwa-top-banner">
+        <div class="pwa-banner-content">
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjGka-p7C45PTqBMBKqSjulqicQlHmW_Ee1BCfUPpaW888vYnoPjElzW9DVm8az1kCOjdlabjA3qb_vS00GpCApyVWh2C0aIcOcvb-BWeeTI8AdLojSf25iCvNpMS6aENxrWO-SgM5xjqePEMsHfCLy4HinnGk2xAnDlKaapXYFY05jXQM/s56-c/Logo2.png" alt="TD NEWS App Icon" class="pwa-app-icon" decoding="async">
+            <div class="pwa-text-wrap">
+                <strong>Install TD NEWS App</strong>
+                <span>Instant offline access & real-time updates</span>
+            </div>
+        </div>
+        <div class="pwa-actions-wrap">
+            <button id="pwa-install-btn" class="btn-pwa-install">Install App Now</button>
+            <button id="pwa-close-btn" class="btn-pwa-dismiss" onclick="dismissPwaBanner()" title="Dismiss">&times;</button>
+        </div>
+    </div>
 
     <!-- LIVE NOTICE -->
     <div class="ticker-wrapper">
@@ -640,7 +626,7 @@
                         <input type="hidden" id="editAdminDocId">
                         <div class="form-group"><label>Admin Name</label><input type="text" id="newAdminName" class="form-control" placeholder="e.g. Vice Principal Office"></div>
                         <div class="form-group"><label>Admin ID</label><input type="text" id="newAdminId" class="form-control" placeholder="Login ID"></div>
-                        <div class="form-group"><label>Password</label><input type="password" id="newAdminPass" class="form-control" placeholder="Password"></div>
+                        <div class="form-group"><label>Password</label><input type="text" id="newAdminPass" class="form-control" placeholder="Password"></div>
                         <div class="form-group">
                             <label>Role</label>
                             <select id="newAdminRole" class="form-control">
@@ -874,220 +860,7 @@
         </div>
     </div>
 
-    <!-- === PWA 1-CLICK FLOATING INSTALL BANNER === -->
-    <div id="pwaInstallBanner" class="pwa-install-banner">
-        <span style="font-size: 1.25rem;">📲</span>
-        <span style="font-size: 0.84rem; font-weight: 800; color: #0f172a;">Install TDTTI App</span>
-        <button type="button" class="pwa-btn-install" id="pwaInstallBtn" onclick="triggerPwaInstall()">Install Now</button>
-        <button type="button" class="pwa-btn-dismiss" onclick="dismissPwaBanner()" title="Dismiss">&times;</button>
-    </div>
-
     <script>
-        // =========================================================================
-        // 📱 1. DYNAMIC WEB APP MANIFEST INJECTION
-        // =========================================================================
-        (function injectDynamicManifest() {
-            const APP_LOGO = "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjGka-p7C45PTqBMBKqSjulqicQlHmW_Ee1BCfUPpaW888vYnoPjElzW9DVm8az1kCOjdlabjA3qb_vS00GpCApyVWh2C0aIcOcvb-BWeeTI8AdLojSf25iCvNpMS6aENxrWO-SgM5xjqePEMsHfCLy4HinnGk2xAnDlKaapXYFY05jXQM/s56-c/Logo2.png";
-
-            const manifestData = {
-                name: "TDTTI SS 7 Progression Report",
-                short_name: "TDTTI SS 7",
-                description: "TDTTI Thuravoor Student Progression & Live Activity Portal",
-                start_url: "./",
-                scope: "./",
-                display: "standalone",
-                orientation: "portrait-primary",
-                background_color: "#f6f8fb",
-                theme_color: "#0284c7",
-                icons: [
-                    {
-                        src: APP_LOGO,
-                        sizes: "192x192",
-                        type: "image/png",
-                        purpose: "any maskable"
-                    },
-                    {
-                        src: APP_LOGO,
-                        sizes: "512x512",
-                        type: "image/png",
-                        purpose: "any maskable"
-                    }
-                ]
-            };
-
-            const manifestBlob = new Blob([JSON.stringify(manifestData)], { type: 'application/json' });
-            const manifestUrl = URL.createObjectURL(manifestBlob);
-
-            let manifestLink = document.querySelector('link[rel="manifest"]');
-            if (!manifestLink) {
-                manifestLink = document.createElement('link');
-                manifestLink.rel = 'manifest';
-                document.head.appendChild(manifestLink);
-            }
-            manifestLink.href = manifestUrl;
-        })();
-
-        // =========================================================================
-        // 🚀 2. DYNAMIC EMBEDDED SERVICE WORKER (CACHE-FIRST + OFFLINE FALLBACK)
-        // =========================================================================
-        (function registerEmbeddedServiceWorker() {
-            if (!('serviceWorker' in navigator)) return;
-
-            const swCode = `
-                const CACHE_VERSION = 'tdtti-pwa-v1.0.0';
-                const STATIC_CACHE = 'tdtti-static-' + CACHE_VERSION;
-                const RUNTIME_CACHE = 'tdtti-runtime-' + CACHE_VERSION;
-
-                const PRECACHE_URLS = [
-                    './',
-                    'https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap',
-                    'https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js',
-                    'https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js',
-                    'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjGka-p7C45PTqBMBKqSjulqicQlHmW_Ee1BCfUPpaW888vYnoPjElzW9DVm8az1kCOjdlabjA3qb_vS00GpCApyVWh2C0aIcOcvb-BWeeTI8AdLojSf25iCvNpMS6aENxrWO-SgM5xjqePEMsHfCLy4HinnGk2xAnDlKaapXYFY05jXQM/s56-c/Logo2.png'
-                ];
-
-                self.addEventListener('install', (event) => {
-                    event.waitUntil(
-                        caches.open(STATIC_CACHE)
-                            .then((cache) => cache.addAll(PRECACHE_URLS))
-                            .then(() => self.skipWaiting())
-                    );
-                });
-
-                self.addEventListener('activate', (event) => {
-                    event.waitUntil(
-                        caches.keys().then((keys) => {
-                            return Promise.all(
-                                keys.map((key) => {
-                                    if (key !== STATIC_CACHE && key !== RUNTIME_CACHE) {
-                                        return caches.delete(key);
-                                    }
-                                })
-                            );
-                        }).then(() => self.clients.claim())
-                    );
-                });
-
-                self.addEventListener('fetch', (event) => {
-                    const req = event.request;
-                    const url = new URL(req.url);
-
-                    // Allow Live Firestore APIs, real-time channels & web channels to bypass cache
-                    if (
-                        req.method !== 'GET' ||
-                        url.hostname.includes('firestore.googleapis.com') ||
-                        url.hostname.includes('firebaseio.com') ||
-                        url.pathname.includes('/google.firestore.')
-                    ) {
-                        return;
-                    }
-
-                    // Cache-First strategy for static assets
-                    event.respondWith(
-                        caches.match(req).then((cached) => {
-                            if (cached) return cached;
-
-                            return fetch(req).then((response) => {
-                                if (
-                                    response && 
-                                    response.status === 200 && 
-                                    (url.origin === location.origin || url.hostname.includes('gstatic.com') || url.hostname.includes('googleapis.com'))
-                                ) {
-                                    const clone = response.clone();
-                                    caches.open(RUNTIME_CACHE).then((cache) => cache.put(req, clone));
-                                }
-                                return response;
-                            }).catch(() => {
-                                if (req.mode === 'navigate') {
-                                    return caches.match('./');
-                                }
-                            });
-                        })
-                    );
-                });
-            `;
-
-            window.addEventListener('load', () => {
-                // Register via sw.js or inline blob fallback
-                navigator.serviceWorker.register('./sw.js')
-                    .catch(() => {
-                        const blob = new Blob([swCode], { type: 'application/javascript' });
-                        const blobUrl = URL.createObjectURL(blob);
-                        return navigator.serviceWorker.register(blobUrl);
-                    })
-                    .then((reg) => console.log('✅ ServiceWorker Registered. Scope:', reg.scope))
-                    .catch((err) => console.warn('ServiceWorker notice:', err));
-            });
-        })();
-
-        // =========================================================================
-        // 📲 3. UNIVERSAL 1-CLICK PWA INSTALLATION PROMPT HANDLER
-        // =========================================================================
-        let deferredPwaPrompt = null;
-
-        function isPwaStandaloneMode() {
-            return (window.matchMedia('(display-mode: standalone)').matches) || 
-                   (window.navigator.standalone === true) ||
-                   (document.referrer.includes('android-app://'));
-        }
-
-        // Capture Chrome/Android/Edge native prompt
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPwaPrompt = e;
-            showPwaBanner();
-        });
-
-        function showPwaBanner() {
-            if (isPwaStandaloneMode()) return;
-            if (sessionStorage.getItem('pwa_banner_dismissed') === 'true') return;
-            
-            const banner = document.getElementById('pwaInstallBanner');
-            if (banner) {
-                banner.classList.add('visible');
-            }
-        }
-
-        // Auto-show banner 1.5 seconds after page load if app is not installed
-        window.addEventListener('DOMContentLoaded', () => {
-            setTimeout(() => {
-                showPwaBanner();
-            }, 1500);
-        });
-
-        // 1-Click Trigger with iOS & Browser Fallbacks
-        async function triggerPwaInstall() {
-            if (deferredPwaPrompt) {
-                deferredPwaPrompt.prompt();
-                const { outcome } = await deferredPwaPrompt.userChoice;
-                console.log(`PWA install outcome: ${outcome}`);
-                deferredPwaPrompt = null;
-                dismissPwaBanner();
-                return;
-            }
-
-            const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-            
-            if (isIOS) {
-                showCustomAlert("📲 To Install on iPhone/iPad:\n\n1. Tap the Share button (⎋ / ⬆) at the bottom of Safari.\n2. Scroll down and tap 'Add to Home Screen' (➕).\n3. Tap 'Add' to install.");
-            } else if (isPwaStandaloneMode()) {
-                showCustomAlert("✅ App is already installed and running!");
-            } else {
-                showCustomAlert("📲 To Install App:\n\nTap your browser menu (⋮ / ⋯) at the top right and select 'Install app' or 'Add to Home Screen'.");
-            }
-        }
-
-        function dismissPwaBanner() {
-            const banner = document.getElementById('pwaInstallBanner');
-            if (banner) banner.classList.remove('visible');
-            sessionStorage.setItem('pwa_banner_dismissed', 'true');
-        }
-
-        window.addEventListener('appinstalled', () => {
-            console.log('🎉 TDTTI App Installed Successfully.');
-            dismissPwaBanner();
-            showCustomAlert("🎉 Thank you! TDTTI App has been installed on your home screen.");
-        });
         // =========================================================================
         // ⚡ FIREBASE INITIALIZATION (FIREBASE SPARK PLAN COMPATIBLE)
         // =========================================================================
@@ -1694,10 +1467,9 @@
 
             let sidebarHtml = `<div class="sidebar-area">`;
             sidebarHtml += `
-            <<div class="quick-links-wrapper" style="order: 0;">
+            <div class="quick-links-wrapper" style="order: 0;">
                 <h3>⚡ Quick Links</h3>
                 <div class="ql-grid">
-                    <a href="javascript:void(0)" class="ql-btn" style="background:#e0f2fe; color:#0284c7; border-color:#bae6fd;" onclick="triggerPwaInstall()">📲 INSTALL APP</a>
                     <a href="#" class="ql-btn">🚌 SCHOOL BUS</a>
                     <a href="#" class="ql-btn">🧒 CM KIDS</a>
                     <a href="#" class="ql-btn">🗳️ SCHOOL ELECTION</a>
@@ -2630,7 +2402,6 @@
             document.getElementById('mediaLink').value = "";
             document.getElementById('subSectionSelect').value = "Art"; 
             
-            // Post Date resets in DD:MM:YYYY format
             const pDate = document.getElementById('customPostDate');
             if (pDate) pDate.value = getTodayDateStr();
 
@@ -2955,7 +2726,6 @@
 
             let finalMediaLink = compressedBase64ToUpload || (document.getElementById('mediaLink') ? document.getElementById('mediaLink').value : "");
             
-            // Format timestamp in DD:MM:YYYY HH:mm:ss
             const now = new Date();
             const timeSuffix = `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}:${String(now.getSeconds()).padStart(2,'0')}`;
             let rawDateVal = document.getElementById('customPostDate') ? document.getElementById('customPostDate').value.trim() : "";
@@ -3229,7 +2999,7 @@
 
                         if (day < 1 || day > 31 || month < 1 || month > 12) {
                             skippedCount++;
-                            continue;
+                            continue; 
                         }
 
                         let safeDate = `${String(day).padStart(2, '0')}:${String(month).padStart(2, '0')}:${year}`;
@@ -3372,6 +3142,111 @@
                     }
                 }
             });
+        }
+
+        // =========================================================================
+        // 📱 PWA: DYNAMIC MANIFEST INJECTION & INSTALLATION CONTROLLER
+        // =========================================================================
+        (function initPwaEngine() {
+            const APP_LOGO_URL = "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjGka-p7C45PTqBMBKqSjulqicQlHmW_Ee1BCfUPpaW888vYnoPjElzW9DVm8az1kCOjdlabjA3qb_vS00GpCApyVWh2C0aIcOcvb-BWeeTI8AdLojSf25iCvNpMS6aENxrWO-SgM5xjqePEMsHfCLy4HinnGk2xAnDlKaapXYFY05jXQM/s56-c/Logo2.png";
+
+            // 1. Dynamic Web App Manifest Blob Injection
+            const manifestContent = {
+                name: "TDTTI THURAVOOR | Live Portal",
+                short_name: "TD NEWS",
+                start_url: "./",
+                scope: "./",
+                display: "standalone",
+                orientation: "portrait-primary",
+                background_color: "#ffffff",
+                theme_color: "#0284c7",
+                description: "Official real-time live portal and news feed for TDTTI Thuravoor.",
+                icons: [
+                    {
+                        src: APP_LOGO_URL,
+                        sizes: "192x192",
+                        type: "image/png",
+                        purpose: "any maskable"
+                    },
+                    {
+                        src: APP_LOGO_URL,
+                        sizes: "512x512",
+                        type: "image/png",
+                        purpose: "any maskable"
+                    }
+                ]
+            };
+
+            const manifestBlob = new Blob([JSON.stringify(manifestContent)], { type: 'application/json' });
+            const manifestUrl = URL.createObjectURL(manifestBlob);
+            const manifestLink = document.createElement('link');
+            manifestLink.rel = 'manifest';
+            manifestLink.href = manifestUrl;
+            document.head.appendChild(manifestLink);
+
+            // 2. Service Worker Registration
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', () => {
+                    navigator.serviceWorker.register('./sw.js')
+                        .then((reg) => console.log('✅ ServiceWorker Active (Scope:', reg.scope, ')'))
+                        .catch((err) => console.warn('⚠️ ServiceWorker Failed:', err));
+                });
+            }
+
+            // 3. PWA Installation Handler & Top Banner Prompt
+            let deferredPrompt = null;
+            const banner = document.getElementById('pwa-install-banner');
+            const installBtn = document.getElementById('pwa-install-btn');
+
+            const isAppAlreadyInstalled = 
+                window.matchMedia('(display-mode: standalone)').matches || 
+                window.navigator.standalone === true;
+
+            // Capture beforeinstallprompt event (Android Chrome / Edge / Desktop)
+            window.addEventListener('beforeinstallprompt', (e) => {
+                e.preventDefault();
+                deferredPrompt = e;
+
+                if (!isAppAlreadyInstalled && !sessionStorage.getItem('pwa_banner_dismissed')) {
+                    setTimeout(() => {
+                        if (banner) banner.classList.add('show');
+                    }, 1200);
+                }
+            });
+
+            // 1-Click Installation Trigger
+            if (installBtn) {
+                installBtn.addEventListener('click', async () => {
+                    if (!deferredPrompt) {
+                        if (/iPhone|iPad|iPod/.test(navigator.userAgent)) {
+                            showCustomAlert("📲 To install on iOS:\nTap the Share button below and select 'Add to Home Screen'.");
+                        } else {
+                            showCustomAlert("App is already installed or your browser doesn't support 1-click install.");
+                        }
+                        return;
+                    }
+
+                    deferredPrompt.prompt();
+                    const { outcome } = await deferredPrompt.userChoice;
+                    
+                    if (outcome === 'accepted') {
+                        if (banner) banner.classList.remove('show');
+                    }
+                    deferredPrompt = null;
+                });
+            }
+
+            // Detect Successful Installation
+            window.addEventListener('appinstalled', () => {
+                if (banner) banner.classList.remove('show');
+                deferredPrompt = null;
+            });
+        })();
+
+        function dismissPwaBanner() {
+            const banner = document.getElementById('pwa-install-banner');
+            if (banner) banner.classList.remove('show');
+            sessionStorage.setItem('pwa_banner_dismissed', 'true');
         }
     </script>
 </body>
