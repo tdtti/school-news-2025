@@ -3,11 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="theme-color" content="#0866FF">
+    <meta name="apple-mobile-web-app-title" content="TDTTI Live">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#0284c7">
+    <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="TDTTI Live">
-    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="apple-touch-icon" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg8JiVmEpr0ghbXQ1Z2Mk-5ZFi1lKNN0f9Eygw999ZF7-Sa4OyQRrhXU646M9kpwRa0Gr5dISn2pGtD_xD-ZEbarFZLrnMquwiMvtGw2U151LH7Jckv2gaRkWJ_CtSbzVM_i1dT-JZb4QeCkLbtyrzczfUnKfP33vi21IPIGHMWhD4SkJQ/s1600/Logo2.png">
     <title>TDTTI THURAVOOR | Live Portal</title>
 
     <!-- Preconnect Fonts -->
@@ -52,31 +55,7 @@
         }
         .yt-loader.loading { opacity: 1; }
 
-        /* === PWA TOP INSTALL BANNER === */
-        .pwa-top-banner {
-            background: #ffffff; border-bottom: 1px solid #e5e7eb; padding: 10px 16px;
-            display: flex; align-items: center; justify-content: space-between; gap: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06); position: sticky; top: 0; z-index: 999;
-            animation: slideDown 0.3s ease;
-        }
-        @keyframes slideDown { from { transform: translateY(-100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-        .pwa-banner-content { display: flex; align-items: center; gap: 12px; flex: 1; min-width: 0; }
-        .pwa-banner-icon { width: 40px; height: 40px; border-radius: 10px; object-fit: contain; background: #f0f2f5; padding: 2px; flex-shrink: 0; border: 1px solid #e5e7eb; }
-        .pwa-banner-text { display: flex; flex-direction: column; min-width: 0; }
-        .pwa-banner-text strong { font-size: 0.92rem; color: var(--text-dark); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .pwa-banner-text span { font-size: 0.76rem; color: var(--text-gray); font-weight: 600; }
-        .pwa-banner-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
-        .pwa-btn-install {
-            background: #000000; color: #ffffff; border: none; padding: 7px 16px;
-            border-radius: 20px; font-weight: 700; font-size: 0.82rem; cursor: pointer; transition: all 0.2s;
-        }
-        .pwa-btn-install:hover { background: #333333; transform: scale(1.03); }
-        .pwa-btn-close {
-            background: #f3f4f6; border: none; color: var(--text-gray); font-size: 1.2rem;
-            font-weight: bold; width: 30px; height: 30px; border-radius: 50%; cursor: pointer;
-            display: flex; align-items: center; justify-content: center; transition: 0.2s;
-        }
-        .pwa-btn-close:hover { background: #e5e7eb; color: var(--text-dark); }
+        
 
         /* === LIVE NOTICE TICKER === */
         .ticker-wrapper { 
@@ -454,20 +433,7 @@
     <!-- Progressive YouTube-Style Loader -->
     <div id="yt-loader" class="yt-loader"></div>
 
-    <!-- PWA Top Install Instructions Banner -->
-    <div id="pwa-top-banner" class="pwa-top-banner" style="display: none;">
-        <div class="pwa-banner-content">
-            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjGka-p7C45PTqBMBKqSjulqicQlHmW_Ee1BCfUPpaW888vYnoPjElzW9DVm8az1kCOjdlabjA3qb_vS00GpCApyVWh2C0aIcOcvb-BWeeTI8AdLojSf25iCvNpMS6aENxrWO-SgM5xjqePEMsHfCLy4HinnGk2xAnDlKaapXYFY05jXQM/s56-c/Logo2.png" alt="TDTTI" class="pwa-banner-icon">
-            <div class="pwa-banner-text">
-                <strong>TDTTI THURAVOOR</strong>
-                <span id="pwa-instructions-text">Install our web app for fastest live updates!</span>
-            </div>
-        </div>
-        <div class="pwa-banner-actions">
-            <button id="pwa-install-btn" class="pwa-btn-install" onclick="triggerPwaInstall()">Install</button>
-            <button class="pwa-btn-close" onclick="dismissPwaBanner()" title="Close">&times;</button>
-        </div>
-    </div>
+    
 
     <!-- LIVE NOTICE -->
     <div class="ticker-wrapper">
@@ -846,27 +812,46 @@
         </div>
     </div>
 
-    <!-- PWA Install Guide Modal -->
-    <div class="modal-overlay" id="pwaPromptModal" style="z-index: 22000;">
-        <div class="modal-box" style="max-width: 380px; text-align: center; padding: 22px;">
-            <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px; text-align:left; background:#f9fafb; padding:10px; border-radius:8px; border:1px solid #e5e7eb;">
-                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjGka-p7C45PTqBMBKqSjulqicQlHmW_Ee1BCfUPpaW888vYnoPjElzW9DVm8az1kCOjdlabjA3qb_vS00GpCApyVWh2C0aIcOcvb-BWeeTI8AdLojSf25iCvNpMS6aENxrWO-SgM5xjqePEMsHfCLy4HinnGk2xAnDlKaapXYFY05jXQM/s56-c/Logo2.png" style="width:42px; height:42px; border-radius:6px;">
-                <div>
-                    <strong style="display:block; font-size:0.95rem;">TDTTI THURAVOOR</strong>
-                    <span style="font-size:0.78rem; color:var(--text-gray);">Official Portal App</span>
-                </div>
-            </div>
-            <div id="pwa-modal-instructions" style="margin-bottom: 18px; font-size: 0.9rem; color: var(--text-dark); line-height: 1.45; text-align: left;">
-                Tap <strong>Install Now</strong> below to add this app to your home screen for instant live updates.
-            </div>
-            <div class="custom-msg-btns">
-                <button class="btn-alert-ok" id="pwa-modal-action-btn" onclick="executePwaInstall()">Install Now</button>
-                <button class="btn-confirm-no" onclick="closeModals()">Close</button>
-            </div>
-        </div>
-    </div>
+    
 
     <script>
+
+      // Dynamic Web App Manifest Injection
+    const PWA_LOGO_URL = "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg8JiVmEpr0ghbXQ1Z2Mk-5ZFi1lKNN0f9Eygw999ZF7-Sa4OyQRrhXU646M9kpwRa0Gr5dISn2pGtD_xD-ZEbarFZLrnMquwiMvtGw2U151LH7Jckv2gaRkWJ_CtSbzVM_i1dT-JZb4QeCkLbtyrzczfUnKfP33vi21IPIGHMWhD4SkJQ/s1600/Logo2.png";
+
+    (function injectPWAManifest() {
+      const manifestData = {
+        name: "TDTTI LIVE",
+        short_name: "TD LIVE",
+        description: "TDTTI Live Portal",
+        start_url: "./",
+        display: "standalone",
+        orientation: "portrait-primary",
+        background_color: "#ffffff",
+        theme_color: "#0284c7",
+        icons: [
+          { src: PWA_LOGO_URL, sizes: "192x192", type: "image/png", purpose: "any maskable" },
+          { src: PWA_LOGO_URL, sizes: "512x512", type: "image/png", purpose: "any maskable" }
+        ]
+      };
+
+      const manifestBlob = new Blob([JSON.stringify(manifestData)], { type: 'application/json' });
+      const manifestURL = URL.createObjectURL(manifestBlob);
+      const manifestLink = document.createElement('link');
+      manifestLink.rel = 'manifest';
+      manifestLink.href = manifestURL;
+      document.head.appendChild(manifestLink);
+    })();
+
+    // Register Service Worker
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+          .then(() => console.log('TDTTI LIVE Registered Successfully!'))
+          .catch((err) => console.warn('ServiceWorker Registration Note:', err));
+      });
+    }
+
         // =========================================================================
         // ⚡ FIREBASE INITIALIZATION (FIREBASE SPARK PLAN COMPATIBLE)
         // =========================================================================
@@ -930,124 +915,7 @@
             }
         });
 
-        // === 100% RELIABLE INSTANT PWA ENGINE ===
-        (function initPwaEngine() {
-            const manifestObj = {
-                name: "TDTTI THURAVOOR Live Portal",
-                short_name: "TDTTI",
-                start_url: window.location.href,
-                scope: "./",
-                display: "standalone",
-                background_color: "#ffffff",
-                theme_color: "#0866FF",
-                description: "TDTTI Thuravoor Live School Portal",
-                icons: [
-                    { src: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjGka-p7C45PTqBMBKqSjulqicQlHmW_Ee1BCfUPpaW888vYnoPjElzW9DVm8az1kCOjdlabjA3qb_vS00GpCApyVWh2C0aIcOcvb-BWeeTI8AdLojSf25iCvNpMS6aENxrWO-SgM5xjqePEMsHfCLy4HinnGk2xAnDlKaapXYFY05jXQM/s56-c/Logo2.png", sizes: "192x192", type: "image/png", purpose: "any maskable" },
-                    { src: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjGka-p7C45PTqBMBKqSjulqicQlHmW_Ee1BCfUPpaW888vYnoPjElzW9DVm8az1kCOjdlabjA3qb_vS00GpCApyVWh2C0aIcOcvb-BWeeTI8AdLojSf25iCvNpMS6aENxrWO-SgM5xjqePEMsHfCLy4HinnGk2xAnDlKaapXYFY05jXQM/s56-c/Logo2.png", sizes: "512x512", type: "image/png", purpose: "any maskable" }
-                ]
-            };
-
-            const manifestBlob = new Blob([JSON.stringify(manifestObj)], { type: 'application/json' });
-            const manifestUrl = URL.createObjectURL(manifestBlob);
-            const manifestLink = document.createElement('link');
-            manifestLink.rel = 'manifest';
-            manifestLink.href = manifestUrl;
-            document.head.appendChild(manifestLink);
-
-            if ('serviceWorker' in navigator) {
-                const swCode = `
-                    self.addEventListener('install', (e) => { self.skipWaiting(); });
-                    self.addEventListener('activate', (e) => { e.waitUntil(clients.claim()); });
-                    self.addEventListener('fetch', (e) => {
-                        e.respondWith(fetch(e.request).catch(() => caches.match(e.request)));
-                    });
-                `;
-                const swBlob = new Blob([swCode], { type: 'application/javascript' });
-                navigator.serviceWorker.register(URL.createObjectURL(swBlob)).catch(() => {});
-            }
-        })();
-
-        let deferredPrompt = null;
-        function isAppInstalled() {
-            return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true || document.referrer.includes('android-app://');
-        }
-
-        function checkAndShowPwaBanner() {
-            if (isAppInstalled() || localStorage.getItem('pwaBannerDismissed') === 'true') return;
-            const banner = document.getElementById('pwa-top-banner');
-            const instructions = document.getElementById('pwa-instructions-text');
-            if (!banner) return;
-
-            const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-            if (isIOS) {
-                if (instructions) instructions.innerText = "Tap Share [⎋] then 'Add to Home Screen'";
-                const installBtn = document.getElementById('pwa-install-btn');
-                if (installBtn) installBtn.innerText = "Guide";
-            }
-            banner.style.display = 'flex';
-        }
-
-        function dismissPwaBanner() {
-            const banner = document.getElementById('pwa-top-banner');
-            if (banner) banner.style.display = 'none';
-            localStorage.setItem('pwaBannerDismissed', 'true');
-        }
-
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            if (!isAppInstalled() && localStorage.getItem('pwaBannerDismissed') !== 'true') {
-                const banner = document.getElementById('pwa-top-banner');
-                if (banner) banner.style.display = 'flex';
-            }
-        });
-
-        window.addEventListener('appinstalled', () => {
-            deferredPrompt = null;
-            dismissPwaBanner();
-            showCustomAlert("🎉 TDTTI App installed successfully!");
-        });
-
-        function triggerPwaInstall() {
-            const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-            const modal = document.getElementById('pwaPromptModal');
-            const modalText = document.getElementById('pwa-modal-instructions');
-            const actionBtn = document.getElementById('pwa-modal-action-btn');
-
-            if (isIOS) {
-                if (modalText) {
-                    modalText.innerHTML = `<strong>iOS Installation:</strong><br>1. Tap the <strong>Share</strong> button at bottom.<br>2. Choose <strong>'Add to Home Screen'</strong>.<br>3. Tap <strong>Add</strong> at top right.`;
-                }
-                if (actionBtn) actionBtn.style.display = 'none';
-                if (modal) modal.classList.add('active');
-            } else if (deferredPrompt) {
-                deferredPrompt.prompt();
-                deferredPrompt.userChoice.then((choice) => {
-                    if (choice.outcome === 'accepted') {
-                        dismissPwaBanner();
-                        showCustomAlert("🎉 App Installed Successfully!");
-                    }
-                    deferredPrompt = null;
-                });
-            } else {
-                if (modalText) modalText.innerHTML = `To install, tap your browser's menu (⋮) and tap <strong>'Install app'</strong> or <strong>'Add to Home screen'</strong>.`;
-                if (modal) modal.classList.add('active');
-            }
-        }
-
-        function executePwaInstall() {
-            closeModals();
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                deferredPrompt.userChoice.then((choice) => {
-                    if (choice.outcome === 'accepted') {
-                        dismissPwaBanner();
-                        showCustomAlert("🎉 App Installed Successfully!");
-                    }
-                    deferredPrompt = null;
-                });
-            }
-        }
+        
 
         // === PROGRESSIVE BAR ===
         let ytTimer = null;
@@ -1312,7 +1180,7 @@
             const postDateInput = document.getElementById('customPostDate');
             if (postDateInput) postDateInput.value = getTodayDateStr();
             
-            checkAndShowPwaBanner();
+           
             initLiveViewers();
             initFirebaseRealtimeSync();
         });
