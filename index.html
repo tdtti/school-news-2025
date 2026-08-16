@@ -3,21 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    
-    <!-- === PWA & MOBILE META TAGS === -->
-    <meta name="theme-color" content="#0284c7">
-    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#0866FF">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="TD NEWS">
-    <meta name="application-name" content="TD NEWS">
-    <meta name="msapplication-TileColor" content="#0284c7">
-
-    <!-- iOS Apple Touch Icons & Icons -->
-    <link rel="apple-touch-icon" sizes="180x180" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjGka-p7C45PTqBMBKqSjulqicQlHmW_Ee1BCfUPpaW888vYnoPjElzW9DVm8az1kCOjdlabjA3qb_vS00GpCApyVWh2C0aIcOcvb-BWeeTI8AdLojSf25iCvNpMS6aENxrWO-SgM5xjqePEMsHfCLy4HinnGk2xAnDlKaapXYFY05jXQM/s56-c/Logo2.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjGka-p7C45PTqBMBKqSjulqicQlHmW_Ee1BCfUPpaW888vYnoPjElzW9DVm8az1kCOjdlabjA3qb_vS00GpCApyVWh2C0aIcOcvb-BWeeTI8AdLojSf25iCvNpMS6aENxrWO-SgM5xjqePEMsHfCLy4HinnGk2xAnDlKaapXYFY05jXQM/s56-c/Logo2.png">
-
+    <meta name="apple-mobile-web-app-title" content="TDTTI Portal">
     <title>TDTTI THURAVOOR | Live Portal</title>
+
+    <!-- App Icon for iOS Safari & Home Screen -->
+    <link rel="apple-touch-icon" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjGka-p7C45PTqBMBKqSjulqicQlHmW_Ee1BCfUPpaW888vYnoPjElzW9DVm8az1kCOjdlabjA3qb_vS00GpCApyVWh2C0aIcOcvb-BWeeTI8AdLojSf25iCvNpMS6aENxrWO-SgM5xjqePEMsHfCLy4HinnGk2xAnDlKaapXYFY05jXQM/s56-c/Logo2.png">
 
     <!-- Preconnect Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -51,37 +44,6 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--bg-color); color: var(--text-dark); overflow-x: hidden; }
 
-        /* === TOP PWA INSTALL POPUP BANNER === */
-        .pwa-top-banner {
-            position: fixed; top: 0; left: 0; right: 0;
-            background: #0284c7; color: #ffffff; z-index: 100000;
-            padding: 10px 16px; display: flex; align-items: center; justify-content: space-between;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            transform: translateY(-120%); transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .pwa-top-banner.show { transform: translateY(0); }
-        .pwa-banner-content { display: flex; align-items: center; gap: 12px; }
-        .pwa-app-icon { width: 40px; height: 40px; border-radius: 10px; background: #ffffff; object-fit: contain; padding: 2px; box-shadow: 0 2px 6px rgba(0,0,0,0.15); }
-        .pwa-text-wrap { display: flex; flex-direction: column; }
-        .pwa-text-wrap strong { font-size: 0.92rem; font-weight: 800; letter-spacing: 0.3px; }
-        .pwa-text-wrap span { font-size: 0.76rem; color: #e0f2fe; }
-        .pwa-actions-wrap { display: flex; align-items: center; gap: 8px; }
-        .btn-pwa-install {
-            background: #ffffff; color: #0284c7; border: none; padding: 7px 14px;
-            border-radius: 20px; font-weight: 800; font-size: 0.82rem; cursor: pointer;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.12); transition: transform 0.15s ease, background 0.2s ease;
-            white-space: nowrap;
-        }
-        .btn-pwa-install:hover { background: #f0f9ff; transform: scale(1.04); }
-        .btn-pwa-dismiss { background: transparent; border: none; color: #ffffff; font-size: 1.5rem; line-height: 1; cursor: pointer; padding: 2px 6px; opacity: 0.8; }
-        .btn-pwa-dismiss:hover { opacity: 1; }
-
-        @media (max-width: 540px) {
-            .pwa-top-banner { padding: 8px 12px; }
-            .pwa-text-wrap span { display: none; }
-            .btn-pwa-install { padding: 6px 12px; font-size: 0.78rem; }
-        }
-
         /* === YOUTUBE-STYLE TOP PROGRESSIVE LOADER === */
         .yt-loader {
             position: fixed; top: 0; left: 0; height: 3.5px; width: 0%;
@@ -92,9 +54,109 @@
         }
         .yt-loader.loading { opacity: 1; }
 
+        /* === PWA INSTALLER BANNER (ABOVE NOTICE SECTION) === */
+        .pwa-installer-bar {
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            color: #ffffff;
+            padding: 10px 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            z-index: 9999;
+            position: relative;
+            animation: pwaSlideDown 0.35s ease-out;
+        }
+        @keyframes pwaSlideDown {
+            from { transform: translateY(-100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .pwa-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex: 1;
+            min-width: 0;
+        }
+        .pwa-app-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            object-fit: contain;
+            background: #ffffff;
+            padding: 2px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+            flex-shrink: 0;
+        }
+        .pwa-text-info {
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .pwa-text-info strong {
+            font-size: 0.86rem;
+            color: #ffffff;
+            font-weight: 800;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .pwa-text-info span {
+            font-size: 0.74rem;
+            color: #94a3b8;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .pwa-right-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+        .btn-pwa-install {
+            background: var(--accent-blue);
+            color: #ffffff;
+            border: none;
+            padding: 7px 14px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 800;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            box-shadow: 0 2px 8px rgba(8, 102, 255, 0.4);
+            transition: all 0.2s ease;
+        }
+        .btn-pwa-install:hover {
+            background: #0052cc;
+            transform: translateY(-1px);
+        }
+        .btn-pwa-close {
+            background: rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+            border: none;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.95rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn-pwa-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
         /* === LIVE NOTICE TICKER === */
         .ticker-wrapper { 
-            background: #003db3;; color: #ffffff; display: flex; align-items: center; 
+            background: var(--accent-blue); color: #ffffff; display: flex; align-items: center; 
             font-size: 0.88rem; font-weight: 700; box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
         .ticker-badge { 
@@ -119,8 +181,8 @@
         .cover-school-name:hover { transform: translateY(-2px); }
 
         .live-viewers-badge {
-            background: rgba(0, 0, 0, 0.1); color: #ffffff; padding: 6px 12px;
-            border-radius: 10px; font-size: 1.5rem; font-weight: 700; display: inline-flex;
+            background: rgba(0, 0, 0, 0.75); color: #ffffff; padding: 6px 12px;
+            border-radius: 20px; font-size: 0.78rem; font-weight: 700; display: inline-flex;
             align-items: center; gap: 6px; backdrop-filter: blur(8px);
             box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
@@ -277,7 +339,7 @@
         .modal-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(4px); z-index: 10000; display: none; align-items: center; justify-content: center; padding: 16px; }
         .modal-overlay.active { display: flex; }
         .modal-box { background: white; padding: 22px; border-radius: var(--radius-large); width: 100%; max-width: 480px; position: relative; max-height: 90vh; overflow-y: auto; box-shadow: 0 10px 40px rgba(0,0,0,0.2); border: 1px solid #e5e7eb; }
-        .close-modal { position: absolute; top: 12px; right: 16px; font-size: 1.8rem; cursor: border; background: none; color: #6b7280; }
+        .close-modal { position: absolute; top: 12px; right: 16px; font-size: 1.8rem; cursor: pointer; border: none; background: none; color: #6b7280; }
         .form-group { margin-bottom: 12px; width: 100%; }
         .form-group label { display: block; font-weight: 700; margin-bottom: 4px; font-size: 0.86rem; }
         .form-control { width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 8px; font-family: inherit; background: #f9fafb; font-size: 0.9rem; }
@@ -468,18 +530,22 @@
     <!-- Progressive YouTube-Style Loader -->
     <div id="yt-loader" class="yt-loader"></div>
 
-    <!-- 📲 TOP PWA INSTALL POPUP BANNER -->
-    <div id="pwa-install-banner" class="pwa-top-banner">
-        <div class="pwa-banner-content">
-            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjGka-p7C45PTqBMBKqSjulqicQlHmW_Ee1BCfUPpaW888vYnoPjElzW9DVm8az1kCOjdlabjA3qb_vS00GpCApyVWh2C0aIcOcvb-BWeeTI8AdLojSf25iCvNpMS6aENxrWO-SgM5xjqePEMsHfCLy4HinnGk2xAnDlKaapXYFY05jXQM/s56-c/Logo2.png" alt="TD NEWS App Icon" class="pwa-app-icon" decoding="async">
-            <div class="pwa-text-wrap">
-                <strong>Install TD NEWS App</strong>
-                <span>Instant offline access & real-time updates</span>
+    <!-- =========================================================================
+         📲 PWA INSTALLER BANNER (COMPULSORY ON EVERY LOAD UNTIL INSTALLED)
+         ========================================================================= -->
+    <div id="pwa-install-banner" class="pwa-installer-bar" style="display: none;">
+        <div class="pwa-left">
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjGka-p7C45PTqBMBKqSjulqicQlHmW_Ee1BCfUPpaW888vYnoPjElzW9DVm8az1kCOjdlabjA3qb_vS00GpCApyVWh2C0aIcOcvb-BWeeTI8AdLojSf25iCvNpMS6aENxrWO-SgM5xjqePEMsHfCLy4HinnGk2xAnDlKaapXYFY05jXQM/s56-c/Logo2.png" alt="App Icon" class="pwa-app-icon">
+            <div class="pwa-text-info">
+                <strong>TDTTI THURAVOOR App</strong>
+                <span>Install for quick 1-tap live access</span>
             </div>
         </div>
-        <div class="pwa-actions-wrap">
-            <button id="pwa-install-btn" class="btn-pwa-install">Install App Now</button>
-            <button id="pwa-close-btn" class="btn-pwa-dismiss" onclick="dismissPwaBanner()" title="Dismiss">&times;</button>
+        <div class="pwa-right-actions">
+            <button type="button" class="btn-pwa-install" id="btnPwaInstall" onclick="triggerPwaInstallation()">
+                <span>⬇️ Install</span>
+            </button>
+            <button type="button" class="btn-pwa-close" onclick="dismissPwaBanner()" title="Close">&times;</button>
         </div>
     </div>
 
@@ -860,6 +926,154 @@
         </div>
     </div>
 
+    <!-- =========================================================================
+         🚀 PWA ENGINE: DYNAMIC MANIFEST & IN-MEMORY SERVICE WORKER SCRIPT
+         ========================================================================= -->
+    <script>
+        // Setup Dynamic PWA Web App Manifest
+        (function injectDynamicPWAManifest() {
+            const appIconUrl = "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjGka-p7C45PTqBMBKqSjulqicQlHmW_Ee1BCfUPpaW888vYnoPjElzW9DVm8az1kCOjdlabjA3qb_vS00GpCApyVWh2C0aIcOcvb-BWeeTI8AdLojSf25iCvNpMS6aENxrWO-SgM5xjqePEMsHfCLy4HinnGk2xAnDlKaapXYFY05jXQM/s56-c/Logo2.png";
+            
+            const manifestObj = {
+                name: "TDTTI THURAVOOR Portal",
+                short_name: "TDTTI Portal",
+                description: "Live Portal & Dynamic Notice Board of TDTTI THURAVOOR",
+                start_url: window.location.href,
+                scope: "./",
+                display: "standalone",
+                orientation: "portrait",
+                background_color: "#f6f8fb",
+                theme_color: "#0866FF",
+                icons: [
+                    {
+                        src: appIconUrl,
+                        sizes: "192x192",
+                        type: "image/png",
+                        purpose: "any maskable"
+                    },
+                    {
+                        src: appIconUrl,
+                        sizes: "512x512",
+                        type: "image/png",
+                        purpose: "any maskable"
+                    }
+                ]
+            };
+
+            const manifestBlob = new Blob([JSON.stringify(manifestObj)], { type: "application/manifest+json" });
+            const manifestUrl = URL.createObjectURL(manifestBlob);
+            
+            const linkTag = document.createElement('link');
+            linkTag.rel = 'manifest';
+            linkTag.href = manifestUrl;
+            document.head.appendChild(linkTag);
+        })();
+
+        // Register In-Memory Blob Service Worker for full PWA qualification
+        (function registerPwaServiceWorker() {
+            if ('serviceWorker' in navigator) {
+                const swCode = `
+                    const CACHE_NAME = 'tdtti-pwa-v1';
+                    self.addEventListener('install', (e) => {
+                        self.skipWaiting();
+                    });
+                    self.addEventListener('activate', (e) => {
+                        e.waitUntil(self.clients.claim());
+                    });
+                    self.addEventListener('fetch', (e) => {
+                        // Pass-through fetch handler for online live real-time sync
+                        e.respondWith(
+                            fetch(e.request).catch(() => caches.match(e.request))
+                        );
+                    });
+                `;
+                const swBlob = new Blob([swCode], { type: 'application/javascript' });
+                const swUrl = URL.createObjectURL(swBlob);
+
+                window.addEventListener('load', () => {
+                    navigator.serviceWorker.register(swUrl)
+                        .then(() => console.log("PWA Service Worker registered successfully"))
+                        .catch(err => console.log("Service Worker Registration notice:", err));
+                });
+            }
+        })();
+
+        // =========================================================================
+        // 📱 PWA INSTALLATION BANNER LIFECYCLE & STATE CONTROLLER
+        // =========================================================================
+        let deferredPwaPrompt = null;
+
+        function checkIsAppInstalled() {
+            // Check standalone display mode or saved installation flag in localStorage
+            const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+            const isSavedInstalled = localStorage.getItem('pwa_app_installed') === 'true';
+            return isStandalone || isSavedInstalled;
+        }
+
+        function initPwaInstallationUI() {
+            const banner = document.getElementById('pwa-install-banner');
+            if (!banner) return;
+
+            if (checkIsAppInstalled()) {
+                // If installed, permanently remove/hide banner on this device
+                banner.style.display = 'none';
+                localStorage.setItem('pwa_app_installed', 'true');
+            } else {
+                // Compulsory display on every page load until installed
+                banner.style.display = 'flex';
+            }
+        }
+
+        // Capture Chrome / Android / Edge install prompt
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPwaPrompt = e;
+            const banner = document.getElementById('pwa-install-banner');
+            if (banner && !checkIsAppInstalled()) {
+                banner.style.display = 'flex';
+            }
+        });
+
+        // Trigger prompt when Install button clicked
+        async function triggerPwaInstallation() {
+            if (deferredPwaPrompt) {
+                deferredPwaPrompt.prompt();
+                const choiceResult = await deferredPwaPrompt.userChoice;
+                if (choiceResult.outcome === 'accepted') {
+                    localStorage.setItem('pwa_app_installed', 'true');
+                    dismissPwaBannerPermanently();
+                }
+                deferredPwaPrompt = null;
+            } else {
+                // iOS / Fallback Browser Guidance
+                const isIos = /iPhone|iPad|iPod/.test(navigator.userAgent) && !window.MSStream;
+                if (isIos) {
+                    showCustomAlert("📲 To install on iOS:\n1. Tap the Share button in Safari (icon with arrow ⬆️).\n2. Scroll down and tap 'Add to Home Screen' (➕).");
+                } else {
+                    showCustomAlert("📲 To install this app:\nTap your browser menu (⋮ or ⋯) and select 'Install app' or 'Add to Home screen'.");
+                }
+            }
+        }
+
+        function dismissPwaBanner() {
+            const banner = document.getElementById('pwa-install-banner');
+            if (banner) banner.style.display = 'none';
+        }
+
+        function dismissPwaBannerPermanently() {
+            const banner = document.getElementById('pwa-install-banner');
+            if (banner) banner.style.display = 'none';
+            localStorage.setItem('pwa_app_installed', 'true');
+        }
+
+        // Successfully installed listener
+        window.addEventListener('appinstalled', () => {
+            localStorage.setItem('pwa_app_installed', 'true');
+            dismissPwaBannerPermanently();
+            showCustomAlert("🎉 App installed successfully! You can now launch TDTTI Portal from your home screen.");
+        });
+    </script>
+
     <script>
         // =========================================================================
         // ⚡ FIREBASE INITIALIZATION (FIREBASE SPARK PLAN COMPATIBLE)
@@ -1188,6 +1402,7 @@
             if (postDateInput) postDateInput.value = getTodayDateStr();
             
             initLiveViewers();
+            initPwaInstallationUI();
             initFirebaseRealtimeSync();
         });
 
@@ -2132,6 +2347,7 @@
             const container = document.getElementById('superAdminListContainer');
             if (!container) return;
 
+            // Load default super admin & standard admin
             let defaultSuperAdmin = { id: "default_superadmin", name: "Super Administrator", adminId: "superadmin", password: "super123", status: "active", role: "superadmin" };
             let defaultAdminData = { id: "default_admin", name: "Admin Desk", adminId: "admin", password: "12345", status: "active", role: "admin" };
 
@@ -2164,6 +2380,7 @@
                         </strong>
                         <span>ID: <code>${admin.adminId}</code> • Pass: <code>${admin.password}</code> • Status: <b>${isActive ? 'Active' : 'Inactive'}</b></span>
                     </div>
+                    <!-- ICON-ONLY ACTION BUTTONS: EDIT, DISABLE/ENABLE, PERMANENT DELETE -->
                     <div class="admin-actions-group">
                         <button type="button" class="admin-icon-btn btn-icon-edit" title="Edit Admin" onclick="editAdminUserForm('${admin.id}', '${admin.name}', '${admin.adminId}', '${admin.password}', '${admin.status || 'active'}', '${admin.role || 'admin'}')">✏️</button>
                         <button type="button" class="admin-icon-btn btn-icon-toggle" title="${isActive ? 'Disable Admin' : 'Enable Admin'}" onclick="toggleAdminStatus('${admin.id}', '${isActive ? 'inactive' : 'active'}')">${isActive ? '🚫' : '🟢'}</button>
@@ -2402,6 +2619,7 @@
             document.getElementById('mediaLink').value = "";
             document.getElementById('subSectionSelect').value = "Art"; 
             
+            // Post Date resets in DD:MM:YYYY format
             const pDate = document.getElementById('customPostDate');
             if (pDate) pDate.value = getTodayDateStr();
 
@@ -2577,10 +2795,12 @@
             const todayStr = getTodayDateStr().substring(0, 5); // "DD:MM"
             let defaultStudentText = null;
 
+            // Normalize search query: turns 20/08, 20-08, 20.08 into 20:08
             const cleanQuery = filterQuery.trim().toLowerCase().replace(/[-/.]/g, ':');
 
+            // Filter students matching Name OR normalized Date OR Class/Div
             const matchedStudents = globalBirthdays.filter(b => {
-                if (!cleanQuery) return true;
+                if (!cleanQuery) return true; // Show all if query is empty
 
                 const sName = (b['Student Name'] || '').toLowerCase();
                 const rawDate = String(b.Date || '').replace(/[-/.]/g, ':').toLowerCase();
@@ -2621,6 +2841,7 @@
             const searchInput = document.getElementById('bdayStudentSearch');
             const rawVal = searchInput.value;
 
+            // Dynamic real-time datalist suggestion narrowing
             populateStudentSearch(rawVal);
 
             const cleanInput = rawVal.trim().toLowerCase().replace(/[-/.]/g, ':');
@@ -2726,6 +2947,7 @@
 
             let finalMediaLink = compressedBase64ToUpload || (document.getElementById('mediaLink') ? document.getElementById('mediaLink').value : "");
             
+            // Format timestamp in DD:MM:YYYY HH:mm:ss
             const now = new Date();
             const timeSuffix = `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}:${String(now.getSeconds()).padStart(2,'0')}`;
             let rawDateVal = document.getElementById('customPostDate') ? document.getElementById('customPostDate').value.trim() : "";
@@ -2836,6 +3058,7 @@
                         return;
                     }
 
+                    // Strict Header Verification
                     const headers = lines[0].split(',').map(h => h.trim().toLowerCase().replace(/^["']|["']$/g, ''));
                     const dateIdx = headers.findIndex(h => h === 'date' || h.includes('birth'));
                     const nameIdx = headers.findIndex(h => h === 'student name' || h === 'name' || h.includes('student'));
@@ -2861,6 +3084,7 @@
                         let rawDate = row[dateIdx] || "";
                         let studentName = row[nameIdx] || "";
 
+                        // Strict format checks
                         const dateMatch = rawDate.match(dateRegex);
                         if (!dateMatch || studentName.trim() === "") {
                             skippedCount++;
@@ -2903,6 +3127,7 @@
                     statusDiv.innerText = `⏳ Saving ${parsedStudents.length} valid students (${skippedCount} invalid skipped)...`;
                     setYtProgress(65);
 
+                    // Firestore Batch Upload
                     const batchSize = 450;
                     for (let i = 0; i < parsedStudents.length; i += batchSize) {
                         const chunk = parsedStudents.slice(i, i + batchSize);
@@ -2961,6 +3186,7 @@
                         return;
                     }
 
+                    // Strict Header Verification
                     const headers = lines[0].split(',').map(h => h.trim().toLowerCase().replace(/^["']|["']$/g, ''));
                     const dateIdx = headers.findIndex(h => h === 'date' || h.includes('event date'));
                     const titleIdx = headers.findIndex(h => h === 'title' || h.includes('event'));
@@ -2987,6 +3213,7 @@
                         let title = titleIdx !== -1 ? (row[titleIdx] || "") : "";
                         let content = contentIdx !== -1 ? (row[contentIdx] || "") : "";
 
+                        // Strict format checks
                         const dateMatch = rawDate.match(dateRegex);
                         if (!dateMatch || (title.trim() === "" && content.trim() === "")) {
                             skippedCount++;
@@ -2999,7 +3226,7 @@
 
                         if (day < 1 || day > 31 || month < 1 || month > 12) {
                             skippedCount++;
-                            continue; 
+                            continue;
                         }
 
                         let safeDate = `${String(day).padStart(2, '0')}:${String(month).padStart(2, '0')}:${year}`;
@@ -3030,6 +3257,7 @@
                     statusDiv.innerText = `⏳ Saving ${parsedRecords.length} valid events (${skippedCount} invalid skipped)...`;
                     setYtProgress(65);
 
+                    // Firestore Batch Upload
                     const batchSize = 450;
                     for (let i = 0; i < parsedRecords.length; i += batchSize) {
                         const chunk = parsedRecords.slice(i, i + batchSize);
@@ -3142,111 +3370,6 @@
                     }
                 }
             });
-        }
-
-        // =========================================================================
-        // 📱 PWA: DYNAMIC MANIFEST INJECTION & INSTALLATION CONTROLLER
-        // =========================================================================
-        (function initPwaEngine() {
-            const APP_LOGO_URL = "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjGka-p7C45PTqBMBKqSjulqicQlHmW_Ee1BCfUPpaW888vYnoPjElzW9DVm8az1kCOjdlabjA3qb_vS00GpCApyVWh2C0aIcOcvb-BWeeTI8AdLojSf25iCvNpMS6aENxrWO-SgM5xjqePEMsHfCLy4HinnGk2xAnDlKaapXYFY05jXQM/s56-c/Logo2.png";
-
-            // 1. Dynamic Web App Manifest Blob Injection
-            const manifestContent = {
-                name: "TDTTI THURAVOOR | Live Portal",
-                short_name: "TD NEWS",
-                start_url: "./",
-                scope: "./",
-                display: "standalone",
-                orientation: "portrait-primary",
-                background_color: "#ffffff",
-                theme_color: "#0284c7",
-                description: "Official real-time live portal and news feed for TDTTI Thuravoor.",
-                icons: [
-                    {
-                        src: APP_LOGO_URL,
-                        sizes: "192x192",
-                        type: "image/png",
-                        purpose: "any maskable"
-                    },
-                    {
-                        src: APP_LOGO_URL,
-                        sizes: "512x512",
-                        type: "image/png",
-                        purpose: "any maskable"
-                    }
-                ]
-            };
-
-            const manifestBlob = new Blob([JSON.stringify(manifestContent)], { type: 'application/json' });
-            const manifestUrl = URL.createObjectURL(manifestBlob);
-            const manifestLink = document.createElement('link');
-            manifestLink.rel = 'manifest';
-            manifestLink.href = manifestUrl;
-            document.head.appendChild(manifestLink);
-
-            // 2. Service Worker Registration
-            if ('serviceWorker' in navigator) {
-                window.addEventListener('load', () => {
-                    navigator.serviceWorker.register('./sw.js')
-                        .then((reg) => console.log('✅ ServiceWorker Active (Scope:', reg.scope, ')'))
-                        .catch((err) => console.warn('⚠️ ServiceWorker Failed:', err));
-                });
-            }
-
-            // 3. PWA Installation Handler & Top Banner Prompt
-            let deferredPrompt = null;
-            const banner = document.getElementById('pwa-install-banner');
-            const installBtn = document.getElementById('pwa-install-btn');
-
-            const isAppAlreadyInstalled = 
-                window.matchMedia('(display-mode: standalone)').matches || 
-                window.navigator.standalone === true;
-
-            // Capture beforeinstallprompt event (Android Chrome / Edge / Desktop)
-            window.addEventListener('beforeinstallprompt', (e) => {
-                e.preventDefault();
-                deferredPrompt = e;
-
-                if (!isAppAlreadyInstalled && !sessionStorage.getItem('pwa_banner_dismissed')) {
-                    setTimeout(() => {
-                        if (banner) banner.classList.add('show');
-                    }, 1200);
-                }
-            });
-
-            // 1-Click Installation Trigger
-            if (installBtn) {
-                installBtn.addEventListener('click', async () => {
-                    if (!deferredPrompt) {
-                        if (/iPhone|iPad|iPod/.test(navigator.userAgent)) {
-                            showCustomAlert("📲 To install on iOS:\nTap the Share button below and select 'Add to Home Screen'.");
-                        } else {
-                            showCustomAlert("App is already installed or your browser doesn't support 1-click install.");
-                        }
-                        return;
-                    }
-
-                    deferredPrompt.prompt();
-                    const { outcome } = await deferredPrompt.userChoice;
-                    
-                    if (outcome === 'accepted') {
-                        if (banner) banner.classList.remove('show');
-                    }
-                    deferredPrompt = null;
-                });
-            }
-
-            // Detect Successful Installation
-            window.addEventListener('appinstalled', () => {
-                if (banner) banner.classList.remove('show');
-                deferredPrompt = null;
-            });
-        })();
-
-        function dismissPwaBanner() {
-            const banner = document.getElementById('pwa-install-banner');
-            if (banner) banner.classList.remove('show');
-            sessionStorage.setItem('pwa_banner_dismissed', 'true');
         }
     </script>
 </body>
