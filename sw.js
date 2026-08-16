@@ -1,10 +1,11 @@
-const CACHE_NAME = 'tdtti-ss7-cache-v1';
+const CACHE_NAME = 'tdtti-ss7-cache-v2';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
   'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css',
-  'https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js',
-  'https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js'
+  'https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap',
+  'https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js',
+  'https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js'
 ];
 
 // Install Event - Pre-cache offline core assets
@@ -38,7 +39,7 @@ self.addEventListener('activate', (event) => {
 // Fetch Event - Cache First, Network Fallback
 self.addEventListener('fetch', (event) => {
   // Exclude non-GET requests or live Firestore sync requests from SW intercept
-  if (event.request.method !== 'GET' || event.request.url.includes('firestore.googleapis.com')) {
+  if (event.request.method !== 'GET' || event.request.url.includes('firestore.googleapis.com') || event.request.url.includes('firebasedatabase.app')) {
     return;
   }
 
