@@ -20,9 +20,9 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 
     <style>
-        /* === WEB PROTECTION CSS === */
-        body { -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; }
-        img { -webkit-user-drag: none; -khtml-user-drag: none; -moz-user-drag: none; -o-user-drag: none; }
+        /* === WEB PROTECTION CSS (TOGGLEABLE BY SUPER ADMIN) === */
+        body.web-protected { -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; }
+        body.web-protected img { -webkit-user-drag: none; -khtml-user-drag: none; -moz-user-drag: none; -o-user-drag: none; }
 
         :root {
             --bg-color: #f6f8fb;
@@ -351,6 +351,7 @@
         .bg-indigo { background: linear-gradient(135deg, #6366f1, #4338ca); color: white; }
         .bg-fuchsia { background: linear-gradient(135deg, #d946ef, #a21caf); color: white; }
         .bg-rose { background: linear-gradient(135deg, #f43f5e, #be123c); color: white; }
+        .bg-slate { background: linear-gradient(135deg, #475569, #0f172a); color: white; }
 
         .admin-section-nav-header {
             display: flex; align-items: center; justify-content: space-between;
@@ -448,7 +449,7 @@
         .footer-socials a.mail:hover { background: #EA4335; color: #fff;}
     </style>
 </head>
-<body>
+<body class="web-protected">
 
     <!-- Progressive YouTube-Style Loader -->
     <div id="yt-loader" class="yt-loader"></div>
@@ -592,6 +593,10 @@
                         <div class="app-icon-box bg-rose">📊</div>
                         <span>Activity Chart</span>
                     </div>
+                    <div class="admin-app-icon super-only-app" style="display: none;" onclick="openAdminSection('super_security')">
+                        <div class="app-icon-box bg-slate">🛡️</div>
+                        <span>Web Protection</span>
+                    </div>
                 </div>
 
                 <!-- === SECTION ACTIVE HEADER WITH TOP RIGHT BACK BUTTON === -->
@@ -635,6 +640,29 @@
                 <div id="superActivitySection" style="display: none; width: 100%; margin-bottom: 15px;">
                     <p style="font-size: 0.8rem; color: var(--text-gray); margin-bottom: 10px;">Tap on any administrator below to expand their activity chart and credentials:</p>
                     <div id="superActivityListContainer" style="width: 100%;">Loading activity...</div>
+                </div>
+
+                <!-- SUPER ADMIN: WEB PROTECTION SECURITY TOGGLE SECTION -->
+                <div id="superSecuritySection" style="display: none; width: 100%; margin-bottom: 15px;">
+                    <div style="background: #ffffff; border: 1px solid #e2e8f0; padding: 18px; border-radius: 10px; width: 100%;">
+                        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; border-bottom: 1px solid #f1f5f9; padding-bottom: 10px;">
+                            <div>
+                                <strong style="font-size: 1rem; color: var(--text-dark); display: block;">🛡️ Website Content Protection</strong>
+                                <span style="font-size: 0.78rem; color: var(--text-gray);">Controls text selection, image drag, right-click, and inspection hotkeys (Ctrl+U/S/C/P).</span>
+                            </div>
+                            <span id="securityStatusBadge" class="status-bulb active" title="Current Status" style="width: 14px; height: 14px;"></span>
+                        </div>
+
+                        <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px; margin-bottom: 16px; font-size: 0.82rem; color: #334155; line-height: 1.5;">
+                            <strong>Current State:</strong> <span id="securityStatusText" style="font-weight: 800; color: var(--accent-green);">🟢 ENABLED (Protected)</span><br>
+                            <span style="color: var(--text-gray); font-size: 0.76rem;">When enabled, visitors cannot right-click, copy text, drag images, or use source inspection shortcuts.</span>
+                        </div>
+
+                        <div style="display: flex; gap: 10px;">
+                            <button type="button" class="btn-submit" style="background: #16a34a; margin: 0; flex: 1;" onclick="setWebProtection(true)">🔒 Enable Protection</button>
+                            <button type="button" class="btn-submit" style="background: #dc2626; margin: 0; flex: 1;" onclick="setWebProtection(false)">🔓 Disable Protection</button>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- 📦 SUPER ADMIN ONLY: BULK BIRTHDAYS UPLOAD SECTION -->
@@ -726,7 +754,7 @@
                     <div id="birthdayFields" style="display:none; background: #e5e7eb; padding: 12px; border-radius: 8px; margin-bottom: 12px;">
                         <div class="form-group" style="position: relative;">
                             <label style="color: var(--accent-blue);">🔍 Search Student (By Name or Date)</label>
-                            <input type="text" id="bdayStudentSearch" list="bdayStudentList" class="form-control" placeholder="Type name or date" oninput="autoFillStudent()">
+                            <input type="text" id="bdayStudentSearch" list="bdayStudentList" class="form-control" placeholder="Type name or date (e.g. 20/08)" oninput="autoFillStudent()">
                             <datalist id="bdayStudentList"></datalist>
                             <input type="hidden" id="selectedStudentDocId">
                         </div>
@@ -866,6 +894,41 @@
 
         // High Quality Default Person Avatar (SVG)
         const DEFAULT_PERSON_AVATAR = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%23e5e7eb'/><circle cx='50' cy='38' r='18' fill='%239ca3af'/><path d='M50 62c-18 0-32 10-32 24v4h64v-4c0-14-14-24-32-24z' fill='%239ca3af'/></svg>";
+
+        // =========================================================================
+        // 🛡️ DYNAMIC WEB PROTECTION (TOGGLEABLE IN REAL-TIME BY SUPER ADMIN)
+        // =========================================================================
+        let isWebProtectionEnabled = true;
+
+        function applyWebProtectionState(enabled) {
+            isWebProtectionEnabled = enabled;
+            if (enabled) {
+                document.body.classList.add('web-protected');
+            } else {
+                document.body.classList.remove('web-protected');
+            }
+
+            const badge = document.getElementById('securityStatusBadge');
+            const text = document.getElementById('securityStatusText');
+            if (badge) {
+                badge.className = `status-bulb ${enabled ? 'active' : 'inactive'}`;
+            }
+            if (text) {
+                text.innerHTML = enabled 
+                    ? `<span style="color:var(--accent-green); font-weight:800;">🟢 ENABLED (Protected)</span>` 
+                    : `<span style="color:var(--accent-red); font-weight:800;">🔴 DISABLED (Unprotected)</span>`;
+            }
+        }
+
+        document.addEventListener('contextmenu', event => {
+            if (isWebProtectionEnabled) event.preventDefault();
+        }); 
+
+        document.addEventListener('keydown', function(e) {
+            if (isWebProtectionEnabled && e.ctrlKey && (e.key === 'u' || e.key === 's' || e.key === 'c' || e.key === 'p')) {
+                e.preventDefault();
+            }
+        });
 
         // === 100% RELIABLE INSTANT PWA ENGINE ===
         (function initPwaEngine() {
@@ -1181,12 +1244,6 @@
             confirmCallback = null;
         }
 
-        // Web Protection
-        document.addEventListener('contextmenu', event => event.preventDefault()); 
-        document.addEventListener('keydown', function(e) {
-            if(e.ctrlKey && (e.key === 'u' || e.key === 's' || e.key === 'c' || e.key === 'p')) e.preventDefault();
-        });
-
         const AUTHOR_PROFILES = [
             { name: "TDTTI THURAVOOR", avatar: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjGka-p7C45PTqBMBKqSjulqicQlHmW_Ee1BCfUPpaW888vYnoPjElzW9DVm8az1kCOjdlabjA3qb_vS00GpCApyVWh2C0aIcOcvb-BWeeTI8AdLojSf25iCvNpMS6aENxrWO-SgM5xjqePEMsHfCLy4HinnGk2xAnDlKaapXYFY05jXQM/s56-c/Logo2.png" },
             { name: "Principal Asha V", avatar: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiRkN_fkpQ9rzeGYiaN7YahUs6pPmumJngjvCBYP004ffxlSzJ2gkzs1lHzRMx7aJs-SHDhfShCwl8FqJDitti_7aNAxE_tHEQsp7Z55nUKyBJ5V2gD2opBM5rfQFHU4hikmVxyVSpRusWYqVqc4r1qh4sg-J9wO99AOzpjBp7BGHZlxXwi2mAY34pDUcmT/s1238/va.jpeg" },
@@ -1294,13 +1351,17 @@
                 console.error("Firestore Birthdays Error:", error);
             });
 
-            // 3. Settings Realtime Listener
+            // 3. Settings Realtime Listener (Includes Web Protection Setting)
             db.collection('settings').doc('global').onSnapshot((doc) => {
                 if (doc.exists) {
                     globalSettings = doc.data() || {};
                 } else {
                     globalSettings = {};
                 }
+                
+                const protectionState = globalSettings.webProtection !== undefined ? globalSettings.webProtection : true;
+                applyWebProtectionState(protectionState);
+
                 renderAll(globalPosts, globalSettings);
             }, (error) => {
                 console.error("Firestore Settings Error:", error);
@@ -2083,7 +2144,8 @@
                 'bulk_birthdays': '📦 Bulk Import Birthdays',
                 'bulk_today': '📜 Bulk Import Today in History',
                 'super_users': '👥 Admin User Management',
-                'super_activity': '📊 Logins & Activity Chart'
+                'super_activity': '📊 Logins & Activity Chart',
+                'super_security': '🛡️ Web Content Protection'
             };
             navTitle.innerText = sectionTitles[mode] || 'Admin Section';
 
@@ -2095,6 +2157,7 @@
             document.getElementById('uploadForm').style.display = 'none';
             document.getElementById('superUsersSection').style.display = 'none';
             document.getElementById('superActivitySection').style.display = 'none';
+            document.getElementById('superSecuritySection').style.display = 'none';
             document.getElementById('bulkBirthdayGroup').style.display = 'none';
             document.getElementById('bulkTodayGroup').style.display = 'none';
             document.getElementById('adminSectionHeader').style.display = 'none';
@@ -2110,6 +2173,7 @@
             const bulkTodayGroup = document.getElementById('bulkTodayGroup');
             const superUsersSec = document.getElementById('superUsersSection');
             const superActSec = document.getElementById('superActivitySection');
+            const superSecSec = document.getElementById('superSecuritySection');
             const uploadForm = document.getElementById('uploadForm');
             const postDateField = document.getElementById('fg-postdate');
 
@@ -2117,6 +2181,7 @@
             if (bulkTodayGroup) bulkTodayGroup.style.display = 'none';
             if (superUsersSec) superUsersSec.style.display = 'none';
             if (superActSec) superActSec.style.display = 'none';
+            if (superSecSec) superSecSec.style.display = 'none';
 
             if (currentAdminMode === 'super_users') {
                 uploadForm.style.display = 'none';
@@ -2127,6 +2192,10 @@
                 uploadForm.style.display = 'none';
                 superActSec.style.display = 'block';
                 renderSuperAdminActivity();
+            }
+            else if (currentAdminMode === 'super_security') {
+                uploadForm.style.display = 'none';
+                if (superSecSec) superSecSec.style.display = 'block';
             }
             else if (currentAdminMode === 'bulk_today') {
                 uploadForm.style.display = 'none';
@@ -2420,6 +2489,26 @@
             const body = document.getElementById(cardId);
             if (body) body.classList.toggle('show');
         }
+
+        // =========================================================================
+        // 🛡️ SUPER ADMIN: WEB PROTECTION FIRESTORE UPDATER
+        // =========================================================================
+        async function setWebProtection(enable) {
+            startYtLoader(40);
+            try {
+                await db.collection('settings').doc('global').set({
+                    webProtection: enable
+                }, { merge: true });
+
+                applyWebProtectionState(enable);
+                recordAdminActivity(currentAdminName, `${enable ? 'Enabled' : 'Disabled'} Web Content Protection`);
+                finishYtLoader();
+                showCustomAlert(`✅ Web Protection has been ${enable ? 'ENABLED' : 'DISABLED'} successfully!`);
+            } catch(e) {
+                finishYtLoader();
+                showCustomAlert("Error updating protection: " + e.message);
+            }
+        }
         
         async function resetProfileToAuto() {
             startYtLoader(40);
@@ -2553,7 +2642,7 @@
         }
         
         function toggleFields() {
-            if(currentAdminMode === 'settings' || currentAdminMode === 'super_users' || currentAdminMode === 'super_activity') return; 
+            if(currentAdminMode === 'settings' || currentAdminMode === 'super_users' || currentAdminMode === 'super_activity' || currentAdminMode === 'super_security') return; 
 
             const sec = document.getElementById('sectionSelect').value;
             const bdayFields = document.getElementById('birthdayFields');
@@ -2607,132 +2696,115 @@
         }
 
         // =========================================================================
-// 🔍 REAL-TIME DYNAMIC STUDENT BIRTHDAY SEARCH & AUTO-FILTER
-// =========================================================================
+        // 🔍 REAL-TIME DYNAMIC STUDENT BIRTHDAY SEARCH & AUTO-FILTER
+        // =========================================================================
+        function populateStudentSearch(filterQuery = "") {
+            const datalist = document.getElementById('bdayStudentList');
+            if (!datalist) return;
+            datalist.innerHTML = '';
 
-function populateStudentSearch(filterQuery = "") {
-    const datalist = document.getElementById('bdayStudentList');
-    if (!datalist) return;
-    datalist.innerHTML = '';
+            const todayStr = getTodayDateStr().substring(0, 5); // "DD:MM"
+            let defaultStudentText = null;
 
-    const todayStr = getTodayDateStr().substring(0, 5); // "DD:MM"
-    let defaultStudentText = null;
+            // Normalize search query: turns 20/08, 20-08, 20.08 into 20:08
+            const cleanQuery = filterQuery.trim().toLowerCase().replace(/[-/.]/g, ':');
 
-    // Normalize search query: turns 20/08, 20-08, 20.08 into 20:08
-    const cleanQuery = filterQuery.trim().toLowerCase().replace(/[-/.]/g, ':');
+            // Filter students matching Name OR normalized Date OR Class/Div
+            const matchedStudents = globalBirthdays.filter(b => {
+                if (!cleanQuery) return true; // Show all if query is empty
 
-    // Filter students matching Name OR normalized Date OR Class/Div
-    const matchedStudents = globalBirthdays.filter(b => {
-        if (!cleanQuery) return true; // Show all if input is empty
+                const sName = (b['Student Name'] || '').toLowerCase();
+                const rawDate = String(b.Date || '').replace(/[-/.]/g, ':').toLowerCase();
+                const sClass = (b.Class || '').toLowerCase();
+                const sDiv = (b.Division || '').toLowerCase();
+                const combinedText = `${sName} - ${rawDate} (${sClass}${sDiv})`.toLowerCase();
 
-        const sName = (b['Student Name'] || '').toLowerCase();
-        const rawDate = String(b.Date || '').replace(/[-/.]/g, ':').toLowerCase();
-        const sClass = (b.Class || '').toLowerCase();
-        const sDiv = (b.Division || '').toLowerCase();
-        const combinedText = `${sName} - ${rawDate} (${sClass}${sDiv})`.toLowerCase();
+                return sName.includes(cleanQuery) || 
+                       rawDate.includes(cleanQuery) || 
+                       combinedText.includes(cleanQuery);
+            });
 
-        return sName.includes(cleanQuery) || 
-               rawDate.includes(cleanQuery) || 
-               combinedText.includes(cleanQuery);
-    });
+            matchedStudents.forEach(b => {
+                const opt = document.createElement('option');
+                const displayText = `${b['Student Name'] || 'Unknown'} - ${b.Date} (${b.Class || ''}${b.Division || ''})`;
+                opt.value = displayText;
+                datalist.appendChild(opt);
 
-    // Populate Datalist with ONLY matched students
-    matchedStudents.forEach(b => {
-        const opt = document.createElement('option');
-        const displayText = `${b['Student Name'] || 'Unknown'} - ${b.Date} (${b.Class || ''}${b.Division || ''})`;
-        opt.value = displayText;
-        datalist.appendChild(opt);
-
-        const safeDate = String(b.Date || "").replace(/[-/.]/g, ':').trim(); 
-        if (!defaultStudentText && safeDate.startsWith(todayStr)) { 
-            defaultStudentText = displayText; 
-        }
-    });
-
-    // Initial page load default selection (if query is empty and not user-typed)
-    if (filterQuery === "") {
-        const searchInput = document.getElementById('bdayStudentSearch');
-        if (defaultStudentText) {
-            searchInput.value = defaultStudentText;
-            autoFillStudent();
-        } else {
-            searchInput.value = "";
-            resetBdayFields();
-        }
-    }
-}
-
-function autoFillStudent() {
-    const searchInput = document.getElementById('bdayStudentSearch');
-    const rawVal = searchInput.value;
-
-    // 1. Instantly re-filter suggestions while typing (e.g., typing "20/08" hides everything else)
-    populateStudentSearch(rawVal);
-
-    // 2. Check if current input matches a selected student
-    const cleanInput = rawVal.trim().toLowerCase().replace(/[-/.]/g, ':');
-
-    const student = globalBirthdays.find(b => {
-        const sName = (b['Student Name'] || '').toLowerCase();
-        const rawDate = String(b.Date || '').replace(/[-/.]/g, ':').toLowerCase();
-        const sClass = (b.Class || '').toLowerCase();
-        const sDiv = (b.Division || '').toLowerCase();
-        const exactOption = `${sName} - ${b.Date} (${sClass}${sDiv})`.toLowerCase();
-        const normalizedOption = `${sName} - ${rawDate} (${sClass}${sDiv})`.toLowerCase();
-
-        return exactOption === rawVal.toLowerCase() || 
-               normalizedOption === cleanInput ||
-               (cleanInput.length > 3 && sName === cleanInput);
-    });
-
-    const adminCommBox = document.getElementById('adminCommentManager');
-    const adminCommList = document.getElementById('adminCommentList');
-    if (adminCommList) adminCommList.innerHTML = '';
-
-    if (student) {
-        // Auto-fill all student fields
-        document.getElementById('selectedStudentDocId').value = student.id;
-        document.getElementById('bdayStudentName').value = student['Student Name'] || "";
-        document.getElementById('bdayDate').value = student.Date || "";
-        document.getElementById('studentClass').value = student.Class || "";
-        document.getElementById('studentDiv').value = student.Division || "";
-
-        // Load Comments for this student if available
-        if (student.Comments) {
-            try {
-                let cArray = typeof student.Comments === 'string' ? JSON.parse(student.Comments) : student.Comments;
-                if (cArray.length > 0) {
-                    adminCommBox.style.display = 'block';
-                    cArray.forEach(c => {
-                        adminCommList.innerHTML += `
-                            <div class="admin-comment-item" id="admin-c-${c.id}">
-                                <div style="flex:1;">
-                                    <strong style="font-size:0.82rem;">${c.name} (${timeAgo(c.date)}):</strong>
-                                    <input type="text" id="admin-c-val-${c.id}" value="${c.text}" class="form-control" style="padding:4px; margin-top:2px;">
-                                </div>
-                                <div class="admin-comment-actions">
-                                    <button type="button" style="background:#10b981; color:white;" onclick="editAdminCmt('${student.id}', 'birthdays', '${c.id}')">Save</button>
-                                    <button type="button" style="background:var(--accent-red); color:white;" onclick="delAdminCmt('${student.id}', 'birthdays', '${c.id}')">Del</button>
-                                </div>
-                            </div>
-                        `;
-                    });
-                } else {
-                    adminCommBox.style.display = 'none';
+                const safeDate = String(b.Date || "").replace(/[-/.]/g, ':').trim(); 
+                if (!defaultStudentText && safeDate.startsWith(todayStr)) { 
+                    defaultStudentText = displayText; 
                 }
-            } catch(e) {
-                adminCommBox.style.display = 'none';
-            }
-        } else {
-            adminCommBox.style.display = 'none';
-        }
-    } else {
-        // Clear read-only fields until a valid student option is picked
-        resetBdayFields();
-    }
-}
+            });
 
-        
+            if (filterQuery === "") {
+                const searchInput = document.getElementById('bdayStudentSearch');
+                if (defaultStudentText) {
+                    searchInput.value = defaultStudentText;
+                    autoFillStudent();
+                } else {
+                    searchInput.value = "";
+                    resetBdayFields();
+                }
+            }
+        }
+
+        function autoFillStudent() {
+            const searchInput = document.getElementById('bdayStudentSearch');
+            const rawVal = searchInput.value;
+
+            // Dynamic real-time datalist suggestion narrowing
+            populateStudentSearch(rawVal);
+
+            const cleanInput = rawVal.trim().toLowerCase().replace(/[-/.]/g, ':');
+
+            const student = globalBirthdays.find(b => {
+                const sName = (b['Student Name'] || '').toLowerCase();
+                const rawDate = String(b.Date || '').replace(/[-/.]/g, ':').toLowerCase();
+                const sClass = (b.Class || '').toLowerCase();
+                const sDiv = (b.Division || '').toLowerCase();
+                const exactOption = `${sName} - ${b.Date} (${sClass}${sDiv})`.toLowerCase();
+                const normalizedOption = `${sName} - ${rawDate} (${sClass}${sDiv})`.toLowerCase();
+
+                return exactOption === rawVal.toLowerCase() || 
+                       normalizedOption === cleanInput ||
+                       (cleanInput.length > 3 && sName === cleanInput);
+            });
+
+            const adminCommBox = document.getElementById('adminCommentManager');
+            const adminCommList = document.getElementById('adminCommentList');
+            if (adminCommList) adminCommList.innerHTML = '';
+
+            if (student) {
+                document.getElementById('selectedStudentDocId').value = student.id;
+                document.getElementById('bdayStudentName').value = student['Student Name'] || "";
+                document.getElementById('bdayDate').value = student.Date || "";
+                document.getElementById('studentClass').value = student.Class || "";
+                document.getElementById('studentDiv').value = student.Division || "";
+
+                if (student.Comments) {
+                    try {
+                        let cArray = typeof student.Comments === 'string' ? JSON.parse(student.Comments) : student.Comments;
+                        if (cArray.length > 0) {
+                            adminCommBox.style.display = 'block';
+                            cArray.forEach(c => {
+                                adminCommList.innerHTML += `
+                                    <div class="admin-comment-item" id="admin-c-${c.id}">
+                                        <div style="flex:1;">
+                                            <strong style="font-size:0.82rem;">${c.name} (${timeAgo(c.date)}):</strong>
+                                            <input type="text" id="admin-c-val-${c.id}" value="${c.text}" class="form-control" style="padding:4px; margin-top:2px;">
+                                        </div>
+                                        <div class="admin-comment-actions">
+                                            <button type="button" style="background:#10b981; color:white;" onclick="editAdminCmt('${student.id}', 'birthdays', '${c.id}')">Save</button>
+                                            <button type="button" style="background:var(--accent-red); color:white;" onclick="delAdminCmt('${student.id}', 'birthdays', '${c.id}')">Del</button>
+                                        </div>
+                                    </div>
+                                `;
+                            });
+                        } else { adminCommBox.style.display = 'none'; }
+                    } catch(e) { adminCommBox.style.display = 'none'; }
+                } else { adminCommBox.style.display = 'none'; }
+            } else { resetBdayFields(); }
+        }
 
         function resetBdayFields() {
             document.getElementById('selectedStudentDocId').value = "";
