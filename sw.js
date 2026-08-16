@@ -1,11 +1,7 @@
 // =========================================================================
-// 🚀 TDTTI PRODUCTION SERVICE WORKER (sw.js)
+// 🚀 TD NEWS PWA SERVICE WORKER (Cache-First + Stale-While-Revalidate)
 // =========================================================================
-const CACHE_VERSION = 'tdtti-pwa-v1.0.0';
-const STATIC_CACHE_NAME = `static-${CACHE_VERSION}`;
-const RUNTIME_CACHE_NAME = `runtime-${CACHE_VERSION}`;
-
-// Pre-cached App Shell Assets
+const CACHE_NAME = 'td-news-cache-v1';
 const PRECACHE_ASSETS = [
     './',
     './index.html',
@@ -15,23 +11,23 @@ const PRECACHE_ASSETS = [
     'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjGka-p7C45PTqBMBKqSjulqicQlHmW_Ee1BCfUPpaW888vYnoPjElzW9DVm8az1kCOjdlabjA3qb_vS00GpCApyVWh2C0aIcOcvb-BWeeTI8AdLojSf25iCvNpMS6aENxrWO-SgM5xjqePEMsHfCLy4HinnGk2xAnDlKaapXYFY05jXQM/s56-c/Logo2.png'
 ];
 
-// 1. INSTALL: Pre-cache App Shell
+// 1. INSTALL: Pre-cache static UI assets & fonts
 self.addEventListener('install', (event) => {
     event.waitUntil(
-        caches.open(STATIC_CACHE_NAME)
-            .then((cache) => cache.addAll(PRECACHE_ASSETS))
-            .then(() => self.skipWaiting())
+        caches.open(CACHE_NAME).then((cache) => {
+            return cache.addAll(PRECACHE_ASSETS);
+        }).then(() => self.skipWaiting())
     );
 });
 
-// 2. ACTIVATE: Cleanup Old Cache Versions
+// 2. ACTIVATE: Clear old cache versions
 self.addEventListener('activate', (event) => {
     event.waitUntil(
         caches.keys().then((cacheNames) => {
             return Promise.all(
-                cacheNames.map((cacheName) => {
-                    if (cacheName !== STATIC_CACHE_NAME && cacheName !== RUNTIME_CACHE_NAME) {
-                        return caches.delete(cacheName);
+                cacheNames.map((cache) => {
+                    if (cache !== CACHE_NAME) {
+                        return caches.delete(cache);
                     }
                 })
             );
@@ -39,17 +35,17 @@ self.addEventListener('activate', (event) => {
     );
 });
 
-// 3. FETCH: Cache-First Strategy with Offline Fallback
+// 3. FETCH: Stale-While-Revalidate for cached assets & pass-through for Firebase live updates
 self.addEventListener('fetch', (event) => {
     const request = event.request;
     const url = new URL(request.url);
 
-    // Bypass Firebase Realtime / Firestore WebChannel & WebSocket Requests
+    // Bypass real-time Firebase backend sync, websockets, and POST mutations
     if (
-        request.method !== 'GET' ||
-        url.hostname.includes('firestore.googleapis.com') ||
-        url.hostname.includes('firebaseio.com') ||
-        url.pathname.includes('/google.firestore.')
+        url.origin.includes('firestore.googleapis.com') ||
+        url.origin.includes('firebaseio.com') ||
+        url.origin.includes('googleapis.com/google.firestore') ||
+        request.method !== 'GET'
     ) {
         return;
     }
@@ -57,26 +53,29 @@ self.addEventListener('fetch', (event) => {
     event.respondWith(
         caches.match(request).then((cachedResponse) => {
             if (cachedResponse) {
+                // Return cached version immediately and refresh in background
+                fetch(request).then((networkResponse) => {
+                    if (networkResponse && networkResponse.status === 200) {
+                        caches.open(CACHE_NAME).then((cache) => cache.put(request, networkResponse));
+                    }
+                }).catch(() => {});
                 return cachedResponse;
             }
 
+            // Fetch from network for dynamic images/resources
             return fetch(request).then((networkResponse) => {
-                // Cache valid fonts and static assets dynamically
-                if (
-                    networkResponse && 
-                    networkResponse.status === 200 && 
-                    (url.origin === location.origin || url.hostname.includes('gstatic.com') || url.hostname.includes('googleapis.com'))
-                ) {
-                    const responseClone = networkResponse.clone();
-                    caches.open(RUNTIME_CACHE_NAME).then((cache) => {
-                        cache.put(request, responseClone);
-                    });
+                if (!networkResponse || networkResponse.status !== 200 || networkResponse.type !== 'basic') {
+                    return networkResponse;
                 }
+                const responseToCache = networkResponse.clone();
+                caches.open(CACHE_NAME).then((cache) => {
+                    cache.put(request, responseToCache);
+                });
                 return networkResponse;
             }).catch(() => {
-                // Return offline index.html fallback for navigation requests
+                // Offline Fallback for main document
                 if (request.mode === 'navigate') {
-                    return caches.match('./index.html');
+                    return caches.match('./index.html') || caches.match('./');
                 }
             });
         })
