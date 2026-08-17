@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="theme-color" content="#0284c7">
+    
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -61,7 +61,7 @@
 
         /* === LIVE NOTICE TICKER === */
         .ticker-wrapper { 
-            background: var(--accent-blue); color: #ffffff; display: flex; align-items: center; 
+            background: #003db3; color: #ffffff; display: flex; align-items: center; 
             font-size: 0.88rem; font-weight: 700; box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
         .ticker-badge { 
@@ -86,8 +86,8 @@
         .cover-school-name:hover { transform: translateY(-2px); }
 
         .live-viewers-badge {
-            background: rgba(0, 0, 0, 0.75); color: #ffffff; padding: 6px 12px;
-            border-radius: 20px; font-size: 0.78rem; font-weight: 700; display: inline-flex;
+            background: rgba(255, 255, 255, 0.95); color: var(--accent-blue); padding: 6px 12px;
+            border-radius: 8px; font-size: 1.3rem; font-weight: 700; display: inline-flex;
             align-items: center; gap: 6px; backdrop-filter: blur(8px);
             box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
@@ -628,7 +628,7 @@
                  onmouseleave="cancelLoginPress()" 
                  ontouchstart="startLoginPress(event)" 
                  ontouchend="cancelLoginPress()" 
-                 title="Admin Login"
+                 title=""
                  style="-webkit-touch-callout: none;">
                 <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjGka-p7C45PTqBMBKqSjulqicQlHmW_Ee1BCfUPpaW888vYnoPjElzW9DVm8az1kCOjdlabjA3qb_vS00GpCApyVWh2C0aIcOcvb-BWeeTI8AdLojSf25iCvNpMS6aENxrWO-SgM5xjqePEMsHfCLy4HinnGk2xAnDlKaapXYFY05jXQM/s56-c/Logo2.png" alt="School Logo" decoding="async">
             </div>
@@ -636,7 +636,7 @@
         <img src="https://via.placeholder.com/1200x300.png?text=Loading+Cover..." class="cover-photo" id="ui-cover" decoding="async">
         
         <div class="profile-pic-container">
-            <img src="" class="profile-pic" id="ui-profile" onclick="window.location.reload();" title="Refresh Page" decoding="async">
+            <img src="" class="profile-pic" id="ui-profile" onclick="window.location.reload();" title="" decoding="async">
             <h2 class="school-slogan">Empowering Minds..<br>Shaping Futures...</h2>
         </div>
     </header>
@@ -657,12 +657,12 @@
     <footer class="site-footer">
         <div class="footer-socials">
             <a href="https://wa.me/911234567890" class="wa" target="_blank" title="WhatsApp"><svg viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.91C21.95 6.45 17.5 2 12.04 2m.01 1.67c4.54 0 8.23 3.7 8.23 8.24 0 4.54-3.7 8.23-8.23 8.23-1.53 0-3.04-.42-4.36-1.2l-.31-.18-3.24.85.86-3.16-.2-.32c-.86-1.37-1.31-2.96-1.31-4.59 0-4.54 3.7-8.24 8.24-8.24m4.67 11.23c-.26-.13-1.52-.75-1.76-.84-.23-.08-.41-.13-.58.13-.18.26-.67.84-.82 1.01-.15.18-.3.2-.56.08-1.2-.55-2.22-1.12-3.05-2.24-.22-.29-.02-.45.1-.58.11-.11.26-.3.39-.45.13-.15.17-.26.26-.44.08-.17.04-.32-.02-.45-.06-.13-.58-1.4-.8-1.92-.21-.5-.42-.43-.58-.44h-.5c-.21 0-.56.08-.85.4s-1.12 1.1-1.12 2.68c0 1.58 1.15 3.1 1.31 3.32.16.21 2.27 3.46 5.49 4.85.77.33 1.37.53 1.84.68.77.24 1.47.2 2.02.12.61-.09 1.52-.62 1.74-1.22.21-.6.21-1.12.15-1.22-.07-.1-.24-.15-.5-.28z"/></svg></a>
-            <a href="https://facebook.com" class="fb" target="_blank" title="Facebook"><svg viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-1.1 0-2 .9-2 2v1h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/></svg></a>
-            <a href="https://youtube.com" class="yt" target="_blank" title="YouTube"><svg viewBox="0 0 24 24"><path d="M21.58 7.19c-.23-.86-.91-1.54-1.77-1.77C18.25 5 12 5 12 5s-6.25 0-7.81.42c-.86.23-1.54.91-1.77 1.77C2 8.75 2 12 2 12s0 3.25.42 4.81c.23.86.91 1.54 1.77 1.77C5.75 19 12 19 12 19s6.25 0 7.81-.42c.86-.23 1.54-.91 1.77-1.77C22 15.25 22 12 22 12s0-3.25-.42-4.81zM10 15V9l5.2 3-5.2 3z"/></svg></a>
-            <a href="https://instagram.com" class="ig" target="_blank" title="Instagram"><svg viewBox="0 0 24 24"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/></svg></a>
+            <a href="https://www.facebook.com/share/1DM7v7p7Ex/" class="fb" target="_blank" title="Facebook"><svg viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-1.1 0-2 .9-2 2v1h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/></svg></a>
+            <a href="https://youtube.com/@tdttithuravoor?feature=shared" class="yt" target="_blank" title="YouTube"><svg viewBox="0 0 24 24"><path d="M21.58 7.19c-.23-.86-.91-1.54-1.77-1.77C18.25 5 12 5 12 5s-6.25 0-7.81.42c-.86.23-1.54.91-1.77 1.77C2 8.75 2 12 2 12s0 3.25.42 4.81c.23.86.91 1.54 1.77 1.77C5.75 19 12 19 12 19s6.25 0 7.81-.42c.86-.23 1.54-.91 1.77-1.77C22 15.25 22 12 22 12s0-3.25-.42-4.81zM10 15V9l5.2 3-5.2 3z"/></svg></a>
+            <a href="https://www.instagram.com/tdttithuravur?igsh=MTY4c2t5M2w1ZWlheA==" class="ig" target="_blank" title="Instagram"><svg viewBox="0 0 24 24"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/></svg></a>
             <a href="mailto:contact@yourschool.com" class="mail" title="Email Us"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></a>
         </div>
-        <div style="font-size: 0.88rem;">&copy; 2026 TDTTI THURAVOOR Portal</div>
+        <div style="font-size: 0.88rem;">&copy;TDTTI THURAVOOR NEWS PORTAL@2026</div>
     </footer>
 
     <!-- Admin Login Modal -->
@@ -986,14 +986,14 @@
 
     (function injectPWAManifest() {
       const manifestData = {
-        name: "TDTTI SS 7 Progression Report",
-        short_name: "TDTTI SS 7",
-        description: "TDTTI Class 7 Social Science Progression Report E-Book Portal",
+        name: "TDTTI NEWS ",
+        short_name: "TD NEWS",
+        description: "TDTTI NEWS ONLINE PORTAL",
         start_url: "./",
         display: "standalone",
         orientation: "portrait-primary",
         background_color: "#ffffff",
-        theme_color: "#0284c7",
+        
         icons: [
           { src: PWA_LOGO_URL, sizes: "192x192", type: "image/png", purpose: "any maskable" },
           { src: PWA_LOGO_URL, sizes: "512x512", type: "image/png", purpose: "any maskable" }
@@ -1636,7 +1636,7 @@
                                     `).join('')}
                                 </div>
                                 <div class="add-comment-box">
-                                    <input type="text" class="c-input-name" placeholder="Your Name (Optional)">
+                                    <input type="text" class="c-input-name" placeholder="Your Name">
                                     <textarea class="c-input-text" rows="1" placeholder="Write a comment..."></textarea>
                                     <button onclick="postInstantComment(this, '${item.id}', 'posts')">Post</button>
                                 </div>
@@ -1654,9 +1654,9 @@
         <div class="quick-links-wrapper" style="order: 0;">
             <h3>⚡ Quick Links</h3>
             <div class="ql-grid">
-                <a href="#" class="ql-btn">🚌 SCHOOL BUS</a>
-                <a href="#" class="ql-btn">🧒 CM KIDS</a>
-                <a href="#" class="ql-btn">🗳️ SCHOOL ELECTION</a>
+                <a href="https://tdtti.github.io/schoolbus/" class="ql-btn">🚌 SCHOOL BUS</a>
+                <a href="https://tdtti.github.io/USS-SCHOLRS-2025-26/" class="ql-btn">🧒 CM KIDS</a>
+                <a href="https://tdschoolnews.in/" class="ql-btn">🗳️ SOCIAL SCIENCE 7 </a>
                 <a href="#" class="ql-btn">🎪 UTHSAV</a>
             </div>
         </div>`;
@@ -1919,43 +1919,48 @@
         return await urlOrBase64ToFile(src);
     }
 
-    async function sharePost(btn, docId, collectionName) {
-        let post = btn.closest('.bday-item, .fb-post');
-        let shareUrl = window.location.href;
+    // --- ZERO-TEXT IMAGE SHARING (OPENS SITE ON CLICK) ---
+async function sharePost(btn, docId, collectionName) {
+    let post = btn.closest('.bday-item, .fb-post');
+    let shareUrl = window.location.href;
 
-        const docRef = db.collection(collectionName).doc(docId);
-        docRef.update({
-            Shares: firebase.firestore.FieldValue.increment(1)
-        }).catch(e => {});
+    // Increment Firestore share counter
+    const docRef = db.collection(collectionName).doc(docId);
+    docRef.update({
+        Shares: firebase.firestore.FieldValue.increment(1)
+    }).catch(e => {});
 
-        startYtLoader(40);
-        let imageFile = null;
+    startYtLoader(40);
+    let imageFile = null;
+    try {
+        imageFile = await getShareFileFromPost(post);
+    } catch(e) {}
+    finishYtLoader();
+
+    // Native Web Share (Shares pure Image + URL Link, NO TEXT)
+    if (navigator.share) {
         try {
-            imageFile = await getShareFileFromPost(post);
-        } catch(e) {}
-        finishYtLoader();
-
-        if (navigator.share) {
-            try {
-                if (imageFile && navigator.canShare && navigator.canShare({ files: [imageFile] })) {
-                    await navigator.share({
-                        files: [imageFile],
-                        url: shareUrl
-                    });
-                    return;
-                } else {
-                    await navigator.share({
-                        url: shareUrl
-                    });
-                    return;
-                }
-            } catch(err) {
-                if (err.name === 'AbortError') return; 
+            if (imageFile && navigator.canShare && navigator.canShare({ files: [imageFile] })) {
+                await navigator.share({
+                    files: [imageFile],
+                    url: shareUrl
+                });
+                return;
+            } else {
+                // Fallback if device cannot attach files directly
+                await navigator.share({
+                    url: shareUrl
+                });
+                return;
             }
+        } catch(err) {
+            if (err.name === 'AbortError') return; // User canceled share sheet
         }
-
-        window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(shareUrl)}`, '_blank');
     }
+
+    // Direct fallback (opens WhatsApp with only the site URL)
+    window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(shareUrl)}`, '_blank');
+}
 
     function filterFairs(category, btnElement) {
         document.querySelectorAll('.fair-tab').forEach(b => b.classList.remove('active'));
