@@ -1,4 +1,4 @@
-const CACHE_NAME = 'tdtti-ss7-cache-v2';
+const CACHE_NAME = 'tdtti-ss7-cache-v3';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -38,7 +38,6 @@ self.addEventListener('activate', (event) => {
 
 // Fetch Event - Cache First, Network Fallback
 self.addEventListener('fetch', (event) => {
-  // Exclude non-GET requests or live Firestore sync requests from SW intercept
   if (event.request.method !== 'GET' || event.request.url.includes('firestore.googleapis.com') || event.request.url.includes('firebasedatabase.app')) {
     return;
   }
