@@ -1,5 +1,5 @@
-const CACHE_NAME = 'tdtti-ss7-cache-v2';
-const ASSETS_TO_CACHE = [
+const CACHE_NAME = 'td-news-cache-v2';
+const ASSETS_TO_CACHE = [ 
   './',
   './index.html',
   'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css',
