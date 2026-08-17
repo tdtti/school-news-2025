@@ -1,9 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#0284c7">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="TDTTI SS 7">
+    <link rel="apple-touch-icon" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg8JiVmEpr0ghbXQ1Z2Mk-5ZFi1lKNN0f9Eygw999ZF7-Sa4OyQRrhXU646M9kpwRa0Gr5dISn2pGtD_xD-ZEbarFZLrnMquwiMvtGw2U151LH7Jckv2gaRkWJ_CtSbzVM_i1dT-JZb4QeCkLbtyrzczfUnKfP33vi21IPIGHMWhD4SkJQ/s1600/Logo2.png">
     <title>TDTTI THURAVOOR | Live Portal</title>
 
     <!-- Font Awesome Icons -->
@@ -437,8 +442,8 @@
       <div style="display:flex; align-items:center; gap:12px; margin-bottom:8px;">
         <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg8JiVmEpr0ghbXQ1Z2Mk-5ZFi1lKNN0f9Eygw999ZF7-Sa4OyQRrhXU646M9kpwRa0Gr5dISn2pGtD_xD-ZEbarFZLrnMquwiMvtGw2U151LH7Jckv2gaRkWJ_CtSbzVM_i1dT-JZb4QeCkLbtyrzczfUnKfP33vi21IPIGHMWhD4SkJQ/s1600/Logo2.png" style="width:36px !important; height:36px !important; margin:0 !important; object-fit:contain;" alt="App Icon">
         <div>
-          <h4 style="margin:0; font-size:1rem; font-weight:700; color:white;">Install App TDTTI THURAVOOR | Live Portal</h4>
-          <p style="margin:2px 0 0 0; font-size:0.78rem; opacity:0.9;">TD LIVE NEWS  ANYTIME !</p>
+          <h4 style="margin:0; font-size:1rem; font-weight:700; color:white;">Install App for Online Study</h4>
+          <p style="margin:2px 0 0 0; font-size:0.78rem; opacity:0.9;">Study TDTTI VII SS LESSONS ANYTIME !</p>
         </div>
       </div>
 
@@ -598,7 +603,7 @@
                         <input type="hidden" id="editAdminDocId">
                         <div class="form-group"><label>Admin Name</label><input type="text" id="newAdminName" class="form-control" placeholder="e.g. Vice Principal Office"></div>
                         <div class="form-group"><label>Admin ID</label><input type="text" id="newAdminId" class="form-control" placeholder="Login ID"></div>
-                        <div class="form-group"><label>Password</label><input type="text" id="newAdminPass" class="form-control" placeholder="Password"></div>
+                        <div class="form-group"><label>Password</label><input type="password" id="newAdminPass" class="form-control" placeholder="Password"></div>
                         <div class="form-group">
                             <label>Role</label>
                             <select id="newAdminRole" class="form-control">
@@ -838,9 +843,9 @@
 
     (function injectPWAManifest() {
       const manifestData = {
-        name: "TDTTI THURAVOOR | Live Portal",
-        short_name: "TD NEWS",
-        description: "TDTTI THURAVOOR | Live Portal",
+        name: "TDTTI SS 7 Progression Report",
+        short_name: "TDTTI SS 7",
+        description: "TDTTI Class 7 Social Science Progression Report E-Book Portal",
         start_url: "./",
         display: "standalone",
         orientation: "portrait-primary",
@@ -864,7 +869,7 @@
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('./sw.js')
-          .then(() => console.log('TDTTI THURAVOOR | Live Portal PWA Service Worker Registered Successfully!'))
+          .then(() => console.log('TDTTI SS PWA Service Worker Registered Successfully!'))
           .catch((err) => {
             console.warn('PWA ServiceWorker Note: Ensure sw.js is uploaded to your root folder.');
           });
@@ -875,14 +880,13 @@
     // ⚡ FIREBASE INITIALIZATION (FIREBASE SPARK PLAN COMPATIBLE)
     // =========================================================================
     const firebaseConfig = {
-        apiKey: "AIzaSyDoPsAZ2mUwOfLi6AkQauATGQcFmGULiPY",
-        authDomain: "project-5056f7aa-ff5d-4a09-a4e.firebaseapp.com",
-        databaseURL: "https://project-5056f7aa-ff5d-4a09-a4e-default-rtdb.asia-southeast1.firebasedatabase.app",
-        projectId: "project-5056f7aa-ff5d-4a09-a4e",
-        storageBucket: "project-5056f7aa-ff5d-4a09-a4e.firebasestorage.app",
-        messagingSenderId: "760583934023",
-        appId: "1:760583934023:web:89b12200fd235c6812a162",
-        measurementId: "G-JN02KD0F8H"
+        apiKey: "AIzaSyA3TM-FmqeEVZxQdA5fMRWEeve3rLg1Ctc",
+  authDomain: "tsn2026-aa658.firebaseapp.com",
+  projectId: "tsn2026-aa658",
+  storageBucket: "tsn2026-aa658.firebasestorage.app",
+  messagingSenderId: "323332901185",
+  appId: "1:323332901185:web:9500c4228dc3d6af6339c0",
+  measurementId: "G-4HWQ0T3SJR"
     };
 
     if (!firebase.apps.length) {
@@ -1442,8 +1446,8 @@
                                         <span>${comments.length}</span>
                                     </button>
                                     
-                                    <!-- B&W SHARE ICON (PAPER AIRPLANE) -->
-                                    <button class="social-btn" onclick="sharePost(this, '${item.id}', 'posts')" title="Share">
+                                    <!-- B&W SHARE ICON (PAPER AIRPLANE - SENDS IMAGE & OPENS SITE ON CLICK) -->
+                                    <button class="social-btn" onclick="sharePost(this, '${item.id}', 'posts')" title="Share Image & Link">
                                         <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
                                         <span>${shares}</span>
                                     </button>
@@ -1714,26 +1718,92 @@
         }
     }
 
-    // --- FIREBASE SHARE HANDLER ---
+    // =========================================================================
+    // 🖼️ IMAGE CONVERTER & ADVANCED MEDIA SHARING (OPENS SITE ON CLICK)
+    // =========================================================================
+    async function urlOrBase64ToFile(urlOrBase64, filename = 'tdtti_share.jpg') {
+        try {
+            if (!urlOrBase64) return null;
+            if (urlOrBase64.startsWith('data:image')) {
+                const arr = urlOrBase64.split(',');
+                const mimeMatch = arr[0].match(/:(.*?);/);
+                const mime = mimeMatch ? mimeMatch[1] : 'image/jpeg';
+                const bstr = atob(arr[1]);
+                let n = bstr.length;
+                const u8arr = new Uint8Array(n);
+                while(n--) {
+                    u8arr[n] = bstr.charCodeAt(n);
+                }
+                return new File([u8arr], filename, { type: mime });
+            } else if (urlOrBase64.startsWith('http')) {
+                const res = await fetch(urlOrBase64, { mode: 'cors' });
+                const blob = await res.blob();
+                const ext = blob.type.split('/')[1] || 'jpg';
+                return new File([blob], `tdtti_share.${ext}`, { type: blob.type });
+            }
+        } catch(e) {
+            console.warn('Could not convert image source to file:', e);
+        }
+        return null;
+    }
+
+    async function getShareFileFromPost(postEl) {
+        if (!postEl) return null;
+        const imgEl = postEl.querySelector('.fb-media img, .bday-img-wrapper img, .fb-avatar');
+        if (!imgEl || !imgEl.src) return null;
+        
+        const src = imgEl.src;
+        if (src.startsWith('data:image/svg+xml')) return null;
+        return await urlOrBase64ToFile(src);
+    }
+
+    // --- FIREBASE SHARE HANDLER (SHARES IMAGE & OPENS SITE ON CLICK) ---
     async function sharePost(btn, docId, collectionName) {
         let post = btn.closest('.bday-item, .fb-post');
         let titleEl = post ? (post.querySelector('.post-title-share') || post.querySelector('.bday-info h5')) : null;
-        let titleText = titleEl ? titleEl.innerText : "Check out this update!";
+        let titleText = titleEl ? titleEl.innerText : "TDTTI THURAVOOR Portal Update";
         let shareTitle = "TDTTI THURAVOOR";
-        let shareText = `${titleText}\n\nRead more on our Live Portal:`;
         let shareUrl = window.location.href;
+        let shareText = `${titleText}\n\n👉 Click to view on Live Portal:\n${shareUrl}`;
 
         const docRef = db.collection(collectionName).doc(docId);
         docRef.update({
             Shares: firebase.firestore.FieldValue.increment(1)
         }).catch(e => {});
 
+        startYtLoader(40);
+        let imageFile = null;
+        try {
+            imageFile = await getShareFileFromPost(post);
+        } catch(e) {}
+        finishYtLoader();
+
         if (navigator.share) {
-            navigator.share({ title: shareTitle, text: shareText, url: shareUrl }).catch(err => {});
-        } else {
-            let waText = `*${shareTitle}*\n${titleText}\n\nView here: ${shareUrl}`;
-            window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(waText)}`, '_blank');
+            try {
+                if (imageFile && navigator.canShare && navigator.canShare({ files: [imageFile] })) {
+                    await navigator.share({
+                        files: [imageFile],
+                        title: shareTitle,
+                        text: shareText,
+                        url: shareUrl
+                    });
+                    return;
+                } else {
+                    await navigator.share({
+                        title: shareTitle,
+                        text: shareText,
+                        url: shareUrl
+                    });
+                    return;
+                }
+            } catch(err) {
+                if (err.name === 'AbortError') return; // User cancelled share
+            }
         }
+
+        // Fallback to WhatsApp share
+        let waText = `*${shareTitle}*\n${titleText}\n\n🌐 View & Read here: ${shareUrl}`;
+        window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(waText)}`, '_blank');
     }
 
     function filterFairs(category, btnElement) {
@@ -1842,7 +1912,7 @@
                         <button class="social-btn" onclick="sendBirthdayWish(this, '${sName}', '${student.id}')" title="Wish">
                             🎁 <span>${wishes}</span>
                         </button>
-                        <button class="social-btn" onclick="sharePost(this, '${student.id}', 'birthdays')" title="Share">
+                        <button class="social-btn" onclick="sharePost(this, '${student.id}', 'birthdays')" title="Share Image & Link">
                             <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
                             <span>${shares}</span>
                         </button>
@@ -1901,7 +1971,7 @@
             Wishes: firebase.firestore.FieldValue.increment(1)
         }).catch(e => {});
 
-        let text = `🎉 *Happy Birthday ${studentName}!* 🎂\n\nWishing you a fantastic day filled with joy and success!\n\nBest wishes from: *${senderName.toUpperCase()}*\n\nView today's birthdays here: ${window.location.href}`;
+        let text = `🎉 *Happy Birthday ${studentName}!* 🎂\n\nWishing you a fantastic day filled with joy and success!\n\nBest wishes from: *${senderName.toUpperCase()}*\n\n👉 View on Live Portal: ${window.location.href}`;
         window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank');
         closeWishModal();
     }
