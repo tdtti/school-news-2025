@@ -241,8 +241,14 @@
         .ql-btn:hover { background: #111827; color: white; border-color: #111827; }
 
         /* Modals & Full-Screen Overlay */
-        .modal-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(4px); z-index: 10000; display: none; align-items: center; justify-content: center; padding: 16px; }
-        .modal-overlay.active { display: flex; }
+        .modal-overlay { 
+            position: fixed; inset: 0; 
+            background: rgba(15, 23, 42, 0.72); 
+            backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+            z-index: 10000; display: none; align-items: center; justify-content: center; padding: 16px; 
+            opacity: 0; transition: opacity 0.25s ease;
+        }
+        .modal-overlay.active { display: flex; opacity: 1; }
         .modal-box { background: white; padding: 22px; border-radius: var(--radius-large); width: 100%; max-width: 480px; position: relative; max-height: 90vh; overflow-y: auto; box-shadow: 0 10px 40px rgba(0,0,0,0.2); border: 1px solid #e5e7eb; }
         .close-modal { position: absolute; top: 12px; right: 16px; font-size: 1.8rem; cursor: pointer; border: none; background: none; color: #6b7280; }
         .form-group { margin-bottom: 12px; width: 100%; }
@@ -254,8 +260,157 @@
         .btn-delete { background: var(--accent-red); margin-top: 5px; }
         
         /* =========================================================
-           🖥️ 100% FULL-WIDTH ADMIN DASHBOARD VIEW (NO MODAL BOX)
+           ✨ NEW ULTRA-MODERN COLORFUL MESSAGE BOXES & DIALOGS
            ========================================================= */
+        .modern-msg-box {
+            background: #ffffff;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 400px;
+            position: relative;
+            padding: 28px 24px 22px 24px;
+            text-align: center;
+            box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.8) inset;
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            overflow: hidden;
+            transform: scale(0.92) translateY(15px);
+            transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .modal-overlay.active .modern-msg-box {
+            transform: scale(1) translateY(0);
+        }
+
+        /* Top Glowing Multi-Color Gradient Highlight */
+        .modern-msg-box::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #0866FF, #00d2ff, #a855f7, #ec4899);
+        }
+
+        /* Vibrant Icon Orb */
+        .msg-icon-orb {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 14px auto;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75rem;
+            position: relative;
+            user-select: none;
+        }
+        .orb-blue {
+            background: linear-gradient(135deg, #e0f2fe, #bae6fd);
+            color: #0284c7;
+            box-shadow: 0 8px 24px rgba(2, 132, 199, 0.25);
+        }
+        .orb-green {
+            background: linear-gradient(135deg, #dcfce7, #bbf7d0);
+            color: #16a34a;
+            box-shadow: 0 8px 24px rgba(34, 197, 94, 0.25);
+        }
+        .orb-red {
+            background: linear-gradient(135deg, #fee2e2, #fecaca);
+            color: #dc2626;
+            box-shadow: 0 8px 24px rgba(239, 68, 68, 0.25);
+        }
+        .orb-purple {
+            background: linear-gradient(135deg, #f3e8ff, #e9d5ff);
+            color: #9333ea;
+            box-shadow: 0 8px 24px rgba(147, 51, 234, 0.25);
+        }
+        .orb-pink {
+            background: linear-gradient(135deg, #fce7f3, #fbcfe8);
+            color: #db2777;
+            box-shadow: 0 8px 24px rgba(219, 39, 119, 0.25);
+        }
+
+        .modern-msg-title {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: #0f172a;
+            margin-bottom: 6px;
+            letter-spacing: -0.2px;
+        }
+        .modern-msg-text {
+            font-size: 0.92rem;
+            color: #475569;
+            font-weight: 500;
+            line-height: 1.5;
+            margin-bottom: 20px;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .modern-btn-group {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            width: 100%;
+        }
+        .modern-btn {
+            flex: 1;
+            padding: 11px 18px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            user-select: none;
+        }
+        .modern-btn:active {
+            transform: scale(0.97);
+        }
+        .btn-grad-blue {
+            background: linear-gradient(135deg, #0866FF, #0052cc);
+            color: #ffffff;
+            box-shadow: 0 4px 14px rgba(8, 102, 255, 0.35);
+        }
+        .btn-grad-blue:hover {
+            background: linear-gradient(135deg, #0052cc, #003db3);
+            box-shadow: 0 6px 20px rgba(8, 102, 255, 0.45);
+            transform: translateY(-2px);
+        }
+        .btn-grad-green {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: #ffffff;
+            box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
+        }
+        .btn-grad-green:hover {
+            background: linear-gradient(135deg, #059669, #047857);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.45);
+            transform: translateY(-2px);
+        }
+        .btn-grad-red {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: #ffffff;
+            box-shadow: 0 4px 14px rgba(239, 68, 68, 0.35);
+        }
+        .btn-grad-red:hover {
+            background: linear-gradient(135deg, #dc2626, #b91c1c);
+            box-shadow: 0 6px 20px rgba(239, 68, 68, 0.45);
+            transform: translateY(-2px);
+        }
+        .btn-glass-cancel {
+            background: #f1f5f9;
+            color: #475569;
+            border: 1px solid #cbd5e1;
+        }
+        .btn-glass-cancel:hover {
+            background: #e2e8f0;
+            color: #1e293b;
+            transform: translateY(-2px);
+        }
+
+        /* 100% FULL-WIDTH ADMIN DASHBOARD VIEW */
         #uploadModal {
             padding: 0 !important;
             background: #f8fafc !important;
@@ -305,7 +460,6 @@
             padding: 20px 16px 60px 16px; flex: 1;
         }
 
-        /* === MOBILE APP-STYLE GRID LAUNCHER === */
         .admin-app-grid {
             display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; padding: 10px 0;
             width: 100%; margin-bottom: 10px;
@@ -349,7 +503,6 @@
         .image-guide-box { background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px; padding: 8px 10px; margin-bottom: 10px; font-size: 0.78rem; color: #1e40af; line-height: 1.4; }
         .compression-status-badge { background: #dcfce7; color: #166534; border: 1px solid #86efac; padding: 6px 10px; border-radius: 6px; font-size: 0.78rem; margin-top: 6px; display: none; font-weight: 700; }
 
-        /* === SUPER ADMIN NO-TABLE COLLAPSIBLE ACTIVITY & STATUS BULBS === */
         .super-admin-banner {
             background: linear-gradient(135deg, #1e1b4b, #312e81);
             color: #fff; padding: 10px 14px; border-radius: 8px; margin-bottom: 14px;
@@ -377,7 +530,7 @@
             background: #f9fafb; cursor: pointer; user-select: none; gap: 8px;
         }
         .activity-card-header:hover { background: #f3f4f6; }
-        .activity-admin-meta { display: flex; align-items: center; gap: 8px; flex: 1; min-width: 0; }
+        .activity-admin-meta { display: flex; align-items: center; gap: 8px; flex-width: 0; }
         .activity-admin-meta strong { font-size: 0.88rem; color: var(--text-dark); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .activity-admin-meta span { font-size: 0.75rem; color: var(--text-gray); font-weight: 600; }
         .activity-card-body {
@@ -410,14 +563,6 @@
         .btn-icon-edit { background: #e0f2fe; color: #0284c7; border: 1px solid #bae6fd; }
         .btn-icon-toggle { background: #fef3c7; border: 1px solid #fde047; }
         .btn-icon-delete { background: #fee2e2; color: #ef4444; border: 1px solid #fca5a5; }
-
-        /* Custom Alert & Confirm */
-        .custom-alert-box, .custom-confirm-box { background: white; padding: 25px; border-radius: var(--radius-large); width: 100%; max-width: 380px; text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,0.3); }
-        .custom-msg-text { font-size: 1rem; margin-bottom: 20px; color: var(--text-dark); font-weight: 600; line-height: 1.4;}
-        .custom-msg-btns { display: flex; gap: 8px; justify-content: center; }
-        .custom-msg-btns button { flex: 1; padding: 10px; border-radius: 8px; font-weight: 700; cursor: pointer; border: none; font-size: 0.92rem; transition: 0.2s;}
-        .btn-alert-ok, .btn-confirm-yes { background: #111827; color: white; }
-        .btn-confirm-no { background: #e5e7eb; color: var(--text-dark); }
 
         .site-footer { text-align: center; padding: 30px 16px; color: var(--text-gray); font-weight: 700; background: #ffffff; border-top: 1px solid #e5e7eb; margin-top: 30px; }
         .footer-socials { display: flex; justify-content: center; gap: 12px; margin-bottom: 16px; flex-wrap: wrap;}
@@ -537,22 +682,18 @@
     <div class="modal-overlay" id="uploadModal">
         <div class="modal-box">
             
-            <!-- 100% STICKY TOP BAR WITH PROMINENT CLOSABLE '✕' -->
             <div class="admin-fullview-header">
                 <h2 id="dashboardModalTitle">⚙️ Admin Dashboard</h2>
                 <button type="button" class="btn-close-fullview" onclick="closeModals()" title="Close & Exit Dashboard">&times;</button>
             </div>
 
-            <!-- 100% FULL-WIDTH BODY -->
             <div class="admin-fullview-body">
                 
-                <!-- SUPER ADMIN EXCLUSIVE BADGE -->
                 <div id="superAdminBadge" class="super-admin-banner" style="display: none;">
                     <span>👑 Super Admin Mode</span>
                     <span style="font-size: 0.75rem; background: rgba(255,255,255,0.2); padding: 3px 8px; border-radius: 12px;">Full Privileges</span>
                 </div>
 
-                <!-- === MOBILE APP-STYLE GRID LAUNCHER === -->
                 <div class="admin-app-grid" id="adminAppGrid">
                     <div class="admin-app-icon" onclick="openAdminSection('create')">
                         <div class="app-icon-box bg-blue">📝</div>
@@ -567,7 +708,6 @@
                         <span>Profile & Cover</span>
                     </div>
 
-                    <!-- SUPER ADMIN ONLY APPS (STRICTLY HIDDEN FOR REGULAR ADMINS) -->
                     <div class="admin-app-icon super-only-app" style="display: none;" onclick="openAdminSection('bulk_birthdays')">
                         <div class="app-icon-box bg-purple">📦</div>
                         <span>Bulk Birthdays</span>
@@ -590,20 +730,18 @@
                     </div>
                 </div>
 
-                <!-- === SECTION ACTIVE HEADER WITH TOP RIGHT BACK BUTTON === -->
                 <div id="adminSectionHeader" class="admin-section-nav-header" style="display: none;">
                     <h3 id="adminSectionTitle">Section Title</h3>
                     <button type="button" class="btn-section-back" onclick="closeAdminSection()">← Back</button>
                 </div>
 
-                <!-- SUPER ADMIN: ADMIN USER MANAGEMENT (NO TABLES, 100% WIDTH) -->
                 <div id="superUsersSection" style="display: none; width: 100%; margin-bottom: 15px;">
                     <div style="background: #faf5ff; border: 1px solid #d8b4fe; padding: 14px; border-radius: 8px; margin-bottom: 14px; width: 100%;">
                         <strong style="color: #7e22ce; font-size: 0.92rem; display:block; margin-bottom:10px;" id="adminFormTitle">➕ Add Admin User</strong>
                         <input type="hidden" id="editAdminDocId">
                         <div class="form-group"><label>Admin Name</label><input type="text" id="newAdminName" class="form-control" placeholder="e.g. Vice Principal Office"></div>
                         <div class="form-group"><label>Admin ID</label><input type="text" id="newAdminId" class="form-control" placeholder="Login ID"></div>
-                        <div class="form-group"><label>Password</label><input type="text" id="newAdminPass" class="form-control" placeholder="Password"></div>
+                        <div class="form-group"><label>Password</label><input type="password" id="newAdminPass" class="form-control" placeholder="Password"></div>
                         <div class="form-group">
                             <label>Role</label>
                             <select id="newAdminRole" class="form-control">
@@ -627,13 +765,11 @@
                     <div id="superAdminListContainer" style="width: 100%;">Loading admins...</div>
                 </div>
 
-                <!-- SUPER ADMIN: LOGIN CREDENTIALS & ACTIVITY TIMELINE (NO TABLES, COLLAPSIBLE, BULBS) -->
                 <div id="superActivitySection" style="display: none; width: 100%; margin-bottom: 15px;">
                     <p style="font-size: 0.8rem; color: var(--text-gray); margin-bottom: 10px;">Tap on any administrator below to expand their activity chart and credentials:</p>
                     <div id="superActivityListContainer" style="width: 100%;">Loading activity...</div>
                 </div>
 
-                <!-- SUPER ADMIN: WEB PROTECTION SECURITY TOGGLE SECTION -->
                 <div id="superSecuritySection" style="display: none; width: 100%; margin-bottom: 15px;">
                     <div style="background: #ffffff; border: 1px solid #e2e8f0; padding: 18px; border-radius: 10px; width: 100%;">
                         <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; border-bottom: 1px solid #f1f5f9; padding-bottom: 10px;">
@@ -656,7 +792,6 @@
                     </div>
                 </div>
 
-                <!-- 📦 SUPER ADMIN ONLY: BULK BIRTHDAYS UPLOAD SECTION -->
                 <div id="bulkBirthdayGroup" style="display: none; width: 100%; background: #f0fdf4; border: 1px dashed #22c55e; padding: 14px; border-radius: 8px; margin-bottom: 14px;">
                     <label style="color: #166534; font-weight: 800; font-size: 0.95rem;">📦 Bulk Import Birthdays (Strict CSV Check)</label>
                     <div style="background: #ffffff; border: 1px solid #bbf7d0; border-radius: 6px; padding: 8px 10px; margin: 8px 0 10px 0; font-family: monospace; font-size: 0.78rem; color: #166534; line-height: 1.5;">
@@ -670,7 +805,6 @@
                     <button type="button" class="btn-submit" style="background:#16a34a; margin-top:0;" onclick="processBulkBirthdayUpload()">📥 Validate & Import Students</button>
                 </div>
 
-                <!-- 📜 SUPER ADMIN ONLY: BULK TODAY IN HISTORY UPLOAD SECTION -->
                 <div id="bulkTodayGroup" style="display: none; width: 100%; background: #eff6ff; border: 1px dashed #3b82f6; padding: 14px; border-radius: 8px; margin-bottom: 14px;">
                     <label style="color: #1e40af; font-weight: 800; font-size: 0.95rem;">📜 Bulk Import "Today in History" (Strict CSV Check)</label>
                     <div style="background: #ffffff; border: 1px solid #bfdbfe; border-radius: 6px; padding: 8px 10px; margin: 8px 0 10px 0; font-family: monospace; font-size: 0.78rem; color: #1e40af; line-height: 1.5;">
@@ -684,7 +818,6 @@
                     <button type="button" class="btn-submit" style="background:#2563eb; margin-top:0;" onclick="processBulkTodayUpload()">📥 Validate & Import History</button>
                 </div>
 
-                <!-- REGULAR FORM (100% WIDTH) -->
                 <form id="uploadForm" style="display: none; width: 100%;">
                     <div class="form-group" id="settingsSelectGroup" style="display: none;">
                         <label>Select Image to Update</label>
@@ -694,7 +827,6 @@
                         </select>
                     </div>
 
-                    <!-- 📅 POST DATE IN DD:MM:YYYY FORMAT -->
                     <div class="form-group" id="fg-postdate">
                         <label style="color: var(--text-dark); font-weight: 700; display: flex; justify-content: space-between; align-items: center;">
                             <span>📅 Post Date</span>
@@ -803,36 +935,47 @@
         </div>
     </div>
     
-    <!-- Custom Wish Modal -->
+    <!-- =========================================================
+         ✨ RESTRUCTURED MODERN COLORFUL MESSAGE BOXES
+         ========================================================= -->
+
+    <!-- Custom Wish Modal (Ultra Modern Colorful UI) -->
     <div class="modal-overlay" id="customWishModal" style="z-index: 21000;">
-        <div class="custom-alert-box">
-            <h3 style="margin-bottom: 8px; color: var(--accent-blue);">🎁 Send a Wish!</h3>
-            <p style="font-size: 0.9rem; margin-bottom: 16px; color: var(--text-gray); font-weight: 600;" id="wishModalText">Enter your Name to wish them a Happy Birthday:</p>
-            <input type="text" id="wishSenderName" class="form-control" placeholder="Your Name" value="TEAM TDTTI" style="margin-bottom: 20px; text-transform: uppercase; text-align: center; font-weight: 800; font-size: 1rem; color: var(--text-dark);">
-            <div class="custom-msg-btns">
-                <button class="btn-confirm-yes" onclick="executeBirthdayWish()" style="background: #25D366;">Send to WhatsApp</button>
-                <button class="btn-confirm-no" onclick="closeWishModal()">Cancel</button>
+        <div class="modern-msg-box">
+            <div class="msg-icon-orb orb-pink">🎁</div>
+            <h3 class="modern-msg-title">Send a Birthday Wish!</h3>
+            <p class="modern-msg-text" id="wishModalText">Enter your Name to wish them a Happy Birthday:</p>
+            <input type="text" id="wishSenderName" class="form-control" placeholder="Your Name" value="TEAM TDTTI" style="margin-bottom: 20px; text-transform: uppercase; text-align: center; font-weight: 800; font-size: 1rem; color: var(--text-dark); border-radius: 12px; border: 1.5px solid #cbd5e1; padding: 12px;">
+            <div class="modern-btn-group">
+                <button type="button" class="modern-btn btn-grad-green" onclick="executeBirthdayWish()">
+                    <i class="fa-brands fa-whatsapp"></i> Send to WhatsApp
+                </button>
+                <button type="button" class="modern-btn btn-glass-cancel" onclick="closeWishModal()">Cancel</button>
             </div>
         </div>
     </div>
     
-    <!-- Custom Alert Modal -->
+    <!-- Custom Alert Modal (Ultra Modern Dynamic Colorful UI) -->
     <div class="modal-overlay" id="customAlertModal" style="z-index: 21000;">
-        <div class="custom-alert-box">
-            <div class="custom-msg-text" id="customAlertMsg">Alert message goes here.</div>
-            <div class="custom-msg-btns">
-                <button class="btn-alert-ok" onclick="closeCustomAlert()">OK</button>
+        <div class="modern-msg-box">
+            <div class="msg-icon-orb orb-blue" id="customAlertOrb">🔔</div>
+            <h3 class="modern-msg-title" id="customAlertTitle">Notification</h3>
+            <div class="modern-msg-text" id="customAlertMsg">Alert message goes here.</div>
+            <div class="modern-btn-group">
+                <button type="button" class="modern-btn btn-grad-blue" onclick="closeCustomAlert()">Got It</button>
             </div>
         </div>
     </div>
 
-    <!-- Custom Confirm Modal -->
+    <!-- Custom Confirm Modal (Ultra Modern Colorful UI) -->
     <div class="modal-overlay" id="customConfirmModal" style="z-index: 21000;">
-        <div class="custom-confirm-box">
-            <div class="custom-msg-text" id="customConfirmMsg">Are you sure?</div>
-            <div class="custom-msg-btns">
-                <button class="btn-confirm-yes" id="btnConfirmYes">Yes, Delete</button>
-                <button class="btn-confirm-no" onclick="closeCustomConfirm()">Cancel</button>
+        <div class="modern-msg-box">
+            <div class="msg-icon-orb orb-red">⚠️</div>
+            <h3 class="modern-msg-title" id="customConfirmTitle">Please Confirm</h3>
+            <div class="modern-msg-text" id="customConfirmMsg">Are you sure you want to proceed?</div>
+            <div class="modern-btn-group">
+                <button type="button" class="modern-btn btn-grad-red" id="btnConfirmYes">Yes, Proceed</button>
+                <button type="button" class="modern-btn btn-glass-cancel" onclick="closeCustomConfirm()">Cancel</button>
             </div>
         </div>
     </div>
@@ -877,7 +1020,7 @@
     }
     
     // =========================================================================
-    // ⚡ FIREBASE INITIALIZATION (FIREBASE SPARK PLAN COMPATIBLE)
+    // ⚡ FIREBASE INITIALIZATION
     // =========================================================================
     const firebaseConfig = {
         apiKey: "AIzaSyDoPsAZ2mUwOfLi6AkQauATGQcFmGULiPY",
@@ -896,16 +1039,15 @@
     const db = firebase.firestore();
 
     // Current Session Details
-    let currentAdminRole = null; // 'superadmin' | 'admin' | null
+    let currentAdminRole = null; 
     let currentAdminName = "Admin Desk";
     let activeAdminUsers = [];
     let currentAdminMode = "create";
 
-    // High Quality Default Person Avatar (SVG)
     const DEFAULT_PERSON_AVATAR = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%23e5e7eb'/><circle cx='50' cy='38' r='18' fill='%239ca3af'/><path d='M50 62c-18 0-32 10-32 24v4h64v-4c0-14-14-24-32-24z' fill='%239ca3af'/></svg>";
 
     // =========================================================================
-    // 🛡️ DYNAMIC WEB PROTECTION (TOGGLEABLE IN REAL-TIME BY SUPER ADMIN)
+    // 🛡️ DYNAMIC WEB PROTECTION
     // =========================================================================
     let isWebProtectionEnabled = true;
 
@@ -989,7 +1131,7 @@
         }, 4500);
     }
 
-    // --- SPARK-OPTIMIZED IN-MEMORY IMAGE COMPRESSION ENGINE ---
+    // --- IN-MEMORY IMAGE COMPRESSION ENGINE ---
     let compressedBase64ToUpload = null;
 
     function updateImageGuide() {
@@ -1111,22 +1253,51 @@
         }
     }
 
-    function showCustomAlert(msg) {
-        document.getElementById('customAlertMsg').innerText = msg;
-        document.getElementById('customAlertModal').classList.add('active');
+    // =========================================================================
+    // 🎨 NEW COLORFUL MODAL MESSAGE BOX HANDLERS
+    // =========================================================================
+    function showCustomAlert(msg, customTitle = "") {
+        const modal = document.getElementById('customAlertModal');
+        const msgEl = document.getElementById('customAlertMsg');
+        const titleEl = document.getElementById('customAlertTitle');
+        const orbEl = document.getElementById('customAlertOrb');
+        
+        msgEl.innerText = msg;
+
+        // Contextual styling based on message intent
+        if (msg.includes('✅') || msg.toLowerCase().includes('success') || msg.toLowerCase().includes('imported')) {
+            titleEl.innerText = customTitle || "Success!";
+            orbEl.className = "msg-icon-orb orb-green";
+            orbEl.innerHTML = "✨";
+        } else if (msg.includes('❌') || msg.includes('⚠️') || msg.toLowerCase().includes('error') || msg.toLowerCase().includes('invalid')) {
+            titleEl.innerText = customTitle || "Notice";
+            orbEl.className = "msg-icon-orb orb-red";
+            orbEl.innerHTML = "⚠️";
+        } else if (msg.includes('🎉') || msg.includes('🎁')) {
+            titleEl.innerText = customTitle || "Celebration!";
+            orbEl.className = "msg-icon-orb orb-pink";
+            orbEl.innerHTML = "🎉";
+        } else {
+            titleEl.innerText = customTitle || "Notification";
+            orbEl.className = "msg-icon-orb orb-blue";
+            orbEl.innerHTML = "🔔";
+        }
+
+        modal.classList.add('active');
     }
+    
     function closeCustomAlert() {
         document.getElementById('customAlertModal').classList.remove('active');
     }
     
-    // Safety Toast alias
     function showPresenceToast(msg) {
         showCustomAlert(msg);
     }
     
     let confirmCallback = null;
-    function showCustomConfirm(msg, callback) {
+    function showCustomConfirm(msg, callback, customTitle = "Please Confirm") {
         document.getElementById('customConfirmMsg').innerText = msg;
+        document.getElementById('customConfirmTitle').innerText = customTitle;
         confirmCallback = callback;
         document.getElementById('customConfirmModal').classList.add('active');
         document.getElementById('btnConfirmYes').onclick = function() {
@@ -1203,7 +1374,6 @@
         currentBdayViewStr = getTodayDateStr();
         currentTodayViewStr = getTodayDateStr();
         
-        // Post date initialized in DD:MM:YYYY format
         const postDateInput = document.getElementById('customPostDate');
         if (postDateInput) postDateInput.value = getTodayDateStr();
         
@@ -1218,7 +1388,6 @@
     function initFirebaseRealtimeSync() {
         startYtLoader(30);
 
-        // 1. Posts Realtime Listener
         db.collection('posts').onSnapshot((snapshot) => {
             globalPosts = [];
             snapshot.forEach((doc) => {
@@ -1232,7 +1401,6 @@
             finishYtLoader();
         });
 
-        // 2. Birthdays Realtime Listener
         db.collection('birthdays').onSnapshot((snapshot) => {
             globalBirthdays = [];
             snapshot.forEach((doc) => {
@@ -1246,7 +1414,6 @@
             console.error("Firestore Birthdays Error:", error);
         });
 
-        // 3. Settings Realtime Listener (Includes Web Protection Setting)
         db.collection('settings').doc('global').onSnapshot((doc) => {
             if (doc.exists) {
                 globalSettings = doc.data() || {};
@@ -1262,7 +1429,6 @@
             console.error("Firestore Settings Error:", error);
         });
 
-        // 4. Admin Users Realtime Listener (For Super Admin)
         db.collection('admins').onSnapshot((snapshot) => {
             activeAdminUsers = [];
             snapshot.forEach((doc) => {
@@ -1427,7 +1593,6 @@
                             </div>
                             ${item.MediaLink ? `<div class="fb-media">${renderMedia(item.MediaLink)}</div>` : ''}
                             
-                            <!-- MONOCHROME SOCIAL BAR -->
                             <div class="social-bar">
                                 <div class="social-left-group">
                                     <div class="reaction-container">
@@ -1447,14 +1612,12 @@
                                         <span>${comments.length}</span>
                                     </button>
                                     
-                                    <!-- B&W SHARE ICON (PAPER AIRPLANE) -->
-                                    <button class="social-btn" onclick="sharePost(this, '${item.id}', 'posts')" title="Share">
+                                    <button class="social-btn" onclick="sharePost(this, '${item.id}', 'posts')" title="Share Image">
                                         <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
                                         <span>${shares}</span>
                                     </button>
                                 </div>
 
-                                <!-- B&W SHOW MORE TOGGLE (CHEVRON EXPANDER) -->
                                 <button class="inline-show-more-btn" data-expanded="false" onclick="toggleInlineSectionPosts('${wrapperId}', this)" title="Expand / Collapse Section">
                                     <svg viewBox="0 0 24 24" class="icon-expand-toggle"><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/></svg>
                                 </button>
@@ -1618,7 +1781,6 @@
         }
     });
 
-    // --- FIREBASE REACTION HANDLER ---
     async function doReaction(btn, docId, collectionName, type) {
         let post = btn.closest('.bday-item, .fb-post');
         let postId = post.id;
@@ -1674,7 +1836,6 @@
         }
     }
 
-    // --- FIREBASE COMMENT HANDLER ---
     async function postInstantComment(btn, docId, collectionName) {
         let box = btn.closest('.add-comment-box');
         let nameField = box.querySelector('.c-input-name');
@@ -1719,13 +1880,47 @@
         }
     }
 
-    // --- FIREBASE SHARE HANDLER ---
+    // =========================================================================
+    // 🖼️ ZERO-TEXT PURE IMAGE & SITE LINK SHARING
+    // =========================================================================
+    async function urlOrBase64ToFile(urlOrBase64, filename = 'tdtti_share.jpg') {
+        try {
+            if (!urlOrBase64) return null;
+            if (urlOrBase64.startsWith('data:image')) {
+                const arr = urlOrBase64.split(',');
+                const mimeMatch = arr[0].match(/:(.*?);/);
+                const mime = mimeMatch ? mimeMatch[1] : 'image/jpeg';
+                const bstr = atob(arr[1]);
+                let n = bstr.length;
+                const u8arr = new Uint8Array(n);
+                while(n--) {
+                    u8arr[n] = bstr.charCodeAt(n);
+                }
+                return new File([u8arr], filename, { type: mime });
+            } else if (urlOrBase64.startsWith('http')) {
+                const res = await fetch(urlOrBase64, { mode: 'cors' });
+                const blob = await res.blob();
+                const ext = blob.type.split('/')[1] || 'jpg';
+                return new File([blob], `tdtti_share.${ext}`, { type: blob.type });
+            }
+        } catch(e) {
+            console.warn('Could not convert image source to file:', e);
+        }
+        return null;
+    }
+
+    async function getShareFileFromPost(postEl) {
+        if (!postEl) return null;
+        const imgEl = postEl.querySelector('.fb-media img, .bday-img-wrapper img, .fb-avatar');
+        if (!imgEl || !imgEl.src) return null;
+        
+        const src = imgEl.src;
+        if (src.startsWith('data:image/svg+xml')) return null;
+        return await urlOrBase64ToFile(src);
+    }
+
     async function sharePost(btn, docId, collectionName) {
         let post = btn.closest('.bday-item, .fb-post');
-        let titleEl = post ? (post.querySelector('.post-title-share') || post.querySelector('.bday-info h5')) : null;
-        let titleText = titleEl ? titleEl.innerText : "Check out this update!";
-        let shareTitle = "TDTTI THURAVOOR";
-        let shareText = `${titleText}\n\nRead more on our Live Portal:`;
         let shareUrl = window.location.href;
 
         const docRef = db.collection(collectionName).doc(docId);
@@ -1733,12 +1928,33 @@
             Shares: firebase.firestore.FieldValue.increment(1)
         }).catch(e => {});
 
+        startYtLoader(40);
+        let imageFile = null;
+        try {
+            imageFile = await getShareFileFromPost(post);
+        } catch(e) {}
+        finishYtLoader();
+
         if (navigator.share) {
-            navigator.share({ title: shareTitle, text: shareText, url: shareUrl }).catch(err => {});
-        } else {
-            let waText = `*${shareTitle}*\n${titleText}\n\nView here: ${shareUrl}`;
-            window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(waText)}`, '_blank');
+            try {
+                if (imageFile && navigator.canShare && navigator.canShare({ files: [imageFile] })) {
+                    await navigator.share({
+                        files: [imageFile],
+                        url: shareUrl
+                    });
+                    return;
+                } else {
+                    await navigator.share({
+                        url: shareUrl
+                    });
+                    return;
+                }
+            } catch(err) {
+                if (err.name === 'AbortError') return; 
+            }
         }
+
+        window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(shareUrl)}`, '_blank');
     }
 
     function filterFairs(category, btnElement) {
@@ -1847,7 +2063,7 @@
                         <button class="social-btn" onclick="sendBirthdayWish(this, '${sName}', '${student.id}')" title="Wish">
                             🎁 <span>${wishes}</span>
                         </button>
-                        <button class="social-btn" onclick="sharePost(this, '${student.id}', 'birthdays')" title="Share">
+                        <button class="social-btn" onclick="sharePost(this, '${student.id}', 'birthdays')" title="Share Image">
                             <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
                             <span>${shares}</span>
                         </button>
@@ -1906,7 +2122,7 @@
             Wishes: firebase.firestore.FieldValue.increment(1)
         }).catch(e => {});
 
-        let text = `🎉 *Happy Birthday ${studentName}!* 🎂\n\nWishing you a fantastic day filled with joy and success!\n\nBest wishes from: *${senderName.toUpperCase()}*\n\nView today's birthdays here: ${window.location.href}`;
+        let text = `🎉 *Happy Birthday ${studentName}!* 🎂\n\nWishing you a fantastic day filled with joy and success!\n\nBest wishes from: *${senderName.toUpperCase()}*\n\n👉 View on Live Portal: ${window.location.href}`;
         window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank');
         closeWishModal();
     }
@@ -1941,7 +2157,7 @@
     }
 
     // =========================================================================
-    // 🔐 AUTHENTICATION & MULTI-SUPER ADMIN LOGIN SYSTEM
+    // 🔐 AUTHENTICATION
     // =========================================================================
     async function verifyLogin(e) {
         e.preventDefault();
@@ -1950,7 +2166,6 @@
 
         startYtLoader(40);
 
-        // 1. Check Firestore Admins (Supports Multiple Super Admins & Custom Admins)
         try {
             const querySnap = await db.collection('admins').where('adminId', '==', idVal).where('password', '==', passVal).get();
             if (!querySnap.empty) {
@@ -1967,7 +2182,6 @@
             }
         } catch(err) {}
 
-        // 2. Default Fallback Super Admin
         if (idVal === "superadmin" && passVal === "super123") {
             currentAdminRole = "superadmin";
             currentAdminName = "Super Administrator";
@@ -1975,7 +2189,6 @@
             return;
         }
 
-        // 3. Default Fallback Standard Admin
         if (idVal === "admin" && passVal === "12345") {
             currentAdminRole = "admin";
             currentAdminName = "Admin Desk";
@@ -1992,10 +2205,8 @@
         closeModals();
         populateStudentSearch();
 
-        // Track login activity
         recordAdminActivity(currentAdminName, "Logged in to Dashboard");
 
-        // Setup Super Admin UI Permissions
         const isSuper = (currentAdminRole === 'superadmin');
         document.getElementById('superAdminBadge').style.display = isSuper ? 'flex' : 'none';
         document.querySelectorAll('.super-only-app').forEach(el => {
@@ -2004,7 +2215,7 @@
         document.getElementById('dashboardModalTitle').innerText = isSuper ? "Super Admin Dashboard" : "Admin Dashboard";
 
         document.getElementById('uploadModal').classList.add('active');
-        closeAdminSection(); // Shows App Grid on open
+        closeAdminSection(); 
         updateImageGuide();
     }
 
@@ -2018,16 +2229,10 @@
         }).catch(()=>{});
     }
 
-    // =========================================================================
-    // 📱 MOBILE APP-STYLE GRID NAVIGATION (SHOWS ONLY CLICKED SECTION)
-    // =========================================================================
     function openAdminSection(mode) {
         currentAdminMode = mode;
-        
-        // Hide App Grid Launcher
         document.getElementById('adminAppGrid').style.display = 'none';
 
-        // Show Navigation Header with Top Right Back Button
         const navHeader = document.getElementById('adminSectionHeader');
         const navTitle = document.getElementById('adminSectionTitle');
         navHeader.style.display = 'flex';
@@ -2048,7 +2253,6 @@
     }
 
     function closeAdminSection() {
-        // Hide all active sections
         document.getElementById('uploadForm').style.display = 'none';
         document.getElementById('superUsersSection').style.display = 'none';
         document.getElementById('superActivitySection').style.display = 'none';
@@ -2057,7 +2261,6 @@
         document.getElementById('bulkTodayGroup').style.display = 'none';
         document.getElementById('adminSectionHeader').style.display = 'none';
 
-        // Show App Grid Launcher
         document.getElementById('adminAppGrid').style.display = 'grid';
     }
 
@@ -2146,14 +2349,10 @@
         }
     }
 
-    // =========================================================================
-    // 👥 SUPER ADMIN: ADMIN USER MANAGEMENT (SUPPORTS SUPER ADMINS & DELETION)
-    // =========================================================================
     async function renderSuperAdminUsers() {
         const container = document.getElementById('superAdminListContainer');
         if (!container) return;
 
-        // Load default super admin & standard admin
         let defaultSuperAdmin = { id: "default_superadmin", name: "Super Administrator", adminId: "superadmin", password: "super123", status: "active", role: "superadmin" };
         let defaultAdminData = { id: "default_admin", name: "Admin Desk", adminId: "admin", password: "12345", status: "active", role: "admin" };
 
@@ -2186,7 +2385,6 @@
                     </strong>
                     <span>ID: <code>${admin.adminId}</code> • Pass: <code>${admin.password}</code> • Status: <b>${isActive ? 'Active' : 'Inactive'}</b></span>
                 </div>
-                <!-- ICON-ONLY ACTION BUTTONS: EDIT, DISABLE/ENABLE, PERMANENT DELETE -->
                 <div class="admin-actions-group">
                     <button type="button" class="admin-icon-btn btn-icon-edit" title="Edit Admin" onclick="editAdminUserForm('${admin.id}', '${admin.name}', '${admin.adminId}', '${admin.password}', '${admin.status || 'active'}', '${admin.role || 'admin'}')">✏️</button>
                     <button type="button" class="admin-icon-btn btn-icon-toggle" title="${isActive ? 'Disable Admin' : 'Enable Admin'}" onclick="toggleAdminStatus('${admin.id}', '${isActive ? 'inactive' : 'active'}')">${isActive ? '🚫' : '🟢'}</button>
@@ -2290,9 +2488,6 @@
         });
     }
 
-    // =========================================================================
-    // 📊 SUPER ADMIN: LOGIN CREDENTIALS & ACTIVITY (NO TABLES, COLLAPSIBLE)
-    // =========================================================================
     async function renderSuperAdminActivity() {
         const container = document.getElementById('superActivityListContainer');
         if (!container) return;
@@ -2385,9 +2580,6 @@
         if (body) body.classList.toggle('show');
     }
 
-    // =========================================================================
-    // 🛡️ SUPER ADMIN: WEB PROTECTION FIRESTORE UPDATER
-    // =========================================================================
     async function setWebProtection(enable) {
         startYtLoader(40);
         try {
@@ -2425,7 +2617,6 @@
         document.getElementById('mediaLink').value = "";
         document.getElementById('subSectionSelect').value = "Art"; 
         
-        // Post Date resets in DD:MM:YYYY format
         const pDate = document.getElementById('customPostDate');
         if (pDate) pDate.value = getTodayDateStr();
 
@@ -2598,15 +2789,13 @@
         if (!datalist) return;
         datalist.innerHTML = '';
 
-        const todayStr = getTodayDateStr().substring(0, 5); // "DD:MM"
+        const todayStr = getTodayDateStr().substring(0, 5); 
         let defaultStudentText = null;
 
-        // Normalize search query: turns 20/08, 20-08, 20.08 into 20:08
         const cleanQuery = filterQuery.trim().toLowerCase().replace(/[-/.]/g, ':');
 
-        // Filter students matching Name OR normalized Date OR Class/Div
         const matchedStudents = globalBirthdays.filter(b => {
-            if (!cleanQuery) return true; // Show all if query is empty
+            if (!cleanQuery) return true;
 
             const sName = (b['Student Name'] || '').toLowerCase();
             const rawDate = String(b.Date || '').replace(/[-/.]/g, ':').toLowerCase();
@@ -2647,7 +2836,6 @@
         const searchInput = document.getElementById('bdayStudentSearch');
         const rawVal = searchInput.value;
 
-        // Dynamic real-time datalist suggestion narrowing
         populateStudentSearch(rawVal);
 
         const cleanInput = rawVal.trim().toLowerCase().replace(/[-/.]/g, ':');
@@ -2744,16 +2932,12 @@
         }
     }
 
-    // =========================================================================
-    // 🚀 DATA WRITER (DD:MM:YYYY POST DATE SUPPORT)
-    // =========================================================================
     async function executeSubmitData(actionType, mode, section, docId) {
         closeModals();
         startYtLoader(30);
 
         let finalMediaLink = compressedBase64ToUpload || (document.getElementById('mediaLink') ? document.getElementById('mediaLink').value : "");
         
-        // Format timestamp in DD:MM:YYYY HH:mm:ss
         const now = new Date();
         const timeSuffix = `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}:${String(now.getSeconds()).padStart(2,'0')}`;
         let rawDateVal = document.getElementById('customPostDate') ? document.getElementById('customPostDate').value.trim() : "";
@@ -2864,7 +3048,6 @@
                     return;
                 }
 
-                // Strict Header Verification
                 const headers = lines[0].split(',').map(h => h.trim().toLowerCase().replace(/^["']|["']$/g, ''));
                 const dateIdx = headers.findIndex(h => h === 'date' || h.includes('birth'));
                 const nameIdx = headers.findIndex(h => h === 'student name' || h === 'name' || h.includes('student'));
@@ -2890,7 +3073,6 @@
                     let rawDate = row[dateIdx] || "";
                     let studentName = row[nameIdx] || "";
 
-                    // Strict format checks
                     const dateMatch = rawDate.match(dateRegex);
                     if (!dateMatch || studentName.trim() === "") {
                         skippedCount++;
@@ -2933,7 +3115,6 @@
                 statusDiv.innerText = `⏳ Saving ${parsedStudents.length} valid students (${skippedCount} invalid skipped)...`;
                 setYtProgress(65);
 
-                // Firestore Batch Upload
                 const batchSize = 450;
                 for (let i = 0; i < parsedStudents.length; i += batchSize) {
                     const chunk = parsedStudents.slice(i, i + batchSize);
@@ -2992,7 +3173,6 @@
                     return;
                 }
 
-                // Strict Header Verification
                 const headers = lines[0].split(',').map(h => h.trim().toLowerCase().replace(/^["']|["']$/g, ''));
                 const dateIdx = headers.findIndex(h => h === 'date' || h.includes('event date'));
                 const titleIdx = headers.findIndex(h => h === 'title' || h.includes('event'));
@@ -3019,7 +3199,6 @@
                     let title = titleIdx !== -1 ? (row[titleIdx] || "") : "";
                     let content = contentIdx !== -1 ? (row[contentIdx] || "") : "";
 
-                    // Strict format checks
                     const dateMatch = rawDate.match(dateRegex);
                     if (!dateMatch || (title.trim() === "" && content.trim() === "")) {
                         skippedCount++;
@@ -3063,7 +3242,6 @@
                 statusDiv.innerText = `⏳ Saving ${parsedRecords.length} valid events (${skippedCount} invalid skipped)...`;
                 setYtProgress(65);
 
-                // Firestore Batch Upload
                 const batchSize = 450;
                 for (let i = 0; i < parsedRecords.length; i += batchSize) {
                     const chunk = parsedRecords.slice(i, i + batchSize);
@@ -3179,7 +3357,7 @@
     }
 
     // =========================================================================
-    // 📲 PWA INSTALLATION & BANNER ENGINE (FIXED & FULLY FUNCTIONAL)
+    // 📲 PWA INSTALLATION & BANNER ENGINE
     // =========================================================================
     let deferredPwaPrompt = null;
 
