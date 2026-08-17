@@ -1,13 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="TD NEWS ">
-    <link rel="apple-touch-icon" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg8JiVmEpr0ghbXQ1Z2Mk-5ZFi1lKNN0f9Eygw999ZF7-Sa4OyQRrhXU646M9kpwRa0Gr5dISn2pGtD_xD-ZEbarFZLrnMquwiMvtGw2U151LH7Jckv2gaRkWJ_CtSbzVM_i1dT-JZb4QeCkLbtyrzczfUnKfP33vi21IPIGHMWhD4SkJQ/s1600/Logo2.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
     <title>TDTTI THURAVOOR | Live Portal</title>
 
     <!-- Font Awesome Icons -->
@@ -60,7 +56,7 @@
 
         /* === LIVE NOTICE TICKER === */
         .ticker-wrapper { 
-            background: #003db3; color: #ffffff; display: flex; align-items: center; 
+            background: var(--accent-blue); color: #ffffff; display: flex; align-items: center; 
             font-size: 0.88rem; font-weight: 700; box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
         .ticker-badge { 
@@ -85,8 +81,8 @@
         .cover-school-name:hover { transform: translateY(-2px); }
 
         .live-viewers-badge {
-            background: rgba(255, 255, 255, 0.95); color: var(--accent-blue); padding: 9px 16px;
-            border-radius: var(--radius-large);  font-size: 1.12rem; font-weight: 700; display: inline-flex;
+            background: rgba(0, 0, 0, 0.75); color: #ffffff; padding: 6px 12px;
+            border-radius: 20px; font-size: 0.78rem; font-weight: 700; display: inline-flex;
             align-items: center; gap: 6px; backdrop-filter: blur(8px);
             box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
@@ -240,159 +236,8 @@
         .ql-btn:hover { background: #111827; color: white; border-color: #111827; }
 
         /* Modals & Full-Screen Overlay */
-        /* =========================================================
-   ✨ NEW MODERN MESSAGE BOX & DIALOG UI
-   ========================================================= */
-.modal-overlay {
-    position: fixed; inset: 0;
-    background: rgba(15, 23, 42, 0.65);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    z-index: 25000;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    padding: 18px;
-    opacity: 0;
-    transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.modal-overlay.active {
-    display: flex;
-    opacity: 1;
-}
-
-.modern-dialog-card {
-    background: #ffffff;
-    border-radius: 20px;
-    width: 100%;
-    max-width: 390px;
-    padding: 24px 22px;
-    text-align: center;
-    position: relative;
-    box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(226, 232, 240, 0.8);
-    transform: scale(0.92) translateY(10px);
-    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.modal-overlay.active .modern-dialog-card {
-    transform: scale(1) translateY(0);
-}
-
-/* Icon Badges */
-.dialog-icon-wrap {
-    width: 58px;
-    height: 58px;
-    margin: 0 auto 16px auto;
-    border-radius: 18px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.7rem;
-    box-shadow: 0 8px 16px -4px rgba(0,0,0,0.08);
-}
-.icon-info { background: linear-gradient(135deg, #e0f2fe, #bae6fd); color: #0284c7; }
-.icon-warning { background: linear-gradient(135deg, #fee2e2, #fca5a5); color: #ef4444; }
-.icon-wish { background: linear-gradient(135deg, #dcfce7, #86efac); color: #16a34a; }
-
-/* Text Content */
-.dialog-title {
-    font-size: 1.15rem;
-    font-weight: 800;
-    color: #0f172a;
-    margin-bottom: 8px;
-    letter-spacing: -0.2px;
-}
-.dialog-desc {
-    font-size: 0.9rem;
-    line-height: 1.5;
-    color: #475569;
-    font-weight: 500;
-    margin-bottom: 22px;
-    white-space: pre-line;
-    word-break: break-word;
-}
-
-/* Modern Input */
-.dialog-input {
-    width: 100%;
-    padding: 12px 14px;
-    border: 1.5px solid #cbd5e1;
-    border-radius: 12px;
-    font-size: 0.95rem;
-    font-weight: 700;
-    color: #0f172a;
-    background: #f8fafc;
-    text-align: center;
-    text-transform: uppercase;
-    margin-bottom: 20px;
-    outline: none;
-    transition: all 0.2s ease;
-}
-.dialog-input:focus {
-    border-color: #0284c7;
-    background: #ffffff;
-    box-shadow: 0 0 0 4px rgba(2, 132, 199, 0.15);
-}
-
-/* Modern Action Buttons */
-.dialog-btn-group {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-}
-.btn-dialog {
-    flex: 1;
-    padding: 12px 16px;
-    border-radius: 12px;
-    font-weight: 700;
-    font-size: 0.92rem;
-    border: none;
-    cursor: pointer;
-    transition: all 0.18s ease;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    user-select: none;
-}
-.btn-dialog:active {
-    transform: scale(0.97);
-}
-
-/* Button Variants */
-.btn-dialog-primary {
-    background: linear-gradient(135deg, #0f172a, #1e293b);
-    color: #ffffff;
-    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.2);
-}
-.btn-dialog-primary:hover {
-    background: linear-gradient(135deg, #1e293b, #334155);
-}
-.btn-dialog-danger {
-    background: linear-gradient(135deg, #ef4444, #dc2626);
-    color: #ffffff;
-    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.25);
-}
-.btn-dialog-danger:hover {
-    background: linear-gradient(135deg, #dc2626, #b91c1c);
-}
-.btn-dialog-whatsapp {
-    background: linear-gradient(135deg, #22c55e, #16a34a);
-    color: #ffffff;
-    box-shadow: 0 4px 12px rgba(34, 197, 94, 0.25);
-}
-.btn-dialog-whatsapp:hover {
-    background: linear-gradient(135deg, #16a34a, #15803d);
-}
-.btn-dialog-cancel {
-    background: #f1f5f9;
-    color: #475569;
-    border: 1px solid #e2e8f0;
-}
-.btn-dialog-cancel:hover {
-    background: #e2e8f0;
-    color: #0f172a;
-}
-
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(4px); z-index: 10000; display: none; align-items: center; justify-content: center; padding: 16px; }
+        .modal-overlay.active { display: flex; }
         .modal-box { background: white; padding: 22px; border-radius: var(--radius-large); width: 100%; max-width: 480px; position: relative; max-height: 90vh; overflow-y: auto; box-shadow: 0 10px 40px rgba(0,0,0,0.2); border: 1px solid #e5e7eb; }
         .close-modal { position: absolute; top: 12px; right: 16px; font-size: 1.8rem; cursor: pointer; border: none; background: none; color: #6b7280; }
         .form-group { margin-bottom: 12px; width: 100%; }
@@ -592,8 +437,8 @@
       <div style="display:flex; align-items:center; gap:12px; margin-bottom:8px;">
         <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg8JiVmEpr0ghbXQ1Z2Mk-5ZFi1lKNN0f9Eygw999ZF7-Sa4OyQRrhXU646M9kpwRa0Gr5dISn2pGtD_xD-ZEbarFZLrnMquwiMvtGw2U151LH7Jckv2gaRkWJ_CtSbzVM_i1dT-JZb4QeCkLbtyrzczfUnKfP33vi21IPIGHMWhD4SkJQ/s1600/Logo2.png" style="width:36px !important; height:36px !important; margin:0 !important; object-fit:contain;" alt="App Icon">
         <div>
-          <h4 style="margin:0; font-size:1rem; font-weight:700; color:white;">Install App for Online Study</h4>
-          <p style="margin:2px 0 0 0; font-size:0.78rem; opacity:0.9;">Study TDTTI VII SS LESSONS ANYTIME !</p>
+          <h4 style="margin:0; font-size:1rem; font-weight:700; color:white;">Install App TDTTI THURAVOOR | Live Portal</h4>
+          <p style="margin:2px 0 0 0; font-size:0.78rem; opacity:0.9;">TD LIVE NEWS  ANYTIME !</p>
         </div>
       </div>
 
@@ -661,13 +506,13 @@
 
     <footer class="site-footer">
         <div class="footer-socials">
-            <a href="https://wa.me/9497731772" class="wa" target="_blank" title="WhatsApp"><svg viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.91C21.95 6.45 17.5 2 12.04 2m.01 1.67c4.54 0 8.23 3.7 8.23 8.24 0 4.54-3.7 8.23-8.23 8.23-1.53 0-3.04-.42-4.36-1.2l-.31-.18-3.24.85.86-3.16-.2-.32c-.86-1.37-1.31-2.96-1.31-4.59 0-4.54 3.7-8.24 8.24-8.24m4.67 11.23c-.26-.13-1.52-.75-1.76-.84-.23-.08-.41-.13-.58.13-.18.26-.67.84-.82 1.01-.15.18-.3.2-.56.08-1.2-.55-2.22-1.12-3.05-2.24-.22-.29-.02-.45.1-.58.11-.11.26-.3.39-.45.13-.15.17-.26.26-.44.08-.17.04-.32-.02-.45-.06-.13-.58-1.4-.8-1.92-.21-.5-.42-.43-.58-.44h-.5c-.21 0-.56.08-.85.4s-1.12 1.1-1.12 2.68c0 1.58 1.15 3.1 1.31 3.32.16.21 2.27 3.46 5.49 4.85.77.33 1.37.53 1.84.68.77.24 1.47.2 2.02.12.61-.09 1.52-.62 1.74-1.22.21-.6.21-1.12.15-1.22-.07-.1-.24-.15-.5-.28z"/></svg></a>
-            <a href="https://www.facebook.com/share/1DM7v7p7Ex/" class="fb" target="_blank" title="Facebook"><svg viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-1.1 0-2 .9-2 2v1h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/></svg></a>
-            <a href="https://youtube.com/@tdttithuravoor?feature=shared" class="yt" target="_blank" title="YouTube"><svg viewBox="0 0 24 24"><path d="M21.58 7.19c-.23-.86-.91-1.54-1.77-1.77C18.25 5 12 5 12 5s-6.25 0-7.81.42c-.86.23-1.54.91-1.77 1.77C2 8.75 2 12 2 12s0 3.25.42 4.81c.23.86.91 1.54 1.77 1.77C5.75 19 12 19 12 19s6.25 0 7.81-.42c.86-.23 1.54-.91 1.77-1.77C22 15.25 22 12 22 12s0-3.25-.42-4.81zM10 15V9l5.2 3-5.2 3z"/></svg></a>
-            <a href="https://www.instagram.com/tdttithuravur?igsh=MTY4c2t5M2w1ZWlheA==" class="ig" target="_blank" title="Instagram"><svg viewBox="0 0 24 24"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/></svg></a>
-            <a href="tdttithirumalabhagom@gmail.com" class="mail" title="Email Us"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></a>
+            <a href="https://wa.me/911234567890" class="wa" target="_blank" title="WhatsApp"><svg viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.91C21.95 6.45 17.5 2 12.04 2m.01 1.67c4.54 0 8.23 3.7 8.23 8.24 0 4.54-3.7 8.23-8.23 8.23-1.53 0-3.04-.42-4.36-1.2l-.31-.18-3.24.85.86-3.16-.2-.32c-.86-1.37-1.31-2.96-1.31-4.59 0-4.54 3.7-8.24 8.24-8.24m4.67 11.23c-.26-.13-1.52-.75-1.76-.84-.23-.08-.41-.13-.58.13-.18.26-.67.84-.82 1.01-.15.18-.3.2-.56.08-1.2-.55-2.22-1.12-3.05-2.24-.22-.29-.02-.45.1-.58.11-.11.26-.3.39-.45.13-.15.17-.26.26-.44.08-.17.04-.32-.02-.45-.06-.13-.58-1.4-.8-1.92-.21-.5-.42-.43-.58-.44h-.5c-.21 0-.56.08-.85.4s-1.12 1.1-1.12 2.68c0 1.58 1.15 3.1 1.31 3.32.16.21 2.27 3.46 5.49 4.85.77.33 1.37.53 1.84.68.77.24 1.47.2 2.02.12.61-.09 1.52-.62 1.74-1.22.21-.6.21-1.12.15-1.22-.07-.1-.24-.15-.5-.28z"/></svg></a>
+            <a href="https://facebook.com" class="fb" target="_blank" title="Facebook"><svg viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-1.1 0-2 .9-2 2v1h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/></svg></a>
+            <a href="https://youtube.com" class="yt" target="_blank" title="YouTube"><svg viewBox="0 0 24 24"><path d="M21.58 7.19c-.23-.86-.91-1.54-1.77-1.77C18.25 5 12 5 12 5s-6.25 0-7.81.42c-.86.23-1.54.91-1.77 1.77C2 8.75 2 12 2 12s0 3.25.42 4.81c.23.86.91 1.54 1.77 1.77C5.75 19 12 19 12 19s6.25 0 7.81-.42c.86-.23 1.54-.91 1.77-1.77C22 15.25 22 12 22 12s0-3.25-.42-4.81zM10 15V9l5.2 3-5.2 3z"/></svg></a>
+            <a href="https://instagram.com" class="ig" target="_blank" title="Instagram"><svg viewBox="0 0 24 24"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/></svg></a>
+            <a href="mailto:contact@yourschool.com" class="mail" title="Email Us"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></a>
         </div>
-        <div style="font-size: 0.88rem;">&copy; 2026 TDTTI THURAVOOR NEWS PORTAL</div>
+        <div style="font-size: 0.88rem;">&copy; 2026 TDTTI THURAVOOR Portal</div>
     </footer>
 
     <!-- Admin Login Modal -->
@@ -753,7 +598,7 @@
                         <input type="hidden" id="editAdminDocId">
                         <div class="form-group"><label>Admin Name</label><input type="text" id="newAdminName" class="form-control" placeholder="e.g. Vice Principal Office"></div>
                         <div class="form-group"><label>Admin ID</label><input type="text" id="newAdminId" class="form-control" placeholder="Login ID"></div>
-                        <div class="form-group"><label>Password</label><input type="password" id="newAdminPass" class="form-control" placeholder="Password"></div>
+                        <div class="form-group"><label>Password</label><input type="text" id="newAdminPass" class="form-control" placeholder="Password"></div>
                         <div class="form-group">
                             <label>Role</label>
                             <select id="newAdminRole" class="form-control">
@@ -953,43 +798,36 @@
         </div>
     </div>
     
-    <!-- 🎁 Restructured Modern Wish Modal -->
-    <div class="modal-overlay" id="customWishModal">
-        <div class="modern-dialog-card">
-            <div class="dialog-icon-wrap icon-wish">🎂</div>
-            <h3 class="dialog-title">Send Birthday Wish</h3>
-            <p class="dialog-desc" id="wishModalText">Enter your name to send a personalized greeting:</p>
-            <input type="text" id="wishSenderName" class="dialog-input" placeholder="YOUR NAME" value="TEAM TDTTI">
-            <div class="dialog-btn-group">
-                <button type="button" class="btn-dialog btn-dialog-whatsapp" onclick="executeBirthdayWish()">
-                    <i class="fa-brands fa-whatsapp"></i> Send to WhatsApp
-                </button>
-                <button type="button" class="btn-dialog btn-dialog-cancel" onclick="closeWishModal()">Cancel</button>
+    <!-- Custom Wish Modal -->
+    <div class="modal-overlay" id="customWishModal" style="z-index: 21000;">
+        <div class="custom-alert-box">
+            <h3 style="margin-bottom: 8px; color: var(--accent-blue);">🎁 Send a Wish!</h3>
+            <p style="font-size: 0.9rem; margin-bottom: 16px; color: var(--text-gray); font-weight: 600;" id="wishModalText">Enter your Name to wish them a Happy Birthday:</p>
+            <input type="text" id="wishSenderName" class="form-control" placeholder="Your Name" value="TEAM TDTTI" style="margin-bottom: 20px; text-transform: uppercase; text-align: center; font-weight: 800; font-size: 1rem; color: var(--text-dark);">
+            <div class="custom-msg-btns">
+                <button class="btn-confirm-yes" onclick="executeBirthdayWish()" style="background: #25D366;">Send to WhatsApp</button>
+                <button class="btn-confirm-no" onclick="closeWishModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Custom Alert Modal -->
+    <div class="modal-overlay" id="customAlertModal" style="z-index: 21000;">
+        <div class="custom-alert-box">
+            <div class="custom-msg-text" id="customAlertMsg">Alert message goes here.</div>
+            <div class="custom-msg-btns">
+                <button class="btn-alert-ok" onclick="closeCustomAlert()">OK</button>
             </div>
         </div>
     </div>
 
-    <!-- 🔔 Restructured Modern Alert Modal -->
-    <div class="modal-overlay" id="customAlertModal">
-        <div class="modern-dialog-card">
-            <div class="dialog-icon-wrap icon-info" id="customAlertIcon">ℹ️</div>
-            <h3 class="dialog-title" id="customAlertTitle">Notification</h3>
-            <div class="dialog-desc" id="customAlertMsg">Alert message goes here.</div>
-            <div class="dialog-btn-group">
-                <button type="button" class="btn-dialog btn-dialog-primary" onclick="closeCustomAlert()">Got it</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- ⚠️ Restructured Modern Confirm Modal -->
-    <div class="modal-overlay" id="customConfirmModal">
-        <div class="modern-dialog-card">
-            <div class="dialog-icon-wrap icon-warning">⚠️</div>
-            <h3 class="dialog-title">Confirm Action</h3>
-            <div class="dialog-desc" id="customConfirmMsg">Are you sure you want to proceed?</div>
-            <div class="dialog-btn-group">
-                <button type="button" class="btn-dialog btn-dialog-danger" id="btnConfirmYes">Yes, Proceed</button>
-                <button type="button" class="btn-dialog btn-dialog-cancel" onclick="closeCustomConfirm()">Cancel</button>
+    <!-- Custom Confirm Modal -->
+    <div class="modal-overlay" id="customConfirmModal" style="z-index: 21000;">
+        <div class="custom-confirm-box">
+            <div class="custom-msg-text" id="customConfirmMsg">Are you sure?</div>
+            <div class="custom-msg-btns">
+                <button class="btn-confirm-yes" id="btnConfirmYes">Yes, Delete</button>
+                <button class="btn-confirm-no" onclick="closeCustomConfirm()">Cancel</button>
             </div>
         </div>
     </div>
@@ -1000,9 +838,9 @@
 
     (function injectPWAManifest() {
       const manifestData = {
-        name: "TDTTI SS 7 Progression Report",
-        short_name: "TDTTI SS 7",
-        description: "TDTTI Class 7 Social Science Progression Report E-Book Portal",
+        name: "TDTTI THURAVOOR | Live Portal",
+        short_name: "TD NEWS",
+        description: "TDTTI THURAVOOR | Live Portal",
         start_url: "./",
         display: "standalone",
         orientation: "portrait-primary",
@@ -1026,7 +864,7 @@
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('./sw.js')
-          .then(() => console.log('TDTTI SS PWA Service Worker Registered Successfully!'))
+          .then(() => console.log('TDTTI THURAVOOR | Live Portal PWA Service Worker Registered Successfully!'))
           .catch((err) => {
             console.warn('PWA ServiceWorker Note: Ensure sw.js is uploaded to your root folder.');
           });
@@ -1267,58 +1105,33 @@
         }
     }
 
-    // --- ENHANCED MODERN MESSAGE BOX LOGIC ---
-function showCustomAlert(msg, title = "Notification", icon = "ℹ️") {
-    const alertModal = document.getElementById('customAlertModal');
-    const msgEl = document.getElementById('customAlertMsg');
-    const titleEl = document.getElementById('customAlertTitle');
-    const iconEl = document.getElementById('customAlertIcon');
-
-    if (msgEl) msgEl.innerText = msg;
-    if (titleEl) titleEl.innerText = title;
-    if (iconEl) {
-        if (msg.includes('✅') || msg.includes('Success')) icon = '✅';
-        else if (msg.includes('⚠️') || msg.includes('Invalid') || msg.includes('Error') || msg.includes('❌')) icon = '⚠️';
-        iconEl.innerText = icon;
+    function showCustomAlert(msg) {
+        document.getElementById('customAlertMsg').innerText = msg;
+        document.getElementById('customAlertModal').classList.add('active');
     }
-    if (alertModal) alertModal.classList.add('active');
-}
-
-function closeCustomAlert() {
-    const alertModal = document.getElementById('customAlertModal');
-    if (alertModal) alertModal.classList.remove('active');
-}
-
-let confirmCallback = null;
-function showCustomConfirm(msg, callback) {
-    const confirmModal = document.getElementById('customConfirmModal');
-    const msgEl = document.getElementById('customConfirmMsg');
-    const yesBtn = document.getElementById('btnConfirmYes');
-
-    if (msgEl) msgEl.innerText = msg;
-    confirmCallback = callback;
-    if (confirmModal) confirmModal.classList.add('active');
-
-    if (yesBtn) {
-        yesBtn.onclick = function() {
-            if (confirmCallback) confirmCallback();
-            closeCustomConfirm();
-        };
+    function closeCustomAlert() {
+        document.getElementById('customAlertModal').classList.remove('active');
     }
-}
-
-function closeCustomConfirm() {
-    const confirmModal = document.getElementById('customConfirmModal');
-    if (confirmModal) confirmModal.classList.remove('active');
-    confirmCallback = null;
-}
     
     // Safety Toast alias
     function showPresenceToast(msg) {
         showCustomAlert(msg);
     }
     
-    
+    let confirmCallback = null;
+    function showCustomConfirm(msg, callback) {
+        document.getElementById('customConfirmMsg').innerText = msg;
+        confirmCallback = callback;
+        document.getElementById('customConfirmModal').classList.add('active');
+        document.getElementById('btnConfirmYes').onclick = function() {
+            if(confirmCallback) confirmCallback();
+            closeCustomConfirm();
+        };
+    }
+    function closeCustomConfirm() {
+        document.getElementById('customConfirmModal').classList.remove('active');
+        confirmCallback = null;
+    }
 
     const AUTHOR_PROFILES = [
         { name: "TDTTI THURAVOOR", avatar: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjGka-p7C45PTqBMBKqSjulqicQlHmW_Ee1BCfUPpaW888vYnoPjElzW9DVm8az1kCOjdlabjA3qb_vS00GpCApyVWh2C0aIcOcvb-BWeeTI8AdLojSf25iCvNpMS6aENxrWO-SgM5xjqePEMsHfCLy4HinnGk2xAnDlKaapXYFY05jXQM/s56-c/Logo2.png" },
@@ -1628,8 +1441,8 @@ function closeCustomConfirm() {
                                         <span>${comments.length}</span>
                                     </button>
                                     
-                                    <!-- B&W SHARE ICON (PAPER AIRPLANE - SENDS IMAGE & OPENS SITE ON CLICK) -->
-                                    <button class="social-btn" onclick="sharePost(this, '${item.id}', 'posts')" title="Share Image & Link">
+                                    <!-- B&W SHARE ICON (PAPER AIRPLANE) -->
+                                    <button class="social-btn" onclick="sharePost(this, '${item.id}', 'posts')" title="Share">
                                         <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
                                         <span>${shares}</span>
                                     </button>
@@ -1654,7 +1467,7 @@ function closeCustomConfirm() {
                                     `).join('')}
                                 </div>
                                 <div class="add-comment-box">
-                                    <input type="text" class="c-input-name" placeholder="Your Name ">
+                                    <input type="text" class="c-input-name" placeholder="Your Name (Optional)">
                                     <textarea class="c-input-text" rows="1" placeholder="Write a comment..."></textarea>
                                     <button onclick="postInstantComment(this, '${item.id}', 'posts')">Post</button>
                                 </div>
@@ -1672,10 +1485,9 @@ function closeCustomConfirm() {
         <div class="quick-links-wrapper" style="order: 0;">
             <h3>⚡ Quick Links</h3>
             <div class="ql-grid">
-                <a href="https://tdtti.github.io/schoolbus/" class="ql-btn">🚌 SCHOOL BUS</a>
-                <a href="https://tdtti.github.io/USS-SCHOLRS-2025-26/" class="ql-btn">🧒 CM KIDS</a>
-                <a href="https://tdschoolnews.in/" class="ql-btn">🗳️ SOCIAL SCIENCE 7</a>
-                <a href="#" class="hidden">🗳️ SCHOOL ELECTION</a>
+                <a href="#" class="ql-btn">🚌 SCHOOL BUS</a>
+                <a href="#" class="ql-btn">🧒 CM KIDS</a>
+                <a href="#" class="ql-btn">🗳️ SCHOOL ELECTION</a>
                 <a href="#" class="ql-btn">🎪 UTHSAV</a>
             </div>
         </div>`;
@@ -1901,88 +1713,27 @@ function closeCustomConfirm() {
         }
     }
 
-    // =========================================================================
-    // 🖼️ IMAGE CONVERTER & ADVANCED MEDIA SHARING (OPENS SITE ON CLICK)
-    // =========================================================================
-    async function urlOrBase64ToFile(urlOrBase64, filename = 'tdtti_share.jpg') {
-        try {
-            if (!urlOrBase64) return null;
-            if (urlOrBase64.startsWith('data:image')) {
-                const arr = urlOrBase64.split(',');
-                const mimeMatch = arr[0].match(/:(.*?);/);
-                const mime = mimeMatch ? mimeMatch[1] : 'image/jpeg';
-                const bstr = atob(arr[1]);
-                let n = bstr.length;
-                const u8arr = new Uint8Array(n);
-                while(n--) {
-                    u8arr[n] = bstr.charCodeAt(n);
-                }
-                return new File([u8arr], filename, { type: mime });
-            } else if (urlOrBase64.startsWith('http')) {
-                const res = await fetch(urlOrBase64, { mode: 'cors' });
-                const blob = await res.blob();
-                const ext = blob.type.split('/')[1] || 'jpg';
-                return new File([blob], `tdtti_share.${ext}`, { type: blob.type });
-            }
-        } catch(e) {
-            console.warn('Could not convert image source to file:', e);
-        }
-        return null;
-    }
+    // --- FIREBASE SHARE HANDLER ---
+    async function sharePost(btn, docId, collectionName) {
+        let post = btn.closest('.bday-item, .fb-post');
+        let titleEl = post ? (post.querySelector('.post-title-share') || post.querySelector('.bday-info h5')) : null;
+        let titleText = titleEl ? titleEl.innerText : "Check out this update!";
+        let shareTitle = "TDTTI THURAVOOR";
+        let shareText = `${titleText}\n\nRead more on our Live Portal:`;
+        let shareUrl = window.location.href;
 
-    async function getShareFileFromPost(postEl) {
-        if (!postEl) return null;
-        const imgEl = postEl.querySelector('.fb-media img, .bday-img-wrapper img, .fb-avatar');
-        if (!imgEl || !imgEl.src) return null;
-        
-        const src = imgEl.src;
-        if (src.startsWith('data:image/svg+xml')) return null;
-        return await urlOrBase64ToFile(src);
-    }
+        const docRef = db.collection(collectionName).doc(docId);
+        docRef.update({
+            Shares: firebase.firestore.FieldValue.increment(1)
+        }).catch(e => {});
 
-    // --- FIREBASE SHARE HANDLER (SHARES IMAGE & OPENS SITE ON CLICK) ---
-    // --- ZERO-TEXT IMAGE SHARING (OPENS SITE ON CLICK) ---
-async function sharePost(btn, docId, collectionName) {
-    let post = btn.closest('.bday-item, .fb-post');
-    let shareUrl = window.location.href;
-
-    // Increment Firestore share counter
-    const docRef = db.collection(collectionName).doc(docId);
-    docRef.update({
-        Shares: firebase.firestore.FieldValue.increment(1)
-    }).catch(e => {});
-
-    startYtLoader(40);
-    let imageFile = null;
-    try {
-        imageFile = await getShareFileFromPost(post);
-    } catch(e) {}
-    finishYtLoader();
-
-    // Native Web Share (Shares pure Image + URL Link, NO TEXT)
-    if (navigator.share) {
-        try {
-            if (imageFile && navigator.canShare && navigator.canShare({ files: [imageFile] })) {
-                await navigator.share({
-                    files: [imageFile],
-                    url: shareUrl
-                });
-                return;
-            } else {
-                // Fallback if device cannot attach files directly
-                await navigator.share({
-                    url: shareUrl
-                });
-                return;
-            }
-        } catch(err) {
-            if (err.name === 'AbortError') return; // User canceled share sheet
+        if (navigator.share) {
+            navigator.share({ title: shareTitle, text: shareText, url: shareUrl }).catch(err => {});
+        } else {
+            let waText = `*${shareTitle}*\n${titleText}\n\nView here: ${shareUrl}`;
+            window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(waText)}`, '_blank');
         }
     }
-
-    // Direct fallback (opens WhatsApp with only the site URL)
-    window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(shareUrl)}`, '_blank');
-}
 
     function filterFairs(category, btnElement) {
         document.querySelectorAll('.fair-tab').forEach(b => b.classList.remove('active'));
@@ -2090,7 +1841,7 @@ async function sharePost(btn, docId, collectionName) {
                         <button class="social-btn" onclick="sendBirthdayWish(this, '${sName}', '${student.id}')" title="Wish">
                             🎁 <span>${wishes}</span>
                         </button>
-                        <button class="social-btn" onclick="sharePost(this, '${student.id}', 'birthdays')" title="Share Image & Link">
+                        <button class="social-btn" onclick="sharePost(this, '${student.id}', 'birthdays')" title="Share">
                             <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
                             <span>${shares}</span>
                         </button>
@@ -2121,23 +1872,18 @@ async function sharePost(btn, docId, collectionName) {
     }
     
     let currentWishData = null;
-function sendBirthdayWish(btn, studentName, docId) {
-    currentWishData = { btn: btn, studentName: studentName, docId: docId };
-    const textEl = document.getElementById('wishModalText');
-    const inputEl = document.getElementById('wishSenderName');
-    const modalEl = document.getElementById('customWishModal');
+    function sendBirthdayWish(btn, studentName, docId) {
+        currentWishData = { btn: btn, studentName: studentName, docId: docId };
+        document.getElementById('wishModalText').innerText = `Enter your Name to wish ${studentName} a Happy Birthday:`;
+        document.getElementById('wishSenderName').value = "TEAM TDTTI";
+        document.getElementById('customWishModal').classList.add('active');
+        document.getElementById('wishSenderName').focus();
+    }
 
-    if (textEl) textEl.innerText = `Enter your name to wish ${studentName} a Happy Birthday:`;
-    if (inputEl) inputEl.value = "TEAM TDTTI";
-    if (modalEl) modalEl.classList.add('active');
-    if (inputEl) setTimeout(() => inputEl.focus(), 150);
-}
-
-function closeWishModal() {
-    const modalEl = document.getElementById('customWishModal');
-    if (modalEl) modalEl.classList.remove('active');
-    currentWishData = null;
-}
+    function closeWishModal() {
+        document.getElementById('customWishModal').classList.remove('active');
+        currentWishData = null;
+    }
 
     function executeBirthdayWish() {
         if (!currentWishData) return;
@@ -2154,7 +1900,7 @@ function closeWishModal() {
             Wishes: firebase.firestore.FieldValue.increment(1)
         }).catch(e => {});
 
-        let text = `🎉 *Happy Birthday ${studentName}!* 🎂\n\nWishing you a fantastic day filled with joy and success!\n\nBest wishes from: *${senderName.toUpperCase()}*\n\n👉 View on Live Portal: ${window.location.href}`;
+        let text = `🎉 *Happy Birthday ${studentName}!* 🎂\n\nWishing you a fantastic day filled with joy and success!\n\nBest wishes from: *${senderName.toUpperCase()}*\n\nView today's birthdays here: ${window.location.href}`;
         window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank');
         closeWishModal();
     }
