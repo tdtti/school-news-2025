@@ -46,7 +46,6 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--bg-color); color: var(--text-dark); overflow-x: hidden; }
 
-        /* Utility visibility class */
         .hidden { display: none !important; }
 
         /* === YOUTUBE-STYLE TOP PROGRESSIVE LOADER === */
@@ -142,7 +141,7 @@
         .section-wrapper { width: 100%; display: flex; flex-direction: column; gap: 8px; margin: 0; padding: 0; background: transparent; border: none; }
         .cards-grid { width: 100%; display: flex; flex-direction: column; gap: 8px; }
 
-        /* === POST CARDS WITH SUBTLE SHADOW LINE === */
+        /* === POST CARDS === */
         .fb-post { 
             width: 100%; background: #ffffff; border-radius: var(--radius-large); 
             box-shadow: var(--shadow-subtle);
@@ -291,13 +290,72 @@
         .quick-links-wrapper { width: 100%; background: #ffffff; border-radius: var(--radius-large); padding: 14px; border: var(--border-subtle); box-shadow: var(--shadow-subtle); }
         .quick-links-wrapper h3 { font-size: 0.92rem; margin-bottom: 10px; color: var(--text-dark); display: flex; align-items: center; gap: 6px; border-bottom: 1px solid #f3f4f6; padding-bottom: 6px;}
         .ql-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-        .ql-btn { display: flex; align-items: center; justify-content: center; background: #f9fafb; color: var(--text-dark); padding: 9px; text-align: center; border-radius: 8px; font-weight: 700; text-decoration: none; border: 1px solid #e5e7eb; font-size: 0.8rem; transition: 0.2s;}
+        .ql-btn { 
+            display: flex; align-items: center; justify-content: center; background: #f9fafb; 
+            color: var(--text-dark); padding: 9px; text-align: center; border-radius: 8px; 
+            font-weight: 700; border: 1px solid #e5e7eb; font-size: 0.8rem; cursor: pointer; 
+            transition: 0.2s; width: 100%; font-family: inherit; user-select: none;
+        }
         .ql-btn:hover { background: #111827; color: white; border-color: #111827; }
+
+        /* === IN-APP BROWSER MODAL === */
+        .in-app-browser-overlay {
+            position: fixed; inset: 0; background: #ffffff; z-index: 999999;
+            display: none; flex-direction: column; width: 100vw; height: 100vh; height: 100dvh;
+        }
+        .in-app-browser-overlay.active { display: flex; }
+        .in-app-browser-header {
+            background: #0866FF; color: #ffffff; display: flex; align-items: center; 
+            justify-content: space-between; padding: 10px 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.15); 
+            gap: 10px; flex-shrink: 0; z-index: 10;
+        }
+        .btn-browser-back {
+            background: rgba(255, 255, 255, 0.2); color: #ffffff; border: none; border-radius: 20px; 
+            padding: 6px 12px; font-weight: 700; font-size: 0.82rem; cursor: pointer; display: inline-flex; 
+            align-items: center; gap: 6px; transition: background 0.2s;
+        }
+        .btn-browser-back:hover { background: rgba(255, 255, 255, 0.35); }
+        .in-app-browser-title-wrap { flex: 1; overflow: hidden; text-align: center; }
+        .in-app-browser-title-wrap h4 {
+            margin: 0; font-size: 0.95rem; font-weight: 700; white-space: nowrap; 
+            overflow: hidden; text-overflow: ellipsis; color: #ffffff;
+        }
+        .in-app-browser-title-wrap span {
+            display: block; font-size: 0.72rem; opacity: 0.85; white-space: nowrap; 
+            overflow: hidden; text-overflow: ellipsis; color: #e0f2fe;
+        }
+        .in-app-browser-actions { display: flex; align-items: center; gap: 8px; }
+        .btn-browser-action {
+            background: rgba(255, 255, 255, 0.2); color: #ffffff; border: none; width: 34px; height: 34px; 
+            border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; 
+            cursor: pointer; text-decoration: none; transition: background 0.2s;
+        }
+        .btn-browser-action:hover { background: rgba(255, 255, 255, 0.35); }
+        .btn-browser-close { font-size: 1.4rem; line-height: 1; }
+        .in-app-browser-body { position: relative; flex: 1; width: 100%; height: 100%; background: #f8fafc; overflow: hidden; }
+        .in-app-browser-body iframe { width: 100%; height: 100%; border: none; display: block; }
+        .browser-spinner-overlay {
+            position: absolute; inset: 0; background: rgba(255, 255, 255, 0.9);
+            display: flex; flex-direction: column; align-items: center; justify-content: center; 
+            gap: 10px; z-index: 5; color: #475569; font-weight: 700; font-size: 0.88rem;
+        }
+        .browser-spinner {
+            width: 36px; height: 36px; border: 3.5px solid #e2e8f0; border-top-color: #0866FF; 
+            border-radius: 50%; animation: spinBrowser 0.8s linear infinite;
+        }
+        @keyframes spinBrowser { to { transform: rotate(360deg); } }
+
+        /* Custom Add-More Button styling */
+        .btn-media-add {
+            background: #0866FF; color: #ffffff; border: none; border-radius: 16px;
+            padding: 5px 12px; font-size: 0.78rem; font-weight: 700; cursor: pointer;
+            display: inline-flex; align-items: center; gap: 5px; transition: background 0.15s ease, transform 0.15s ease;
+        }
+        .btn-media-add:hover { background: #0052cc; transform: translateY(-1px); }
 
         /* Modals & Full-Screen Overlay */
         .modal-overlay { 
-            position: fixed; inset: 0; 
-            background: rgba(15, 23, 42, 0.72); 
+            position: fixed; inset: 0; background: rgba(15, 23, 42, 0.72); 
             backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
             z-index: 10000; display: none; align-items: center; justify-content: center; padding: 16px; 
             opacity: 0; transition: opacity 0.25s ease;
@@ -313,205 +371,66 @@
         .btn-submit { width: 100%; padding: 11px; background: var(--accent-blue); color: white; border: none; border-radius: 8px; font-weight: 700; font-size: 0.95rem; cursor: pointer; margin-top: 8px; transition: 0.2s;}
         .btn-delete { background: var(--accent-red); margin-top: 5px; }
 
-        /* Custom Add-More Button styling */
-        .btn-media-add {
-            background: #0866FF;
-            color: #ffffff;
-            border: none;
-            border-radius: 16px;
-            padding: 5px 12px;
-            font-size: 0.78rem;
-            font-weight: 700;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            transition: background 0.15s ease, transform 0.15s ease;
-        }
-        .btn-media-add:hover {
-            background: #0052cc;
-            transform: translateY(-1px);
-        }
-        
         /* Modern Message Boxes */
         .modern-msg-box {
-            background: #ffffff;
-            border-radius: 20px;
-            width: 100%;
-            max-width: 400px;
-            position: relative;
-            padding: 28px 24px 22px 24px;
-            text-align: center;
+            background: #ffffff; border-radius: 20px; width: 100%; max-width: 400px;
+            position: relative; padding: 28px 24px 22px 24px; text-align: center;
             box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.8) inset;
-            border: 1px solid rgba(226, 232, 240, 0.8);
-            overflow: hidden;
-            transform: scale(0.92) translateY(15px);
-            transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border: 1px solid rgba(226, 232, 240, 0.8); overflow: hidden;
+            transform: scale(0.92) translateY(15px); transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
-        .modal-overlay.active .modern-msg-box {
-            transform: scale(1) translateY(0);
-        }
-
+        .modal-overlay.active .modern-msg-box { transform: scale(1) translateY(0); }
         .modern-msg-box::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 5px;
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 5px;
             background: linear-gradient(90deg, #0866FF, #00d2ff, #a855f7, #ec4899);
         }
-
         .msg-icon-orb {
-            width: 60px;
-            height: 60px;
-            margin: 0 auto 14px auto;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.75rem;
-            position: relative;
-            user-select: none;
+            width: 60px; height: 60px; margin: 0 auto 14px auto; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; font-size: 1.75rem;
+            position: relative; user-select: none;
         }
-        .orb-blue {
-            background: linear-gradient(135deg, #e0f2fe, #bae6fd);
-            color: #0284c7;
-            box-shadow: 0 8px 24px rgba(2, 132, 199, 0.25);
-        }
-        .orb-green {
-            background: linear-gradient(135deg, #dcfce7, #bbf7d0);
-            color: #16a34a;
-            box-shadow: 0 8px 24px rgba(34, 197, 94, 0.25);
-        }
-        .orb-red {
-            background: linear-gradient(135deg, #fee2e2, #fecaca);
-            color: #dc2626;
-            box-shadow: 0 8px 24px rgba(239, 68, 68, 0.25);
-        }
-        .orb-pink {
-            background: linear-gradient(135deg, #fce7f3, #fbcfe8);
-            color: #db2777;
-            box-shadow: 0 8px 24px rgba(219, 39, 119, 0.25);
-        }
+        .orb-blue { background: linear-gradient(135deg, #e0f2fe, #bae6fd); color: #0284c7; box-shadow: 0 8px 24px rgba(2, 132, 199, 0.25); }
+        .orb-green { background: linear-gradient(135deg, #dcfce7, #bbf7d0); color: #16a34a; box-shadow: 0 8px 24px rgba(34, 197, 94, 0.25); }
+        .orb-red { background: linear-gradient(135deg, #fee2e2, #fecaca); color: #dc2626; box-shadow: 0 8px 24px rgba(239, 68, 68, 0.25); }
+        .orb-pink { background: linear-gradient(135deg, #fce7f3, #fbcfe8); color: #db2777; box-shadow: 0 8px 24px rgba(219, 39, 119, 0.25); }
 
-        .modern-msg-title {
-            font-size: 1.15rem;
-            font-weight: 800;
-            color: #0f172a;
-            margin-bottom: 6px;
-            letter-spacing: -0.2px;
-        }
-        .modern-msg-text {
-            font-size: 0.92rem;
-            color: #475569;
-            font-weight: 500;
-            line-height: 1.5;
-            margin-bottom: 20px;
-            white-space: pre-wrap;
-            word-break: break-word;
-        }
-
-        .modern-btn-group {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            width: 100%;
-        }
+        .modern-msg-title { font-size: 1.15rem; font-weight: 800; color: #0f172a; margin-bottom: 6px; letter-spacing: -0.2px; }
+        .modern-msg-text { font-size: 0.92rem; color: #475569; font-weight: 500; line-height: 1.5; margin-bottom: 20px; white-space: pre-wrap; word-break: break-word; }
+        .modern-btn-group { display: flex; gap: 10px; justify-content: center; width: 100%; }
         .modern-btn {
-            flex: 1;
-            padding: 11px 18px;
-            border-radius: 12px;
-            font-weight: 700;
-            font-size: 0.9rem;
-            cursor: pointer;
-            border: none;
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            user-select: none;
+            flex: 1; padding: 11px 18px; border-radius: 12px; font-weight: 700; font-size: 0.9rem;
+            cursor: pointer; border: none; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            display: inline-flex; align-items: center; justify-content: center; gap: 6px; user-select: none;
         }
-        .modern-btn:active {
-            transform: scale(0.97);
-        }
-        .btn-grad-blue {
-            background: linear-gradient(135deg, #0866FF, #0052cc);
-            color: #ffffff;
-            box-shadow: 0 4px 14px rgba(8, 102, 255, 0.35);
-        }
-        .btn-grad-blue:hover {
-            background: linear-gradient(135deg, #0052cc, #003db3);
-            box-shadow: 0 6px 20px rgba(8, 102, 255, 0.45);
-            transform: translateY(-2px);
-        }
-        .btn-grad-green {
-            background: linear-gradient(135deg, #10b981, #059669);
-            color: #ffffff;
-            box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
-        }
-        .btn-grad-green:hover {
-            background: linear-gradient(135deg, #059669, #047857);
-            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.45);
-            transform: translateY(-2px);
-        }
-        .btn-grad-red {
-            background: linear-gradient(135deg, #ef4444, #dc2626);
-            color: #ffffff;
-            box-shadow: 0 4px 14px rgba(239, 68, 68, 0.35);
-        }
-        .btn-grad-red:hover {
-            background: linear-gradient(135deg, #dc2626, #b91c1c);
-            box-shadow: 0 6px 20px rgba(239, 68, 68, 0.45);
-            transform: translateY(-2px);
-        }
-        .btn-glass-cancel {
-            background: #f1f5f9;
-            color: #475569;
-            border: 1px solid #cbd5e1;
-        }
-        .btn-glass-cancel:hover {
-            background: #e2e8f0;
-            color: #1e293b;
-            transform: translateY(-2px);
-        }
+        .modern-btn:active { transform: scale(0.97); }
+        .btn-grad-blue { background: linear-gradient(135deg, #0866FF, #0052cc); color: #ffffff; box-shadow: 0 4px 14px rgba(8, 102, 255, 0.35); }
+        .btn-grad-blue:hover { background: linear-gradient(135deg, #0052cc, #003db3); box-shadow: 0 6px 20px rgba(8, 102, 255, 0.45); transform: translateY(-2px); }
+        .btn-grad-green { background: linear-gradient(135deg, #10b981, #059669); color: #ffffff; box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35); }
+        .btn-grad-green:hover { background: linear-gradient(135deg, #059669, #047857); box-shadow: 0 6px 20px rgba(16, 185, 129, 0.45); transform: translateY(-2px); }
+        .btn-grad-red { background: linear-gradient(135deg, #ef4444, #dc2626); color: #ffffff; box-shadow: 0 4px 14px rgba(239, 68, 68, 0.35); }
+        .btn-grad-red:hover { background: linear-gradient(135deg, #dc2626, #b91c1c); box-shadow: 0 6px 20px rgba(239, 68, 68, 0.45); transform: translateY(-2px); }
+        .btn-glass-cancel { background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; }
+        .btn-glass-cancel:hover { background: #e2e8f0; color: #1e293b; transform: translateY(-2px); }
 
         /* 100% FULL-WIDTH ADMIN DASHBOARD VIEW */
         #uploadModal {
-            padding: 0 !important;
-            background: #f8fafc !important;
-            backdrop-filter: none !important;
-            align-items: flex-start !important;
-            justify-content: flex-start !important;
-            overflow-y: auto !important;
-            z-index: 10000;
+            padding: 0 !important; background: #f8fafc !important; backdrop-filter: none !important;
+            align-items: flex-start !important; justify-content: flex-start !important;
+            overflow-y: auto !important; z-index: 10000;
         }
-
         #uploadModal .modal-box {
-            width: 100% !important;
-            max-width: 100% !important;
-            min-height: 100vh !important;
-            max-height: none !important;
-            border-radius: 0 !important;
-            border: none !important;
-            box-shadow: none !important;
-            background: #f8fafc !important;
-            padding: 0 !important;
-            display: flex;
-            flex-direction: column;
+            width: 100% !important; max-width: 100% !important; min-height: 100vh !important;
+            max-height: none !important; border-radius: 0 !important; border: none !important;
+            box-shadow: none !important; background: #f8fafc !important; padding: 0 !important;
+            display: flex; flex-direction: column;
         }
-
         .admin-fullview-header {
             position: sticky; top: 0; left: 0; right: 0; z-index: 50;
             background: #ffffff; border-bottom: 1px solid #e2e8f0; padding: 14px 20px;
             display: flex; align-items: center; justify-content: space-between;
             box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
         }
-
-        .admin-fullview-header h2 {
-            font-size: 1.15rem; font-weight: 800; color: var(--text-dark); margin: 0;
-            display: flex; align-items: center; gap: 8px;
-        }
-
+        .admin-fullview-header h2 { font-size: 1.15rem; font-weight: 800; color: var(--text-dark); margin: 0; display: flex; align-items: center; gap: 8px; }
         .btn-close-fullview {
             background: #f1f5f9; border: 1px solid #cbd5e1; color: #475569;
             font-size: 1.4rem; line-height: 1; width: 36px; height: 36px; border-radius: 50%;
@@ -520,29 +439,13 @@
         }
         .btn-close-fullview:hover { background: #0f172a; color: #ffffff; border-color: #0f172a; transform: rotate(90deg); }
 
-        .admin-fullview-body {
-            width: 100%; max-width: 900px; margin: 0 auto;
-            padding: 20px 16px 60px 16px; flex: 1;
-        }
-
-        .admin-app-grid {
-            display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; padding: 10px 0;
-            width: 100%; margin-bottom: 10px;
-        }
-        .admin-app-icon {
-            display: flex; flex-direction: column; align-items: center; text-align: center;
-            cursor: pointer; user-select: none; transition: transform 0.15s ease;
-            -webkit-tap-highlight-color: transparent;
-        }
+        .admin-fullview-body { width: 100%; max-width: 900px; margin: 0 auto; padding: 20px 16px 60px 16px; flex: 1; }
+        .admin-app-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; padding: 10px 0; width: 100%; margin-bottom: 10px; }
+        .admin-app-icon { display: flex; flex-direction: column; align-items: center; text-align: center; cursor: pointer; user-select: none; transition: transform 0.15s ease; -webkit-tap-highlight-color: transparent; }
         .admin-app-icon:hover { transform: scale(1.06); }
         .admin-app-icon:active { transform: scale(0.95); }
-        .app-icon-box {
-            width: 56px; height: 56px; border-radius: 16px; display: flex; align-items: center; justify-content: center;
-            font-size: 1.6rem; margin-bottom: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); transition: 0.2s;
-        }
-        .admin-app-icon span {
-            font-size: 0.76rem; font-weight: 700; color: var(--text-dark); line-height: 1.2;
-        }
+        .app-icon-box { width: 56px; height: 56px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; margin-bottom: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); transition: 0.2s; }
+        .admin-app-icon span { font-size: 0.76rem; font-weight: 700; color: var(--text-dark); line-height: 1.2; }
 
         .bg-blue { background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white; }
         .bg-emerald { background: linear-gradient(135deg, #10b981, #047857); color: white; }
@@ -553,10 +456,7 @@
         .bg-rose { background: linear-gradient(135deg, #f43f5e, #be123c); color: white; }
         .bg-slate { background: linear-gradient(135deg, #475569, #0f172a); color: white; }
 
-        .admin-section-nav-header {
-            display: flex; align-items: center; justify-content: space-between;
-            width: 100%; border-bottom: 1px solid #e5e7eb; padding-bottom: 10px; margin-bottom: 14px;
-        }
+        .admin-section-nav-header { display: flex; align-items: center; justify-content: space-between; width: 100%; border-bottom: 1px solid #e5e7eb; padding-bottom: 10px; margin-bottom: 14px; }
         .admin-section-nav-header h3 { font-size: 1.05rem; font-weight: 800; color: var(--text-dark); margin: 0; }
         .btn-section-back {
             background: #f3f4f6; color: var(--text-dark); border: 1px solid #d1d5db;
@@ -573,35 +473,17 @@
             color: #fff; padding: 10px 14px; border-radius: 8px; margin-bottom: 14px;
             display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem; font-weight: 700;
         }
-        .status-bulb {
-            width: 10px; height: 10px; border-radius: 50%; display: inline-block; flex-shrink: 0;
-        }
-        .status-bulb.active {
-            background-color: var(--accent-green);
-            box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
-            animation: livePulse 1.8s infinite;
-        }
-        .status-bulb.inactive {
-            background-color: var(--accent-red);
-            box-shadow: 0 0 6px rgba(239, 68, 68, 0.6);
-        }
+        .status-bulb { width: 10px; height: 10px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
+        .status-bulb.active { background-color: var(--accent-green); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); animation: livePulse 1.8s infinite; }
+        .status-bulb.inactive { background-color: var(--accent-red); box-shadow: 0 0 6px rgba(239, 68, 68, 0.6); }
         
-        .activity-card-item {
-            background: #ffffff; border: 1px solid #e5e7eb; border-radius: 8px;
-            margin-bottom: 8px; overflow: hidden; transition: all 0.2s ease; width: 100%;
-        }
-        .activity-card-header {
-            padding: 10px 14px; display: flex; align-items: center; justify-content: space-between;
-            background: #f9fafb; cursor: pointer; user-select: none; gap: 8px;
-        }
+        .activity-card-item { background: #ffffff; border: 1px solid #e5e7eb; border-radius: 8px; margin-bottom: 8px; overflow: hidden; transition: all 0.2s ease; width: 100%; }
+        .activity-card-header { padding: 10px 14px; display: flex; align-items: center; justify-content: space-between; background: #f9fafb; cursor: pointer; user-select: none; gap: 8px; }
         .activity-card-header:hover { background: #f3f4f6; }
         .activity-admin-meta { display: flex; align-items: center; gap: 8px; flex-width: 0; }
         .activity-admin-meta strong { font-size: 0.88rem; color: var(--text-dark); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .activity-admin-meta span { font-size: 0.75rem; color: var(--text-gray); font-weight: 600; }
-        .activity-card-body {
-            padding: 12px 14px; display: none; background: #ffffff; border-top: 1px solid #f3f4f6;
-            font-size: 0.82rem; color: #374151;
-        }
+        .activity-card-body { padding: 12px 14px; display: none; background: #ffffff; border-top: 1px solid #f3f4f6; font-size: 0.82rem; color: #374151; }
         .activity-card-body.show { display: block; }
         
         .activity-stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
@@ -609,11 +491,7 @@
         .activity-stat-box span { display: block; font-size: 0.7rem; color: var(--text-gray); font-weight: 700; }
         .activity-stat-box strong { font-size: 0.95rem; color: var(--text-dark); }
 
-        .super-user-card {
-            background: #f8fafc; border: 1px solid #e2e8f0; padding: 10px 12px;
-            border-radius: 8px; margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between; gap: 8px;
-            width: 100%;
-        }
+        .super-user-card { background: #f8fafc; border: 1px solid #e2e8f0; padding: 10px 12px; border-radius: 8px; margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%; }
         .super-user-info { display: flex; flex-direction: column; }
         .super-user-info strong { font-size: 0.88rem; color: var(--text-dark); }
         .super-user-info span { font-size: 0.75rem; color: var(--text-gray); }
@@ -728,6 +606,35 @@
         </div>
         <div style="font-size: 0.88rem;">&copy; 2026 TDTTI THURAVOOR Portal</div>
     </footer>
+
+    <!-- IN-APP BROWSER MODAL -->
+    <div class="in-app-browser-overlay" id="inAppBrowserModal">
+        <div class="in-app-browser-header">
+            <button type="button" class="btn-browser-back" onclick="closeInAppBrowser()" title="Back to Portal">
+                <i class="fa-solid fa-arrow-left"></i> <span>Back</span>
+            </button>
+            <div class="in-app-browser-title-wrap">
+                <h4 id="inAppBrowserTitle">Web Portal</h4>
+                <span id="inAppBrowserUrl">https://...</span>
+            </div>
+            <div class="in-app-browser-actions">
+                <button type="button" class="btn-browser-action" onclick="refreshInAppBrowser()" title="Reload page">
+                    <i class="fa-solid fa-rotate-right"></i>
+                </button>
+                <a id="inAppBrowserExternalLink" href="#" target="_blank" rel="noopener noreferrer" class="btn-browser-action" title="Open in External Browser">
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                </a>
+                <button type="button" class="btn-browser-action btn-browser-close" onclick="closeInAppBrowser()" title="Close">&times;</button>
+            </div>
+        </div>
+        <div class="in-app-browser-body">
+            <div id="inAppBrowserLoader" class="browser-spinner-overlay">
+                <div class="browser-spinner"></div>
+                <span>Loading page inside app...</span>
+            </div>
+            <iframe id="inAppBrowserIframe" src="" frameborder="0" allowfullscreen allow="geolocation; camera; microphone"></iframe>
+        </div>
+    </div>
 
     <!-- Admin Login Modal -->
     <div class="modal-overlay" id="loginModal">
@@ -975,7 +882,7 @@
                         </div>
                         <div class="form-group" id="fg-content"><label>Content</label><textarea id="postContent" class="form-control" rows="3"></textarea></div>
                         
-                        <!-- MEDIA LINK WITH "+ Add More Link" BUTTON -->
+                        <!-- MEDIA LINK WITH "+ Add More Link" -->
                         <div class="form-group" id="fg-media">
                             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
                                 <label style="margin-bottom: 0;">Media Link (YouTube/Direct URL)</label>
@@ -991,7 +898,7 @@
                         </div>
                     </div>
 
-                    <!-- IMAGE UPLOAD GROUP WITH "+ Add More Photo" BUTTON -->
+                    <!-- IMAGE UPLOAD GROUP WITH "+ Add More Photo" -->
                     <div class="form-group" id="imageUploadGroup" style="background: #eef2ff; padding: 12px; border-radius: 8px; border: 1px dashed var(--accent-blue);">
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
                             <label style="color: var(--accent-blue); font-weight: 800; margin-bottom: 0;">Upload Image or Take Photo</label>
@@ -1210,11 +1117,55 @@
     }
 
     // =========================================================================
-    // 📷 DYNAMIC MULTI-MEDIA LINK & MULTI-PHOTO SLOTS
+    // 🌐 IN-APP BROWSER CONTROLLER FOR QUICK LINKS
+    // =========================================================================
+    function openInAppBrowser(url, title = "Live Portal") {
+        const modal = document.getElementById('inAppBrowserModal');
+        const iframe = document.getElementById('inAppBrowserIframe');
+        const titleEl = document.getElementById('inAppBrowserTitle');
+        const urlEl = document.getElementById('inAppBrowserUrl');
+        const extLink = document.getElementById('inAppBrowserExternalLink');
+        const loader = document.getElementById('inAppBrowserLoader');
+
+        if (!modal || !iframe) return;
+
+        titleEl.innerText = title;
+        urlEl.innerText = url;
+        extLink.href = url;
+
+        loader.style.display = 'flex';
+        iframe.onload = function() {
+            loader.style.display = 'none';
+        };
+
+        iframe.src = url;
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeInAppBrowser() {
+        const modal = document.getElementById('inAppBrowserModal');
+        const iframe = document.getElementById('inAppBrowserIframe');
+        if (modal) modal.classList.remove('active');
+        if (iframe) iframe.src = 'about:blank';
+        document.body.style.overflow = '';
+    }
+
+    function refreshInAppBrowser() {
+        const iframe = document.getElementById('inAppBrowserIframe');
+        const loader = document.getElementById('inAppBrowserLoader');
+        if (iframe && iframe.src && iframe.src !== 'about:blank') {
+            if (loader) loader.style.display = 'flex';
+            iframe.src = iframe.src;
+        }
+    }
+
+    // =========================================================================
+    // 📷 MULTI-MEDIA LINK & MULTI-PHOTO SLOTS
     // =========================================================================
     let mediaLinkCounter = 0;
     let slotCounter = 0;
-    let slotCompressedData = {}; // Stores slotId -> Base64 string
+    let slotCompressedData = {}; 
 
     function addMediaLinkSlot(initialVal = "") {
         mediaLinkCounter++;
@@ -1421,7 +1372,7 @@
         }
     }
 
-    // MODAL MESSAGE BOXES
+    // MODAL DIALOGS
     function showCustomAlert(msg, customTitle = "") {
         const modal = document.getElementById('customAlertModal');
         const msgEl = document.getElementById('customAlertMsg');
@@ -1600,7 +1551,6 @@
         }, (error) => {});
     }
 
-    // Helper: Extract all media links/images safely from post item
     function getMediaItems(item) {
         if (!item) return [];
         let list = [];
@@ -1861,10 +1811,10 @@
         <div class="quick-links-wrapper" style="order: 0;">
             <h3>⚡ Quick Links</h3>
             <div class="ql-grid">
-                <a href="https://tdtti.github.io/schoolbus" class="ql-btn">🚌 SCHOOL BUS</a>
-                <a href="https://tdtti.github.io/USS-SCHOLRS-2025-26" class="ql-btn">🧒 CM KIDS</a>
-                <a href="https://tdschoolnews.in" class="ql-btn">🗳️ SOCIAL SCIENCE 7</a>
-                <a href="https://tdtti.github.io/Uthsav" class="ql-btn">🎪 UTHSAV</a>
+                <button type="button" class="ql-btn" onclick="openInAppBrowser('https://tdtti.github.io/schoolbus/', '🚌 SCHOOL BUS')">🚌 SCHOOL BUS</button>
+                <button type="button" class="ql-btn" onclick="openInAppBrowser('https://tdtti.github.io/USS-SCHOLRS-2025-26/', '🧒 CM KIDS')">🧒 CM KIDS</button>
+                <button type="button" class="ql-btn" onclick="openInAppBrowser('https://tdschoolnews.in/', '🗳️ SOCIAL SCIENCE 7')">🗳️ SOCIAL SCIENCE 7</button>
+                <button type="button" class="ql-btn" onclick="openInAppBrowser('https://tdtti.github.io/Uthsav/', '🎪 UTHSAV')">🎪 UTHSAV</button>
             </div>
         </div>`;
 
@@ -2503,7 +2453,7 @@
             document.getElementById('birthdayFields').style.display = 'none';
             document.getElementById('normalFields').style.display = 'none';
             document.getElementById('imageUploadGroup').style.display = 'block';
-            document.getElementById('btnAddPhotoSlot').style.display = 'none'; // Only 1 photo for profile/cover
+            document.getElementById('btnAddPhotoSlot').style.display = 'none'; 
             if (postDateField) postDateField.style.display = 'none';
             
             document.getElementById('submitBtn').style.display = 'block';
@@ -2808,7 +2758,6 @@
         document.getElementById('postContent').value = "";
         document.getElementById('subSectionSelect').value = "Art"; 
         
-        // Reset Media Links container back to single empty input
         const mediaContainer = document.getElementById('mediaLinksContainer');
         if (mediaContainer) {
             mediaContainer.innerHTML = `
@@ -2819,7 +2768,6 @@
         }
         mediaLinkCounter = 0;
 
-        // Reset Image Slots back to single empty slot
         const imgContainer = document.getElementById('imageSlotsContainer');
         if (imgContainer) {
             imgContainer.innerHTML = `
@@ -2879,7 +2827,6 @@
                 if (pDate) pDate.value = datePart;
             }
 
-            // Restore media items into inputs and preview slots
             const mediaList = getMediaItems(post);
             const mediaContainer = document.getElementById('mediaLinksContainer');
             const imgContainer = document.getElementById('imageSlotsContainer');
@@ -3020,7 +2967,7 @@
             bdayFields.style.display = "block";
             normalFields.style.display = "none";
             imgField.style.display = "block";
-            if (btnAddPhoto) btnAddPhoto.style.display = "none"; // Single portrait for birthday
+            if (btnAddPhoto) btnAddPhoto.style.display = "none";
             
             document.getElementById('editSelectGroup').style.display = 'none';
             document.getElementById('submitBtn').style.display = 'block';
@@ -3205,7 +3152,6 @@
         closeModals();
         startYtLoader(30);
 
-        // Gather all media links and compressed images
         const enteredLinks = Array.from(document.querySelectorAll('.media-link-input')).map(i => i.value.trim()).filter(Boolean);
         const uploadedImages = Object.values(slotCompressedData).filter(Boolean);
         const combinedMedia = [...enteredLinks, ...uploadedImages];
@@ -3295,6 +3241,7 @@
         }
     }
 
+    // BULK BIRTHDAYS IMPORTER
     async function processBulkBirthdayUpload() {
         const fileInput = document.getElementById('bulkCsvFile');
         const statusDiv = document.getElementById('bulkProgressStatus');
@@ -3417,9 +3364,7 @@
         reader.readAsText(file);
     }
 
-    // =========================================================================
-    // 📜 BULK "TODAY IN HISTORY" IMPORTER WITH STRICT VALIDATION
-    // =========================================================================
+    // BULK TODAY IN HISTORY IMPORTER
     async function processBulkTodayUpload() {
         const fileInput = document.getElementById('bulkTodayCsvFile');
         const statusDiv = document.getElementById('bulkTodayProgressStatus');
@@ -3631,9 +3576,7 @@
         });
     }
 
-    // =========================================================================
-    // 📲 PWA INSTALLATION & BANNER ENGINE
-    // =========================================================================
+    // PWA INSTALLATION BANNER
     let deferredPwaPrompt = null;
 
     function initPwaGuidanceBanner() {
