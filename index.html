@@ -161,6 +161,60 @@
         .fb-media { width: 100%; background: #050505; }
         .fb-media img, .fb-media video { width: 100%; max-height: auto; object-fit: cover; display: block; pointer-events: none;}
 
+        /* MULTI-MEDIA GRID */
+        .multi-media-grid {
+            display: grid;
+            gap: 3px;
+            width: 100%;
+            background: #050505;
+        }
+        .multi-media-grid.count-1 {
+            grid-template-columns: 1fr;
+        }
+        .multi-media-grid.count-2 {
+            grid-template-columns: 1fr 1fr;
+        }
+        .multi-media-grid.count-3 {
+            grid-template-columns: 1fr 1fr;
+        }
+        .multi-media-grid.count-3 .multi-media-item:first-child {
+            grid-column: 1 / -1;
+        }
+        .multi-media-grid.count-4 {
+            grid-template-columns: 1fr 1fr;
+        }
+        .multi-media-grid.count-more {
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        }
+        .multi-media-item {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .multi-media-item img {
+            width: 100%;
+            height: 100%;
+            max-height: 420px;
+            object-fit: cover;
+            display: block;
+        }
+        .multi-media-item iframe {
+            width: 100%;
+            height: 260px;
+            display: block;
+        }
+        @media (max-width: 520px) {
+            .multi-media-grid.count-2,
+            .multi-media-grid.count-3,
+            .multi-media-grid.count-4 {
+                grid-template-columns: 1fr;
+            }
+        }
+
         /* === B&W SOCIAL BUTTONS === */
         .social-bar { 
             display: flex; justify-content: space-between; align-items: center; 
@@ -258,10 +312,28 @@
         
         .btn-submit { width: 100%; padding: 11px; background: var(--accent-blue); color: white; border: none; border-radius: 8px; font-weight: 700; font-size: 0.95rem; cursor: pointer; margin-top: 8px; transition: 0.2s;}
         .btn-delete { background: var(--accent-red); margin-top: 5px; }
+
+        /* Custom Add-More Button styling */
+        .btn-media-add {
+            background: #0866FF;
+            color: #ffffff;
+            border: none;
+            border-radius: 16px;
+            padding: 5px 12px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: background 0.15s ease, transform 0.15s ease;
+        }
+        .btn-media-add:hover {
+            background: #0052cc;
+            transform: translateY(-1px);
+        }
         
-        /* =========================================================
-           ✨ NEW ULTRA-MODERN COLORFUL MESSAGE BOXES & DIALOGS
-           ========================================================= */
+        /* Modern Message Boxes */
         .modern-msg-box {
             background: #ffffff;
             border-radius: 20px;
@@ -280,7 +352,6 @@
             transform: scale(1) translateY(0);
         }
 
-        /* Top Glowing Multi-Color Gradient Highlight */
         .modern-msg-box::before {
             content: '';
             position: absolute;
@@ -289,7 +360,6 @@
             background: linear-gradient(90deg, #0866FF, #00d2ff, #a855f7, #ec4899);
         }
 
-        /* Vibrant Icon Orb */
         .msg-icon-orb {
             width: 60px;
             height: 60px;
@@ -316,11 +386,6 @@
             background: linear-gradient(135deg, #fee2e2, #fecaca);
             color: #dc2626;
             box-shadow: 0 8px 24px rgba(239, 68, 68, 0.25);
-        }
-        .orb-purple {
-            background: linear-gradient(135deg, #f3e8ff, #e9d5ff);
-            color: #9333ea;
-            box-shadow: 0 8px 24px rgba(147, 51, 234, 0.25);
         }
         .orb-pink {
             background: linear-gradient(135deg, #fce7f3, #fbcfe8);
@@ -592,8 +657,7 @@
         </div>
       </div>
 
-      <div id="pwaGuideSteps" style="font-size:0.8rem; background:rgba(0,0,0,0.18); padding:8px 12px; border-radius:8px; margin-bottom:10px; line-height:1.4;">
-      </div>
+      <div id="pwaGuideSteps" style="font-size:0.8rem; background:rgba(0,0,0,0.18); padding:8px 12px; border-radius:8px; margin-bottom:10px; line-height:1.4;"></div>
 
       <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
         <button id="pwaDirectInstallBtn" onclick="triggerPwaInstallPrompt()" style="background:#22c55e; color:white; width:auto; padding:7px 16px; font-size:0.82rem; border-radius:20px; font-weight:700; margin:0; border:none; cursor:pointer; display:inline-flex; align-items:center; gap:6px;">
@@ -678,7 +742,7 @@
         </div>
     </div>
 
-    <!-- Admin Dashboard Full-Width View (No Modal Box, Closable '✕') -->
+    <!-- Admin Dashboard Full-Width View -->
     <div class="modal-overlay" id="uploadModal">
         <div class="modal-box">
             
@@ -910,20 +974,51 @@
                             </select>
                         </div>
                         <div class="form-group" id="fg-content"><label>Content</label><textarea id="postContent" class="form-control" rows="3"></textarea></div>
-                        <div class="form-group" id="fg-media"><label>Media Link (YouTube/Direct URL)</label><input type="url" id="mediaLink" class="form-control" placeholder="Leave blank if uploading image below"></div>
+                        
+                        <!-- MEDIA LINK WITH "+ Add More Link" BUTTON -->
+                        <div class="form-group" id="fg-media">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                                <label style="margin-bottom: 0;">Media Link (YouTube/Direct URL)</label>
+                                <button type="button" class="btn-media-add" onclick="addMediaLinkSlot()" title="Add another link">
+                                    <i class="fa-solid fa-plus"></i> Add More Link
+                                </button>
+                            </div>
+                            <div id="mediaLinksContainer" style="display: flex; flex-direction: column; gap: 8px;">
+                                <div class="media-link-row" id="media-link-row-0" style="display: flex; gap: 6px; align-items: center;">
+                                    <input type="url" class="form-control media-link-input" placeholder="YouTube or Direct Image/Video URL">
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
+                    <!-- IMAGE UPLOAD GROUP WITH "+ Add More Photo" BUTTON -->
                     <div class="form-group" id="imageUploadGroup" style="background: #eef2ff; padding: 12px; border-radius: 8px; border: 1px dashed var(--accent-blue);">
-                        <label style="color: var(--accent-blue); font-weight: 800;">Upload Image or Take Photo</label>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                            <label style="color: var(--accent-blue); font-weight: 800; margin-bottom: 0;">Upload Image or Take Photo</label>
+                            <button type="button" id="btnAddPhotoSlot" class="btn-media-add" onclick="addImageSlot()" title="Add another image or photo">
+                                <i class="fa-solid fa-plus"></i> Add More Photo
+                            </button>
+                        </div>
                         <div class="image-guide-box" id="imageGuideText">
                             📐 <strong>Spark Plan Optimized:</strong> Auto-compressed directly in memory and stored securely in Firestore without third-party hosts.
                         </div>
-                        <div style="display: flex; gap: 8px;">
-                            <input type="file" id="fileUpload" class="form-control" style="background:#fff; flex: 1;" accept="image/*" onchange="handleImageSelection(this)">
-                            <label for="cameraUpload" class="form-control" style="background:var(--accent-blue); color:white; width: 50px; text-align:center; cursor:pointer; font-size: 1.1rem; display:flex; align-items:center; justify-content:center; border:none; margin:0;" title="Take Photo">📷</label>
-                            <input type="file" id="cameraUpload" accept="image/*" capture="environment" style="display:none;" onchange="handleImageSelection(this, true)">
+
+                        <div id="imageSlotsContainer" style="display: flex; flex-direction: column; gap: 10px;">
+                            <!-- Initial Slot 0 -->
+                            <div class="image-slot-item" id="img-slot-0" data-slot-id="0">
+                                <div style="display: flex; gap: 8px; align-items: center;">
+                                    <input type="file" id="fileUpload_0" class="form-control slot-file-input" style="background:#fff; flex: 1;" accept="image/*" onchange="handleSlotImageChange(this, 0)">
+                                    <label for="cameraUpload_0" class="form-control slot-cam-label" style="background:var(--accent-blue); color:white; width: 50px; text-align:center; cursor:pointer; font-size: 1.1rem; display:flex; align-items:center; justify-content:center; border:none; margin:0; border-radius:8px;" title="Take Photo">📷</label>
+                                    <input type="file" id="cameraUpload_0" accept="image/*" capture="environment" style="display:none;" onchange="handleSlotImageChange(this, 0, true)">
+                                </div>
+                                <div id="compressionBadge_0" class="compression-status-badge"></div>
+                                <div id="previewWrap_0" class="slot-preview-wrap" style="display: none; margin-top: 8px; align-items: center; gap: 10px; background: #fff; padding: 6px 10px; border-radius: 8px; border: 1px solid #d1d5db;">
+                                    <img id="previewImg_0" src="" style="width: 48px; height: 48px; object-fit: cover; border-radius: 6px;">
+                                    <span id="previewInfo_0" style="font-size: 0.78rem; color: #374151; flex: 1;"></span>
+                                    <button type="button" onclick="clearSlotImage(0)" style="background: #fee2e2; color: #dc2626; border: 1px solid #fca5a5; border-radius: 50%; width: 26px; height: 26px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: bold;">✕</button>
+                                </div>
+                            </div>
                         </div>
-                        <div id="compressionStatusBadge" class="compression-status-badge"></div>
                     </div>
 
                     <button type="button" class="btn-submit" id="submitBtn" onclick="submitData('create')">Publish Now</button>
@@ -935,11 +1030,7 @@
         </div>
     </div>
     
-    <!-- =========================================================
-         ✨ RESTRUCTURED MODERN COLORFUL MESSAGE BOXES
-         ========================================================= -->
-
-    <!-- Custom Wish Modal (Ultra Modern Colorful UI) -->
+    <!-- Custom Modals -->
     <div class="modal-overlay" id="customWishModal" style="z-index: 21000;">
         <div class="modern-msg-box">
             <div class="msg-icon-orb orb-pink">🎁</div>
@@ -955,7 +1046,6 @@
         </div>
     </div>
     
-    <!-- Custom Alert Modal (Ultra Modern Dynamic Colorful UI) -->
     <div class="modal-overlay" id="customAlertModal" style="z-index: 21000;">
         <div class="modern-msg-box">
             <div class="msg-icon-orb orb-blue" id="customAlertOrb">🔔</div>
@@ -967,7 +1057,6 @@
         </div>
     </div>
 
-    <!-- Custom Confirm Modal (Ultra Modern Colorful UI) -->
     <div class="modal-overlay" id="customConfirmModal" style="z-index: 21000;">
         <div class="modern-msg-box">
             <div class="msg-icon-orb orb-red">⚠️</div>
@@ -981,7 +1070,6 @@
     </div>
 
     <script>
-    // Dynamic Web App Manifest Injection
     const PWA_LOGO_URL = "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg8JiVmEpr0ghbXQ1Z2Mk-5ZFi1lKNN0f9Eygw999ZF7-Sa4OyQRrhXU646M9kpwRa0Gr5dISn2pGtD_xD-ZEbarFZLrnMquwiMvtGw2U151LH7Jckv2gaRkWJ_CtSbzVM_i1dT-JZb4QeCkLbtyrzczfUnKfP33vi21IPIGHMWhD4SkJQ/s1600/Logo2.png";
 
     (function injectPWAManifest() {
@@ -1008,7 +1096,6 @@
       document.head.appendChild(manifestLink);
     })();
 
-    // Register Service Worker
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('./sw.js')
@@ -1019,9 +1106,7 @@
       });
     }
     
-    // =========================================================================
-    // ⚡ FIREBASE INITIALIZATION
-    // =========================================================================
+    // FIREBASE INITIALIZATION
     const firebaseConfig = {
         apiKey: "AIzaSyDoPsAZ2mUwOfLi6AkQauATGQcFmGULiPY",
         authDomain: "project-5056f7aa-ff5d-4a09-a4e.firebaseapp.com",
@@ -1038,7 +1123,6 @@
     }
     const db = firebase.firestore();
 
-    // Current Session Details
     let currentAdminRole = null; 
     let currentAdminName = "Admin Desk";
     let activeAdminUsers = [];
@@ -1046,9 +1130,7 @@
 
     const DEFAULT_PERSON_AVATAR = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%23e5e7eb'/><circle cx='50' cy='38' r='18' fill='%239ca3af'/><path d='M50 62c-18 0-32 10-32 24v4h64v-4c0-14-14-24-32-24z' fill='%239ca3af'/></svg>";
 
-    // =========================================================================
-    // 🛡️ DYNAMIC WEB PROTECTION
-    // =========================================================================
+    // DYNAMIC WEB PROTECTION
     let isWebProtectionEnabled = true;
 
     function applyWebProtectionState(enabled) {
@@ -1061,9 +1143,7 @@
 
         const badge = document.getElementById('securityStatusBadge');
         const text = document.getElementById('securityStatusText');
-        if (badge) {
-            badge.className = `status-bulb ${enabled ? 'active' : 'inactive'}`;
-        }
+        if (badge) badge.className = `status-bulb ${enabled ? 'active' : 'inactive'}`;
         if (text) {
             text.innerHTML = enabled 
                 ? `<span style="color:var(--accent-green); font-weight:800;">🟢 ENABLED (Protected)</span>` 
@@ -1081,7 +1161,6 @@
         }
     });
 
-    // === PROGRESSIVE BAR ===
     let ytTimer = null;
     function startYtLoader(initial = 25) {
         const bar = document.getElementById('yt-loader');
@@ -1115,7 +1194,6 @@
         }, 200);
     }
 
-    // === LIVE ONLINE VIEWERS OSCILLATOR ===
     let baseViewerCount = 28;
     function initLiveViewers() {
         const el = document.getElementById('live-viewer-count');
@@ -1131,8 +1209,94 @@
         }, 4500);
     }
 
-    // --- IN-MEMORY IMAGE COMPRESSION ENGINE ---
-    let compressedBase64ToUpload = null;
+    // =========================================================================
+    // 📷 DYNAMIC MULTI-MEDIA LINK & MULTI-PHOTO SLOTS
+    // =========================================================================
+    let mediaLinkCounter = 0;
+    let slotCounter = 0;
+    let slotCompressedData = {}; // Stores slotId -> Base64 string
+
+    function addMediaLinkSlot(initialVal = "") {
+        mediaLinkCounter++;
+        const container = document.getElementById('mediaLinksContainer');
+        if (!container) return;
+        const rowId = `media-link-row-${mediaLinkCounter}`;
+        const row = document.createElement('div');
+        row.className = 'media-link-row';
+        row.id = rowId;
+        row.style.cssText = 'display: flex; gap: 6px; align-items: center;';
+        row.innerHTML = `
+            <input type="url" class="form-control media-link-input" placeholder="YouTube or Direct Image/Video URL" value="${initialVal}">
+            <button type="button" onclick="removeMediaLinkSlot('${rowId}')" style="background:#fee2e2; color:#dc2626; border:1px solid #fca5a5; border-radius:8px; padding:9px 12px; cursor:pointer; font-weight:bold;" title="Remove this link">✕</button>
+        `;
+        container.appendChild(row);
+    }
+
+    function removeMediaLinkSlot(rowId) {
+        const el = document.getElementById(rowId);
+        if (el) el.remove();
+    }
+
+    function addImageSlot(existingBase64 = null) {
+        slotCounter++;
+        const id = slotCounter;
+        const container = document.getElementById('imageSlotsContainer');
+        if (!container) return;
+
+        const slotDiv = document.createElement('div');
+        slotDiv.className = 'image-slot-item';
+        slotDiv.id = `img-slot-${id}`;
+        slotDiv.setAttribute('data-slot-id', id);
+        slotDiv.innerHTML = `
+            <div style="display: flex; gap: 8px; align-items: center;">
+                <input type="file" id="fileUpload_${id}" class="form-control slot-file-input" style="background:#fff; flex: 1;" accept="image/*" onchange="handleSlotImageChange(this, ${id})">
+                <label for="cameraUpload_${id}" class="form-control slot-cam-label" style="background:var(--accent-blue); color:white; width: 50px; text-align:center; cursor:pointer; font-size: 1.1rem; display:flex; align-items:center; justify-content:center; border:none; margin:0; border-radius:8px;" title="Take Photo">📷</label>
+                <input type="file" id="cameraUpload_${id}" accept="image/*" capture="environment" style="display:none;" onchange="handleSlotImageChange(this, ${id}, true)">
+                <button type="button" onclick="removeImageSlot(${id})" style="background:#fee2e2; color:#dc2626; border:1px solid #fca5a5; border-radius:8px; padding:9px 12px; cursor:pointer; font-weight:bold;" title="Remove photo slot">✕</button>
+            </div>
+            <div id="compressionBadge_${id}" class="compression-status-badge"></div>
+            <div id="previewWrap_${id}" class="slot-preview-wrap" style="display: none; margin-top: 8px; align-items: center; gap: 10px; background: #fff; padding: 6px 10px; border-radius: 8px; border: 1px solid #d1d5db;">
+                <img id="previewImg_${id}" src="" style="width: 48px; height: 48px; object-fit: cover; border-radius: 6px;">
+                <span id="previewInfo_${id}" style="font-size: 0.78rem; color: #374151; flex: 1;"></span>
+                <button type="button" onclick="clearSlotImage(${id})" style="background: #fee2e2; color: #dc2626; border: 1px solid #fca5a5; border-radius: 50%; width: 26px; height: 26px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: bold;">✕</button>
+            </div>
+        `;
+        container.appendChild(slotDiv);
+
+        if (existingBase64) {
+            slotCompressedData[id] = existingBase64;
+            showSlotPreview(id, existingBase64, "Saved Photo");
+        }
+    }
+
+    function removeImageSlot(id) {
+        const el = document.getElementById(`img-slot-${id}`);
+        if (el) el.remove();
+        delete slotCompressedData[id];
+    }
+
+    function clearSlotImage(id) {
+        delete slotCompressedData[id];
+        const f = document.getElementById(`fileUpload_${id}`);
+        if (f) f.value = '';
+        const c = document.getElementById(`cameraUpload_${id}`);
+        if (c) c.value = '';
+        const wrap = document.getElementById(`previewWrap_${id}`);
+        if (wrap) wrap.style.display = 'none';
+        const badge = document.getElementById(`compressionBadge_${id}`);
+        if (badge) badge.style.display = 'none';
+    }
+
+    function showSlotPreview(slotId, src, infoText) {
+        const wrap = document.getElementById(`previewWrap_${slotId}`);
+        const img = document.getElementById(`previewImg_${slotId}`);
+        const info = document.getElementById(`previewInfo_${slotId}`);
+        if (wrap && img) {
+            img.src = src;
+            if (info) info.innerText = infoText || "Spark Compressed Image";
+            wrap.style.display = 'flex';
+        }
+    }
 
     function updateImageGuide() {
         const sec = document.getElementById('sectionSelect').value;
@@ -1149,7 +1313,7 @@
         } else if (sec === 'Birthdays') {
             guide.innerHTML = `📐 <strong>Recommended size:</strong> 600 × 750 px (Student portrait).<br>⚡ Compressed & stored directly in Firestore.`;
         } else {
-            guide.innerHTML = `📐 <strong>Recommended size:</strong> 1280 × 720 px (Posts/Gallery).<br>⚡ Compressed & stored directly in Firestore.`;
+            guide.innerHTML = `📐 <strong>Recommended size:</strong> 1280 × 720 px (Posts/Gallery). Tap '+ Add More Photo' to attach multiple images.<br>⚡ Compressed & stored directly in Firestore.`;
         }
     }
 
@@ -1196,38 +1360,36 @@
         });
     }
 
-    async function handleImageSelection(inputElement, isCamera = false) {
-        const badge = document.getElementById('compressionStatusBadge');
-        if (isCamera) document.getElementById('fileUpload').value = '';
-        else document.getElementById('cameraUpload').value = '';
+    async function handleSlotImageChange(inputElement, slotId, isCamera = false) {
+        const badge = document.getElementById(`compressionBadge_${slotId}`);
+        const fileInp = document.getElementById(`fileUpload_${slotId}`);
+        const camInp = document.getElementById(`cameraUpload_${slotId}`);
+        
+        if (isCamera && fileInp) fileInp.value = '';
+        else if (!isCamera && camInp) camInp.value = '';
 
         if (!inputElement.files || inputElement.files.length === 0) {
-            compressedBase64ToUpload = null;
-            badge.style.display = 'none';
             return;
         }
 
         const file = inputElement.files[0];
-
         if (file.size > 15 * 1024 * 1024) {
             showCustomAlert("⚠️ Image is too large! Maximum raw file size is 15 MB.");
             inputElement.value = '';
-            compressedBase64ToUpload = null;
-            badge.style.display = 'none';
             return;
         }
 
-        badge.style.display = 'block';
-        badge.style.background = '#fef3c7';
-        badge.style.color = '#92400e';
-        badge.style.borderColor = '#fcd34d';
-        badge.innerText = '⏳ Compressing image for Firebase Spark storage...';
+        if (badge) {
+            badge.style.display = 'block';
+            badge.style.background = '#fef3c7';
+            badge.style.color = '#92400e';
+            badge.style.borderColor = '#fcd34d';
+            badge.innerText = '⏳ Compressing image for Firebase Spark storage...';
+        }
 
         startYtLoader(40);
-
         try {
             const sec = document.getElementById('sectionSelect').value;
-
             let maxW = 1000, maxH = 1000, q = 0.75;
             if (currentAdminMode === 'settings') {
                 if (document.getElementById('settingKey').value === 'CoverPhoto') { maxW = 1100; maxH = 400; q = 0.78; }
@@ -1237,25 +1399,29 @@
             }
 
             const result = await compressImageFile(file, maxW, maxH, q);
-            compressedBase64ToUpload = result.base64;
+            slotCompressedData[slotId] = result.base64;
 
-            badge.style.background = '#dcfce7';
-            badge.style.color = '#166534';
-            badge.style.borderColor = '#86efac';
-            badge.innerHTML = `✅ <strong>Spark Ready:</strong> ${result.originalSizeKB} KB ➔ <strong>${result.compressedSizeKB} KB</strong> (${result.dimensions})`;
+            if (badge) {
+                badge.style.background = '#dcfce7';
+                badge.style.color = '#166534';
+                badge.style.borderColor = '#86efac';
+                badge.innerHTML = `✅ <strong>Spark Ready:</strong> ${result.originalSizeKB} KB ➔ <strong>${result.compressedSizeKB} KB</strong> (${result.dimensions})`;
+            }
+
+            showSlotPreview(slotId, result.base64, `${result.compressedSizeKB} KB • ${result.dimensions}`);
             finishYtLoader();
-        } catch (err) {
-            badge.style.background = '#fee2e2';
-            badge.style.color = '#991b1b';
-            badge.style.borderColor = '#fca5a5';
-            badge.innerText = '❌ Compression failed. Please pick a smaller image.';
+        } catch(err) {
+            if (badge) {
+                badge.style.background = '#fee2e2';
+                badge.style.color = '#991b1b';
+                badge.style.borderColor = '#fca5a5';
+                badge.innerText = '❌ Compression failed. Please pick a smaller image.';
+            }
             finishYtLoader();
         }
     }
 
-    // =========================================================================
-    // 🎨 NEW COLORFUL MODAL MESSAGE BOX HANDLERS
-    // =========================================================================
+    // MODAL MESSAGE BOXES
     function showCustomAlert(msg, customTitle = "") {
         const modal = document.getElementById('customAlertModal');
         const msgEl = document.getElementById('customAlertMsg');
@@ -1264,7 +1430,6 @@
         
         msgEl.innerText = msg;
 
-        // Contextual styling based on message intent
         if (msg.includes('✅') || msg.toLowerCase().includes('success') || msg.toLowerCase().includes('imported')) {
             titleEl.innerText = customTitle || "Success!";
             orbEl.className = "msg-icon-orb orb-green";
@@ -1288,10 +1453,6 @@
     
     function closeCustomAlert() {
         document.getElementById('customAlertModal').classList.remove('active');
-    }
-    
-    function showPresenceToast(msg) {
-        showCustomAlert(msg);
     }
     
     let confirmCallback = null;
@@ -1382,9 +1543,7 @@
         initFirebaseRealtimeSync();
     });
 
-    // =========================================================================
-    // 🔄 FIREBASE REAL-TIME SYNC ENGINE
-    // =========================================================================
+    // FIREBASE REAL-TIME SYNC
     function initFirebaseRealtimeSync() {
         startYtLoader(30);
 
@@ -1439,6 +1598,52 @@
                 renderSuperAdminActivity();
             }
         }, (error) => {});
+    }
+
+    // Helper: Extract all media links/images safely from post item
+    function getMediaItems(item) {
+        if (!item) return [];
+        let list = [];
+        if (Array.isArray(item.MediaLinks)) {
+            list = item.MediaLinks.filter(Boolean);
+        } else if (typeof item.MediaLinks === 'string') {
+            try {
+                const parsed = JSON.parse(item.MediaLinks);
+                if (Array.isArray(parsed)) list = parsed.filter(Boolean);
+            } catch(e) {}
+        }
+        if (list.length === 0 && item.MediaLink) {
+            list = [item.MediaLink];
+        }
+        return list;
+    }
+
+    function renderMedia(mediaInput) {
+        let items = Array.isArray(mediaInput) ? mediaInput : [mediaInput];
+        items = items.filter(u => u && String(u).trim() !== '');
+        if (items.length === 0) return '';
+
+        if (items.length === 1) {
+            const url = items[0];
+            if (url.includes('youtube.com') || url.includes('youtu.be')) {
+                const id = url.split('v=')[1] ? url.split('v=')[1].split('&')[0] : url.split('/').pop().split('?')[0];
+                return `<iframe width="100%" height="300" src="https://www.youtube.com/embed/${id}" frameborder="0" loading="lazy" allowfullscreen></iframe>`;
+            }
+            return `<img src="${url}" loading="lazy" decoding="async">`;
+        }
+
+        const countClass = items.length <= 4 ? `count-${items.length}` : 'count-more';
+        return `
+            <div class="multi-media-grid ${countClass}">
+                ${items.map(url => {
+                    if (url.includes('youtube.com') || url.includes('youtu.be')) {
+                        const id = url.split('v=')[1] ? url.split('v=')[1].split('&')[0] : url.split('/').pop().split('?')[0];
+                        return `<div class="multi-media-item"><iframe width="100%" height="240" src="https://www.youtube.com/embed/${id}" frameborder="0" loading="lazy" allowfullscreen></iframe></div>`;
+                    }
+                    return `<div class="multi-media-item"><img src="${url}" loading="lazy" decoding="async"></div>`;
+                }).join('')}
+            </div>
+        `;
     }
 
     function renderAll(postsData, settingsData) {
@@ -1577,6 +1782,8 @@
                         let showHeader = (secName !== "Gallery" && secName !== "Today");
                         let showContent = (secName !== "Gallery");
 
+                        const mediaList = getMediaItems(item);
+
                         secHtml += `
                         <div class="fb-post ${hiddenClass}" ${subSecAttr} data-date="${rawDate}" id="${postIdStr}" data-docid="${item.id}">
                             ${showHeader ? `
@@ -1591,7 +1798,7 @@
                                 ${item.Title ? `<h3 class="post-title-share" style="${!showHeader ? 'margin-top:10px;' : ''}">${item.Title}</h3>` : ''}
                                 ${(item.Content && showContent) ? `<p>${item.Content}</p>` : ''}
                             </div>
-                            ${item.MediaLink ? `<div class="fb-media">${renderMedia(item.MediaLink)}</div>` : ''}
+                            ${mediaList.length > 0 ? `<div class="fb-media">${renderMedia(mediaList)}</div>` : ''}
                             
                             <div class="social-bar">
                                 <div class="social-left-group">
@@ -1681,7 +1888,6 @@
         updateTodayGrid(); 
     }
 
-    // --- INLINE SHOW MORE TOGGLE ---
     function toggleInlineSectionPosts(wrapperId, btn) {
         const wrapper = document.getElementById(wrapperId);
         if (!wrapper) return;
@@ -1880,9 +2086,6 @@
         }
     }
 
-    // =========================================================================
-    // 🖼️ ZERO-TEXT PURE IMAGE & SITE LINK SHARING
-    // =========================================================================
     async function urlOrBase64ToFile(urlOrBase64, filename = 'tdtti_share.jpg') {
         try {
             if (!urlOrBase64) return null;
@@ -2126,15 +2329,6 @@
         window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank');
         closeWishModal();
     }
-    
-    function renderMedia(url) {
-        if (!url) return '';
-        if (url.includes('youtube.com') || url.includes('youtu.be')) {
-            const id = url.split('v=')[1] || url.split('/').pop();
-            return `<iframe width="100%" height="300" src="https://www.youtube.com/embed/${id}" frameborder="0" loading="lazy" allowfullscreen></iframe>`;
-        }
-        return `<img src="${url}" loading="lazy" decoding="async">`;
-    }
 
     let loginHoldTimer;
     function startLoginPress(e) {
@@ -2156,9 +2350,6 @@
         closeAdminSection(); 
     }
 
-    // =========================================================================
-    // 🔐 AUTHENTICATION
-    // =========================================================================
     async function verifyLogin(e) {
         e.preventDefault();
         const idVal = document.getElementById('adminId').value.trim();
@@ -2312,6 +2503,7 @@
             document.getElementById('birthdayFields').style.display = 'none';
             document.getElementById('normalFields').style.display = 'none';
             document.getElementById('imageUploadGroup').style.display = 'block';
+            document.getElementById('btnAddPhotoSlot').style.display = 'none'; // Only 1 photo for profile/cover
             if (postDateField) postDateField.style.display = 'none';
             
             document.getElementById('submitBtn').style.display = 'block';
@@ -2614,17 +2806,45 @@
         document.getElementById('postTitle').value = "";
         document.getElementById('postAuthor').value = currentAdminName || "TDTTI THURAVOOR";
         document.getElementById('postContent').value = "";
-        document.getElementById('mediaLink').value = "";
         document.getElementById('subSectionSelect').value = "Art"; 
         
+        // Reset Media Links container back to single empty input
+        const mediaContainer = document.getElementById('mediaLinksContainer');
+        if (mediaContainer) {
+            mediaContainer.innerHTML = `
+                <div class="media-link-row" id="media-link-row-0" style="display: flex; gap: 6px; align-items: center;">
+                    <input type="url" class="form-control media-link-input" placeholder="YouTube or Direct Image/Video URL">
+                </div>
+            `;
+        }
+        mediaLinkCounter = 0;
+
+        // Reset Image Slots back to single empty slot
+        const imgContainer = document.getElementById('imageSlotsContainer');
+        if (imgContainer) {
+            imgContainer.innerHTML = `
+                <div class="image-slot-item" id="img-slot-0" data-slot-id="0">
+                    <div style="display: flex; gap: 8px; align-items: center;">
+                        <input type="file" id="fileUpload_0" class="form-control slot-file-input" style="background:#fff; flex: 1;" accept="image/*" onchange="handleSlotImageChange(this, 0)">
+                        <label for="cameraUpload_0" class="form-control slot-cam-label" style="background:var(--accent-blue); color:white; width: 50px; text-align:center; cursor:pointer; font-size: 1.1rem; display:flex; align-items:center; justify-content:center; border:none; margin:0; border-radius:8px;" title="Take Photo">📷</label>
+                        <input type="file" id="cameraUpload_0" accept="image/*" capture="environment" style="display:none;" onchange="handleSlotImageChange(this, 0, true)">
+                    </div>
+                    <div id="compressionBadge_0" class="compression-status-badge"></div>
+                    <div id="previewWrap_0" class="slot-preview-wrap" style="display: none; margin-top: 8px; align-items: center; gap: 10px; background: #fff; padding: 6px 10px; border-radius: 8px; border: 1px solid #d1d5db;">
+                        <img id="previewImg_0" src="" style="width: 48px; height: 48px; object-fit: cover; border-radius: 6px;">
+                        <span id="previewInfo_0" style="font-size: 0.78rem; color: #374151; flex: 1;"></span>
+                        <button type="button" onclick="clearSlotImage(0)" style="background: #fee2e2; color: #dc2626; border: 1px solid #fca5a5; border-radius: 50%; width: 26px; height: 26px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: bold;">✕</button>
+                    </div>
+                </div>
+            `;
+        }
+        slotCounter = 0;
+        slotCompressedData = {};
+
         const pDate = document.getElementById('customPostDate');
         if (pDate) pDate.value = getTodayDateStr();
 
         if(document.getElementById('editPostSelect')) document.getElementById('editPostSelect').value = "";
-        document.getElementById('fileUpload').value = "";
-        document.getElementById('cameraUpload').value = "";
-        document.getElementById('compressionStatusBadge').style.display = 'none';
-        compressedBase64ToUpload = null;
     }
 
     function populateEditDropdown() {
@@ -2650,7 +2870,6 @@
             document.getElementById('postTitle').value = post.Title || "";
             document.getElementById('postAuthor').value = post.Author || "TDTTI THURAVOOR";
             document.getElementById('postContent').value = post.Content || "";
-            document.getElementById('mediaLink').value = post.MediaLink || "";
             if(sec === "Fairs" && post.SubSection) {
                 document.getElementById('subSectionSelect').value = post.SubSection;
             }
@@ -2659,12 +2878,62 @@
                 const pDate = document.getElementById('customPostDate');
                 if (pDate) pDate.value = datePart;
             }
+
+            // Restore media items into inputs and preview slots
+            const mediaList = getMediaItems(post);
+            const mediaContainer = document.getElementById('mediaLinksContainer');
+            const imgContainer = document.getElementById('imageSlotsContainer');
+            
+            if (mediaContainer) mediaContainer.innerHTML = '';
+            if (imgContainer) imgContainer.innerHTML = '';
+            slotCompressedData = {};
+            mediaLinkCounter = 0;
+            slotCounter = 0;
+
+            let hasUrls = false;
+            let hasImages = false;
+
+            mediaList.forEach(m => {
+                if (m.startsWith('data:image')) {
+                    hasImages = true;
+                    addImageSlot(m);
+                } else if (m.startsWith('http') || m.includes('youtube') || m.includes('youtu.be')) {
+                    hasUrls = true;
+                    addMediaLinkSlot(m);
+                }
+            });
+
+            if (!hasUrls) {
+                mediaContainer.innerHTML = `
+                    <div class="media-link-row" id="media-link-row-0" style="display: flex; gap: 6px; align-items: center;">
+                        <input type="url" class="form-control media-link-input" placeholder="YouTube or Direct Image/Video URL">
+                    </div>
+                `;
+            }
+            if (!hasImages) {
+                imgContainer.innerHTML = `
+                    <div class="image-slot-item" id="img-slot-0" data-slot-id="0">
+                        <div style="display: flex; gap: 8px; align-items: center;">
+                            <input type="file" id="fileUpload_0" class="form-control slot-file-input" style="background:#fff; flex: 1;" accept="image/*" onchange="handleSlotImageChange(this, 0)">
+                            <label for="cameraUpload_0" class="form-control slot-cam-label" style="background:var(--accent-blue); color:white; width: 50px; text-align:center; cursor:pointer; font-size: 1.1rem; display:flex; align-items:center; justify-content:center; border:none; margin:0; border-radius:8px;" title="Take Photo">📷</label>
+                            <input type="file" id="cameraUpload_0" accept="image/*" capture="environment" style="display:none;" onchange="handleSlotImageChange(this, 0, true)">
+                        </div>
+                        <div id="compressionBadge_0" class="compression-status-badge"></div>
+                        <div id="previewWrap_0" class="slot-preview-wrap" style="display: none; margin-top: 8px; align-items: center; gap: 10px; background: #fff; padding: 6px 10px; border-radius: 8px; border: 1px solid #d1d5db;">
+                            <img id="previewImg_0" src="" style="width: 48px; height: 48px; object-fit: cover; border-radius: 6px;">
+                            <span id="previewInfo_0" style="font-size: 0.78rem; color: #374151; flex: 1;"></span>
+                            <button type="button" onclick="clearSlotImage(0)" style="background: #fee2e2; color: #dc2626; border: 1px solid #fca5a5; border-radius: 50%; width: 26px; height: 26px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: bold;">✕</button>
+                        </div>
+                    </div>
+                `;
+            }
         }
+
         let adminCommBox = document.getElementById('adminCommentManager');
         let adminCommList = document.getElementById('adminCommentList');
         adminCommList.innerHTML = '';
         
-        if (post.Comments) {
+        if (post && post.Comments) {
             try {
                 let cArray = typeof post.Comments === 'string' ? JSON.parse(post.Comments) : post.Comments;
                 if (cArray.length > 0) {
@@ -2739,6 +3008,7 @@
         const mediaField = document.getElementById('fg-media');
         const imgField = document.getElementById('imageUploadGroup');
         const subSecField = document.getElementById('fg-subsection'); 
+        const btnAddPhoto = document.getElementById('btnAddPhotoSlot');
 
         clearPostFields();
         document.getElementById('adminCommentManager').style.display = 'none';
@@ -2750,6 +3020,7 @@
             bdayFields.style.display = "block";
             normalFields.style.display = "none";
             imgField.style.display = "block";
+            if (btnAddPhoto) btnAddPhoto.style.display = "none"; // Single portrait for birthday
             
             document.getElementById('editSelectGroup').style.display = 'none';
             document.getElementById('submitBtn').style.display = 'block';
@@ -2773,6 +3044,7 @@
             mediaField.style.display = "block";
             imgField.style.display = "block";
             contentField.style.display = "block";
+            if (btnAddPhoto) btnAddPhoto.style.display = "inline-flex";
         }
 
         if (currentAdminMode === 'edit' && sec !== "Birthdays") {
@@ -2781,9 +3053,6 @@
         }
     }
 
-    // =========================================================================
-    // 🔍 REAL-TIME DYNAMIC STUDENT BIRTHDAY SEARCH & AUTO-FILTER
-    // =========================================================================
     function populateStudentSearch(filterQuery = "") {
         const datalist = document.getElementById('bdayStudentList');
         if (!datalist) return;
@@ -2901,14 +3170,14 @@
 
     function submitData(actionType = 'create') {
         const section = document.getElementById('sectionSelect').value;
-        const fileInput = document.getElementById('fileUpload');
-        const cameraInput = document.getElementById('cameraUpload');
+        const uploadedImages = Object.values(slotCompressedData).filter(Boolean);
+        const enteredLinks = Array.from(document.querySelectorAll('.media-link-input')).map(i => i.value.trim()).filter(Boolean);
         
         if (currentAdminMode !== 'settings' && section === "Birthdays" && document.getElementById('selectedStudentDocId').value === "") {
             showCustomAlert("Please select a valid student from the search box to update their photo.");
             return;
         }
-        if (currentAdminMode === 'settings' && !compressedBase64ToUpload && fileInput.files.length === 0 && cameraInput.files.length === 0) {
+        if (currentAdminMode === 'settings' && uploadedImages.length === 0) {
             showCustomAlert("Please upload or take an image first to update settings.");
             return;
         }
@@ -2936,7 +3205,11 @@
         closeModals();
         startYtLoader(30);
 
-        let finalMediaLink = compressedBase64ToUpload || (document.getElementById('mediaLink') ? document.getElementById('mediaLink').value : "");
+        // Gather all media links and compressed images
+        const enteredLinks = Array.from(document.querySelectorAll('.media-link-input')).map(i => i.value.trim()).filter(Boolean);
+        const uploadedImages = Object.values(slotCompressedData).filter(Boolean);
+        const combinedMedia = [...enteredLinks, ...uploadedImages];
+        const primaryMedia = combinedMedia[0] || "";
         
         const now = new Date();
         const timeSuffix = `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}:${String(now.getSeconds()).padStart(2,'0')}`;
@@ -2961,7 +3234,7 @@
                 const setKey = document.getElementById('settingKey').value;
                 setYtProgress(60);
                 await db.collection('settings').doc('global').set({
-                    [setKey]: finalMediaLink
+                    [setKey]: primaryMedia
                 }, { merge: true });
                 recordAdminActivity(currentAdminName, `Updated ${setKey}`);
             } 
@@ -2973,7 +3246,7 @@
             else if (section === "Birthdays") {
                 setYtProgress(60);
                 await db.collection('birthdays').doc(docId).update({
-                    ImageLink: finalMediaLink
+                    ImageLink: primaryMedia
                 });
                 recordAdminActivity(currentAdminName, `Updated student birthday photo`);
             } 
@@ -2986,7 +3259,10 @@
                     Timestamp: timestamp,
                     SubSection: (section === "Fairs" && document.getElementById('subSectionSelect')) ? document.getElementById('subSectionSelect').value : ""
                 };
-                if (finalMediaLink) updatePayload.MediaLink = finalMediaLink;
+                if (combinedMedia.length > 0) {
+                    updatePayload.MediaLink = primaryMedia;
+                    updatePayload.MediaLinks = combinedMedia;
+                }
                 await db.collection('posts').doc(docId).update(updatePayload);
                 recordAdminActivity(currentAdminName, `Edited post in ${section}`);
             } 
@@ -2999,7 +3275,8 @@
                     Content: document.getElementById('postContent').value || "",
                     Author: document.getElementById('postAuthor').value || currentAdminName,
                     SubSection: (section === "Fairs" && document.getElementById('subSectionSelect')) ? document.getElementById('subSectionSelect').value : "",
-                    MediaLink: finalMediaLink,
+                    MediaLink: primaryMedia,
+                    MediaLinks: combinedMedia,
                     Reactions: JSON.stringify({ like: 0, love: 0, clap: 0 }),
                     Comments: JSON.stringify([]),
                     Shares: 0,
@@ -3018,9 +3295,6 @@
         }
     }
 
-    // =========================================================================
-    // 📦 BULK BIRTHDAYS IMPORTER WITH STRICT VALIDATION
-    // =========================================================================
     async function processBulkBirthdayUpload() {
         const fileInput = document.getElementById('bulkCsvFile');
         const statusDiv = document.getElementById('bulkProgressStatus');
@@ -3225,6 +3499,7 @@
                         "Author": (authorIdx !== -1 && row[authorIdx]) ? row[authorIdx] : currentAdminName,
                         "SubSection": "",
                         "MediaLink": mediaIdx !== -1 ? (row[mediaIdx] || "") : "",
+                        "MediaLinks": (mediaIdx !== -1 && row[mediaIdx]) ? [row[mediaIdx]] : [],
                         "Reactions": JSON.stringify({ like: 0, love: 0, clap: 0 }),
                         "Comments": JSON.stringify([]),
                         "Shares": 0,
